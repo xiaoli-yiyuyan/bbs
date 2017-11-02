@@ -1,0 +1,110 @@
+<?php
+namespace App;
+
+use Iam\Db;
+use Iam\Url;
+use Iam\View;
+use Iam\Page;
+use Iam\Listen;
+use Iam\Request;
+use Iam\FileUpload;
+
+class User extends Common
+{
+    public function index()
+    {
+  	   View::load('User/index',['a' => 1]);
+    }
+    public function updateInfo(){
+      if (Request::isPost()) {
+        $id = $this->user['id'];
+        $nickname = Request::post('nickname');
+        DB::table('user')->where(['id' => $id])->update(['nickname' => $nickname]);
+        echo "修改成功";
+      }
+      View::load('User/updateInfo');
+    }
+
+	public function photoUpload()
+	{
+        $photoPath = "./public/photo/";
+        print_r($photoPath);
+		$up = new FileUpload();
+    	//设置属性（上传的位置、大小、类型、设置文件名是否要随机生成）
+    	$up->set("path",$photoPath);
+    	$up->set("maxsize",2000000); //kb
+    	$up->set("allowtype",array("gif","png","jpg","jpeg"));//可以是"doc"、"docx"、"xls"、"xlsx"、"csv"和"txt"等文件，注意设置其文件大小
+    	$up->set("israndname",true);//true:由系统命名；false：保留原文件名
+
+    	//使用对象中的upload方法，上传文件，方法需要传一个上传表单的名字name：pic
+    	//如果成功返回true，失败返回false
+
+    	if($up->upload("photo")){
+    		echo '<pre>';
+    		//获取上传成功后文件名字
+    		$photoUrl= $up->getFileName();
+    		Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => substr($photoPath, 1) . $photoUrl]);
+    		echo '</pre>';
+
+    	}else{
+    		echo '<pre>';
+    		//获取上传失败后的错误提示
+    		var_dump($up->getErrorMsg());
+    		echo '<pre/>';
+    	}
+	}
+
+    public function myBooks(){
+      $this->isLogin();
+      $collectId = Db::table('novel_collect')->field('novelId')->where(['userid' => $this->user['id']])->select();
+
+      $count = count($collectId);
+      if ($count){
+        foreach ($collectId as $key => $value) {
+          $myBooks[] = Db::table('novel')->find('id',$value['novelId']);
+        }
+        foreach ($myBooks as &$item) {
+            $item['mark'] = $this->getMarkTitle($item['id']);
+         }
+      }
+
+      $bookList = $count ? $myBooks : '您还没有添加任何书籍';
+      View::load('User/myBooks',['new_list' => $bookList,'count' => $count]);
+    }
+    public function getMarkTitle($novelid)
+    {
+      // echo "<pre>";
+      //  print_r($novelid);
+        $mark = Db::query('SELECT * FROM `novel_mark` WHERE `id` IN(SELECT `markid` FROM `novel_mark_body` WHERE `novelid`=?)', [$novelid]);
+        return $mark;
+     }
+    public function updatePwd(){
+      if (Request::isPost()) {
+        $id = $this->user['id'];
+        $oldPwd = $this->user['password'];
+        $postdata = Request::post();
+        if( strlen($postdata['password']) < 6 ){
+          return Page::error('密码位数不得低于6位');
+        }
+        if( $postdata['password'] == $postdata['oldpwd']){
+          return Page::error('原始密码与新密码不能一样');
+        }
+        if( $postdata['password'] != $postdata['passwordAgain']){
+          return Page::error('密码与密码确认不一致');
+        }
+
+        if( md5($postdata['oldpwd'])  != $oldPwd){
+            return Page::error('原始密码不正确');
+        }
+        DB::table('user')->where(['id' => $id])->update(['password'=>md5($postdata['password'])]);
+        echo "修改成功";
+      }
+      View::load('User/updatePwd');
+    }
+
+    public function quit(){
+      session_destroy();
+      $this->user = ['id' => 0];
+      Url::redirect('/Login/index');
+    }
+}

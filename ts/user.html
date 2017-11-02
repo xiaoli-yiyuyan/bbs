@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="zepto.min.js"></script>
+    <script src="touch.js"></script>
+    <script src="iscroll.js"></script>
+    <script src="ui.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .user_info {
+            position: relative;
+            padding: 1rem;
+            background: #FFF;
+        }
+        .user_photo {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+        }
+        .user_memo {
+            flex: 1;
+            line-height: 1rem;
+            padding: .5rem;
+        }
+        .user_lv {
+            padding: 0 .2rem;
+            border-radius: .2rem;
+            font-size: .6rem;
+            background: #09f;
+            color: #fff;
+        }
+        .user_name {
+            font-size: .9rem;
+        }
+        .user_explan {
+            color: #888;
+        }
+        .fans_nav {
+            padding: .3rem;
+            background: #fff;
+        }
+        .fans_nav_link {
+            position: relative;
+            text-align: center;
+            flex: 1;
+            font-size: .6rem;
+            color: #777;
+        }
+        .fans_nav_num {
+            color: #333;
+            font-size: .8rem;
+        }
+    </style>
+    <header class="header">
+        <div class="header-back">
+            <i class="icon-svg" style="background-image:url(svg/arrow-left.svg);"></i>
+        </div>
+        <div class="header-title">用户中心</div>
+        <div class="header-nav">
+            <i class="icon-svg" style="background-image:url(svg/account.svg);"></i>
+        </div>
+    </header>
+    <div class="user_info flex-box border-b">
+        <img class="user_photo" src="images/1.jpg" alt="">
+        <div class="user_memo">
+            <div class="user_name">游侠123 <span class="user_lv">lv.24</span></div>
+            <div class="user_explan">签名：我就是我，颜色不一样的烟火~~</div>
+        </div>
+    </div>
+    <div class="fans_nav flex-box">
+        <div class="fans_nav_link">
+            <div class="fans_nav_num">124</div>
+            <div>关注</div>
+        </div>
+        <div class="fans_nav_link border-l">
+            <div class="fans_nav_num">124</div>
+            <div>粉丝</div>
+        </div>
+    </div>
+    <p>
+        <div class="list list-border-bottom list-lg">
+            <div class="list-group">
+                <div class="list-item ellipsis list-item-icon">
+                    <img src="svg/百香果.svg" alt="">
+                    消息中心
+                </div>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="list list-border-bottom list-lg">
+            <div class="list-group">
+                <div class="list-item ellipsis list-item-icon">
+                    <img src="svg/蓝莓.svg" alt="">
+                    修改资料
+                </div>
+                <div class="list-item ellipsis list-item-icon">
+                    <img src="svg/百香果.svg" alt="">
+                    消息中心
+                </div>
+                <div class="list-item ellipsis list-item-icon">
+                    <img src="svg/草莓.svg" alt="">
+                    修改资料
+                </div>
+                <div class="list-item ellipsis list-item-icon">
+                    <img src="svg/水蜜桃.svg" alt="">
+                    修改资料
+                </div>
+            </div>
+        </div>
+    </p>
+</body>
+</html>

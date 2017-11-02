@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="swiper.min.css">
+
+    <script src="zepto.min.js"></script>
+    <script src="touch.js"></script>
+    <script src="iscroll.js"></script>
+    <script src="swiper.min.js"></script>
+    <script src="ui.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-back">
+            <i class="icon-svg" style="background-image:url(svg/arrow-left.svg);"></i>
+            <div class="back-word">返回</div>
+        </div>
+        <div class="header-center">标题</div>
+        <div class="header-nav">
+            <div class="nav-word">用户</div>
+            <i class="icon-svg" style="background-image:url(svg/account.svg);"></i>
+        </div>
+    </header>
+    <p>按钮</p>
+
+    <p><div class="btn">按钮(默认)</div></p>
+    <p><div class="btn btn-success btn-lg">按钮(success)</div></p>
+    <p><div class="btn btn-danger">按钮(danger)</div></p>
+    <p><div class="btn btn-warning">按钮(warning)</div></p>
+    <p>填充</p>
+    <p><div class="btn btn-fill">按钮(success)</div></p>
+    <p><div class="btn btn-success btn-fill">按钮(success)</div></p>
+    <p><div class="btn btn-danger btn-fill">按钮(danger)</div></p>
+    <p><div class="btn btn-warning btn-fill">按钮(warning)</div></p>
+    <p><button class="btn btn-warning btn-fill">按钮(warning)</button> <button class="btn">按钮(默认)</button> <button class="btn btn-danger btn-fill">按钮(danger)</button></p>
+    <p>表单</p>
+    <p>
+        <div class="item-line item-lg">
+            <div class="item-title">账号</div>
+            <div class="item-input"><input type="text" class="input input-lg" placeholder="请输入账号"></div>
+        </div>
+
+        <div class="item-line item-lg">
+            <div class="item-title">密码</div>
+            <div class="item-input"><input type="text" class="input input-line input-lg" placeholder="密码输入"></div>
+        </div>
+
+        <div class="item-line item-lg">
+            <div class="item-title">手机号</div>
+            <div class="item-input"><input type="text" class="input input-line input-lg" placeholder="手机号输入"></div>
+        </div>
+
+        <div class="item-line item-lg">
+            <div class="item-title">文本</div>
+            <div class="item-input">
+                <textarea name="name" class="input input-line input-lg" placeholder="文本域"></textarea>
+            </div>
+        </div>
+
+        <div class="item-line item-lg">
+            <div class="item-title">radio</div>
+            <div class="item-input">
+                <input class="input-checkbox" type="checkbox">
+            </div>
+        </div>
+        <p><div class="btn btn-fill btn-lg">提交</div></p>
+
+    </p>
+
+    <p>搜索框</p>
+    <p>
+        <div class="input-search">
+            <input type="text" class="input" placeholder="请输入关键字">
+            <span class="btn btn-fill"><i class="icon-search"></i></span>
+        </div>
+    </p>
+    <p>卡片</p>
+    <p>
+        <div class="card">
+            <div class="card-header">
+                标题
+            </div>
+            <div class="card-content">
+                头和尾的卡片。卡头是用来显示一些额外的信息，或自定义操作卡标题和页脚。
+            </div>
+            <div class="card-footer">
+                底部
+            </div>
+        </div>
+    </p>
+    <p>TAB切换</p>
+    <p>
+        <div class="tab">
+            <div class="tab-header">
+                <div class="tab-link tab-active" data-to-tab=".tab1">tab1</div>
+                <div class="tab-link" data-to-tab=".tab2">tab2</div>
+                <div class="tab-link" data-to-tab=".tab3">tab3</div>
+                <div class="tab-link" data-to-tab=".tab4">tab4</div>
+                <div class="tab-link" data-to-tab=".tab5">tab5</div>
+            </div>
+            <div class="tab-content">
+                 <div class="tab-page tab1 tab-active">页面1</div>
+                 <div class="tab-page tab2">页面2</div>
+                 <div class="tab-page tab3">页面3</div>
+                 <div class="tab-page tab4">页面4</div>
+                 <div class="tab-page tab5">页面5</div>
+            </div>
+        </div>
+    </p>
+    <p>卡片TAB切换</p>
+    <p>
+        <div class="tab card">
+            <div class="tab-header">
+                <div class="tab-link tab-active" data-to-tab=".tab1">tab1</div>
+                <div class="tab-link" data-to-tab=".tab2">tab2</div>
+                <div class="tab-link" data-to-tab=".tab3">tab3</div>
+                <div class="tab-link" data-to-tab=".tab4">tab4</div>
+                <div class="tab-link" data-to-tab=".tab5">tab5</div>
+            </div>
+            <div class="tab-content">
+                 <div class="tab-page tab1 tab-active">页面1</div>
+                 <div class="tab-page tab2">页面2</div>
+                 <div class="tab-page tab3">页面3</div>
+                 <div class="tab-page tab4">页面4</div>
+                 <div class="tab-page tab5">页面5</div>
+            </div>
+        </div>
+    </p>
+
+    <p>列表</p>
+    <p>
+        <div class="list">
+            <div class="list-group list-arrow">
+                <div class="list-item list-item-image-text">
+                    <div class="list-item-image">
+                        <img src="images/1.jpg" alt="">
+
+                    </div>
+                    <div class="list-item-text">Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机</div>
+                </div>
+                <div class="list-item ellipsis list-item-icon">
+                    <img src="images/1.jpg" alt="">
+                    Letv 乐视1S 乐1S 移动联通双4G 双卡双待 16GB 金</div>
+                <div class="list-item ellipsis">NOKIA/诺基亚 2610 nokia 2610 经典诺基亚直板手机 学生备用老人手机 诺基亚低端功能机</div>
+                <div class="list-item ellipsis">华为 Mate8 NXT-TL00 3GB+32GB版 移动定制 月光银</div>
+                <div class="list-item ellipsis">锤子 坚果 32GB 红色 移动联通4G手机 双卡双待></div>
+            </div>
+        </div>
+    </p>
+
+    <p>弹窗</p>
+    <p>
+        <button class="btn alert">alert</button>
+        <button class="btn confirm">confirm</button>
+        <button class="btn msg">msg</button>
+        <button class="btn free">自定义</button>
+    </p>
+    <p>上下拉刷新加载</p>
+    <p>
+        <div class="list">
+            <div class="list-group">
+                <a class="list-item ellipsis list-item-icon" href="dropload.html">
+                    <img src="images/1.jpg" alt="">
+                    Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机
+                </a>
+                <!-- <a class="list-item ellipsis list-item-icon" href="iscrollload.html">
+                    <img src="images/1.jpg" alt="">
+                    [IScroll5版] Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机
+                </a> -->
+            </div>
+        </div>
+    </p>
+
+    <p>左右滑动导航栏</p>
+    <p>
+
+        <div class="nav-touch" id="wrapper2">
+            <div class="nav-touch-box">
+                <a class="nav-link" href="">百度</a>
+                <a class="nav-link" href="">谷歌</a>
+                <a class="nav-link" href="">淘宝</a>
+                <a class="nav-link" href="">埃里巴巴</a>
+                <a class="nav-link" href="">王企鹅奥</a>
+                <a class="nav-link" href="">百委屈翁度</a>
+                <a class="nav-link" href="">百其味无穷度</a>
+                <a class="nav-link" href="">驱蚊器二</a>
+            </div>
+        </div>
+    </p>
+    <p>TAB左右滑动导航栏</p>
+    <p>
+        <div class="tab tab-touch" id="wrappertab">
+            <div class="tab-header">
+                <div class="tab-link tab-active" data-to-tab=".tab1">大小单双</div>
+                <div class="tab-link" data-to-tab=".tab2">一星单选</div>
+                <div class="tab-link" data-to-tab=".tab3">二星单选</div>
+                <div class="tab-link" data-to-tab=".tab4">二星组选</div>
+                <div class="tab-link" data-to-tab=".tab5">三星单选</div>
+                <div class="tab-link" data-to-tab=".tab6">五星单选</div>
+                <div class="tab-link" data-to-tab=".tab7">三星组三</div>
+                <div class="tab-link" data-to-tab=".tab8">三星组六</div>
+            </div>
+            <div class="tab-content">
+                 <div class="tab-page tab1 tab-active">页面1</div>
+                 <div class="tab-page tab2">页面2</div>
+                 <div class="tab-page tab3">页面3</div>
+                 <div class="tab-page tab4">页面4</div>
+                 <div class="tab-page tab5">页面5</div>
+                 <div class="tab-page tab6">页面6</div>
+                 <div class="tab-page tab7">页面7</div>
+                 <div class="tab-page tab8">页面8</div>
+            </div>
+        </div>
+    </p>
+    <p>焦点图轮播</p>
+    <p>
+
+        <div class="banner swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="images/b1.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/b2.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/17444682.jpg" alt=""></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </p>
+    <script>
+    $(function() {
+        var mySwiper = new Swiper ('.swiper-container', {
+             loop: true,
+             autoplay: 5000,
+             pagination: '.swiper-pagination'
+         })
+
+        $('.nav-touch-box').width(function() {
+            return this.scrollWidth;
+        });
+        var navScroll = new IScroll("#wrapper2", {
+            snap: 'a',
+            scrollX:true,
+            scrollY:false
+        });
+        navScroll.on('scrollEnd', function() {
+            console.log(this);
+        });
+
+        $('.tab-header').width(function() {
+            return this.scrollWidth;
+        });
+        var navScroll = new IScroll("#wrappertab", {
+            snap: 'div',
+            preventDefault:false,
+
+            scrollX:true,
+            scrollY:false
+        });
+        navScroll.on('scrollEnd', function() {
+            console.log(this);
+        });
+    });
+        // var startX, endX, deltaX, overX = 0; style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"
+        // $(".nav-touch-box").bind('touchstart', function(e){
+        //     $(this).css({
+        //         'transition-duration': '0ms'
+        //     });
+        //     var touch = e.touches[0];
+        //     startX = touch.pageX;
+        // }) .bind('touchmove', function(e){
+        //     var touch = e.touches[0];
+        //     endX = touch.pageX;
+        //     deltaX = (startX - endX) * 0.5;
+        //     $(this).css('transform', 'translate(' + (overX - deltaX) + 'px, 0px) translateZ(0px)');
+        // }).bind('touchend', function(e){
+        //     overX -= deltaX;
+        //
+        //     var parentWidth = $(this).parent().width();
+        //
+        //     var width = 0;
+        //     $(this).find('.nav-link').each(function() {
+        //         width += $(this).width();
+        //     });
+        //     var rWidth = -(width - parentWidth);
+        //     console.log(overX);
+        //     if (overX > 0) {
+        //         overX = 0;
+        //         $(this).css({
+        //             'transform': 'translate(0px, 0px) translateZ(0px)',
+        //             'transition-duration': '600ms'
+        //         });
+        //     } else if (overX < rWidth) {
+        //         overX = rWidth;
+        //         $(this).css({
+        //             'transform': 'translate(' + rWidth + 'px, 0px) translateZ(0px)',
+        //             'transition-duration': '600ms'
+        //         });
+        //     }
+        //     console.log(overX, rWidth, width, parentWidth);
+        // });
+
+        $('.alert').click(function() {
+            $.alert('消息内容');
+        });
+        $('.confirm').click(function() {
+            $.confirm('消息内容', {
+                yes: function() {
+                    $.alert('你点击了确定');
+                },
+                no: function() {
+                    $.alert('你点击了取消');
+                }
+            });
+        });
+        $('.msg').click(function() {
+            $.msg('消息内容');
+        });
+        $('.free').click(function() {
+            $.modal({
+                title: '爆款手机',
+                content: '<div class="list">\
+            <div class="list-group">\
+                <div class="list-item ellipsis list-item-icon">\
+                    <img src="images/1.jpg" alt="">\
+                    Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机\
+                </div>\
+                <div class="list-item ellipsis list-item-icon">\
+                    <img src="images/1.jpg" alt="">\
+                    Letv 乐视1S 乐1S 移动联通双4G 双卡双待 16GB 金</div>\
+                <div class="list-item ellipsis">NOKIA/诺基亚 2610 nokia 2610 经典诺基亚直板手机 学生备用老人手机 诺基亚低端功能机</div>\
+                <div class="list-item ellipsis">华为 Mate8 NXT-TL00 3GB+32GB版 移动定制 月光银</div>\
+                <div class="list-item ellipsis">锤子 坚果 32GB 红色 移动联通4G手机 双卡双待&gt;</div>\
+            </div>\
+        </div>',
+                btn: [
+                    function($btn) {
+                        $btn.text('管理');
+                        $btn.click(function() {
+                            $.alert('点击了按钮一');
+                        });
+                    },
+                    function($btn) {
+                        $btn.text('取消');
+                        $btn.click(function() {
+                            $.alert('点击了按钮二');
+                        });
+                    },
+                    function($btn) {
+                        $btn.text('查看>>');
+                        $btn.click(function() {
+                            $.alert('点击了按钮三');
+                        });
+                    }
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
