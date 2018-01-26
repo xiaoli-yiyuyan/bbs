@@ -15,10 +15,6 @@
 <div class="title-nav"><span class="title-i"></span>我的应用</div>
 <div class="">
   <div class="myApplication">  <a href="/User/myBooks">我的书架</a></div>
-  <div class="myApplication">  <a href="/User/myBooks">我的书架</a></div>
-  <div class="myApplication">  <a href="/User/myBooks">我的书架</a></div>
-  <div class="myApplication">  <a href="/User/myBooks">我的书架</a></div>
-
 </div>
 <script type="text/javascript">
     var $file = $('<input type="file">');
