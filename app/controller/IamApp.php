@@ -72,7 +72,7 @@ class IamApp
             'sign' => $sign,
             'module' => $module,
             'name' => $name
-        ])
+        ]);
         $url = $host . '?' . $params;
         return self::http($url, $data, 'POST');
     }

@@ -15,6 +15,11 @@ class View
 		echo $str;
 	}
 
+	/**
+	 * 模板加载
+	 * @param string $name 模板路径
+	 * @param array $data 变量参数
+	 */
 	public static function load($name, $data = [])
 	{
 		$config = Config::get('TEMPLATE');
@@ -30,6 +35,11 @@ class View
 		//return $tpl;
 	}
 
+	/**
+	 * 变量参数设置
+	 * @param string $name 变量名
+	 * @param array $data 变量值
+	 */
 	public static function data($name, $value = '')
 	{
 		if (is_string($name)) {

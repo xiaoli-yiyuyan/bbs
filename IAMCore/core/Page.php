@@ -27,7 +27,7 @@ class Page
 		View::load('success', ['msg' => $msg, 'url' => $url]);
 	}
 
-	public static function countPage($p,$allnum, $pagesize = 10){
+	public static function countPage($p, $allnum, $pagesize = 10){
 		$allPage = ceil($allnum/$pagesize);
 		$page = $p >= $allPage ? $allPage : ($p+1);
 	}

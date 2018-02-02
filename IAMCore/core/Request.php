@@ -63,7 +63,8 @@ class Request
 		return $array;
 	}
 
-	private static function sustain_set_data($val,$way){
+	private static function sustain_set_data($val,$way)
+	{
         /*
             设置POST,GET,COOKIE数据
         */
