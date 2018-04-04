@@ -1,5 +1,5 @@
-﻿# Host: 192.168.2.199  (Version: 5.5.53)
-# Date: 2017-09-11 18:13:42
+﻿# Host: localhost  (Version: 5.5.47)
+# Date: 2018-04-04 16:07:40
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -32,16 +32,16 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `type` int(11) DEFAULT '0',
+  `type` int(11) DEFAULT '0' COMMENT '0 普通，1 论坛',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "category"
 #
 
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (2,'聊天室',0);
+INSERT INTO `category` VALUES (2,'聊天室',0),(3,'论坛栏目',1);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
 #
@@ -58,14 +58,14 @@ CREATE TABLE `chat` (
   `appid` int(11) DEFAULT '0',
   `classid` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "chat"
 #
 
 /*!40000 ALTER TABLE `chat` DISABLE KEYS */;
-INSERT INTO `chat` VALUES (190,16,0,'??','2017-09-07 15:22:10',0,2),(191,16,0,'[表情:不要]','2017-09-07 15:22:27',0,2),(192,16,0,'打开机速度很快就','2017-09-07 15:22:59',0,2),(193,16,0,'青蛙多撒所多','2017-09-07 15:23:10',0,2),(194,16,0,'王企鹅奥多所撒','2017-09-07 15:23:13',0,2),(195,16,0,'玩的啊收到','2017-09-07 15:23:15',0,2),(196,16,0,'的','2017-09-07 15:23:16',0,2),(197,16,0,'收到','2017-09-07 15:23:17',0,2),(198,16,0,'阿萨德','2017-09-07 15:23:20',0,2),(199,16,0,'二','2017-09-07 15:24:04',0,2),(200,16,0,'123阿尔大厦','2017-09-07 15:24:12',0,2),(201,16,0,'[@:youxia]阿达','2017-09-07 15:24:18',0,2);
+INSERT INTO `chat` VALUES (190,16,0,'??','2017-09-07 15:22:10',0,2),(191,16,0,'[表情:不要]','2017-09-07 15:22:27',0,2),(192,16,0,'打开机速度很快就','2017-09-07 15:22:59',0,2),(193,16,0,'青蛙多撒所多','2017-09-07 15:23:10',0,2),(194,16,0,'王企鹅奥多所撒','2017-09-07 15:23:13',0,2),(195,16,0,'玩的啊收到','2017-09-07 15:23:15',0,2),(196,16,0,'的','2017-09-07 15:23:16',0,2),(197,16,0,'收到','2017-09-07 15:23:17',0,2),(198,16,0,'阿萨德','2017-09-07 15:23:20',0,2),(199,16,0,'二','2017-09-07 15:24:04',0,2),(200,16,0,'123阿尔大厦','2017-09-07 15:24:12',0,2),(201,16,0,'[@:youxia]阿达','2017-09-07 15:24:18',0,2),(202,1,0,'[表情:抱抱][表情:抱抱][表情:抱抱][表情:奋斗]','2018-04-02 18:10:17',0,2),(203,1,0,'111','2018-04-03 11:09:26',0,2),(204,1,0,'...','2018-04-03 11:09:37',0,2),(205,1,0,'111','2018-04-04 11:04:46',0,2),(206,1,0,'5445','2018-04-04 11:54:24',0,2),(207,1,0,'，开会开会','2018-04-04 11:54:33',0,2),(208,1,0,'51515','2018-04-04 11:55:17',0,2),(209,1,0,'fghjl','2018-04-04 11:55:56',0,2),(210,1,0,'...','2018-04-04 13:36:29',0,2);
 /*!40000 ALTER TABLE `chat` ENABLE KEYS */;
 
 #
@@ -89,6 +89,90 @@ CREATE TABLE `collect_nav` (
 /*!40000 ALTER TABLE `collect_nav` ENABLE KEYS */;
 
 #
+# Structure for table "forum"
+#
+
+DROP TABLE IF EXISTS `forum`;
+CREATE TABLE `forum` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` int(11) DEFAULT '0',
+  `user_id` int(11) DEFAULT '0',
+  `title` varchar(255) DEFAULT NULL,
+  `context` text,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) DEFAULT '0',
+  `log` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "forum"
+#
+
+/*!40000 ALTER TABLE `forum` DISABLE KEYS */;
+INSERT INTO `forum` VALUES (1,2,1,'sfrsdfds',NULL,'2018-03-30 15:27:44',0,NULL),(2,2,1,'lijl',NULL,'2018-03-30 15:28:17',0,NULL),(3,2,1,'lijl','kugk','2018-03-30 15:30:18',0,NULL);
+/*!40000 ALTER TABLE `forum` ENABLE KEYS */;
+
+#
+# Structure for table "forum_mark"
+#
+
+DROP TABLE IF EXISTS `forum_mark`;
+CREATE TABLE `forum_mark` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+#
+# Data for table "forum_mark"
+#
+
+/*!40000 ALTER TABLE `forum_mark` DISABLE KEYS */;
+/*!40000 ALTER TABLE `forum_mark` ENABLE KEYS */;
+
+#
+# Structure for table "forum_mark_body"
+#
+
+DROP TABLE IF EXISTS `forum_mark_body`;
+CREATE TABLE `forum_mark_body` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mark_id` int(11) DEFAULT '0',
+  `forum_id` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+#
+# Data for table "forum_mark_body"
+#
+
+/*!40000 ALTER TABLE `forum_mark_body` DISABLE KEYS */;
+/*!40000 ALTER TABLE `forum_mark_body` ENABLE KEYS */;
+
+#
+# Structure for table "forum_reply"
+#
+
+DROP TABLE IF EXISTS `forum_reply`;
+CREATE TABLE `forum_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `forum_id` int(11) DEFAULT '0',
+  `user_id` int(11) DEFAULT '0',
+  `content` varchar(255) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+#
+# Data for table "forum_reply"
+#
+
+/*!40000 ALTER TABLE `forum_reply` DISABLE KEYS */;
+/*!40000 ALTER TABLE `forum_reply` ENABLE KEYS */;
+
+#
 # Structure for table "novel"
 #
 
@@ -104,14 +188,14 @@ CREATE TABLE `novel` (
   `wordcount` varchar(255) DEFAULT NULL,
   `money` varchar(255) DEFAULT '' COMMENT '0免费，<0 购买',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "novel"
 #
 
 /*!40000 ALTER TABLE `novel` DISABLE KEYS */;
-INSERT INTO `novel` VALUES (76,0,'巫师亚伯','http://qidian.qpic.cn/qdbimg/349573/1007994514/180','魔兽践踏，巨龙咆哮，巫师诅咒，魔法璀璨之光照耀知识灯塔！',3,'吃瓜子群众','12.9万','');
+INSERT INTO `novel` VALUES (76,0,'巫师亚伯','http://qidian.qpic.cn/qdbimg/349573/1007994514/180','魔兽践踏，巨龙咆哮，巫师诅咒，魔法璀璨之光照耀知识灯塔！',3,'吃瓜子群众','12.9万',''),(77,0,'爱迪生大多','','阿萨德',0,'阿达','爱迪生','');
 /*!40000 ALTER TABLE `novel` ENABLE KEYS */;
 
 #
@@ -193,14 +277,14 @@ CREATE TABLE `novel_mark` (
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "novel_mark"
 #
 
 /*!40000 ALTER TABLE `novel_mark` DISABLE KEYS */;
-INSERT INTO `novel_mark` VALUES (3,'奇幻');
+INSERT INTO `novel_mark` VALUES (3,'奇幻'),(4,'玄幻'),(5,'武侠'),(6,'仙侠'),(7,'都市'),(8,'现实'),(9,'军事'),(10,'历史'),(11,'游戏'),(12,'体育'),(13,'科幻'),(14,'灵异'),(15,'二次元'),(16,'短篇');
 /*!40000 ALTER TABLE `novel_mark` ENABLE KEYS */;
 
 #
@@ -215,14 +299,14 @@ CREATE TABLE `novel_mark_body` (
   PRIMARY KEY (`id`),
   KEY `markid` (`markid`),
   KEY `novelid` (`novelid`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "novel_mark_body"
 #
 
 /*!40000 ALTER TABLE `novel_mark_body` DISABLE KEYS */;
-INSERT INTO `novel_mark_body` VALUES (74,3,76);
+INSERT INTO `novel_mark_body` VALUES (74,3,76),(75,4,77),(76,11,77),(77,16,77);
 /*!40000 ALTER TABLE `novel_mark_body` ENABLE KEYS */;
 
 #
@@ -258,21 +342,23 @@ CREATE TABLE `user` (
   `nickname` varchar(255) DEFAULT NULL,
   `nickcolor` varchar(255) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
+  `money` int(11) DEFAULT '0',
+  `coin` int(11) DEFAULT '0',
+  `vip_level` int(11) DEFAULT '0',
   `addtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `exp` int(11) DEFAULT '0',
   `lasttime` datetime DEFAULT NULL,
   `addip` varchar(255) DEFAULT NULL,
   `lastip` varchar(255) DEFAULT NULL,
   `sid` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `money` int(11) DEFAULT '0',
-  `vip_level` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 #
 # Data for table "user"
 #
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'youxia','e10adc3949ba59abbe56e057f20f883e','youxia',NULL,'/static/images/photo.jpg','2017-09-07 15:14:13',NULL,'127.0.0.1',NULL,'16_gK37NYZt2EA7YcaL','675567585@qq.com',0,0);
+INSERT INTO `user` VALUES (1,'youxia','e10adc3949ba59abbe56e057f20f883e','youxia',NULL,'/public/photo/20180403145610_997.png',0,0,0,'2017-09-07 15:14:13',52,NULL,'127.0.0.1',NULL,'16_gK37NYZt2EA7YcaL','675567585@qq.com'),(17,'ABCDE123','e10adc3949ba59abbe56e057f20f883e','ABCDE123',NULL,'/static/images/photo.jpg',0,0,0,'2018-04-03 13:48:44',0,NULL,'127.0.0.1',NULL,'17_UxqE9eBarVokKz2S','5555@qq.cm');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;

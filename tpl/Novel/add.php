@@ -54,7 +54,7 @@
             <textarea name="memo" class="input input-line input-lg" placeholder="简介"></textarea>
         </div>
     </div>
-    <p><div class="btn btn-fill btn-lg">立即添加</div></p>
+    <p><button class="btn btn-fill btn-lg">立即添加</button></p>
 </form>
 
     <script type="text/javascript">

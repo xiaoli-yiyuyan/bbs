@@ -12,7 +12,7 @@ require(['vue'], function(Vue) {
         props: ['item'],
         template: '<div class="chat-view">\
         <div class="chat-photo" :style="{backgroundImage: \'url(\' + item.photo + \')\'}"></div>\
-        <div class="chat-top"><span class="chat-nickname">{{ item.nickname }}</span>\
+        <div class="chat-top"><span class="chat-nickname">{{ item.nickname }}({{ item.level }}级)</span>\
             <span class="chat-addtime">{{ item.addtime }}</span><span class="chat-a" v-on:click="altTa(item.nickname)">@Ta</span></div>\
             <div class="chat-content" v-html="item.content"></div></div>',
         methods: {

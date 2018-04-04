@@ -9,10 +9,14 @@ use Iam\Session;
 class Common
 {
     public $user = ['id' => 0];
+    public $upExp = 25;
+
     public function __construct()
     {
         if (Session::has('sid')) {
             $this->user = Db::table('user')->find('sid', Session::get('sid'));
+            $level_info = getUserLeve($this->user['exp'], $this->upExp);
+            $this->user = array_merge($this->user, $level_info);
         } else {
         }
         View::data([
@@ -39,6 +43,6 @@ class Common
     {
         // print_r($userid);
         // print_r(Db::table('user')->field('nickname')->find(2));
-        return Db::table('user')->field($field)->find($userid)[$field];
+        return Db::table('user')->field($field)->find($userid);
     }
 }

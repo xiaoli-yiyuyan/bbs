@@ -7,6 +7,7 @@ use Iam\View;
 use Iam\Page;
 use Iam\Listen;
 use Iam\Request;
+use Iam\Response;
 use Iam\FileUpload;
 
 class User extends Common
@@ -25,34 +26,43 @@ class User extends Common
       View::load('User/updateInfo');
     }
 
-	public function photoUpload()
-	{
-        $photoPath = "./public/photo/";
-        print_r($photoPath);
-		$up = new FileUpload();
-    	//设置属性（上传的位置、大小、类型、设置文件名是否要随机生成）
-    	$up->set("path",$photoPath);
-    	$up->set("maxsize",2000000); //kb
-    	$up->set("allowtype",array("gif","png","jpg","jpeg"));//可以是"doc"、"docx"、"xls"、"xlsx"、"csv"和"txt"等文件，注意设置其文件大小
-    	$up->set("israndname",true);//true:由系统命名；false：保留原文件名
+    public function photoUpload()
+    {
+          $photoPath = "./public/photo/";
+          print_r($photoPath);
+      $up = new FileUpload();
+        //设置属性（上传的位置、大小、类型、设置文件名是否要随机生成）
+        $up->set("path",$photoPath);
+        $up->set("maxsize",2000000); //kb
+        $up->set("allowtype",array("gif","png","jpg","jpeg"));//可以是"doc"、"docx"、"xls"、"xlsx"、"csv"和"txt"等文件，注意设置其文件大小
+        $up->set("israndname",true);//true:由系统命名；false：保留原文件名
 
-    	//使用对象中的upload方法，上传文件，方法需要传一个上传表单的名字name：pic
-    	//如果成功返回true，失败返回false
+        //使用对象中的upload方法，上传文件，方法需要传一个上传表单的名字name：pic
+        //如果成功返回true，失败返回false
 
-    	if($up->upload("photo")){
-    		echo '<pre>';
-    		//获取上传成功后文件名字
-    		$photoUrl= $up->getFileName();
-    		Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => substr($photoPath, 1) . $photoUrl]);
-    		echo '</pre>';
+        if($up->upload("photo")){
+          echo '<pre>';
+          //获取上传成功后文件名字
+          $photoUrl= $up->getFileName();
+          Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => substr($photoPath, 1) . $photoUrl]);
+          echo '</pre>';
 
-    	}else{
-    		echo '<pre>';
-    		//获取上传失败后的错误提示
-    		var_dump($up->getErrorMsg());
-    		echo '<pre/>';
-    	}
-	}
+        }else{
+          echo '<pre>';
+          //获取上传失败后的错误提示
+          var_dump($up->getErrorMsg());
+          echo '<pre/>';
+        }
+    }
+
+    public function base64Upload()
+    {
+        $base64 = Request::post('base64');
+        $path = base64Upload($base64, 'static/uploads/photo/', $this->user['id']) . '?t=' . time();
+        return Response::json(['err' => 1, 'msg' => $path]);
+
+        // Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => substr($photoPath, 1) . $photoUrl]);
+    }
 
     public function myBooks(){
       $this->isLogin();

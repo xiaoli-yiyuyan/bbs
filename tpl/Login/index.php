@@ -5,7 +5,7 @@
     </a>
     <form class="" action="/Login/login" method="post">
         <div><input type="text" name="username" placeholder="用户名"></div>
-        <div><input type="text" name="password" placeholder="密码"></div>
+        <div><input type="password" name="password" placeholder="密码"></div>
         <div><button>登陆</button></div>
         <div class="login-reg-nav">
             <a class="func-null">忘记密码</a>

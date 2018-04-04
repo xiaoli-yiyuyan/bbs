@@ -1,15 +1,32 @@
 <?php self::load('Common/header',['title' => '聊天室']); ?>
 <script data-main="/static/js/chat/room.js" src="/static/js/require.js"></script>
 <div class="header">
-    <span class="back"></span>
-    <span class="left-word"><?=$classInfo['title']?></span>
-    <?php if (empty($user['id'] > 0)){ ?>
-        <a href="/Login/index" class="right-nav">登陆/注册</a>
-    <?php } else { ?>
-        <a href="/User/index" class="right-nav"><?=$user['username']?></a>
-    <?php } ?>
+    <span class="header-left nickname-home">
+        <?php if (empty($user['id'] > 0)){ ?>
+            <a href="/Login/index">登陆/注册</a>
+        <?php } else { ?>
+            <a href="/User/index"><?=$user['username']?>(等级:<?=$user['level']?>)</a>
+        <?php } ?>
+    </span>
+    <span class="header-right">
+        <span class="show-box">金币:<?=$user['coin']?></span>
+    </span>
 </div>
 <style media="screen">
+    .nickname-home
+    {
+        padding: 0 .8rem;
+    }
+    .show-box
+    {
+        display: block;
+        margin: 10px;
+        padding: 0 .8rem;
+        line-height: 25px;
+        border-radius: 3px;
+        background: #444;
+    }
+
     .chat-view
     {
         position: relative;
@@ -94,14 +111,14 @@
     .chat-input
     {
         position: fixed;
-z-index: 999;
-bottom: 0;
-width: 100%;
-background-color: #FFF;
-overflow: hidden;
--webkit-transition: all .2s ease;
-transition: all .2s ease;
-box-shadow: 0 0 1px #ccc;
+        z-index: 999;
+        bottom: 0;
+        width: 100%;
+        background-color: #FFF;
+        overflow: hidden;
+        -webkit-transition: all .2s ease;
+        transition: all .2s ease;
+        box-shadow: 0 0 1px #ccc;
     }
 
     .transition
@@ -148,7 +165,7 @@ box-shadow: 0 0 1px #ccc;
     .border-t
     {
         background-position: left top;
-        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.5,transparent),color-stop(0.5,#e0e0e0),to(#e0e0e0));
+        /* background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.5,transparent),color-stop(0.5,#e0e0e0),to(#e0e0e0)); */
     }
 
     .chat-face-box

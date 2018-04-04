@@ -2,6 +2,7 @@
 namespace App;
 
 use Iam\Db;
+use Iam\Url;
 use Iam\View;
 use Iam\Listen;
 
@@ -14,7 +15,7 @@ class Index extends Common
         foreach ($new_list as &$item) {
             $item['mark'] = $this->getMarkTitle($item['id']);
          }
-        // print_r($new_list);
+        Url::redirect('/chat/room/?id=2');
     	View::load('index',['mark' => $mark, 'new_list' => $new_list]);
     }
 

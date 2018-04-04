@@ -26,9 +26,10 @@
             </div>
         </div>
     <!-- End 滑动导航 -->
+    <a href="/chat/room/?id=2">聊天室</a>
+    <a href="/forum/index/?id=2">论坛</a>
 
-
-<!--     <div class="mark-title">
+    <!-- <div class="mark-title">
         <?php foreach ($mark as $item) { ?>
             <a href="/Novel/list?id=<?=$item['id']?>"><?=$item['title']?></a>
         <?php } ?>

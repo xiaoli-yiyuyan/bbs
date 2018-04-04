@@ -37,7 +37,7 @@ class Chat extends Common
 
     public function room()
     {
-        $classid = Request::get('classid');
+        $classid = Request::get('id');
         $category = new \Model\Category;
         if (!$classInfo = $category->info($classid)) {
             return Page::error('页面未找到！');
@@ -88,6 +88,7 @@ class Chat extends Common
             if (!$chat->add($this->user['id'], $post['touserid'], $classid, $post['content'])) {
                 return Response::json(['err' => 1, 'msg' => '添加失败']);
             }
+            Db::table('user')->where(['id' => $this->user['id']])->update(['exp' => $this->user['exp'] + 1]);
             return Response::json(['err' => 0]);
         }
     }
@@ -95,8 +96,11 @@ class Chat extends Common
     private function parseView(&$list)
     {
         foreach ($list as &$item) {
+            $info = $this->getUserInfo(['photo', 'exp'], $item['userid']);
+            $level_info = getUserLeve($info['exp'], $this->upExp);
             $item['nickname'] = $this->getNickname($item['userid']);
-            $item['photo'] = $this->getUserInfo('photo', $item['userid']);
+            $item['photo'] = $info['photo'];
+            $item['level'] = $level_info['level'];
             $item['content'] = $this->face($item['content']);
             $item['addtime'] = date('m-d H:i:s', strtotime($item['addtime']));
         }

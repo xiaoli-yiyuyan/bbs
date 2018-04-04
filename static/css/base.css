@@ -10,7 +10,7 @@ a {
     TEXT-DECORATION: none;
 }
 div {
-    background-color: #FFFFFF;
+    /* background-color: #FFFFFF; */
 }
 .header {
     position: relative;
@@ -326,4 +326,55 @@ i.svg-more {
 }
 .box-padding {
     padding: .5rem;
+}
+
+.change-info
+{   
+    padding: 3px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 208px;
+    bottom: 0;
+    flex-direction: column;
+}
+.change-info a {
+    margin: 3px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background: #FFF;
+    border-radius: 3px;
+}
+.li-box {
+}
+.info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    line-height: 25px
+}
+.select-photo-page {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.select-photo
+{
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+}
+
+.user-info
+{
+    background: #FFF;
 }
