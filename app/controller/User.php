@@ -58,7 +58,9 @@ class User extends Common
     public function base64Upload()
     {
         $base64 = Request::post('base64');
-        $path = base64Upload($base64, 'static/uploads/photo/', $this->user['id']) . '?t=' . time();
+        if ($path = base64Upload($base64, 'static/uploads/photo/', $this->user['id']) . '?t=' . time()) {
+            Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => $path]);
+        }
         return Response::json(['err' => 1, 'msg' => $path]);
 
         // Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => substr($photoPath, 1) . $photoUrl]);

@@ -2,15 +2,17 @@
 <script data-main="/static/js/chat/room.js" src="/static/js/require.js"></script>
 <div class="header">
     <span class="header-left nickname-home">
-        <?php if (empty($user['id'] > 0)){ ?>
+        <?php if ($user['id'] == 0){ ?>
             <a href="/Login/index">登陆/注册</a>
         <?php } else { ?>
             <a href="/User/index"><?=$user['username']?>(等级:<?=$user['level']?>)</a>
         <?php } ?>
     </span>
+    <?php if ($user['id'] > 0){ ?>
     <span class="header-right">
         <span class="show-box">金币:<?=$user['coin']?></span>
     </span>
+    <?php } ?>
 </div>
 <style media="screen">
     .nickname-home
