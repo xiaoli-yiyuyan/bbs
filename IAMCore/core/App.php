@@ -20,21 +20,23 @@ class App
 	public static function run()
 	{
 		self::init();
-		$appPath = self::$namespace . DS . self::$controller;
-		Loader::addClassMap('App', $appPath); //添加命名空间
-		$modelPath = 'app' . DS . 'model';
+		$appPath = self::$approot . DS . self::$controller;
+		// print_r($appPath);
+		Loader::addClassMap(self::$namespace, $appPath); //添加命名空间
+		$modelPath = self::$approot . DS . 'model';
 		Loader::addClassMap('Model', $modelPath); //添加命名空间
-		$runClass = self::$namespace . DS . self::$class;
+		// linux 下和 windows 下斜杠和反斜杠问题
+		$runClass = '\\' . self::$namespace . '\\' . self::$class;
 		if (class_exists($runClass)) {
 			$appClass = new $runClass;
 			$appAction = self::$action;
 			if (method_exists($appClass, $appAction)) {
 				$appClass->$appAction();
 			} else {
-				echo '404 no action';
+				echo '404 您访问的网页不存在[1]';
 			}
 		} else {
-			echo '404 no class';
+			echo '404 您访问的网页不存在[2]';
 		}
 	}
 

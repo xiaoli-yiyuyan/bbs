@@ -41,8 +41,10 @@ class Loader
 		if (!empty(self::$map[$class])) {
             // 类库映射
             return self::$map[$class];
-        }
+		}
+		$class = strtr($class, '\\', DS);
 		$namespace = dirname($class);
+
 		if (!empty(self::$map[$namespace])) {
 			$original = self::$map[$namespace] . DS . basename($class) . EXT;
 		} else {
@@ -60,7 +62,7 @@ class Loader
             self::$map = array_merge(self::$map, $class);
         } else {
             self::$map[$class] = $map;
-        }
+		}
     }
 
 	// public static function addNamespaceAlias($namespace, $path = '')
