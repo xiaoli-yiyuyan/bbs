@@ -89,7 +89,7 @@ require(['vue'], function(Vue) {
         $.get('/Chat/fistList', {'classid': data.classid}, function(result) {
             if(result.length > 0) {
                 data.list = result;
-                data.lastid = result[result.length - 1].id;
+                data.lastid = result[0].id;
             } else {
                 data.lastid = 0;
             }

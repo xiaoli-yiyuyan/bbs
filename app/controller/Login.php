@@ -55,11 +55,12 @@ class Login
                 'email' => $post['email'],
                 'addip' => Request::ip()
             ]);
+            $sid = $id . '_' . getRandChar(16);
             Db::table('user')->where(['id' => $id])->update([
-                'sid' => $id . '_' . getRandChar(16)
+                'sid' => $sid
             ]);
 
-            Session::set('sid', $id);
+            Session::set('sid', $sid);
 
             Url::redirect('/User/index');
         } else {
