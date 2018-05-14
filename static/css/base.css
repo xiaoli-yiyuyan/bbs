@@ -1,6 +1,5 @@
 html, body {
     margin: 0;
-    background-color: #f0f0f0;
 }
 * {
     box-sizing:border-box;
@@ -9,15 +8,12 @@ html, body {
 a {
     TEXT-DECORATION: none;
 }
-div {
-    /* background-color: #FFFFFF; */
-}
 .header {
-    position: relative;
+    /* position: relative;
     height: 45px;
-    line-height: 45px;
-    color: #E4E4E4;
-    background-color: rgba(0,0,0,0.8);
+    line-height: 45px; */
+    /* color: #E4E4E4; */
+    background-color: #FFF;
 }
 .header a {
     color: #E4E4E4;
@@ -29,11 +25,10 @@ div {
 }
 .header .logo,
 .header .back {
-    position: absolute;
-    left: 10px;
+    margin-left: .5rem;
     width: 60px;
     height: 45px;
-    background-image: url(/static/images/ianmi.png);
+    background-image: url(/static/images/ianmiColor.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% auto;
@@ -51,6 +46,10 @@ div {
     font-size: 14px;
 }
 
+.header .header-right {
+    position: initial;
+
+}
 .index-search {
     margin: 10px;
     padding: 10px;

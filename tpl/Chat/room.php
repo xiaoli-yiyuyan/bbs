@@ -1,20 +1,40 @@
 <?php self::load('Common/header',['title' => '聊天室']); ?>
-<script data-main="/static/js/chat/room.js" src="/static/js/require.js"></script>
+<script data-main="/static/js/chat/room.js?1" src="/static/js/require.js"></script>
 <div class="header">
-    <span class="header-left nickname-home">
-        <?php if ($user['id'] == 0){ ?>
-            <a href="/Login/index">登陆/注册</a>
-        <?php } else { ?>
-            <a href="/User/index"><?=$user['username']?>(等级:<?=$user['level']?>)</a>
-        <?php } ?>
-    </span>
-    <?php if ($user['id'] > 0){ ?>
+    <span class="logo"></span>
+    <div class="flex input-search">
+        <input type="text" class="input input-line ss-input" placeholder="请输入关键字">
+        <i class="icon-svg search"></i>
+    </div>
     <span class="header-right">
-        <span class="show-box">金币:<?=$user['coin']?></span>
+        <a class="icon-svg user" href="/User/index"></a>
     </span>
-    <?php } ?>
 </div>
 <style media="screen">
+    .user {
+        margin: .3rem;
+        margin-right: .5rem;
+        width: 1.6rem;
+        height: 1.6rem;
+        background-image: url(/static/svg/gr.svg);
+    }
+    .search {
+        width: 1.6rem;
+        height: 1.6rem;
+        background-image: url(/static/svg/ss.svg);
+    }
+    .ss-input {
+        margin-right: 0;
+        height: 1.6rem;
+        background-color: transparent;
+    }
+    .input-search {
+        margin: .3rem;
+        padding: 0;
+        background-color: #eee;
+        border-radius: .4rem;
+
+    }
     .nickname-home
     {
         padding: 0 .8rem;
@@ -33,23 +53,23 @@
     {
         position: relative;
         padding: 10px;
-        background: #f0f0f0;
+        /* background: #f0f0f0; */
     }
     .chat-view .chat-top
     {
         display: -webkit-flex;
         margin-left: 50px;
-        background: #f0f0f0;
+        /* background: #f0f0f0; */
     }
 
     .chat-top .chat-nickname
     {
-        color: #999;
+        color: #05f;
         -webkit-flex: 1;
     }
     .chat-top .chat-addtime
     {
-        color: #999;
+        color: #ddd;
         font-size: 12px;
     }
     .chat-top .chat-a
@@ -60,7 +80,7 @@
     .chat-view .chat-content
     {
 
-        background-color: #5FB878;
+        /* background-color: #5FB878; */
         color: #fff;
 
         margin-left: 50px;
@@ -69,8 +89,7 @@
         position: relative;
         line-height: 22px;
         margin-top: 5px;
-        padding: 8px 15px;
-        background-color: #e2e2e2;
+        /* background-color: #e2e2e2; */
         border-radius: 3px;
         color: #333;
         word-break: break-all;
@@ -78,7 +97,7 @@
 
     }
 
-    .chat-view .chat-content:after {
+    /* .chat-view .chat-content:after {
         left: auto;
         right: -10px;
         border-top-color: #5FB878;
@@ -95,13 +114,13 @@
         border-color: #e2e2e2 transparent transparent;
         overflow: hidden;
         border-width: 10px;
-    }
+    } */
 
     .chat-view .chat-photo
     {
         position: absolute;
-        top: 5px;
-        left: 5px;
+        top: 10px;
+        left: 10px;
         width: 40px;
         height: 40px;
         background-position: center center;
@@ -120,7 +139,7 @@
         overflow: hidden;
         -webkit-transition: all .2s ease;
         transition: all .2s ease;
-        box-shadow: 0 0 1px #ccc;
+        /* box-shadow: 0 0 1px #ccc; */
     }
 
     .transition
@@ -205,6 +224,14 @@
     {
         width: 28px;
         height: 28px;
+    }
+
+    .user-explain {
+        position: relative;
+        padding-bottom: .2rem;
+        padding-left: 2.5rem;
+        text-align: right;
+        font-size: .6rem;
     }
 </style>
 <div id="app-room" data-classid="<?=$classInfo['id']?>">

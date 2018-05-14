@@ -4,7 +4,7 @@ html {
 body {
   margin: auto;
   font-size: 0.7rem;
-  background: #eeeeee;
+  /* background: #eeeeee; */
 }
 * {
   box-sizing: border-box;

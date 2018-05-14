@@ -12,6 +12,11 @@ use Iam\FileUpload;
 
 class User extends Common
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->isLogin();
+    }
     public function index()
     {
   	   View::load('User/index',['a' => 1]);

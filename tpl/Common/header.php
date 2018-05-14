@@ -6,7 +6,7 @@
 	<title><?=$title?></title>
 	<link rel="shortcut icon" href="favicon.ico?v=1">
 	<link rel="stylesheet" href="/static/ui/style.css">
-	<link rel="stylesheet" href="/static/css/style.css">
+	<!-- <link rel="stylesheet" href="/static/css/style.css"> -->
 	<link rel="stylesheet" href="/static/css/base.css">
 	<script src="/static/js/jquery.js"></script>
 	<script src="/static/js/base.js"></script>

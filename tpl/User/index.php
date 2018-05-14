@@ -1,53 +1,5 @@
 <?php self::load('Common/header',['title' => '用户中心']); ?>
-<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="/static/css/cropper.min.css">
-=======
-<div class="header">
-    <span class="logo"></span>
-    <a href="/" class="right-nav" style="margin-right:35px;">首页 | </a>
-    <a href="/User/quit" class="right-nav">退出</a>
-
-</div>
-<div class="userInfo">
-  <img src="<?=$user['photo']?>" class="faceImg photo" alt="">
-  <span class="info_name"><?=$user['nickname']?> </span>
-  <span class="changeInfo">
-    <a href="/User/updateInfo">修改资料</a> | <a href="/User/updatePwd">修改密码</a>
-  </span>
-</div>
-<div class="title-nav"><span class="title-i"></span>我的应用</div>
-<div class="">
-  <div class="myApplication">  <a href="/User/myBooks">我的书架</a></div>
-</div>
-<script type="text/javascript">
-    var $file = $('<input type="file">');
-    $('.photo').click(function() {
-        $file.click();
-    });
-    $file.change(function() {
-        var $this = $(this);
-        var file = this.files[0];
-        console.log(file);
-        if (checkExt(file.name)) {
-            console.log('yes');
-            var fd = new FormData();
-            fd.append("photo", file);
-            $.ajax({
-                url: "/User/photoUpload",
-                type: "POST",
-                // xhr: function() {  // custom xhr
-                //             // myXhr = $.ajaxSettings.xhr();
-                //             // if(myXhr.upload){ // check if upload property exists
-                //             //     myXhr.upload.addEventListener('progress',progress, false); // for handling the progress of the upload
-                //             // }
-                //             // return myXhr;
-                // },
-                processData: false,
-                contentType: false,
-                data: fd,
-                success: function(data) {
-                    if (!data.err) {
->>>>>>> 3f5c089e7a8f18ba6e1be5bad7de4d1a476339ae
 
 <script src="/static/js/cropper.min.js"></script>
 <script src="/static/js/reszieimg.js"></script>

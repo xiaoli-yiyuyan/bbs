@@ -28,6 +28,7 @@ class Common
     {
       if (!$this->user['id']) {
         Url::redirect('/Login/index');
+        exit();
       }
       return true;
     }
