@@ -377,3 +377,42 @@ i.svg-more {
 {
     background: #FFF;
 }
+
+.s_exit {
+    margin: .3rem;
+    margin-right: .5rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-image: url(/static/svg/exit.svg);
+}
+.s_setting {
+    margin: .3rem;
+    margin-right: .5rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-image: url(/static/svg/setting.svg);
+}
+
+.user-info {
+    display: flex;
+    padding: 1rem;
+  }
+  .user-photo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: .1rem;
+  }
+  .info-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 .5rem;
+  }
+  .info-box>div {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  .user-nc {
+    font-size: .8rem;
+  }

@@ -32,10 +32,20 @@
 </style>
 <div class="header">
     <span class="logo"></span>
-    <a href="/User/quit" class="right-nav">退出</a>
+    <div class="head_center">个人中心</div>
+    <a href="/User/quit" class="icon-svg s_setting"></a>
 
 </div>
-<div class="user-info flex-box">
+
+    <div class="user-info">
+      <img class="user-photo photo" src="<?=$user['photo']?>" alt="">
+      <div class="info-box">
+        <div class="user-nc"><?=$user['nickname']?></div>
+        <div class="user-ep">小尾巴</div>
+        <div class="edit-info">点击修改个人信息</div>
+      </div>
+    </div>
+<!-- <div class="user-info flex-box">
     <div>
         <img src="<?=$user['photo']?>" class="faceImg photo" id="image" alt="">
     </div>
@@ -45,7 +55,7 @@
         <div>等级：<?=$user['level']?>(<?=$user['now_exp']?>/<?=$user['next_exp']?>)</div>
         <div>财富：<?=$user['coin']?></div>
     </div>
-</div>
+</div> -->
 <div class="change-info flex-box">
     <div class="li-box flex flex-box">
         <a href="/User/updateInfo" class="flex-box flex">修改资料</a>
