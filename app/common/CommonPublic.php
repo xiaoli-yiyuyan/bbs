@@ -6,7 +6,7 @@ use Iam\Url;
 use Iam\View;
 use Iam\Session;
 
-class Common
+class CommonPublic
 {
     public $user = ['id' => 0];
     public $upExp = 25;

@@ -33,16 +33,17 @@
 <div class="header">
     <span class="logo"></span>
     <div class="head_center">个人中心</div>
-    <a href="/User/quit" class="icon-svg s_setting"></a>
+    <div></div>
+    <!-- <a href="/User/quit" class="icon-svg s_setting"></a> -->
 
 </div>
 
-    <div class="user-info">
+    <div class="user-info border-b">
       <img class="user-photo photo" src="<?=$user['photo']?>" alt="">
       <div class="info-box">
         <div class="user-nc"><?=$user['nickname']?></div>
-        <div class="user-ep">小尾巴</div>
-        <div class="edit-info">点击修改个人信息</div>
+        <div class="user-ep"><?=$user['explain']?></div>
+        <div class="edit-info"><i class="icon-svg s_edit"></i>点击修改个人信息</div>
       </div>
     </div>
 <!-- <div class="user-info flex-box">
@@ -58,11 +59,33 @@
 </div> -->
 <div class="change-info flex-box">
     <div class="li-box flex flex-box">
-        <a href="/User/updateInfo" class="flex-box flex">修改资料</a>
-        <a href="/User/updatePwd" class="flex-box flex">修改密码</a>
+        <a href="/User/updateInfo" class="flex-box flex">
+            <div>
+                <i class="li-box-svg icon-svg b_mofang"></i>
+                <div class="li-box-word">修改资料</div>
+            </div>
+        </a>
+        <a href="/User/updatePwd" class="flex-box flex">
+            <div>
+                <i class="li-box-svg icon-svg b_puke"></i>
+                <div class="li-box-word">修改密码</div>
+            </div>
+        </a>
     </div>
     <div class="li-box flex-box flex">
-        <a href="/chat/room/?id=2" class="flex-box flex">聊天大厅</a>
+        <a href="/chat/room/?id=2" class="flex-box flex">
+            <div>
+
+                <i class="li-box-svg icon-svg b_youxika"></i>
+                <div class="li-box-word">聊天大厅</div>
+            </div>
+        </a>
+        <a href="/User/quit" class="flex-box flex">
+            <div>
+                <i class="li-box-svg icon-svg b_shuiqiang"></i>
+                <div class="li-box-word">退出</div>
+            </div>
+        </a>
     </div>
 </div>
 <!-- <div class="title-nav"><span class="title-i"></span>我的应用</div>
@@ -129,6 +152,9 @@
             $.msg('更换成功');
         });
         cropper.destroy();
+    });
+    $('.edit-info').click(function() {
+        location.href="/User/updateInfo";
     });
     // $file.change(function() {
     //     var $this = $(this);

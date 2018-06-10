@@ -9,7 +9,7 @@ use Iam\Session;
 use Iam\Request;
 use Iam\Response;
 
-class Login
+class Login extends Common
 {
     public function index()
     {

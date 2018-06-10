@@ -14,7 +14,7 @@ require(['vue'], function(Vue) {
         <div class="chat-photo" :style="{backgroundImage: \'url(\' + item.photo + \')\'}"></div>\
         <div class="chat-top"><span class="chat-nickname">{{ item.nickname }}({{ item.level }}级)</span>\
             <span class="chat-addtime">{{ item.addtime }}</span><span class="chat-a" v-on:click="altTa(item.nickname)">@Ta</span></div>\
-            <div class="chat-content" v-html="item.content"></div><div class="user-explain border-b">很快就有小尾巴了-ianmi.com</div></div>',
+            <div class="chat-content" v-html="item.content"></div><div class="user-explain border-b">{{ item.explain }}</div></div>',
         methods: {
             altTa: function(userid) {
                 bus.$emit('altTa', userid);
@@ -73,11 +73,7 @@ require(['vue'], function(Vue) {
     });
     var data = {
         my: [],
-        list: [{
-            'userid':1,
-            'content': '你好',
-            'addtime': new Date()
-        }],
+        list: [],
         user: [],
         classid: $('#app-room').data('classid')
     }

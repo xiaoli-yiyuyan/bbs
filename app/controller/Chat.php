@@ -96,10 +96,11 @@ class Chat extends Common
     private function parseView(&$list)
     {
         foreach ($list as &$item) {
-            $info = $this->getUserInfo(['photo', 'exp'], $item['userid']);
+            $info = $this->getUserInfo(['photo', 'exp', 'explain'], $item['userid']);
             $level_info = getUserLeve($info['exp'], $this->upExp);
             $item['nickname'] = $this->getNickname($item['userid']);
             $item['photo'] = $info['photo'];
+            $item['explain'] = empty($info['explain']) ? '隐形的小尾巴O(∩_∩)O哈哈~' : $info['explain'];
             $item['level'] = $level_info['level'];
             $item['content'] = $this->face($item['content']);
             $item['addtime'] = date('m-d H:i:s', strtotime($item['addtime']));

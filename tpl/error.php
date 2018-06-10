@@ -1,5 +1,14 @@
 <?php self::load('Common/header',['title' => '错误提示']); ?>
-<?=$msg?>
+<div class="header">
+    <span class="logo"></span>
+    <div class="head_center">错误提示</div>
+    <div></div>
+</div>
+
+<div class="page-msg-box">
+    <i class="icon-svg svg-false"></i>
+    <div class="page-msg-box false"><?=$msg?></div>
+</div>
 <script>
     setTimeout(function(){
         history.go(-1);

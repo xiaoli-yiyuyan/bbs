@@ -21,14 +21,37 @@ class User extends Common
     {
   	   View::load('User/index',['a' => 1]);
     }
+
     public function updateInfo(){
       if (Request::isPost()) {
-        $id = $this->user['id'];
-        $nickname = Request::post('nickname');
-        DB::table('user')->where(['id' => $id])->update(['nickname' => $nickname]);
-        echo "修改成功";
+          $nickname = Request::post('nickname');
+          $explain = Request::post('explain');
+          DB::table('user')->where(['id' => $this->user['id']])->update(['nickname' => $nickname, 'explain' => $explain]);
+          echo "修改成功";
       }
       View::load('User/updateInfo');
+    }
+
+    public function editInfo()
+    {
+        $data = Request::post(['nickname', 'explain']);
+        $data['nickname'] = htmlspecialchars($data['nickname']);
+        $data['explain'] = htmlspecialchars($data['explain']);
+        if (mb_strlen($data['nickname']) < 2) {
+            return Page::error('昵称长度不能小于2个字符哦！');
+        }
+        if (mb_strlen($data['nickname']) > 16) {
+            return Page::error('昵称太长啦，我记不住！');
+        }
+        if (empty($data['explain'])) {
+            return Page::error('你忘了你的小尾巴了！');
+        }
+        if (mb_strlen($data['explain']) > 500) {
+            return Page::error('你的小尾巴了太长了，我记不住！');
+        }
+        DB::table('user')->where(['id' => $this->user['id']])->update($data);
+        return Page::success('修改成功');
+
     }
 
     public function photoUpload()

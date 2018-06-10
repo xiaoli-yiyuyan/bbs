@@ -40,17 +40,30 @@ class App
 		}
 	}
 
-	public static function parseUrl()
+	private static function parseUrl()
 	{
 		$requestUrl = $_SERVER['REQUEST_URI'];
 		self::baseUrl($requestUrl);
-		$url = explode('/',self::$baseUrl);
+		$url = explode('/', self::$baseUrl);
 		$k = Config::get('REWRITE');
-		if (!empty($url[$k])) self::$class = $url[$k];
-		if (!empty($url[$k + 1])) self::$action = $url[$k + 1];
+		if (!empty($url[$k])) {
+			$class = explode('_', $url[$k]);
+			foreach ($class as &$item) {
+				$item = ucfirst($item);
+			}
+			self::$class = implode('', $class);
+		}
+		
+		if (!empty($url[$k + 1])) {
+			$action = explode('_', $url[$k + 1]);
+			foreach ($action as &$item) {
+				$item = ucfirst($item);
+			}
+			self::$action = lcfirst(implode('', $action));
+		}
 	}
 
-	public static function baseUrl($url)
+	private static function baseUrl($url)
 	{
 		self::$baseUrl = strpos($url, '?') ? strstr($url, '?', true) : $url;
 	}

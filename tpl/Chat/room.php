@@ -1,5 +1,5 @@
 <?php self::load('Common/header',['title' => '聊天室']); ?>
-<script data-main="/static/js/chat/room.js?1" src="/static/js/require.js"></script>
+<script data-main="/static/js/chat/room.js?v=<?=$version?>" src="/static/js/require.js"></script>
 <div class="header">
     <span class="logo"></span>
     <div class="flex input-search">
@@ -228,6 +228,7 @@
 
     .user-explain {
         position: relative;
+        color: rgb(148, 124, 124);
         padding-bottom: .2rem;
         padding-left: 2.5rem;
         text-align: right;

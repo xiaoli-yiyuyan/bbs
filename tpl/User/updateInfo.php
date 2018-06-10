@@ -1,9 +1,33 @@
-<?php self::load('Common/header',['title' => '修改昵称']); ?>
+<?php self::load('Common/header',['title' => '修改资料']); ?>
+
 <div class="header">
-  <span class="logo"></span>
-    <span class="right-nav"><a href="/">首页</a> | <a href="/User">个人中心</a></span>
+    <span class="logo"></span>
+    <div class="head_center">修改资料</div>
+    <span class="header-right">
+        <a class="icon-svg svg-user" href="/User/index"></a>
+    </span>
 </div>
-<div class="">
+<form class="box-padding" action="/User/edit_info" method="post">
+
+<!-- <div class="update-photo-box">
+  <img src="<?=$user['photo']?>" alt="">
+  <?=$user['username']?>
+</div> -->
+<div class="item-line item-lg">
+    <div class="item-title">昵称</div>
+    <div class="item-input"><input type="text" class="input input-line input-lg" name="nickname" placeholder="昵称" value="<?=$user['nickname']?>"></div>
+</div>
+
+<div class="item-line item-lg">
+    <div class="item-title">小尾巴</div>
+    <div class="item-input"><textarea name="explain" class="input input-line input-lg" placeholder="小尾巴"><?=$user['explain']?></textarea></div>
+</div>
+
+<p><button class="btn btn-fill btn-lg" style="width: 100%;">修改</button></p>
+</form>
+
+
+<!-- <div class="">
     <form class="" action="/User/updateInfo" method="post">
       <table>
           <tr>
@@ -19,7 +43,7 @@
           </tr>
       </table>
     </form>
-</div>
+</div> -->
 
 <?php self::load('Common/footer'); ?>
 <style>
