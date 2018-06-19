@@ -37,7 +37,7 @@
         <div class="bbs_info border-t">
             <div class="bbs_user"><img class="bbs_user_photo" src="<?=$item['photo']?>" alt=""> <?=$item['nickname']?></div>
             <div class="create_time">
-                <span class="bbs_replay_num"><?=$item['replay_count']?>回/<?=$item['read_count']?>逛</span>
+                <span class="bbs_replay_num"><?=$item['reply_count']?>回/<?=$item['read_count']?>逛</span>
                 <?=$item['create_time']?>
             </div>
         </div>

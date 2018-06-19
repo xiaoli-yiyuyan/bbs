@@ -74,6 +74,7 @@ class Forum extends Common
 
     public function add()
     {
+        $this->isLogin();
         $classid = Request::get('classid');
         $category = new Category;
         if (!$classInfo = $category->info($classid)) {
@@ -206,6 +207,7 @@ class Forum extends Common
 
     public function replyAdd()
     {
+        $this->isLogin();
         $id = Request::get('id');
         $way = Request::get('way');
         $context = Request::post('context');
