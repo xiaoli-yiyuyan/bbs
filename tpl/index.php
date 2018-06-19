@@ -60,7 +60,9 @@
         var navScroll = new IScroll("#wrapper2", {
             snap: 'a',
             scrollX:true,
-            scrollY:false
+            scrollY:false,
+            click: true,
+            taps:true
         });
     });
     

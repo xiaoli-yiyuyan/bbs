@@ -15,7 +15,7 @@ class Index extends Common
         foreach ($new_list as &$item) {
             $item['mark'] = $this->getMarkTitle($item['id']);
          }
-        Url::redirect('/chat/room/?id=2');
+        // Url::redirect('/chat/room/?id=2');
     	View::load('index',['mark' => $mark, 'new_list' => $new_list]);
     }
 

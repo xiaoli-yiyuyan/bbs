@@ -34,10 +34,11 @@ a {
     background-size: 100% auto;
 }
 .header .back {
-    width: 45px;
+    width: 2.2rem;
     left: 0;
-    background-image: url(/static/svg/back.svg);
-    background-size: 28px auto;
+    margin-top: -0.125rem;
+    background-image: url(/static/svg/back.svg?v=1);
+    background-size: 1.2rem auto;
 }
 .header .left-word {
     position: absolute;
@@ -383,6 +384,14 @@ i.svg-more {
     background: #FFF;
 }
 
+
+.user {
+    margin: .3rem;
+    margin-right: .5rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-image: url(/static/svg/gr.svg);
+}
 .s_exit {
     margin: .3rem;
     margin-right: .5rem;
@@ -495,4 +504,198 @@ i.svg-more {
 .page-msg-box .false {
     color: #E22D2D;
 
+}
+
+.bbs_list.list .list-item {
+    line-height: 1.4rem;
+    padding: 0;
+    font-size: .75rem;
+    color: #333;
+}
+.bbs_list.list .list-group{
+    padding: .5rem;
+    border-bottom: .25rem #eee solid;
+}
+.bbs_info {
+    position: relative;
+    padding-top: 0.5rem;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1rem;
+    font-size: .65rem;
+}
+.bbs_user {
+}
+.bbs_user_photo {
+    width: 1rem;
+    height: 1rem;
+    border-radius: .1rem;
+    vertical-align: middle;
+    margin-top: -0.25rem;
+}
+.create_time {
+    color: #aaa;
+    font-size: 12px;
+}
+.bbs_replay_num {
+    color: #333;
+}
+
+.forum_index_title {
+    text-align: center;
+    line-height: 2rem;
+    color: #fff;
+    border-bottom: .25rem #eee solid;
+    background-color: #0894ec;
+}
+.bbs_empty {
+    padding-top: 2rem;
+    text-align: center;
+    font-size: .9rem;
+    color: #aaa;
+}
+.bbas_action {
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.2rem;
+    border-bottom: .25rem #eee solid;
+}
+.bbas_action_title {
+    font-size: .8rem;
+}
+.view_user_info {
+    /* padding-top: .5rem; */
+    display: flex;
+    justify-content: space-between;
+}
+.view_user_info_photo {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: .1rem;
+    margin-top: -0.25rem;
+    vertical-align: middle;
+
+}
+.view_title {
+    text-align: center;
+    padding: .5rem 0;
+    font-size: 1rem;
+}
+.view_head {
+    position: relative;
+    padding: .5rem;
+}
+.view_context {
+    padding: .5rem;
+    line-height: 1.2rem;
+    border-bottom: .25rem #eee solid;
+}
+.bbs_photo {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-right: .25rem;
+}
+.bbs_order {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 .5rem;
+    line-height: 2rem;
+}
+.bbs_order_title {
+    font-size: .9rem;
+    font-weight: 700;
+    line-height: 1.85rem;
+    border-bottom: .15rem #07d664 solid;
+}
+.bbs_page_action {
+    padding: .5rem;
+}
+.bbs_page_jump_box {
+    display: flex;
+    border: .05rem solid #ddd;
+    border-radius: .1rem;
+}
+.bbs_page_action .bbs_page_jump {
+    text-align: center;
+    flex: 1;
+    border-radius: 0;
+    border: 0;
+    border-left: .05rem solid #ddd;
+    /* color: #FFF;
+    background: #0894ec; */
+}
+.bbs_page_action a.bbs_page_jump[href='#'] {
+    color: #666;
+}
+.bbs_page_action .bbs_page_jump:first-child {
+    border-left: 0;
+}
+
+.replay_title {
+    position: relative;
+    padding: .5rem;
+    font-size: .9rem;
+    color: #777;
+}
+.replay_empty {
+    padding-bottom: 2rem;
+}
+.reply_more {
+    text-align: center;
+}
+.reply_input {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.input_face {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(/static/svg/face.svg);
+}
+.input_show {
+    flex: 1;
+    margin: 0 .25rem;
+    background: #eee;
+    border-radius: .1rem;
+}
+.reply_index {
+    position: relative;
+    display: flex;
+    padding: .5rem;
+    background: #FFF;
+    /* box-shadow: 0 -.1rem .1rem #bbb; */
+}
+.reply_body {
+    height: 2.5rem;
+}
+
+.transition
+{
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+.chat-face-box {
+    background: #FFF;
+}
+.face-box {
+    padding: .5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.face-box .face-out {
+    width: 12.5%;
+    text-align: center;
+}
+.face-box .face-out img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.face-chat {
+    width: 1.5rem;
+    height: 1.5rem;
 }

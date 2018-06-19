@@ -54,7 +54,7 @@ function base64Upload($base64, $path='uploads/images/', $filename='')
 }
 
 
-function getUserLeve($exp, $upExp)
+function getUserLevel($exp, $upExp)
 {
     $level = floor(($upExp + sqrt(pow($upExp, 2) + 4 * $upExp * $exp )) / ($upExp * 2)); //计算当前等级
     $next_count_exp = ($level + 1) * $level * $upExp; // 下一级需要的总经验
@@ -62,3 +62,31 @@ function getUserLeve($exp, $upExp)
     $now_exp = $next_exp - $next_count_exp + $exp; // 计算离下一级还差多少经验
     return ['level' => $level, 'next_exp' => $next_exp, 'now_exp' => $now_exp];
 }
+
+
+function downloadImage($url, $filename = '', $path = 'images/')
+{
+    $mime_to_ext = [
+        'image/x-ms-bmp' => '.bmp',
+        'image/jpeg' => '.jpg',
+        'image/gif' => '.gif',
+        'image/png' => '.png'
+    ];
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    $file = curl_exec($ch);
+    curl_close($ch);
+    if (!$img = @getimagesizefromstring($file)) {
+        return;
+    }
+    if (!isset($mime_to_ext[$img['mime']])) {
+        return;
+    }
+    $filename .= $mime_to_ext[$img['mime']];
+    $resource = fopen($path . $filename, 'a');
+    fwrite($resource, $file);
+    fclose($resource);
+    return $path . $filename;
+} 

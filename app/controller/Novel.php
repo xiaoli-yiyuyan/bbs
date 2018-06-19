@@ -42,7 +42,7 @@ class Novel extends Common
         foreach ($list as &$item) {
           $item['mark'] = $this->getMarkTitle($item['id']);
         }
-        $page = Page::countPage($nowPage,$count,$pagesize);
+        // $page = Page::countPage($nowPage,$count,$pagesize);
         $allPage = ceil($count/$pagesize);
         $morepage = $nowPage == $allPage ? 0 : 1;
         $url = explode('?', $_SERVER['REQUEST_URI']);
@@ -149,9 +149,13 @@ class Novel extends Common
         if (Request::isPost()) {
             $post = Request::post(['title', 'photo', 'author', 'mark', 'wordcount', 'memo']);
 
+            if (!$post['photo'] = downloadImage($post['photo'], uniqid(), 'static/novel/')) {
+                return Response::json(['err' => 1, 'msg' => '添加失败, 图片路径错误']);
+            }
+
             $data = [
                 'title' => $post['title'],
-                'photo' => $post['photo'],
+                'photo' => '/' . $post['photo'],
                 'author' => $post['author'],
                 'wordcount' => $post['wordcount'],
                 'memo' => $post['memo']
@@ -159,7 +163,7 @@ class Novel extends Common
             // print_r($data);
 
             if (!$id = Db::table('novel')->add($data)) {
-                return Response::json(['err' => 1, 'msg' => '添加失败']);
+                return Response::json(['err' => 2, 'msg' => '添加失败']);
             }
 
             $mark = $post['mark'];
@@ -174,6 +178,40 @@ class Novel extends Common
         } else {
             View::load('Novel/add');
         }
+    }
+
+    public function webAdd()
+    {
+        
+        $post = Request::post(['title', 'photo', 'author', 'mark', 'wordcount', 'memo']);
+        // return Response::json($post);
+        if (!$post['photo'] = downloadImage($post['photo'], uniqid(), 'static/novel/')) {
+            return Response::json(['err' => 1, 'msg' => '添加失败, 图片路径错误']);
+        }
+
+        $data = [
+            'title' => $post['title'],
+            'photo' => '/' . $post['photo'],
+            'author' => $post['author'],
+            'wordcount' => $post['wordcount'],
+            'memo' => $post['memo']
+        ];
+        // print_r($data);
+
+        if (!$id = Db::table('novel')->add($data)) {
+            return Response::json(['err' => 2, 'msg' => '添加失败']);
+        }
+
+        $mark = $post['mark'];
+        foreach ($mark as $item) {
+            Db::table('novel_mark_body')->add([
+                'markid' => $item,
+                'novelid' => $id
+            ]);
+        }
+        // sleep(1);
+        return Response::json(['err' => 0, 'msg' => '添加成功', 'id' => $id]);
+
     }
 
     public function addChapter()

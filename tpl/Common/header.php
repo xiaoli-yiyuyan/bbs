@@ -7,7 +7,7 @@
 	<link rel="shortcut icon" href="favicon.ico?v=<?=$version?>">
 	<link rel="stylesheet" href="/static/ui/style.css?v=<?=$version?>">
 	<!-- <link rel="stylesheet" href="/static/css/style.css"> -->
-	<link rel="stylesheet" href="/static/css/base.css?v=<?=$version?>">
+	<link rel="stylesheet" href="/static/css/base.css?v=<?=$version?>2">
 	<script src="/static/js/jquery.js"></script>
 	<script src="/static/js/base.js?v=<?=$version?>"></script>
 	<script src="/static/ui/ui.js?v=<?=$version?>"></script>

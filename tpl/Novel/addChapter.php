@@ -20,6 +20,6 @@
             <textarea name="context" class="input input-line input-lg" placeholder="内容"></textarea>
         </div>
     </div>
-    <p><div class="btn btn-fill btn-lg">立即添加</div></p>
+    <p><button class="btn btn-fill btn-lg">立即添加</button></p>
     </form>
 <?php self::load('Common/footer'); ?>

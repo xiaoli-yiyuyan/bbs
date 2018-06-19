@@ -34,9 +34,9 @@ class Db
 
     //Db::table('user')->where()->select();
     public static function table($name){//设置表名
-        if (isset(self::$model[$name])) {
-            return self::$model[$name];
-        }
+        // if (isset(self::$model[$name])) {
+        //     return self::$model[$name];
+        // }
 
         $db = new Db(); //实例化新对象
         $db->setTable($name); //设置操作的模型
