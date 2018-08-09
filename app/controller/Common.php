@@ -11,7 +11,7 @@ class Common
     public $user = ['id' => 0];
     public $upExp = 25;
 
-    private $version = '0.1.0';
+    private $version = '0.2.0';
 
     public function __construct()
     {

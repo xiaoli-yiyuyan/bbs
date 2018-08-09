@@ -40,7 +40,7 @@ class User extends Common
         if (mb_strlen($options['explain']) > 500) {
             return ['err' => 5, 'msg' => '你的小尾巴了太长了，我记不住！'];
         }
-        DB::table('user')->where(['id' => $this->user['id']])->update($options);
+        DB::table('user')->where(['id' => $this->user['id']])->update(['nickname' => $options['nickname'], 'explain' => $options['explain']]);
         return ['id' => $this->user['id']];
 
     }

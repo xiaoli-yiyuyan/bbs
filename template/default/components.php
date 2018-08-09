@@ -559,13 +559,13 @@
         'version' => 
         array (
           'type' => 'value',
-          'value' => '0.0.5',
+          'value' => '0.2.0',
         ),
       ),
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/header.php',
+      'template' => 'template\\default/components/common\\header.php',
     ),
     'footer' => 
     array (
