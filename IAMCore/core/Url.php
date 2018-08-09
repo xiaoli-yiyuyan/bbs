@@ -27,8 +27,13 @@ class Url
 		return $href;
 	}
 
-	public static function redirect($url)
+	public static function redirect($url, $params = [])
 	{
+		$url = explode('?', $url);
+		if (count($url) > 1) {
+			$params = array_merge(explode('&', $url[1]), $params);
+		}
+		$url = !empty($params) ? $url[0] .= '?' . http_build_query($params) : $url[0];
 		header("Location: $url");
 	}
 }

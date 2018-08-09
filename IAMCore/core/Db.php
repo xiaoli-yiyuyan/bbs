@@ -7,7 +7,7 @@ use Iam\Mysql;
 class Db
 {
     private static $init = false;
-    protected static $db;
+    public static $db;
     private static $model = [];
 
     private $tableName; //表名
@@ -74,7 +74,7 @@ class Db
         $sql .= $this->parseWhere();
 
         if(isset($this->order)) $sql .= " ORDER BY $this->order"; //排序
-    	if(isset($min) && isset($max)) $sql .= " LIMIT $min,$max";
+        if(isset($min) && isset($max)) $sql .= " LIMIT $min,$max";
     	$this->fill($sql);
     }
     public function find($id = null,$value = null){ //查询单条数据
@@ -154,6 +154,13 @@ class Db
     // ]);
     //where('username=%d and id=%d')->fill([])->select();
     public function order($sql){
+        if (is_array($sql)) {
+            $order = [];
+            foreach ($sql as $key => $value) {
+                $order[] = '`' . $key . '`'. ' ' . $value;
+            }
+            $sql = implode(',', $order);
+        }
         $this->order = $sql;
         return $this;
     }
@@ -183,7 +190,7 @@ class Db
     public function update($data,$value = null){//更新
         if($data) $this->data($data,$value);
         $sql = "UPDATE $this->tableName SET ".$this->parseSet().$this->parseWhere();
-        $this->fill($sql);
+        return $this->fill($sql);
     }
 
     private function parseSet(){//格式化UPATE SET数据

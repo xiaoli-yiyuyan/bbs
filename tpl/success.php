@@ -1,4 +1,4 @@
-<?php self::load('Common/header',['title' => '操作成功']); ?>
+<?php self::load('common/header',['title' => '操作成功']); ?>
 <div class="header">
     <span class="logo"></span>
     <div class="head_center">操作成功</div>
@@ -17,4 +17,4 @@
         <?php } ?>
     }, 1000);
 </script>
-<?php self::load('Common/footer'); ?>
+<?php self::load('common/footer'); ?>

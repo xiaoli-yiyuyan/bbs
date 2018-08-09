@@ -7,6 +7,9 @@ use Iam\View;
 use Iam\Page;
 use Iam\Request;
 use Iam\Response;
+use Model\Novel as MNovel;
+use Model\NovelMark;
+use Model\NovelHistory;
 
 class Novel extends Common
 {
@@ -18,46 +21,97 @@ class Novel extends Common
             $item['mark'] = $this->getMarkTitle($item['id']);
          }
         // print_r($new_list);
-    	View::load('Novel/index',['mark' => $mark, 'new_list' => $new_list]);
+    	View::load('novel/index',['mark' => $mark, 'new_list' => $new_list]);
+    }
+
+    public function sort()
+    {
+        $mark = Db::table('novel_mark')->select();
+        foreach ($mark as &$item) {
+            $count_all = Db::query('SELECT COUNT(1) as count FROM `novel_mark_body` WHERE `markid`=?', [$item['id']]);
+            $item['count'] = $count_all[0]['count'];
+            
+            if ($novel = Db::query('SELECT * FROM `novel` WHERE id IN(SELECT novelid FROM (SELECT novelid FROM `novel_mark_body` WHERE `markid`=? limit 1) as id)', [$item['id']])) {
+                $item['fitst_novel_photo'] = $novel[0]['photo'];
+            } else {
+                $item['fitst_novel_photo'] = '/static/images/book-cover.svg';
+            }
+        }
+    	View::load('novel/sort',['mark' => $mark]);
     }
 
     public function list()
     {
         $id = Request::get('id');
+        
+        if (!$mark_info = Db::table('novel_mark')->find($id)) {
+            return Page::error('页面未找到！');
+        }
+        $count = Db::table('novel_mark_body')->field('COUNT(1) as count')->where(['markid' => $id])->find()['count'];
         $nowPage = Request::get('p') ? Request::get('p') : 1;
-        $pagesize = 5;
-        $limit = ($nowPage-1)*$pagesize.",".$pagesize;
-        // echo($nowPage);die();
-        $title = '小说列表';
-        if (!empty($id)) {
-            $novelid = Db::table('novel_mark_body')->where(['id' => $id])->select();
-            $mark = Db::table('novel_mark')->field('title')->find($id);
-            $list = Db::query('SELECT * FROM `novel` WHERE id IN(SELECT novelid FROM `novel_mark_body` WHERE `markid`=?) limit '.$limit, [$id]);
-            $title = $mark['title'] . ' - ' . $title;
-            $count = Db::query("SELECT count('id') as count FROM `novel` WHERE id IN(SELECT novelid FROM `novel_mark_body` WHERE `markid`=?)",[$id])[0]['count'];
-        } else {
-            $list = Db::table('novel')->select(($nowPage-1)*$pagesize,$pagesize);
-            $count = Db::query("SELECT count('id') as count FROM `novel`")[0]['count'];
-        }
+
+        $page = new Page([
+            'count' => $count,
+            'p' => $nowPage,
+            'path' => '/forum/list',
+            'query' => ['id' => $id],
+            'pagesize' => 10
+        ]);
+        $page = $page->parse();
+        $list = MNovel::getList(['mark_id' => $id, 'page' => $page['page'], 'pagesize' => $page['pagesize']]);
+        
         foreach ($list as &$item) {
-          $item['mark'] = $this->getMarkTitle($item['id']);
+            $item['mark'] = NovelMark::getTitle($item['id']);
         }
-        // $page = Page::countPage($nowPage,$count,$pagesize);
-        $allPage = ceil($count/$pagesize);
-        $morepage = $nowPage == $allPage ? 0 : 1;
-        $url = explode('?', $_SERVER['REQUEST_URI']);
-        $newUrl = $url[0];
-        if (count($url) >1)  {
-          $paramter = explode('&p=',$url[1]);
-          $newUrl.='?'.$paramter[0].'&p='.($nowPage+1);
-        }
-        View::load('Novel/list', ['list' => $list, 'title' => $title,'morepage' => $morepage,'nextPage' => $newUrl]);
+        View::load('novel/list', [
+            'mark_info' => $mark_info,
+            'list' => $list,
+            'page' => $page
+        ]);
     }
+
+    public function rank()
+    {
+        $tp = Request::get('tp');
+        $count = Db::table('novel')->field('COUNT(1) as count')->find()['count'];
+        $nowPage = Request::get('p') ? Request::get('p') : 1;
+
+        $page = new Page([
+            'count' => $count,
+            'p' => $nowPage,
+            'path' => '/forum/list',
+            'query' => ['tp' => $tp],
+            'pagesize' => 10
+        ]);
+        $page = $page->parse();
+        
+        $options = ['page' => $page['page'], 'pagesize' => $page['pagesize']];
+        if ($tp == 1) {
+            $title = '排行';
+            $options['order'] = ['read' => 'DESC'];
+        } elseif ($tp == 2) {
+            $title = '新书';
+            $options['order'] = ['create_time' => 'DESC'];
+        } else {
+            $title = '完本';
+            $options['is_over'] = 1;
+        }
+        $list = MNovel::getList($options);
+        foreach ($list as &$item) {
+            $item['mark'] = NovelMark::getTitle($item['id']);
+        }
+        View::load('novel/rank', [
+            'list' => $list,
+            'page' => $page,
+            'title' => $title
+        ]);
+    }
+
     public function getMarkTitle($novelid)
     {
         $mark = Db::query('SELECT * FROM `novel_mark` WHERE `id` IN(SELECT `markid` FROM `novel_mark_body` WHERE `novelid`=?)', [$novelid]);
         return $mark;
-     }
+    }
     public function view()
     {
         $id = Request::get('id');
@@ -69,7 +123,7 @@ class Novel extends Common
         $list = Db::table('novel_chapter')->where(['novelid' => $novel['id']])->order('id asc')->select();
 
         $isCollect = $this->isCollect($id) ? '取消收藏' : '加入书架';
-        View::load('Novel/view', ['list' => $list, 'novel' => $novel, 'mark' => $mark,'isCollect' => $isCollect]);
+        View::load('novel/view', ['list' => $list, 'novel' => $novel, 'mark' => $mark,'isCollect' => $isCollect]);
     }
 
     // 文章收藏
@@ -81,20 +135,35 @@ class Novel extends Common
         if(!Db::table('novel_collect')->where(['id' => $collectId['id']])->remove()){
           return Page::error('取消收藏失败');
         }
-        return Url::redirect('/Novel/view?id='.$id);
+        return Url::redirect('/novel/view?id='.$id);
       }
 
       $where = ['userid' => $this->user['id'],'novelid' =>$id];
       if (!Db::table('novel_collect')->add($where)){
         return Page::error('收藏失败');
       }
-      return Url::redirect('/Novel/view?id='.$id);
+      return Url::redirect('/novel/view?id='.$id);
     }
 
     public function isCollect($novelid) // 判断有无收场
     {
         $where = ['userid' => $this->user['id'],'novelid' =>$novelid];
         return Db::table('novel_collect')->field('id')->where($where)->find();
+    }
+
+    public function favorite()
+    {
+        $this->isLogin();
+        $list = [];
+        if ($collectId = Db::table('novel_collect')->field('novelId')->where(['userid' => $this->user['id']])->select(100)){
+            foreach ($collectId as $value) {
+                $novel = Db::table('novel')->find($value['novelId']);
+                $novel['mark'] = NovelMark::getTitle($novel['id']);
+                $list[] = $novel;
+            }
+        }
+
+        View::load('novel/favorite', ['list' => $list]);
     }
 
     public function chapter()
@@ -111,7 +180,7 @@ class Novel extends Common
         if (!$novel = Db::table('novel')->find($chapter['novelid'])) {
             return Page::error('错误的位置！');
         }
-
+        NovelHistory::save($this->user['id'], $chapter['novelid'], $id);
         //上一章
         $prev_chapter = Db::query('SELECT * FROM novel_chapter WHERE novelid=? AND id<? ORDER BY id desc LIMIT 1', [$chapter['novelid'], $id]);
         //下一章
@@ -134,7 +203,7 @@ class Novel extends Common
             'size' => $page_size
         ];
 
-        View::load('Novel/chapter', [
+        View::load('novel/chapter', [
             'chapter' => $chapter,
             'context' => $context,
             'novel' => $novel,
@@ -144,10 +213,21 @@ class Novel extends Common
         ]);
     }
 
+    /**
+     * 阅读历史记录
+     */
+    public function history()
+    {
+        $list = NovelHistory::getList($this->user['id']);
+        View::load('novel/history', [
+            'list' => $list
+        ]);
+    }
+
     public function add()
     {
         if (Request::isPost()) {
-            $post = Request::post(['title', 'photo', 'author', 'mark', 'wordcount', 'memo']);
+            $post = Request::post(['title', 'photo', 'author', 'is_over', 'mark', 'wordcount', 'memo']);
 
             if (!$post['photo'] = downloadImage($post['photo'], uniqid(), 'static/novel/')) {
                 return Response::json(['err' => 1, 'msg' => '添加失败, 图片路径错误']);
@@ -157,6 +237,7 @@ class Novel extends Common
                 'title' => $post['title'],
                 'photo' => '/' . $post['photo'],
                 'author' => $post['author'],
+                'is_over' => $post['is_over'],
                 'wordcount' => $post['wordcount'],
                 'memo' => $post['memo']
             ];
@@ -174,9 +255,9 @@ class Novel extends Common
                 ]);
             }
 
-            Url::redirect('/Novel/view?id=' . $id);
+            Url::redirect('/novel/view?id=' . $id);
         } else {
-            View::load('Novel/add');
+            View::load('novel/add');
         }
     }
 
@@ -240,7 +321,7 @@ class Novel extends Common
         } else {
             $id = Request::get('id');
             $novel = Db::table('novel')->find($id);
-            View::load('Novel/addChapter', ['novel' => $novel]);
+            View::load('novel/addChapter', ['novel' => $novel]);
         }
     }
 
@@ -283,14 +364,14 @@ class Novel extends Common
         $word = "%{$post['word']}%";
         $list = [];
         if ($post['action'] == 1 || $post['action'] == 0) {
-            $list['title'] = Db::query("SELECT * FROM `novel` WHERE `title` LIKE ?", [$word]);
+            $list['title'] = Db::query("SELECT * FROM `novel` WHERE `title` LIKE ? LIMIT 20", [$word]);
         }
         if ($post['action'] == 2 || $post['action'] == 0) {
-            $list['author'] = Db::query("SELECT * FROM `novel` WHERE `author` LIKE ?", [$word]);
+            $list['author'] = Db::query("SELECT * FROM `novel` WHERE `author` LIKE ? LIMIT 20", [$word]);
         }
         if ($post['action'] == 3 || $post['action'] == 0) {
-            $list['mark'] = Db::query("SELECT * FROM `novel_mark` WHERE `title` LIKE ?", [$word]);
+            $list['mark'] = Db::query("SELECT * FROM `novel_mark` WHERE `title` LIKE ? LIMIT 20", [$word]);
         }
-        View::load('Novel/search', ['list' => $list, 'action' => $post['action']]);
+        View::load('novel/search', ['list' => $list, 'action' => $post['action']]);
     }
 }

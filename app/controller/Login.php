@@ -30,10 +30,26 @@ class Login extends Common
             }
 
             Session::set('sid', $user['sid']);
-            Url::redirect('/User/index');
+            Url::redirect('/user/index');
         } else {
             View::load('login/index');
         }
+    }
+
+    public function loginApi()
+    {
+        $post = Request::post(['username', 'password']);
+        if (empty($post['username']) || empty($post['password'])) {
+            return Response::json(['err' => 1, 'msg' =>'用户名或密码为空！']);
+        }
+
+        $where = ['username' => $post['username'], 'password' => md5($post['password'])];
+        if (!$user = Db::table('user')->where($where)->find()) {
+            return Response::json(['err' => 2, 'msg' =>'用户名或密登录失败！码为空！']);
+        }
+
+        Session::set('sid', $user['sid']);
+        return Response::json(['err' => 0, 'msg' =>'登陆成功']);
     }
 
     public function register()
@@ -62,7 +78,7 @@ class Login extends Common
 
             Session::set('sid', $sid);
 
-            Url::redirect('/User/index');
+            Url::redirect('/user/index');
         } else {
             View::load('login/register');
         }

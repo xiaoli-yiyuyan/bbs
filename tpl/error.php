@@ -1,4 +1,4 @@
-<?php self::load('Common/header',['title' => '错误提示']); ?>
+<?php self::load('common/header',['title' => '错误提示']); ?>
 <div class="header">
     <span class="logo"></span>
     <div class="head_center">错误提示</div>
@@ -14,4 +14,4 @@
         history.go(-1);
     }, 2000);
 </script>
-<?php self::load('Common/footer'); ?>
+<?php self::load('common/footer'); ?>

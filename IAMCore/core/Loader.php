@@ -42,14 +42,19 @@ class Loader
             // 类库映射
             return self::$map[$class];
 		}
-		$class = strtr($class, '\\', DS);
-		$namespace = dirname($class);
 
-		if (!empty(self::$map[$namespace])) {
-			$original = self::$map[$namespace] . DS . basename($class) . EXT;
+		$path = strtr($class, '\\', DS) . EXT;
+
+		$first = explode(DS, $path)[0];
+
+		if (!empty(self::$map[$first])) {
+			$length = strlen($first);
+			$original = self::$map[$first] . DS . substr($path, $length);
 		} else {
 			$original = ROOT_PATH . $class . EXT;
 		}
+		
+			
 		if (is_file($original)) {
 			return $original;
 		}

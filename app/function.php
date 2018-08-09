@@ -1,5 +1,11 @@
 <?php
-function getRandChar($length){
+function now()
+{
+    return date('Y-m-d H:i:s');
+}
+
+function getRandChar($length)
+{
 	$str = null;
 	$strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 	$max = strlen($strPol)-1;
@@ -90,3 +96,29 @@ function downloadImage($url, $filename = '', $path = 'images/')
     fclose($resource);
     return $path . $filename;
 } 
+function redirect($url, $params = [])
+{
+    \Iam\Url::redirect($url, $params);
+    exit();
+}
+
+function byteFormat($size, $dec=2){
+    $a = array("B", "KB", "MB", "GB", "TB", "PB");
+    $pos = 0;
+    while ($size >= 1024) {
+         $size /= 1024;
+           $pos++;
+    }
+    return round($size,$dec)." ".$a[$pos];
+ }
+ 
+function strNPos($str, $find, $n){
+    $pos_val = 0;
+    $len = mb_strlen($find);
+    for ($i = 1; $i <= $n; $i++){
+        $pos = mb_strpos($str, $find);
+        $str = mb_substr($str, $pos + $len);
+        $pos_val = $pos + $pos_val + $len;
+    }
+    return $pos_val - $len;
+}

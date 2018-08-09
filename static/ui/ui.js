@@ -2,16 +2,27 @@ $(function() {
     $(document).on('click', '.tab .tab-header .tab-link', function() {
         var $this = $(this);
         var $parent = $this.closest('.tab');
-
         var $activeTab = $parent.find('.tab-header .tab-link.tab-active');
 
-        if ($this[0] == $activeTab[0]) return;
+        if ($this[0] == $activeTab[0]) {
+            if ($parent.hasClass('tab-toggle')) {
+                $parent.toggleClass('tab-toggle-show');
+            }
+            return;
+        } else {
+            if ($parent.hasClass('tab-toggle')) {
+                $parent.addClass('tab-toggle-show');
+            }
+        }
 
         $activeTab.removeClass('tab-active');
         $this.addClass('tab-active');
 
         $parent.find('.tab-content .tab-page.tab-active').removeClass('tab-active');
         $parent.find('.tab-content').find($this.data('to-tab')).addClass('tab-active');
+    });
+    $(document).on('click', '.left-menu, .left-menu-list .modal-overlay', function() {
+        $('.left-menu-list').toggleClass('left-menu-list-show');
     });
 });
 
@@ -42,8 +53,8 @@ $(function() {
         }
         $modal.appendTo('body');
         $modal.css({
-            'marginTop': - Math.round($modal.height() / 2 * 1.185) + 'px',
-            'marginLeft': - Math.round($modal.width() / 2) + 'px'
+            'marginTop': - Math.round($modal.height() / 2) + 'px',
+            'marginLeft': - Math.round($modal.width() / 2 / 1.185) + 'px'
         });
         setTimeout(function() {
             $modal.addClass('modal-in');
@@ -54,11 +65,6 @@ $(function() {
         for (var p in btn) {
             btn[p].click(function() {
                 Modal.close($modal, $overlay);
-            });
-        }
-        if ($overlay) {
-            $overlay.click(function() {
-                Modal.close($modal, $overlay)
             });
         }
         return $modal;
@@ -85,7 +91,9 @@ $(function() {
             btn: [function($btn) {
                 $btn.text('确认');
                 if (callbackOk) {
-                    $btn.click(callbackOk);
+                    $btn.click(function() {
+                        callbackOk();
+                    });
                 }
             }]
         });
@@ -121,8 +129,5 @@ $(function() {
             Modal.close($modal);
         }, time)
     }
-    $(document).on('click', '*[i-type=back]', function() {        
-        history.go(-1); 
-        location.reload(); 
-    })
+
 })($);

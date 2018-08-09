@@ -26,14 +26,16 @@ class Request
 		return $result;
 	}
 
-	public static function post($data = null){
+	public static function post($data = null, $default = ''){
 		//获取post数据
-		return self::sustain("POST",$data);
+		$value = self::sustain("POST", $data);
+		return $value ? $value : $default;
 	}
 
-	public static function get($data = null){
+	public static function get($data = null, $default = ''){
 		//获取get数据
-		return self::sustain("GET",$data);
+		$value = self::sustain("GET", $data);
+		return $value ? $value : $default;
 	}
 
 	public static function cookie($data = null){

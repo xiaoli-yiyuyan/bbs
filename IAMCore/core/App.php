@@ -10,6 +10,7 @@ class App
 	protected static $baseUrl;
 	protected static $class = 'Index';
 	protected static $action = 'index';
+	protected static $admin = 'Admin';	
 
 	public static function init()
 	{
@@ -26,6 +27,11 @@ class App
 		$modelPath = self::$approot . DS . 'model';
 		Loader::addClassMap('Model', $modelPath); //添加命名空间
 		// linux 下和 windows 下斜杠和反斜杠问题
+		if (!(self::$namespace == 'App' && self::$class == self::$admin)) {
+			$appClass = new \app\Main;
+			$appClass->index(self::$baseUrl);
+			return; 
+		}
 		$runClass = '\\' . self::$namespace . '\\' . self::$class;
 		if (class_exists($runClass)) {
 			$appClass = new $runClass;

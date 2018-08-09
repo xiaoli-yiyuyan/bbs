@@ -1,0 +1,69 @@
+body {
+    background: #f8f8f8;
+}
+.novel-header-right {
+    padding: 0 .5rem;
+    align-items: center;
+    justify-content: center;
+}
+.novel-header-right a.icon-svg{
+    margin: 0 .5rem;
+}
+.top-nav {
+    padding: .8rem .5rem;
+    background: #FFF;
+    border-bottom: 0.05rem solid #EEE;
+}
+.top-nav a {
+    display: block;
+}
+.top-nav .icon-svg {
+    margin: auto;
+    width: 2.4rem;
+    height: 2.4rem;
+}
+.top-nav .top-nav-word {
+    margin-top: .5rem;
+    color: #333;
+    font-weight: 700;
+}
+.icon-sort {
+    background-image: url(/static/images/novel/index/sort.png);
+}
+.icon-finishbook {
+    background-image: url(/static/images/novel/index/finishbook.png);
+}
+.icon-fuli {
+    background-image: url(/static/images/novel/index/fuli.png);
+}
+.icon-newbook {
+    background-image: url(/static/images/novel/index/sort.png);
+}
+.icon-rank {
+    background-image: url(/static/images/novel/index/rank.png);
+}
+
+.svg-user2 {
+    background-image: url(/static/images/novel/index/svg/account.svg);
+}
+.svg-book {
+    background-image: url(/static/images/novel/index/svg/book.svg);
+}
+.novel-list-box {
+    margin-top: .5rem;
+    padding: .5rem;
+    background: #FFF;
+}
+.mark-sort .novel-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.mark-sort .novel-title {
+    font-size: .9rem;
+}
+.mark-sort .novel-mark-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

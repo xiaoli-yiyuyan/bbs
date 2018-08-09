@@ -16,29 +16,33 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="header-height"></div>
     <header class="header">
-        <div class="header-back">
-            <i class="icon-svg" style="background-image:url(svg/arrow-left.svg);"></i>
-            <div class="back-word">返回</div>
-        </div>
-        <div class="header-center">标题</div>
-        <div class="header-nav">
-            <div class="nav-word">用户</div>
-            <i class="icon-svg" style="background-image:url(svg/account.svg);"></i>
-        </div>
+        <div class="icon-svg menu left-menu"></div>
+        <div>用户中心</div>
+        <div class="icon-svg user"></div>
     </header>
-    <p>按钮</p>
+    <div class="left-menu-list">
+        <div class="modal-overlay"></div>
+        <div class="menu-list-body"> left-menu-list-show</div>
+    </div>
+    <div style="margin: .5rem;">
+            
+        <p>按钮</p>
 
-    <p><div class="btn">按钮(默认)</div></p>
-    <p><div class="btn btn-success btn-lg">按钮(success)</div></p>
-    <p><div class="btn btn-danger">按钮(danger)</div></p>
-    <p><div class="btn btn-warning">按钮(warning)</div></p>
-    <p>填充</p>
-    <p><div class="btn btn-fill">按钮(success)</div></p>
-    <p><div class="btn btn-success btn-fill">按钮(success)</div></p>
-    <p><div class="btn btn-danger btn-fill">按钮(danger)</div></p>
-    <p><div class="btn btn-warning btn-fill">按钮(warning)</div></p>
-    <p><button class="btn btn-warning btn-fill">按钮(warning)</button> <button class="btn">按钮(默认)</button> <button class="btn btn-danger btn-fill">按钮(danger)</button></p>
+        <p><div class="btn">按钮(默认) 正常大小</div></p>
+        <p><div class="btn btn-shadow btn-sm">按钮(success) 小号</div></p>
+        <p><div class="btn btn-success btn-sm">按钮(success) 小号</div></p>
+        <p><div class="btn btn-danger btn-lg">按钮(danger) 大号</div></p>
+        <p><div class="btn btn-warning">按钮(warning)</div></p>
+        <p>填充</p>
+        <p><div class="btn btn-fill">按钮(success)</div></p>
+        <p><div class="btn btn-success btn-fill">按钮(success)</div></p>
+        <p><div class="btn btn-danger btn-fill">按钮(danger)</div></p>
+        <p><div class="btn btn-warning btn-fill">按钮(warning)</div></p>
+        <p><button class="btn btn-warning btn-fill">按钮(warning)</button> <button class="btn">按钮(默认)</button> <button class="btn btn-danger btn-fill">按钮(danger)</button></p>
+        
+    </div>
     <p>表单</p>
     <p>
         <div class="item-line item-lg">
@@ -64,9 +68,16 @@
         </div>
 
         <div class="item-line item-lg">
-            <div class="item-title">radio</div>
+            <div class="item-title">checkbox</div>
             <div class="item-input">
                 <input class="input-checkbox" type="checkbox">
+            </div>
+        </div>
+        <div class="item-line item-lg">
+            <div class="item-title">radio</div>
+            <div class="item-input">
+                <input class="input-radio" name="radio" type="radio" checked>
+                <input class="input-radio" name="radio" type="radio">
             </div>
         </div>
         <p><div class="btn btn-fill btn-lg">提交</div></p>
@@ -96,7 +107,7 @@
     </p>
     <p>TAB切换</p>
     <p>
-        <div class="tab">
+        <div class="tab tab-toggle">
             <div class="tab-header">
                 <div class="tab-link tab-active" data-to-tab=".tab1">tab1</div>
                 <div class="tab-link" data-to-tab=".tab2">tab2</div>
@@ -142,7 +153,7 @@
                         <img src="images/1.jpg" alt="">
 
                     </div>
-                    <div class="list-item-text">Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机</div>
+                    <div class="list-item-text">Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机<br>发布时间：2018-06-07</div>
                 </div>
                 <div class="list-item ellipsis list-item-icon">
                     <img src="images/1.jpg" alt="">

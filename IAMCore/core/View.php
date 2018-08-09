@@ -1,6 +1,9 @@
 <?php
 namespace Iam;
 
+use Iam\Db;
+use Iam\Listen;
+
 class View
 {
 	public static $data = [];
@@ -36,6 +39,26 @@ class View
 	}
 
 	/**
+	 * 模板加载
+	 * @param string $name 模板路径
+	 * @param array $data 变量参数
+	 */
+	public static function page($name, $data = [])
+	{
+		$config = Config::get('TEMPLATE');
+		$tpl_path = ROOT_PATH . $config['PATH'] . DS . $name . $config['EXT'];
+		if (file_exists($tpl_path)) {
+			(function() use($data, $tpl_path){
+				extract(array_merge(self::$data, $data)); //数组转化为变量
+				include($tpl_path);
+			})();
+		} else {
+			$tpl = '404';
+		}
+		//return $tpl;
+	}
+
+	/**
 	 * 变量参数设置
 	 * @param string $name 变量名
 	 * @param array $data 变量值
@@ -51,5 +74,64 @@ class View
 		} elseif(is_array($name)) {
 			self::$data = array_merge(self::$data, $name);
 		}
+	}
+
+	/**
+	 * 模板加载
+	 * @param string $name 模板路径
+	 * @param array $data 变量参数
+	 */
+	public static function loadComponent($name, $data = [])
+	{
+		Listen::hook('loadComponentBefore', ['name' => $name]);
+		$component = self::$components[$name];
+		foreach ($component['props'] as $key => &$value) {
+			if (isset($data[$key])) {
+				$value = $data[$key];
+			}
+		}
+		$data = $component['data']($component);
+		self::load($component['template'], $data);
+	}
+
+
+	private static $components = [];
+
+	/**
+	 * 创建组件
+	 */
+	public static function component($name, $options = [])
+	{
+		if (empty($options)) {
+			return self::$components['name'];
+		}
+		return self::$components[$name] = $options;
+	}
+
+
+	private $config = [
+		'tag_begin' => '<_',
+		'tag_end' => '_>'
+	];
+
+
+	/**
+	 * 模板解析输出
+	 * @param string $context 模板内容
+	 */
+	public static function template($context)
+	{
+		// $config = [
+		// 	'tag_begin' => '<_',
+		// 	'tag_end' => '_>',
+		// 	'tag_over' => '/'
+		// ];
+		// // if(preg_replace_callback('/<\!--include:(.+?)-->/', function($met){
+		// // 	$this->context = str_replace($met[0],file_get_contents(".".$met[1]),$this->context);
+		// // }, $this->context));$pattern
+		// $pattern = '/' . $config['tag_begin'] . '([a-zA-Z0-9]+)( +(.+?)="(.+?)")*?\/' . $config['tag_end'] . '/';
+		// $pattern = '/<_.*? (.+?)="(.+?)"\/_>/';
+		// preg_match_all($pattern, $context,$mat, PREG_SET_ORDER);
+
 	}
 }
