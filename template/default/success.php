@@ -1,9 +1,6 @@
 <?php $this->load('components/common/header',['title' => $title]); ?>
-<div class="header">
-    <span class="logo"></span>
-    <div class="head_center"><?=$title?></div>
-    <div></div>
-</div>
+<?php $this->load('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
+
 <div class="page-msg-box">
     <i class="icon-svg svg-true"></i>
     <?=$msg?>

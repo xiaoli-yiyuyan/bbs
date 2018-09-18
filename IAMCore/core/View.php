@@ -27,6 +27,7 @@ class View
 	{
 		$config = Config::get('TEMPLATE');
 		$tpl_path = ROOT_PATH . $config['PATH'] . DS . $name . $config['EXT'];
+
 		if (file_exists($tpl_path)) {
 			(function() use($data, $tpl_path){
 				extract(array_merge(self::$data, $data)); //数组转化为变量
@@ -34,6 +35,7 @@ class View
 			})();
 		} else {
 			$tpl = '404';
+			echo $tpl_path;
 		}
 		//return $tpl;
 	}

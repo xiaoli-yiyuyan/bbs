@@ -178,6 +178,10 @@ class Component
 			return $tree[$namespaceName];
 		}
 
+		if (!isset($tree[$namespaceName]) || !isset($tree[$namespaceName][$componentName])) {
+			return;
+		}
+
 		return $tree[$namespaceName][$componentName];
 	}
 
@@ -253,7 +257,9 @@ class Component
             $namespace = implode($this->ds, $name_index);
 		}
 
-		$config = $this->get($namespace, $component_name);
+		if (!$config = $this->get($namespace, $component_name)) {
+			return;
+		}
 		
 		$source = $config['source'];
 		$props_data = [];
@@ -307,5 +313,7 @@ class Component
 		} else {
 			$tpl = '404';
 		}
+
+		return true;
 	}
 }

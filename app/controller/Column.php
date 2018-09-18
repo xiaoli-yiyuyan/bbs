@@ -13,6 +13,7 @@ class Column extends Common
         if (!$info = Category::info($options['id'])) {
             return ['err' => 1, 'msg' => '你要查看的栏目不存在！'];
         }
+        $info['is_admin'] = $this->isAdmin($this->user['id'], $info['id']);
         return $info;
     }
 
@@ -56,7 +57,11 @@ class Column extends Common
         
         $data = [
             'photo' => $options['photo'],
-            'title' => $options['title']
+            'title' => $options['title'],
+            'bm_id' => $options['bm_id'],
+            'user_add' => $options['user_add'],
+            'is_html' => $options['is_html'],
+            'is_ubb' => $options['is_ubb'],
         ];
         if (!empty($options['file_id'])) {
             if (Db::table('file')->where([

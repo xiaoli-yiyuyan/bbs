@@ -646,6 +646,16 @@
       ),
       'template' => 'template\\default/components/common\\left_menu.php',
     ),
+    'index_link' => 
+    array (
+      'props' => 
+      array (
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template\\default/components/common\\index_link.php',
+    ),
   ),
   '/components/forum' => 
   array (
@@ -1266,8 +1276,8 @@
               'prop' => 'id',
               'value' => 0,
             ),
-            'is_html' => 1,
-            'is_ubb' => 1,
+            'is_html' => '0',
+            'is_ubb' => '0',
           ),
         ),
         1 => 
@@ -1300,7 +1310,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/forum/view.php',
+      'template' => 'template\\default/forum\\view.php',
     ),
     'reply' => 
     array (
