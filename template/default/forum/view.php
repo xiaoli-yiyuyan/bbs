@@ -16,7 +16,7 @@
     <div class="view_head border-b">
         <div class="view_title">
             <?=$view['info']['title']?>
-            <?php if ($view['info']['user_id'] == $userinfo['id']) { ?>
+            <?php if ($view['info']['user_id'] == $userinfo['id'] || $view['class_info']['is_admin']) { ?>
             <div class="view_action">
                 <a class="btn" href="/forum/editor?id=<?=$view['info']['id']?>">修改</a>
                 <a class="btn btn_remove" data-id="<?=$view['info']['id']?>">删除</a>
@@ -82,7 +82,6 @@
         });
     });
 </script>
-
 <?php $this->load('/components/forum/reply_form', ['forum_id' => $view['info']['id']]); ?>
 
 <?php $this->load('components/common/footer'); ?>

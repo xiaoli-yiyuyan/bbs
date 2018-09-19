@@ -9,7 +9,7 @@ class Mysql {//数据库操作类基于PDO
     var $dataList;
     function __construct($config){//链接数据库
         //$config = config('mysql');
-        $this->pdo = new PDO('mysql:host='.$config['host'].';dbname='.$config['dbname'].';charset=utf8',$config['user'],$config['pass']);
+        $this->pdo = new PDO('mysql:host='.$config['host'].';port='.$config['port'].';dbname='.$config['dbname'].';charset=utf8',$config['user'],$config['pass']);
     }
 
     function prepare($sql){//数据查询

@@ -30,9 +30,9 @@
                 </div>
                 <div class="tab-page tab4">
                     <!-- <div>系统通知</div> -->
-                    <div><a href="/admin/forum">帖子</a></div>
-                    <!-- <div>聊天室</div>
-                    <div>友链</div> -->
+                    <div><a href="/admin/forum">帖子回收站</a></div>
+                    <div><a href="/admin/forum_auto">待审核帖子</a></div>
+                    <!-- <div>友链</div> -->
                 </div>
                 <div class="tab-page tab5">
                     <div><a href="/admin/database">数据库备份/还原</a></div>

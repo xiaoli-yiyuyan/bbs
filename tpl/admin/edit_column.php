@@ -16,6 +16,7 @@
             <div class="item-title">图标</div>
             <div class="item-input"><input type="text" name="photo" class="input input-lg" placeholder="可直接填写图片url" value="<?=$info['photo']?>"></div>
         </div>
+        
         <div class="item-line item-lg">
             <div class="column_photo" style="background-image: url(<?=$info['photo']?>)">
                 <div class="column_photo_progress"></div>
@@ -23,6 +24,35 @@
             <div>
                 <div>点击上传图片选择文件</div>
                 <div class="btn add_column_photo">上传图片</div>
+            </div>
+        </div>
+        <div class="item-line item-lg">
+            <div class="item-title">版主ID</div>
+            <div class="item-input"><input type="text" name="bm_id" class="input input-lg" placeholder="多个用,号隔开" value="<?=$info['bm_id']?>"></div>
+        </div>
+        <div class="item-line item-lg">
+            <div class="item-title">会员发帖</div>
+            <div class="item-input">
+                <input class="input-radio" name="user_add" value="1" type="radio" <?php if ($info['user_add']) { ?>checked<?php } ?>>开启
+                <input class="input-radio" name="user_add" value="0" type="radio" <?php if (!$info['user_add']) { ?>checked<?php } ?>>关闭
+            </div>
+        </div>
+        <div class="item-line item-lg">
+            --- 内容设置 ---
+        </div>
+        <div class="item-line item-lg">
+            <div class="item-title">HTML过滤</div>
+            <div class="item-input">
+                <input class="input-radio" name="is_html" value="1" type="radio" <?php if ($info['is_html']) { ?>checked<?php } ?>>开启
+                <input class="input-radio" name="is_html" value="0" type="radio" <?php if (!$info['is_html']) { ?>checked<?php } ?>>关闭
+            </div>
+            </div>
+        <div class="item-line item-lg">
+            <div class="item-title">开启UBB</div>
+            <div class="item-input">
+            
+                <input class="input-radio" name="is_ubb" value="1" type="radio" <?php if ($info['is_ubb']) { ?>checked<?php } ?>>开启
+                <input class="input-radio" name="is_ubb" value="0" type="radio" <?php if (!$info['is_ubb']) { ?>checked<?php } ?>>关闭 
             </div>
         </div>
         <button class="btn btn-fill btn-lg btn-block">保存</button>
@@ -114,6 +144,7 @@
     }
     $('#add').submit(function() {
         var $this = $(this)
+        // console.log($this.serializeArray());
         $.post($this.attr('action'), $this.serialize()).then(function(data) {
             data = JSON.parse(data);
             if (data.err) {

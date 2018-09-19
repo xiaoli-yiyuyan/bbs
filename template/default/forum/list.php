@@ -10,7 +10,9 @@
         </div>
     </div>
     <div>
+        <?php if ($column_info['user_add'] || $column_info['is_admin']) { ?>
         <a class="btn" href="/forum/add?id=<?=$column_info['id']?>" style="display:inline-block;">发帖</a>
+        <?php } ?>
     </div>
 </div>
 

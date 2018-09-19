@@ -25,7 +25,21 @@ class Admin extends Common
 
     public function index()
     {
-    	View::load('admin/index');
+        $count = Db::query('SELECT COUNT(*) as num FROM `user`')[0]['num'];
+        $today_count = Db::query('SELECT COUNT(*) as num FROM `user` WHERE `create_time` > CURDATE()')[0]['num'];
+        $online_count = Db::query('SELECT COUNT(*) as num FROM `user` WHERE TIMESTAMPDIFF(MINUTE, last_time, NOW()) < 20')[0]['num'];
+        $forum_count = Db::query('SELECT COUNT(*) as num FROM `forum`')[0]['num'];
+        $forum_today_count = Db::query('SELECT COUNT(*) as num FROM `forum` WHERE `create_time` > CURDATE()')[0]['num'];
+        $forum_reply_today_count = Db::query('SELECT COUNT(*) as num FROM `forum_reply` WHERE `create_time` > CURDATE()')[0]['num'];
+
+        View::load('admin/index', [
+            'count'=> $count,
+            'today_count'=> $today_count,
+            'online_count'=> $online_count,
+            'forum_count'=> $forum_count,
+            'forum_today_count'=> $forum_today_count,
+            'forum_reply_today_count'=> $forum_reply_today_count,
+        ]);
     }
 
     private function initComponent()
@@ -318,6 +332,7 @@ class Admin extends Common
     public function updateColumn()
     {
         $post = Request::post();
+        // print_r($post);
         $column = new Column;
         $res = $column->save($post);
         return Response::json($res);
@@ -418,6 +433,15 @@ class Admin extends Common
         $forum = new Forum;
         $list = $forum->list(['status' => 9999]);
         View::load('admin/forum', [
+            'list' => $list
+        ]);
+    }
+
+    public function forumAuto()
+    {
+        $forum = new Forum;
+        $list = $forum->list(['status' => 1]);
+        View::load('admin/forum_auto', [
             'list' => $list
         ]);
     }
@@ -1074,6 +1098,13 @@ class Admin extends Common
     {
         $template = new \Iam\Template;
         $template->test();
+    }
+
+    public function img()
+    {
+        $photo = Request::get('photo');
+        print_r($photo);
+        downloadImage($photo, uniqid(), 'static/novels/');
     }
 
 }

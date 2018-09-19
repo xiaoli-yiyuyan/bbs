@@ -89,6 +89,11 @@ class Forum extends Common
             return ['err' => 1, 'msg' => '帖子发表栏目不存在！'];
         }
 
+        if (!$class_info['user_add'] && !$this->isAdmin($this->user['id'], $class_info['id'])) {
+            return ['err' => 2, 'msg' => '该栏目禁止发帖'];
+
+        }
+
         if (empty($options['title'])) {
             return ['err' => 2, 'msg' => '帖子标题不能为空！'];
 
@@ -143,7 +148,8 @@ class Forum extends Common
             return ['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！'];
         }
         
-        if ($info['user_id'] != $this->user['id']) {
+
+        if ($info['user_id'] != $this->user['id'] && !$this->isAdmin($this->user['id'], $info['class_id'])) {
             return ['err' => 2, 'msg' => '你无权进行此操作！'];
         }
 
@@ -275,8 +281,10 @@ class Forum extends Common
         $info['img_list'] = $this->setViewFiles($info['img_data']);
         $info['file_list'] = $this->setViewFiles($info['file_data']);
 
+        $class_info['is_admin'] = $this->isAdmin($this->user['id'], $class_info['id']);
+
         // 启用HTML过滤
-        if (!empty($options['is_html'])) {
+        if (!empty($class_info['is_html'])) {
             $info['title'] = htmlspecialchars($info['title']);
             $info['context'] = htmlspecialchars($info['context']);
             $info['context'] = str_replace(chr(10), '<br>', $info['context']);
@@ -285,7 +293,7 @@ class Forum extends Common
         }
 
         // 启用UBB语法
-        if (!empty($options['is_ubb'])) {
+        if (!empty($class_info['is_ubb'])) {
             $info['context'] = $this->setReadRule($info['context']);
             $info['context'] = $this->setViewImages($info['context'], $info['img_data']);
         }

@@ -12,7 +12,9 @@ class Forum extends Common
         'pagesize' => 10,
         'order' => 0,
         'sort' => 0,
-        'status' => 0
+        'status' => 0,
+        'query' => [],
+        'page_name' => 'p'
     ];
     // array (
     //     'class_id' => 0,

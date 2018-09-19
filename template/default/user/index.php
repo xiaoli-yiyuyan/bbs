@@ -17,7 +17,7 @@
       <img class="user-photo photo" src="<?=$userinfo['photo']?>" alt="">
       <div class="info-box">
         <div class="user-nc">
-            <span><?=$userinfo['nickname']?><span class="user_lv">lv.24</span></span>
+            <span><?=$userinfo['nickname']?><span class="user_lv">lv.<?=$userinfo['level']?></span></span>
         </div>
         <div class="user-ep"><?=$userinfo['explain']?></div>
         <div class="edit-info"><i class="icon-svg s_edit"></i>点击修改个人信息</div>
@@ -64,13 +64,13 @@
     </div>
     <!-- 论坛评论统计 End -->
 
-    <div class="li-box border-b">
+    <!-- <div class="li-box border-b">
         <a href="/chat/room/?id=2" class="flex-box flex">
 
             <i class="li-box-svg icon-svg b_youxika"></i>
             <div class="li-box-word">聊天大厅</div>
         </a>
-    </div>
+    </div> -->
     <div class="li-box border-b">
         <a href="/user/edit_info" class="flex-box flex">
             <i class="li-box-svg icon-svg b_mofang"></i>
@@ -115,7 +115,7 @@
     var $img = $('.select-photo img');
 
     $file.localResizeIMG({
-        maxSize: 400,
+        maxSize: 90,
         error: function(msg) {
             $.alert(msg);
         },
