@@ -38,7 +38,18 @@ class Forum extends Common
             $item['photo'] = $info['photo'];
             $item['level'] = $level_info['level'];
             $item['context'] = $this->face($item['context']);
-            $item['create_time'] = date('m-d H:i', strtotime($item['create_time']));
+            $timeStamp = strtotime($item['create_time']);
+            $diff = strtotime(now()) - $timeStamp;
+            $diffArr = array('31536000'=>'年','2592000'=>'个月','604800'=>'星期','86400'=>'天','3600' => '小时', '60' => '分钟','1' => '秒');
+            foreach($diffArr as $key => $value){
+                echo $key;
+                $modValue = (int) ($diff/$key);
+                if($modValue > 0){
+                    $item['create_time'] = $modValue.$value."前";
+                    break;
+                }
+            }
+            // $item['create_time'] = date('m-d H:i', strtotime($item['create_time']));
         }
     }
 
