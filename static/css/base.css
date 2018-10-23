@@ -882,3 +882,45 @@ i.svg-more {
 .index_top_nav a {
     color: #FFF;
 }
+.message_list .list-item-image img {
+    border-radius: .1rem;
+    box-shadow: 0 0 0.15rem rgba(0, 0, 0, .3);
+}
+.new_message {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    border-radius: .1rem;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    background: #f22;
+    color: #FFF;
+}
+.new_message_icon {
+    position: relative;
+    padding: 0 .25rem;
+    padding-left: 1.5rem;
+    margin: .625rem;
+    border-radius: .1rem;
+    height: 1rem;
+    font-weight: 700;
+    line-height: 1rem;
+    text-align: center;
+    background: #f22;
+    color: #FFF;
+
+}
+.new_message_icon:before {
+    position: absolute;
+    left: .25rem;
+    content: '';
+    height: 1rem;
+    width: 1rem;
+    background-image: url(/static/svg/message.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+
+}

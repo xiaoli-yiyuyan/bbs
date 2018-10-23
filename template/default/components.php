@@ -428,6 +428,29 @@
       ),
       'template' => 'template\\default/user\\care_user.php',
     ),
+    'message' => 
+    array (
+      'props' => 
+      array (
+      ),
+      'source' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Message',
+          'action' => 'list',
+          'param' => 'message_list',
+          'options' => 
+          array (
+            'user_id' => 0,
+            'to_user_id' => 0,
+            'page' => 1,
+            'pagesize' => 10,
+          ),
+        ),
+      ),
+      'template' => 'template\\default/user\\message.php',
+    ),
   ),
   '/' => 
   array (
@@ -474,6 +497,16 @@
             'pagesize' => 10,
             'order' => 0,
             'sort' => 0,
+          ),
+        ),
+        2 => 
+        array (
+          'name' => 'Message',
+          'action' => 'count',
+          'param' => 'message_count',
+          'options' => 
+          array (
+            'status' => 0,
           ),
         ),
       ),
@@ -594,8 +627,18 @@
       ),
       'source' => 
       array (
+        0 => 
+        array (
+          'name' => 'Message',
+          'action' => 'count',
+          'param' => 'message_count',
+          'options' => 
+          array (
+            'status' => 0,
+          ),
+        ),
       ),
-      'template' => 'template/default/components/common/header_nav.php',
+      'template' => 'template\\default/components/common\\header_nav.php',
     ),
     'page_jump' => 
     array (
@@ -1099,6 +1142,55 @@
       array (
       ),
       'template' => 'template\\default/components/user\\friend_list.php',
+    ),
+    'message_list' => 
+    array (
+      'props' => 
+      array (
+        'list' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template\\default/components/user\\message_list.php',
+    ),
+    'message_item' => 
+    array (
+      'props' => 
+      array (
+        'user_id' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+        'content' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+        0 => 
+        array (
+          'name' => 'User',
+          'action' => 'info',
+          'param' => 'userinfo',
+          'options' => 
+          array (
+            'id' => 
+            array (
+              'prop' => 'user_id',
+              'value' => 0,
+            ),
+          ),
+        ),
+      ),
+      'template' => 'template\\default/components/user\\message_item.php',
     ),
   ),
   '/login' => 

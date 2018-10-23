@@ -11,10 +11,15 @@
 <header class="header">
     <span class="logo"></span>
     <div class="flex-box">
+        
+    <?php if ($message_count > 0) { ?>
+            <a href="/user/message" class="new_message_icon"><?=$message_count?></a>
+        <?php } ?>
     <a href="/user/index" class="icon-svg user"></a>
     <div class="icon-svg menu left-menu"></div>
     </div>
 </header>
+
 <?php $this->load('/components/common/left_menu'); ?>
 
 <div class="index_top_nav index_link">

@@ -12,6 +12,7 @@ use Iam\Response;
 use Iam\FileUpload;
 use Model\Friend;
 use Model\User as MUser;
+use Model\Message as MMessage;
 
 class User extends Common
 {
@@ -222,9 +223,16 @@ class User extends Common
 
         if ($this->isCare($options)) {
             Db::table('friend')->where(['user_id' => $options['user_id'], 'care_user_id' => $options['care_user_id']])->remove();
+
+            $content = '<a href="/user/show?id=' . $this->user['id'] . '">' .$this->user['nickname'] . '</a> 取消了对你的关注！';
+            MMessage::create(0, $options['care_user_id'], $content);
             return ['msg' => '取消关注成功', 'is_care' => 0];
+
         }
         Db::table('friend')->add(['user_id' => $options['user_id'], 'care_user_id' => $options['care_user_id']]);
+        
+        $content = '<a href="/user/show?id=' . $this->user['id'] . '">' .$this->user['nickname'] . '</a> 关注了你！';
+        MMessage::create(0, $options['care_user_id'], $content);
         return ['msg' => '关注成功', 'is_care' => 1];
     }
 

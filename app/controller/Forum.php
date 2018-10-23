@@ -11,6 +11,7 @@ use Model\Forum as MForum;
 use Model\ForumReply;
 use Model\File;
 use Model\Category;
+use Model\Message;
 
 class Forum extends Common
 {
@@ -547,7 +548,7 @@ class Forum extends Common
             return ['err' => 2, 'msg' => '回复内容不能为空哦！'];
         }
         $forum_id = $options['forum_id'];
-        if (!Db::table('forum')->find($forum_id)) {
+        if (!$forum = Db::table('forum')->find($forum_id)) {
             return ['err' => 3, 'msg' => '回复的主题可能已经删除或不存在！'];
         }
         $reply_id = Db::table('forum_reply')->add([
@@ -556,6 +557,11 @@ class Forum extends Common
             'context' => htmlspecialchars($options['context'])
         ]);
         Db::query('UPDATE `forum` SET `reply_count` = `reply_count` + 1 WHERE `id` = ?', [$forum_id]);
+        if ($this->user['id'] != $forum['user_id']) {
+            $content = '<a href="/user/show?id=' . $this->user['id'] . '">' .$this->user['nickname'] . '</a> 评论了你的主题，快去<a href="/forum/view?id=' . $forum_id . '">查看</a>吧！';
+            Message::create(0, $forum['user_id'], $content);
+        }
+
         return ['forum_id' => $forum_id, 'reply_id' => $reply_id];
     }
 

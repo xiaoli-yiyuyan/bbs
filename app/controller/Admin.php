@@ -781,6 +781,52 @@ class Admin extends Common
                     ]
                 ]
             ], [
+                'name' => 'Message',
+                'title' => '消息',
+                'action' => [
+                    [
+                        'action' => 'list',
+                        'name' => 'message_list',
+                        'title' => '列表',
+                        'options' => [
+                            [
+                                'name' => 'user_id',
+                                'title' => '发件人id',
+                                'value' => 0,
+                                'explain' => '0 为系统消息'
+                            ], [
+                                'name' => 'to_user_id',
+                                'title' => '收件人id',
+                                'value' => 0,
+                                'explain' => '收件人id'
+                            ], [
+                                'name' => 'page',
+                                'title' => '页数',
+                                'value' => 1,
+                                'explain' => '读取第N页的数据'
+                            ], [
+                                'name' => 'pagesize',
+                                'title' => '显示条数',
+                                'value' => 10,
+                                'explain' => '每页最大显示条数'
+                            ]
+                        ]
+                    ],
+                    [
+                        'action' => 'count',
+                        'name' => 'message_count',
+                        'title' => '数量',
+                        'options' => [
+                            [
+                                'name' => 'status',
+                                'title' => '类型',
+                                'value' => 0,
+                                'explain' => '0 为未读，1 为已读，2 为所有'
+                            ]
+                        ]
+                    ]
+                ]
+            ], [
                 'name' => 'Column',
                 'title' => '栏目',
                 'action' => [
