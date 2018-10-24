@@ -103,7 +103,10 @@ class User extends Common
             unset($options['id']);
             return $this->user;
         }
-        return Db::table('user')->where(['id' => $options['id']])->find();
+		$user = Db::table('user')->where(['id' => $options['id']])->find();
+		$level_info = getUserLevel($user['exp'], $this->upExp);
+        $user = array_merge($user, $level_info);
+        return $user;
     }
 
     public function list($options)
