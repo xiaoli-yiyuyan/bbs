@@ -11,6 +11,11 @@ use Iam\Response;
 
 class Login extends Common
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index()
     {
     	View::load('login/index');

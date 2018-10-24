@@ -8,13 +8,25 @@ use Iam\Page;
 use Iam\Request;
 use Iam\Response;
 use Model\Forum as MForum;
+use Model\User as MUser;
 use Model\ForumReply;
 use Model\File;
 use Model\Category;
 use Model\Message;
+use app\Setting;
 
 class Forum extends Common
 {
+    private $addForumCoin = 0;
+    private $addReplyCoin = 0;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->addForumCoin = Setting::get('forum_reward');
+        $this->addReplyCoin = Setting::get('reply_reward');
+    }
+
     public function index()
     {
         $class_list = Db::table('Category')->where([
@@ -39,18 +51,18 @@ class Forum extends Common
             $item['photo'] = $info['photo'];
             $item['level'] = $level_info['level'];
             $item['context'] = $this->face($item['context']);
-            $timeStamp = strtotime($item['create_time']);
-            $diff = strtotime(now()) - $timeStamp;
-            $diffArr = array('31536000'=>'年','2592000'=>'个月','604800'=>'星期','86400'=>'天','3600' => '小时', '60' => '分钟','1' => '秒');
-            foreach($diffArr as $key => $value){
-                echo $key;
-                $modValue = (int) ($diff/$key);
-                if($modValue > 0){
-                    $item['create_time'] = $modValue.$value."前";
-                    break;
-                }
-            }
-            // $item['create_time'] = date('m-d H:i', strtotime($item['create_time']));
+            // $timeStamp = strtotime($item['create_time']);
+            // $diff = strtotime(now()) - $timeStamp;
+            // $diffArr = array('31536000'=>'年','2592000'=>'个月','604800'=>'星期','86400'=>'天','3600' => '小时', '60' => '分钟','1' => '秒');
+            // foreach($diffArr as $key => $value){
+            //     echo $key;
+            //     $modValue = (int) ($diff/$key);
+            //     if($modValue > 0){
+            //         $item['create_time'] = $modValue.$value."前";
+            //         break;
+            //     }
+            // }
+            $item['create_time'] = date('m-d H:i', strtotime($item['create_time']));
         }
     }
 
@@ -147,10 +159,11 @@ class Forum extends Common
         ];
 
         if (!$id = Db::table('forum')->add($data)) {
+            MUser::changeCoin($this->user['id'], $this->addForumCoin);
             return ['err' => 6, 'msg' => '发表失败'];
         }
 
-        return ['id' => $id];
+        return ['id' => $id, 'reward_coin' => $this->addForumCoin];
     }
 
 
@@ -569,11 +582,12 @@ class Forum extends Common
         ]);
         Db::query('UPDATE `forum` SET `reply_count` = `reply_count` + 1 WHERE `id` = ?', [$forum_id]);
         if ($this->user['id'] != $forum['user_id']) {
+            MUser::changeCoin($this->user['id'], $this->addReplyCoin);
             $content = '<a href="/user/show?id=' . $this->user['id'] . '">' .$this->user['nickname'] . '</a> 评论了你的主题，快去<a href="/forum/view?id=' . $forum_id . '">查看</a>吧！';
             Message::create(0, $forum['user_id'], $content);
         }
 
-        return ['forum_id' => $forum_id, 'reply_id' => $reply_id];
+        return ['forum_id' => $forum_id, 'reply_id' => $reply_id, 'reward_coin' => $this->addReplyCoin];
     }
 
     public function myList()

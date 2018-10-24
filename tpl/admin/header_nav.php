@@ -15,6 +15,7 @@
         </div>
         <div class="tab-content">
                 <div class="tab-page tab1">
+                    <div><a href="/admin/reward">奖励设置</a></div>
                     <div><a href="/admin/page">组件管理</a></div>
                 </div>
                 <div class="tab-page tab2">

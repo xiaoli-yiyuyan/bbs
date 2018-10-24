@@ -244,4 +244,12 @@ class Db
         self::$db->execute($data);
         return self::$db->fetchAll();
     }
+
+    public static function execute($sql, $data = [])
+    {
+        self::init();
+        self::$db->query($sql);
+        self::$db->exec($data);
+        return self::$db->fetchAll();
+    }
 }

@@ -10,6 +10,7 @@ use Iam\Request;
 use Iam\Response;
 use Iam\Component;
 use Model\CategoryGroup;
+use app\Setting;
 use app\common\DatabaseTool;
 
 class Admin extends Common
@@ -511,7 +512,21 @@ class Admin extends Common
         return Response::json(['name' => $name]);
         // View::load('success', ['msg' => '删除成功', 'url' => '/admin/database']);
     }
+
+    public function reward()
+    {
+        $setting = Setting::get(['login_reward', 'forum_reward', 'reply_reward']);
+        View::load('admin/reward', $setting);
+    }
     
+    public function saveSetting()
+    {
+        $data = Request::post();
+        // $config = json_decode($data, true);
+        $setting = Setting::set($data);
+        return Response::json(['err' => 0]);
+    }
+
     public function getSource()
     {
         

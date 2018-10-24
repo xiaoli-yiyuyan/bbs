@@ -74,4 +74,10 @@ class User extends Common
             'data' => $list
         ];
     }
+
+    public static function changeCoin($user_id, $coin)
+    {
+        $sql = 'UPDATE `user` SET `coin`=`coin`+? WHERE `id`=?';
+        Db::query($sql, [$coin, $user_id]);
+    } 
 }
