@@ -1,4 +1,4 @@
-/*\r\nMySQL Database Backup Tools\r\nServer:127.0.0.1:3306\r\nDatabase:iam\r\nData:2018-09-14 23:08:59\r\n*/\r\nSET FOREIGN_KEY_CHECKS=0;\r\n-- ----------------------------\r\n-- Table structure for category\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `category`;\r\nCREATE TABLE `category` (
+/*\r\nMySQL Database Backup Tools\r\nServer:127.0.0.1:3306\r\nDatabase:love_ianmi\r\nData:2018-10-25 09:51:47\r\n*/\r\nSET FOREIGN_KEY_CHECKS=0;\r\n-- ----------------------------\r\n-- Table structure for category\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `category`;\r\nCREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
@@ -14,7 +14,15 @@
   `is_html` int(11) DEFAULT '1' COMMENT '开启html过滤',
   `is_ubb` int(11) DEFAULT '1' COMMENT '启用ubb',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;\r\n-- ----------------------------\r\n-- Records of category\r\n-- ----------------------------\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('1','','综合论坛','0','','','','0','http://ianmi.com/upload/column/20180909234237_202.png','123','','1','1','1');\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('2','','源码发布','0','','','','0','http://ianmi.com/upload/column/20180909234155_726.png','124','','1','1','1');\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('3','','任务求助','0','','','','0','http://ianmi.com/upload/column/20180909234325_411.png','125','','1','1','1');\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('4','','贴图专区','0','','','','0','http://ianmi.com/upload/column/20180909233702_340.png','127','','1','1','1');\r\n\r\n-- ----------------------------\r\n-- Table structure for file\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `file`;\r\nCREATE TABLE `file` (
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;\r\n-- ----------------------------\r\n-- Records of category\r\n-- ----------------------------\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('1','','综合论坛','0','','','','0','http://ianmi.com/upload/column/20180909234237_202.png','123','','1','1','1');\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('2','','源码发布','0','','','','0','http://ianmi.com/upload/column/20180909234155_726.png','124','','1','1','1');\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('3','','任务求助','0','','','','0','http://ianmi.com/upload/column/20180909234325_411.png','125','','1','1','1');\r\nINSERT INTO `category` (`id`,`name`,`title`,`type`,`config`,`template`,`path`,`order`,`photo`,`file_id`,`bm_id`,`user_add`,`is_html`,`is_ubb`) VALUES ('4','','贴图专区','0','','','','0','http://ianmi.com/upload/column/20180909233702_340.png','127','','1','1','1');\r\n\r\n-- ----------------------------\r\n-- Table structure for code\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `code`;\r\nCREATE TABLE `code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '唯一字符表示',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `content` text COMMENT '代码内容',
+  `status` int(11) DEFAULT '1' COMMENT '状态 0关闭 1开启',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;\r\n-- ----------------------------\r\n-- Records of code\r\n-- ----------------------------\r\nINSERT INTO `code` (`id`,`name`,`title`,`content`,`status`) VALUES ('1','ad_forum','帖子内容下面','','1');\r\n\r\n-- ----------------------------\r\n-- Table structure for file\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `file`;\r\nCREATE TABLE `file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -68,7 +76,16 @@
   `user_id` int(11) DEFAULT '0',
   `care_user_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;\r\n-- ----------------------------\r\n-- Records of friend\r\n-- ----------------------------\r\n\r\n-- ----------------------------\r\n-- Table structure for user\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `user`;\r\nCREATE TABLE `user` (
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;\r\n-- ----------------------------\r\n-- Records of friend\r\n-- ----------------------------\r\n\r\n-- ----------------------------\r\n-- Table structure for setting\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `setting`;\r\nCREATE TABLE `setting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `value` text,
+  `site_id` int(11) DEFAULT '0' COMMENT '网站id',
+  `title` varchar(255) DEFAULT NULL,
+  `type` int(11) DEFAULT '0',
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;\r\n-- ----------------------------\r\n-- Records of setting\r\n-- ----------------------------\r\nINSERT INTO `setting` (`id`,`name`,`value`,`site_id`,`title`,`type`,`update_time`) VALUES ('1','login_reward','1','0','','0','2018-10-24 10:47:51');\r\nINSERT INTO `setting` (`id`,`name`,`value`,`site_id`,`title`,`type`,`update_time`) VALUES ('2','forum_reward','2','0','','0','2018-10-24 10:47:51');\r\nINSERT INTO `setting` (`id`,`name`,`value`,`site_id`,`title`,`type`,`update_time`) VALUES ('3','reply_reward','3','0','','0','2018-10-24 10:47:51');\r\n\r\n-- ----------------------------\r\n-- Table structure for user\r\n-- ----------------------------\r\nDROP TABLE IF EXISTS `user`;\r\nCREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -90,4 +107,4 @@
   `vip_time` datetime DEFAULT NULL COMMENT 'VIP到期时间',
   `lock_time` datetime DEFAULT NULL COMMENT '锁定结束时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户表';
