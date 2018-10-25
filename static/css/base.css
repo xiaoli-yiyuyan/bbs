@@ -350,30 +350,32 @@ i.svg-more {
 }
 
 .bbs_list.list .list-item {
-    line-height: 1.4rem;
+    line-height: 1rem;
     padding: 0;
     font-size: .75rem;
-    color: #333;
+    color: #111;
 }
 .bbs_list.list .list-group{
     padding: .5rem;
-    border-bottom: .25rem #eee solid;
+    border-bottom: .05rem #eee solid;
 }
 .bbs_info {
     position: relative;
-    padding-top: 0.5rem;
+    padding-top: 0.25rem;
     color: #666;
     display: flex;
     justify-content: space-between;
     line-height: 1rem;
-    font-size: .65rem;
+    font-size: .6rem;
 }
 .bbs_user {
+	font-size: .7rem;
+	color: #333;
 }
 .bbs_user_photo {
-    width: 1rem;
-    height: 1rem;
-    border-radius: .1rem;
+    width: .9rem;
+    height: .9rem;
+    border-radius: 50%;
     vertical-align: middle;
     margin-top: -0.25rem;
 }
@@ -381,10 +383,31 @@ i.svg-more {
     color: #aaa;
     font-size: 12px;
 }
-.bbs_replay_num {
-    color: #333;
-}
 
+.reply_time {
+}
+.reply_str {
+	font-size: .6rem;
+	color: #025898;
+	margin: 0 .25rem;
+}
+.bbs_replay_num {
+    color: #666;
+}
+.bbs_replay_num .icon-svg {
+	display: inline-block;
+	margin-left: 0.25rem;
+	margin-top: -0.125rem;
+	vertical-align: middle;
+	width: .9rem;
+	height: .9rem
+}
+.svg-bbs_reply {
+	background-image: url(/static/svg/bbs_reply.svg);
+}
+.svg-look {
+	background-image: url(/static/svg/look.svg);
+}
 .forum_index_title {
     text-align: center;
     line-height: 2rem;
@@ -608,8 +631,8 @@ i.svg-more {
     line-height: 1.2rem;
 }
 .new_user img {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 .content-main {
     background: #FFF;
@@ -882,6 +905,29 @@ i.svg-more {
 .index_top_nav a {
     color: #FFF;
 }
+.new_user_item {
+    position: relative;
+	display: block;
+	width: 2.5rem;
+    height: 2.5rem;
+    border-radius: .1rem;
+    box-shadow: 0 0 .15rem #32393e;
+    overflow: hidden;
+}
+.new_user_photo {
+	width: 100%;
+	height: 100%;
+}
+.new_user_nickname {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: .6rem;
+    color: #fff;
+    line-height: .8rem;
+    background: rgba(0, 0, 0, 0.5);
+}
 .message_list .list-item-image img {
     border-radius: .1rem;
     box-shadow: 0 0 0.15rem rgba(0, 0, 0, .3);
@@ -923,4 +969,36 @@ i.svg-more {
     background-position: center;
     background-size: 100% 100%;
 
+}
+.pagination {
+    display: flex;
+    margin: .5rem;
+    line-height: 1.6rem;
+
+}
+.pagination li,
+.pagination input {
+    flex: 1;
+    text-align: center;
+    
+    display: block;
+    margin: 0 .1rem;
+    background-color: #fff;
+    border: .05rem solid #eee;
+    border-radius: .1rem;
+}
+/* .pagination span,
+.pagination input,
+.pagination a {
+    display: block;
+    margin: 0 .25rem;
+    background-color: #fff;
+    border: .05rem solid #eee;
+    border-radius: .1rem;
+} */
+.pagination *:first-child {
+    margin-left: 0;
+}
+.pagination *:last-child {
+    margin-right: 0;
 }

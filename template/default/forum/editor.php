@@ -63,5 +63,5 @@
     </div>
     <p><button class="btn btn-fill btn-lg btn-block">保存修改</button></p>
 </form>
-<script src="/static/js/forum/add_upload.js"></script>
+<script src="/static/js/forum/add_upload.js?v=0.0.1"></script>
 <?php $this->load('/components/common/footer'); ?>

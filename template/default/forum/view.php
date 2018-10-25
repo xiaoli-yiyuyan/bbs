@@ -49,6 +49,9 @@
     </div>
     <?php } ?>
 </div>
+<!-- 代码自定义 BEGIN -->
+<?=code('ad_forum')?>
+<!-- 代码自定义 END -->
 
 <div class="replay_box content-main">
     <div class="replay_title border-b">全部回复 <?=$reply_list['page']['count']?> 条</div>

@@ -31,6 +31,11 @@
 		'charset'     => 'utf8',
 		// 数据库表前缀
 		'prefix'      => '',
+		'paginate'    => [
+			'type'      => 'app\ext\IPage',
+			'var_page'  => 'page',
+			'list_rows' => 15,
+		],
 	]);
 
 	\Iam\Loader::register();

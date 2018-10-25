@@ -10,6 +10,7 @@ use Iam\Request;
 use Iam\Response;
 use Iam\Component;
 use Model\CategoryGroup;
+use Model\Code;
 use app\Setting;
 use app\common\DatabaseTool;
 
@@ -525,6 +526,64 @@ class Admin extends Common
         // $config = json_decode($data, true);
         $setting = Setting::set($data);
         return Response::json(['err' => 0]);
+    }
+
+    public function code()
+    {
+        $list = Code::order('id', 'DESC')->paginate(10);
+        View::load('admin/code', ['list' => $list, 'page' => $list->render()]);
+    }
+
+    public function addCode()
+    {
+        View::load('admin/add_code');
+    }
+
+    public function codeAdd()
+    {
+        $data = Request::post(['name', 'title', 'content']);
+        if (Code::get(['name' => $data['name']])) {
+            return View::load('error', ['msg' => '添加失败，可能原因：名称重复']);
+        }
+        if (!Code::create($data)) {
+            return View::load('error', ['msg' => '添加失败！']);
+        }
+        return View::load('success', ['msg' => '添加成功', 'url' => '/admin/code']);
+    }
+
+    public function editCode()
+    {
+        $id = Request::get('id');
+        if (!$code = Code::get($id)) {
+            return View::load('error', ['msg' => '自定义不存在！']);
+        }
+        View::load('admin/edit_code', ['code' => $code]);
+    }
+
+    public function codeEdit()
+    {
+        $id = Request::get('id');
+        $data = Request::post(['name', 'title', 'content']);
+        if ($code = Code::get(['name' => $data['name']])) {
+            if ($code->id != $id) {
+                return View::load('error', ['msg' => '修改失败，可能原因：名称重复']);
+            }     
+        }
+        if (!Code::where('id', $id)->update($data)) {
+            return View::load('error', ['msg' => '修改失败！']);
+        }
+        return View::load('success', ['msg' => '修改成功', 'url' => '/admin/code']);
+    }
+
+
+    public function removeCode()
+    {
+        $id = Request::get('id');
+        if (!$code = Code::get($id)) {
+            return View::load('error', ['msg' => '自定义不存在！']);
+        }
+        $code->delete();
+        return View::load('success', ['msg' => '删除成功', 'url' => '/admin/code']);
     }
 
     public function getSource()

@@ -127,3 +127,16 @@ function strNPos($str, $find, $n){
     }
     return $pos_val - $len;
 }
+/**
+ * 调用自定义代码
+ * @param string $name 唯一名称标识
+ * @return string
+ */
+function code($name)
+{
+    if ($code = Model\Code::get(['name' => $name])) {
+        if ($code->status == 1) {
+            return $code->content;
+        }
+    }
+}
