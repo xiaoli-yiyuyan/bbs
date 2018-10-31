@@ -57,8 +57,9 @@ class User extends Model
 
     public static function changeCoin($user_id, $coin)
     {
-        $sql = 'UPDATE `user` SET `coin`=`coin`+? WHERE `id`=?';
-        Db::query($sql, [$coin, $user_id]);
+        return self::where('id', $user_id)->where('coin', '>=', -$coin)->update([
+            'coin' => ['inc', $coin]
+        ]);
     }
 
     /**

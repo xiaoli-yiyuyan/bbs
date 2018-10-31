@@ -115,8 +115,11 @@ function byteFormat($size, $dec=2){
            $pos++;
     }
     return round($size,$dec)." ".$a[$pos];
- }
- 
+}
+
+/**
+ * 制定字符第N次出现的位置
+ */
 function strNPos($str, $find, $n){
     $pos_val = 0;
     $len = mb_strlen($find);

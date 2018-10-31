@@ -3,8 +3,9 @@ namespace Model;
 
 use Iam\Db;
 use Iam\Page;
+use think\Model;
 
-class Forum extends Common
+class Forum extends Model
 {
     private static $options = [
         // 'path' => '/forum/list',

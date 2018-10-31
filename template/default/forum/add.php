@@ -51,5 +51,9 @@
     </div>
     <p><button class="btn btn-fill btn-lg btn-block">立即发表</button></p>
 </form>
+
+<!-- 代码自定义 BEGIN -->
+<?=code('forum_ubb')?>
+<!-- 代码自定义 END -->
 <script src="/static/js/forum/add_upload.js"></script>
 <?php $this->load('/components/common/footer'); ?>

@@ -3,8 +3,9 @@ namespace Model;
 
 use Iam\Db;
 use Iam\Page;
+use think\Model;
 
-class ForumReply extends Common
+class ForumReply extends Model
 {
     public static function getList2($forum_id = 0, $page = 1, $pagesize = 10)
     {

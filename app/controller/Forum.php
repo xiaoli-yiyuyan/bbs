@@ -7,12 +7,14 @@ use Iam\View;
 use Iam\Page;
 use Iam\Request;
 use Iam\Response;
+use app\common\Ubb;
 use Model\Forum as MForum;
 use Model\User as MUser;
 use Model\ForumReply;
 use Model\File;
 use Model\Category;
 use Model\Message;
+use Model\ForumBuy;
 use app\Setting;
 
 class Forum extends Common
@@ -309,22 +311,102 @@ class Forum extends Common
         $class_info['is_admin'] = $this->isAdmin($this->user['id'], $class_info['id']);
 
         // 启用HTML过滤
-        if (!empty($class_info['is_html'])) {
+        $is_html = $class_info['is_html'];
+        if ($options['is_html'] != '') {
+            $is_html = $options['is_html'];
+        }
+        if (!empty($is_html)) {
             $info['title'] = htmlspecialchars($info['title']);
             $info['context'] = htmlspecialchars($info['context']);
-            $info['context'] = str_replace(chr(10), '<br>', $info['context']);
-            $info['context'] = str_replace(chr(13), '<br>', $info['context']);
+            $info['context'] = str_replace(chr(13).chr(10), '<br>', $info['context']);
             $info['context'] = str_replace(chr(32), '&nbsp;', $info['context']);
         }
 
         // 启用UBB语法
-        if (!empty($class_info['is_ubb'])) {
-            $info['context'] = $this->setReadRule($info['context']);
+        $is_ubb = $class_info['is_ubb'];
+        if ($options['is_ubb'] != '') {
+            $is_ubb = $options['is_ubb'];
+        }
+        if (!empty($is_ubb)) {
+            $info['context'] = $this->rule($info['context'], $info['id'], $info['user_id']);
             $info['context'] = $this->setViewImages($info['context'], $info['img_data']);
         }
         Db::query('UPDATE `forum` SET `read_count` = `read_count` + 1 WHERE `id` = ?', [$options['id']]);
 
         return ['err' => 0, 'info' => $info, 'user' => $forum_user, 'class_info' => $class_info];
+    }
+
+    /**
+     * 论坛UBB
+     */
+    private function rule($content, $id, $user_id)
+    {
+        $content = preg_replace_callback('/\[read_login\](.*?)\[\/read_login\]/', function($matches) {
+            if ($this->isLogin()) {
+                return $matches[1];
+            }
+            return Ubb::getTips('此内容<a href="/user/login">登录</a>可见', 'read_login');
+        }, $content);
+        
+        $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user_id) {
+            $reply = ForumReply::get([
+                'user_id' => $this->user['id'],
+                'forum_id' => $this->viewInfo['id']
+            ]);
+            if ($user_id == $this->user['id'] || $reply) {
+                return $matches[1];
+            }
+            return Ubb::getTips('此内容 <span>评论</span> 可见', 'read_reply');
+        }, $content);
+
+        $content = preg_replace_callback('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', function($matches) use($id, $user_id) {
+            if ($user_id == $this->user['id'] || $this->isBuy($id)) {
+                return $matches[2];
+            }
+            return Ubb::getTips('此内容需要花费 <span>' . $matches[1] . '</span> 金币 <a href="/forum/forum_buy?id=' . $id . '">购买</a>', 'read_buy');
+        }, $content);
+        return $content;
+    }
+
+    /**
+     * 判断是否已经购买
+     */
+    private function isBuy($id)
+    {
+        return ForumBuy::get(['forum_id' => $id, 'user_id' => $this->user['id']]);
+    }
+
+    /**
+     * 购买内容
+     */
+    public function forumBuy()
+    {
+        $id = Request::get('id');
+        if (!$forum = MForum::get($id)) {
+            return Page::error('购买失败！');
+        }
+        $content = $forum['context'];
+        $content = preg_match('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', $content, $matches);
+        if (empty($matches)) {
+            return Page::error('购买失败！');
+        }
+        if ($matches <= 0) {
+            return Page::error('购买失败！');
+        }
+        if ($buy = ForumBuy::get(['forum_id' => $id, 'user_id' => $this->user['id']])) {
+            return Page::error('购买失败！');
+        }
+
+        if (!MUser::changeCoin($this->user['id'], -$matches[1])) {
+            return Page::error('购买失败！余额不足');
+        }
+
+        ForumBuy::create([
+            'forum_id' => $id,
+            'user_id' => $this->user['id'],
+            'coin' => $matches[1]
+        ]);
+        return Page::success('购买成功！', '/forum/view?id=' . $id);
     }
 
     public function setViewImages($context, $img_data)
@@ -351,157 +433,6 @@ class Forum extends Common
             }
         }
         return $file_list;
-    }
-
-    private $tagFix = [
-        'begin' => '\[',
-        'end'   => '\]'
-    ];
-
-    private $tags = [
-        'read' => [
-            'name' => ['查看', 'read'],
-            'value' => [
-                'login' => ['登录', 'login'],
-                'reply' => ['回复', 'reply'],
-                'vip' => ['vip']
-            ]
-        ]
-    ];
-
-    /**
-     * 字符串替换 避免正则混淆
-     * @access private
-     * @param string $str
-     * @return string
-     */
-    private function stripPreg($str)
-    {
-        return str_replace(
-            ['{', '}', '(', ')', '|', '[', ']', '-', '+', '*', '.', '^', '?', '/'],
-            ['\{', '\}', '\(', '\)', '\|', '\[', '\]', '\-', '\+', '\*', '\.', '\^', '\?', '\/'],
-            $str);
-    }
-
-    private function parseTags()
-    {
-        $tags = [];
-        $params = [];
-        foreach ($this->tags as $action => $value) {
-            foreach ($value['name'] as $name) {
-                foreach ($value['value'] as $param => $word) {
-                    foreach ($word as $item) {
-                        $begin = "{$this->tagFix['begin']}({$name})=({$item}){$this->tagFix['end']}";
-                        $end = "{$this->tagFix['begin']}\/({$name}){$this->tagFix['end']}";
-                        $tags[] = [
-                            'tag' => [$begin, $end],
-                            'action' => $action,
-                            'param' => $param
-                        ];
-                    }
-                }
-            }
-        }
-        return $tags;
-    }
-
-    public function setReadRule($context)
-    {
-        // $pattern = [];
-
-        // $tags = $this->parseTags();
-        // foreach ($tags as $item) {
-        //     // $item['tag'][0] = $this->stripPreg($item['tag'][0]);
-        //     // $item['tag'][1] = $this->stripPreg($item['tag'][1]);
-        //     $pattern[] = $item['tag'][0];
-        //     if (!in_array($item['tag'][1], $pattern)) {
-        //         $pattern[] = $item['tag'][1];
-        //     }
-        // }
-        // $pattern = '/' . implode('|', $pattern) . '/';
-        $pattern = '/\[(查看|read)=(登录|login|回复|reply|vip,\d+)\]|\[\/(查看|read)\]/';
-
-        $context_arr = [];
-
-        // $matContext = preg_split($pattern, $context);
-        
-        preg_match_all($pattern, $context, $matTags, PREG_SET_ORDER);
-
-        $length = count($matTags);
-        for ($i = 0; $i < $length; $i ++) {
-            if (count($matTags[$i]) == 4) {
-                continue;
-            }
-            $time = 0;
-            $n = 0;
-            for ($_i = $i; $_i < $length; $_i ++) {
-                if (count($matTags[$_i]) == 4) {
-                    $time --;
-                } else {
-                    $time ++;
-                    $n ++;
-                }
-                $rule_data = $matTags[$i];
-                $first = mb_strpos($context, $rule_data[0]);
-
-                if ($time == 0) {
-                    $end = strNPos($context, $matTags[$_i][0], $n);
-                    // print_r($end);die();
-                    $over_len = $end + mb_strlen($matTags[$_i][0]);
-
-                    $i1 = $first + mb_strlen($rule_data[0]);
-                    $i2 = $end - $i1;
-                    $cut = mb_substr($context, $i1, $i2);
-                    $c1 = $this->checkRule($cut, $rule_data[1], $rule_data[2]);
-                    $context = mb_substr($context, 0, $first) . $c1 . mb_substr($context, $over_len);
-                    return $this->setReadRule($context);
-                    // $context;
-                    break;
-                }
-            }
-        }
-        return $context;
-    }
-
-    private function checkRule($context, $action, $param)
-    {
-        $params = explode(',', $param);
-
-        foreach ($this->tags as $action => $value) {
-            // 判断类型
-            if (in_array($action, $value['name'])) {
-                foreach ($value['value'] as $param => $word) {
-                    // 判断参数
-                    if (in_array($params[0], $word)) {
-                        return $this->runReadRule($param, $params, $context);
-                    }
-                }
-            }
-        }
-    }
-
-    private function runReadRule($param, $params, $context)
-    {
-        if ($this->viewInfo['user_id'] !== $this->user['id']) {
-            if ($param == 'login') {
-                if (!$this->isLogin()) {
-                    $context = '【此内容需要登陆以后浏览】';
-                }
-            } elseif ($param == 'reply') {
-                $list = $this->replyList([
-                    'user_id' => $this->user['id'],
-                    'forum_id' => $this->viewInfo['id']
-                ]);
-                if ($list['page']['count'] == 0) {
-                    $context = '【此内容需要回复以后浏览】';
-                }
-            } elseif ($param == 'vip') {
-                if (empty($this->user['vip_level']) || $this->user['vip_level'] < $params[1]) {
-                    $context = '【此内容仅限 VIP' . $params[1] . ' 可浏览】';
-                }
-            }
-        }
-        return $context;
     }
 
     public function replyList($options)

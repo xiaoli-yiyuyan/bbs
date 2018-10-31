@@ -1432,7 +1432,7 @@
               'value' => 0,
             ),
             'is_html' => '1',
-            'is_ubb' => 1,
+            'is_ubb' => '1',
           ),
         ),
         1 => 
@@ -1785,7 +1785,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/forum/editor.php',
+      'template' => 'template\\default/forum\\editor.php',
     ),
     'ajax_edit' => 
     array (
