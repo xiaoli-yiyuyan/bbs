@@ -106,10 +106,44 @@ class Chat extends Common
             $item['addtime'] = date('m-d H:i:s', strtotime($item['addtime']));
         }
     }
+ 
+    private $faceCode = [
+        '爱你' => 'aini.gif',
+        '抱抱' => 'baobao.gif',
+        '不活了' => 'buhuole.gif',
+        '不要' => 'buyao.gif',
+        '超人' => 'chaoren.gif',
+        '大哭' => 'daku.gif',
+        '嗯嗯' => 'enen.gif',
+        '发呆' => 'fadai.gif',
+        '飞呀' => 'feiya.gif',
+        '奋斗' => 'fendou.gif',
+        '尴尬' => 'ganga.gif',
+        '感动' => 'gandong.gif',
+        '害羞' => 'haixiu.gif',
+        '嘿咻' => 'heixiu.gif',
+        '画圈圈' => 'huaquanquan.gif',
+        '惊吓' => 'jinxia.gif',
+        '敬礼' => 'jingli.gif',
+        '快跑' => 'kuaipao.gif',
+        '路过' => 'luguo.gif',
+        '抢劫' => 'qiangjie.gif',
+        '杀气' => 'shaqi.gif',
+        '上吊' => 'shangdiao.gif',
+        '调戏' => 'tiaoxi.gif',
+        '跳舞' => 'tiaowu.gif',
+        '万岁' => 'wanshui.gif',
+        '我走了' => 'wozoule.gif',
+        '喜欢' => 'xihuan.gif',
+        '吓死人' => 'xiasiren.gif',
+        '嚣张' => 'xiaozhang.gif',
+        '疑问' => 'yiwen.gif',
+        '做操' => 'zuocao.gif',
+    ];
 
-    function face($context){
-        if(strpos($context,"[表情:")!==false){
-            $context = preg_replace("/\[表情:(.+)]/U","<img class='face-chat' src='/static/images/face/$1.gif' alt='$1'>",$context);
+    private function face($context){
+        foreach ($this->faceCode as $key => $value) {
+            $context = str_replace("[表情:{$key}]", "<img class=\"face-chat\" src=\"/static/images/face/{$value}\" alt=\"{$key}\">", $context);
         }
         return $context;
     }

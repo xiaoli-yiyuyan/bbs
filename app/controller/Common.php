@@ -61,16 +61,12 @@ class Common
 
     protected function getNickname($userid)
     {
-        // print_r($userid);
-        // print_r(Db::table('user')->field('nickname')->find(2));
-        return Db::table('user')->field('nickname')->find($userid)['nickname'];
+        return MUser::get($userid)->nickname;
     }
 
     protected function getUserInfo($field, $userid)
     {
-        // print_r($userid);
-        // print_r(Db::table('user')->field('nickname')->find(2));
-        return Db::table('user')->field($field)->find($userid);
+        return MUser::get($userid);
     }
 
     public function getUrl()
