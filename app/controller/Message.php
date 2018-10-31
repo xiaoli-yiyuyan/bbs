@@ -10,6 +10,7 @@ class Message extends Common
         $options['to_user_id'] = $this->user['id'];
         return MMessage::getList($options);
     }
+
     /**
      * 获取消息数量
      * 0 未读 1已读 2所有

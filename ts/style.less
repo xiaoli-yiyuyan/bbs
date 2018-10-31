@@ -479,6 +479,14 @@ ul li {
         }
     }
     .list-group {
+        &.border-bottom {
+            .list-item {
+                border-bottom: 1/@rem solid #eee;
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
         &.list-arrow {
             .list-item {
                 &:after {
@@ -486,7 +494,7 @@ ul li {
                     position: absolute;
                     right: 11/@rem;
                     top: 50%;
-                    margin-top: -10/@rem;
+                    margin-top: -8/@rem;
                     width: 16/@rem;
                     height: 16/@rem;
                     .backgroundImage(url(/static/svg/arrow-right.svg));
@@ -496,6 +504,7 @@ ul li {
         .list-item {
             position: relative;
             display: block;
+            color: #333;
             padding: 0 10/@rem;
             padding-right: 38/@rem;
             background: #FFF;

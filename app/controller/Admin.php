@@ -377,7 +377,7 @@ class Admin extends Common
         $list = $user->list([
             'order' => 0,
             'sort' => 0,
-            'page' => Request::get('p', 1)
+            'var_page' => 'p'
         ]);
         View::load('admin/user', [
             'list' => $list
@@ -699,10 +699,10 @@ class Admin extends Common
                         'title' => '用户列表',
                         'options' => [
                             [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
+                                'name' => 'var_page',
+                                'title' => '翻页参数',
+                                'value' => 'page',
+                                'explain' => '翻页参数，有多个的时候请更换不一样的'
                             ], [
                                 'name' => 'pagesize',
                                 'title' => '显示条数',
@@ -712,7 +712,7 @@ class Admin extends Common
                                 'name' => 'order',
                                 'title' => '排序依据',
                                 'value' => 0,
-                                'explain' => '0 动态排序，1 最新'
+                                'explain' => '0 动态排序，1 最新，2 经验，3 金币'
                             ], [
                                 'name' => 'sort',
                                 'title' => '排序方式',

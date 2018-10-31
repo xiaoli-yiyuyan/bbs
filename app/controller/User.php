@@ -244,12 +244,6 @@ class User extends Common
         if (empty($options['care_user_id'])) {
             $options['care_user_id'] = $this->user['id'];
         }
-        // $options = array_merge([
-        //     'care_user_id' => $this->user['id']
-        // ], $options);
-        // if (empty($options['user_id'])) {
-        //     return ['err' => 1, 'msg' => '用户未登录'];
-        // }
         return Friend::getList($options);
     }
 
@@ -258,12 +252,14 @@ class User extends Common
         if (empty($options['user_id'])) {
             $options['user_id'] = $this->user['id'];
         }
-        // $options = array_merge([
-        //     'user_id' => $this->user['id']
-        // ], $options);
-        // if (empty($options['user_id'])) {
-        //     return ['err' => 1, 'msg' => '用户未登录'];
-        // }
         return Friend::getList($options);
+    }
+
+    /**
+     * 获取用户排行榜
+     */
+    public function rank($options)
+    {
+        return MUser::rank($options['type']);
     }
 }

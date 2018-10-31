@@ -54,12 +54,12 @@
 <?php $this->load('/components/forum/simple_list', ['list' => $list2]); ?>
 
 <div class="m_body">
-    <div class="title-nav"><span class="title-i"></span>最近活跃会员</div>
+    <div class="title-nav"><span class="title-i"></span>最近活跃会员 <a class="user_rank_link" href="/user/rank">Top 排行榜</a></div>
     <?php $this->load('/components/user/new_user_list'); ?>
 </div>
 <div class="link_title">最新资讯</div>
 
-<?php $this->load('/components/forum/simple_list', ['list' => $list]); ?>
+<?php $this->load('/components/forum/easy_list', ['list' => $list]); ?>
 
 <script>
 $(function() {

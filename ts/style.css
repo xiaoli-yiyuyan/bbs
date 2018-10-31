@@ -471,12 +471,18 @@ ul li {
 .list.list-border-bottom .list-group .list-item.list-item-icon img {
   left: 1rem;
 }
+.list .list-group.border-bottom .list-item {
+  border-bottom: 0.05rem solid #eee;
+}
+.list .list-group.border-bottom .list-item:last-child {
+  border-bottom: none;
+}
 .list .list-group.list-arrow .list-item:after {
   content: '';
   position: absolute;
   right: 0.55rem;
   top: 50%;
-  margin-top: -0.5rem;
+  margin-top: -0.4rem;
   width: 0.8rem;
   height: 0.8rem;
   background-image: url(/static/svg/arrow-right.svg);
@@ -487,6 +493,7 @@ ul li {
 .list .list-group .list-item {
   position: relative;
   display: block;
+  color: #333;
   padding: 0 0.5rem;
   padding-right: 1.9rem;
   background: #FFF;

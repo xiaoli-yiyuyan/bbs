@@ -19,11 +19,11 @@ function getRandChar($length)
 
 function longPolling($callback){
     session_write_close();
-    // ignore_user_abort(false);
+    ignore_user_abort(false);
     set_time_limit(0);
 
     for($i=0;$i<25;$i++){
-        echo str_repeat(' ',4000);
+        echo ' ';
         ob_flush();
         flush();
         if ($callback()) {

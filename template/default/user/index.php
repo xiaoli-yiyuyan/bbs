@@ -37,6 +37,12 @@
 
 <div class="change-info">
 
+    <div class="li-box border-b message_line_item">
+        <a href="/user/edit_info" class="flex-box flex">
+            <i class="li-box-svg icon-svg b_message"></i>
+            <div class="li-box-word">消息通知</div>
+        </a>
+    </div>
     <!-- <div class="li-box border-b">
         <a href="/novel/favorite/" class="flex-box">
             <div><i class="li-box-svg icon-svg b_qiqiu"></i></div>
@@ -71,6 +77,7 @@
             <div class="li-box-word">聊天大厅</div>
         </a>
     </div> -->
+
     <div class="li-box border-b">
         <a href="/user/edit_info" class="flex-box flex">
             <i class="li-box-svg icon-svg b_mofang"></i>

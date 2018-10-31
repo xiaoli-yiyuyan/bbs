@@ -46,6 +46,26 @@ class App
 		}
 	}
 
+	public static function runTpl()
+	{
+		$runClass = '\\' . self::$namespace . '\\' . self::$class;
+		if (class_exists($runClass)) {
+			$appClass = new $runClass;
+			$appAction = self::$action;
+			if (method_exists($appClass, $appAction)) {
+				$appClass->$appAction();
+			} else {
+				header('HTTP/1.1 404 Not Found');
+				header("status: 404 Not Found");
+				echo '404 您访问的网页不存在[1] <a href="/">点击返回首页</a>';
+			}
+		} else {
+			header('HTTP/1.1 404 Not Found');
+			header("status: 404 Not Found");
+			echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+		}
+	}
+
 	private static function parseUrl()
 	{
 		$requestUrl = $_SERVER['REQUEST_URI'];

@@ -2,8 +2,9 @@
 namespace Model;
 
 use Iam\Db;
+use think\Model;
 
-class Chat extends Common
+class Chat extends Model
 {
     public function add($userid, $touserid, $classid, $content)
     {
@@ -22,7 +23,7 @@ class Chat extends Common
             return false;
         }
 
-        return Db::table('chat')->add([
+        return self::create([
             'userid' => $userid,
             'touserid' => $touserid,
             'classid' => $classid,
@@ -37,11 +38,11 @@ class Chat extends Common
 
     public function listIdDesc($classid, $limit = [0, 20])
     {
-        return Db::table('chat')->field(['id', 'userid', 'touserid', 'content', 'addtime'])->where(['classid' => $classid])->order('`id` DESC')->select($limit[0],$limit[1]);
+        return self::field(['id', 'userid', 'touserid', 'content', 'addtime'])->where(['classid' => $classid])->order('id DESC')->limit($limit[0],$limit[1])->select();//Db::table('chat')->field(['id', 'userid', 'touserid', 'content', 'addtime'])->where(['classid' => $classid])->order('`id` DESC')->select($limit[0],$limit[1]);
     }
 
     public function listIdNew($classid, $lastid)
     {
-        return Db::query('SELECT `id`,`userid`,`touserid`,`content`,`addtime` FROM `chat` WHERE `classid`=? AND `id`>? ORDER BY `id` DESC LIMIT 0,1',[$classid, $lastid]);
+        return self::field(['id', 'userid', 'touserid', 'content', 'addtime'])->where('classid', $classid)->where('id', '>', $lastid)->order('id DESC')->select()->toArray();
     }
 }

@@ -41,8 +41,8 @@
         <div class="box_content">
         <?php foreach ($view['info']['file_list'] as $key => $value) { ?>
             <div class="forum_file_list">
-                <div><?=$value['name']?></div>
-                <a href="<?=$value['path']?>">点击下载(<?=$value['format_size']?>)</a>
+                <div class="forum_down_name"><?=$value['name']?></div>
+                <a  class="forum_down_link" href="<?=$value['path']?>">点击下载(<?=$value['format_size']?>)</a>
             </div>
         <?php } ?>
         </div>

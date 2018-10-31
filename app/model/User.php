@@ -1,13 +1,26 @@
 <?php
 namespace Model;
 
-use Iam\Db;
 use Iam\Page;
+use think\Db;
+use think\Model;
 
-class User extends Common
+class User extends Model
 {
+    public function getIsOnlineAttr($value, $data)
+    {
+        $diff = time() - strtotime($data['last_time']);
+        return $diff < 20 * 60;
+    }
+
+    public function getLvAttr($value, $data)
+    {
+        $level = getUserLevel($data['exp'], 25);
+        return $level;
+    }
+
     private static $options = [
-        'page' => 1,
+        'var_page' => 'page',
         'pagesize' => 10
     ];
     // array (
@@ -17,67 +30,49 @@ class User extends Common
     //     'sort' => 0,0 正序 1 倒序
     //   )
 
-    private static $order = ['last_time', 'id'];
+    private static $order = ['last_time', 'id', 'exp', 'coin'];
     private static $sort = ['ASC', 'DESC'];
 
     private static $search = [];
 
     public static function getList($options = []/*$class_id = 0, $page = 1, $pagesize = 10, word*/)
     {
-        // $query = [];
         $options = array_merge(self::$options, $options);
-        $where = [];
-        // if (!empty($options['class_id'])) {
-        //     $where['class_id'] = $options['class_id'];
-        // }
-        // if (!empty($options['user_id'])) {
-        //     $where['user_id'] = $options['user_id'];
-        // }
-        // if ($options['word']) {
-        //     where('(`id` = :word OR `username` LIKE :word OR `nickname` LIKE :word)', ['word' => $options['word']]);
-        // }
-        $count = Db::table('user')->field('count(1) as count')->where($where)->find()['count'];
-
-        $order = [];
+        $user = self::where('lock_time', '<', now());
 
         $order_value = $options['order'];
 
         if (isset(self::$order[$order_value])) {
-            $order_key = self::$order[$order_value];
-            $order[$order_key] = 'ASC';
-
             $sort_value = $options['sort'];
             if (isset(self::$sort[$sort_value])) {
-                $sort_key = self::$sort[$sort_value];
-                $order[$order_key] = $sort_key;
+                $user->order(self::$order[$order_value], self::$sort[$sort_value]);
+            } else {
+                $user->order(self::$order[$order_value]);
             }
         }
-
-        $user = Db::table('user')->where($where);
-
-        if (!empty($order)) {
-            $user->order($order);
-        }
-        $page = new Page([
-            'count' => $count,
-            'page' => $options['page'],
-            'path' => '',
-            'query' => $where,
-            'pagesize' => $options['pagesize']
+        return $user->paginate($options['pagesize'], false, [
+            'var_page' => $options['var_page']
         ]);
-        $page = $page->parse();
-
-        $list = $user->select(($page['page'] - 1) * $page['pagesize'], $page['pagesize']);
-        
-        return [
-            'page' => $page,
-            'data' => $list
-        ];
     }
 
     public static function changeCoin($user_id, $coin)
     {
         $sql = 'UPDATE `user` SET `coin`=`coin`+? WHERE `id`=?';
         Db::query($sql, [$coin, $user_id]);
-    } 
+    }
+
+    /**
+     * 用户排行榜
+     * @param int $tp 0经验榜 1金币榜
+     */
+    public static function rank($tp = 0)
+    {
+        $user = self::where('lock_time', '<', now());
+        if ($tp == 1) {
+            $user->order('coin', 'DESC');
+        } else {
+            $user->order('exp', 'DESC');
+        }
+        return $user->limit(20)->select()->toArray();
+    }
 }

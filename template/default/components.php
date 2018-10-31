@@ -245,11 +245,7 @@
           'param' => 'user',
           'options' => 
           array (
-            'id' => 
-            array (
-              'prop' => 'id',
-              'value' => 0,
-            ),
+            'id' => 0,
           ),
         ),
         3 => 
@@ -425,6 +421,34 @@
         ),
       ),
       'template' => 'template\\default/user\\message.php',
+    ),
+    'rank' => 
+    array (
+      'props' => 
+      array (
+        'type' => 
+        array (
+          'type' => 'get',
+          'value' => '0',
+        ),
+      ),
+      'source' => 
+      array (
+        0 => 
+        array (
+          'name' => 'User',
+          'action' => 'list',
+          'param' => 'user_list',
+          'options' => 
+          array (
+            'var_page' => 'page',
+            'pagesize' => 10,
+            'order' => '2',
+            'sort' => '1',
+          ),
+        ),
+      ),
+      'template' => 'template\\default/user\\rank.php',
     ),
   ),
   '/' => 
@@ -961,6 +985,21 @@
       ),
       'template' => 'template\\default/components/forum\\easy_list.php',
     ),
+    'easy_list_item' => 
+    array (
+      'props' => 
+      array (
+        'item' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template\\default/components/forum\\easy_list_item.php',
+    ),
   ),
   '/components/user' => 
   array (
@@ -978,7 +1017,7 @@
           'param' => 'user_list',
           'options' => 
           array (
-            'page' => 1,
+            'var_page' => 'page',
             'pagesize' => '6',
             'order' => '0',
             'sort' => '1',
@@ -1577,6 +1616,16 @@
     array (
       'props' => 
       array (
+        'file_name' => 
+        array (
+          'type' => 'post',
+          'value' => '',
+        ),
+        'file_memo' => 
+        array (
+          'type' => 'post',
+          'value' => '',
+        ),
       ),
       'source' => 
       array (
@@ -1591,7 +1640,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/forum/ajax_upload.php',
+      'template' => 'template\\default/forum\\ajax_upload.php',
     ),
     'ajax_add' => 
     array (
