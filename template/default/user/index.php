@@ -17,7 +17,8 @@
       <img class="user-photo photo" src="<?=$userinfo['photo']?>" alt="">
       <div class="info-box">
         <div class="user-nc">
-            <span><?=$userinfo['nickname']?><span class="user_lv">lv.<?=$userinfo['level']?></span></span>
+            <span><?=$userinfo['nickname']?><span class="user_lv">lv.<?=$userinfo['level']?></span><span class="user_coin">金币：<?=$userinfo['coin']?></span></span>
+            
         </div>
         <div class="user-ep"><?=$userinfo['explain']?></div>
         <div class="edit-info"><i class="icon-svg s_edit"></i>点击修改个人信息</div>
@@ -38,7 +39,7 @@
 <div class="change-info">
 
     <div class="li-box border-b message_line_item">
-        <a href="/user/edit_info" class="flex-box flex">
+        <a href="/user/message" class="flex-box flex">
             <i class="li-box-svg icon-svg b_message"></i>
             <div class="li-box-word">消息通知</div>
         </a>

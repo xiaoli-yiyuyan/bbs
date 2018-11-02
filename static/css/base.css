@@ -1125,3 +1125,70 @@ i.svg-more {
     right: 0;
     font-size: .7rem;
 }
+.user_coin {
+    color: #FFF;
+    margin-left: .25rem;
+    padding: 0 .2rem;
+    border-radius: .1rem;
+    font-size: .6rem;
+    font-weight: 400;
+    background: #00ca7d;
+}
+.sign_word {
+    flex-wrap: wrap;
+}
+.sign_word>div{
+    width: 20%;
+    text-align: center;
+}
+.sign_word .feel {
+    background: #FFFFFF;
+    color: #333;
+    line-height: 1.6rem;
+    margin: .125rem;
+    border: .05rem solid #eee;
+    border-radius: .1rem;
+}
+/* .feel.feel_0 {
+    background: #00ca7d;
+    border-color: #00b16d;
+}
+.feel.feel_1 {
+    background: #00ca7d;
+    border-color: #00c964;
+}
+.feel.feel_2 {
+    background: #00c964;
+    border-color: #00c921;
+}
+.feel.feel_3 {
+    background: #00c921;
+    border-color: #2fc900;
+}
+.feel.feel_4 {
+    background: #2fc900;
+    border-color: #72c900;
+}
+.feel.feel_5 {
+    background: #72c900;
+    border-color: #bcc900;
+}
+.feel.feel_6 {
+    background: #bcc900;
+    border-color: #c97200;
+}
+.feel.feel_7 {
+    background: #c97200;
+    border-color: #c94000;
+}
+.feel.feel_8 {
+    background: #c94000;
+    border-color: #c90000;
+}
+.feel.feel_9 {
+    background: #c90000;
+    border-color: #ac0000;
+} */
+.sign_input_box {
+    background: #F8F8F8;
+}
