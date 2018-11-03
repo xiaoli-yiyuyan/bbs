@@ -1,6 +1,6 @@
 <?php self::load('common/header',['title' => '每日签到']); ?>
 <?php self::load('common/header_nav',['title' => '每日签到', 'back_url' => '/','message_count' => 0]); ?>
-<div>
+<div class="m_body">
     <div class="sign_input_box">
         <div class="sign_word flex-box">
             <div>
@@ -34,22 +34,60 @@
                 <div class="feel feel_9">生气ing</div>
             </div>
         </div>
-        <div class="input-search">
-            <input type="text" class="input" placeholder="请输入关键字">
+        <div class="input-search sign_input">
+            <input type="text" class="input" placeholder="我知道你想说点什么">
             <span class="btn btn-fill">签到</span>
         </div>
     </div>
-    <div>
+
+    <div class="sign_log_box">
+        <div class="nav_title">最新签到记录</div>
+        <div class="list">
+            <div class="list-group">
+                <div class="list-item flex-box border-t">
+                    <div class="img_head">
+                        <img src="/static/images/photo.jpg" alt="">
+                    </div>
+                    <div class="flex">
+                        <div class="sign_user_info"><span class="nickname">小包</span> <span class="user_lv">lv.21</span> <span class="vip_icon vip_0">vip5</span> <span class="datatime">2018-01-01 01:01:01</span></div>
+                        <div class="sign_info_memo"> 
+                            <div class="sign_text_info border-b">生气ing</div>
+                            <div class="sign_info">
+                                <table class="sign_table">
+                                    <tr>
+                                        <th>天数</th>
+                                        <th>基础</th>
+                                        <th>连奖</th>
+                                        <th>VIP</th>
+                                        <th>随机</th>
+                                        <th>暴击</th>
+                                        <th>合计</th>
+                                    </tr>
+                                    <tr>
+                                        <td>7 天</td>
+                                        <td>1</td>
+                                        <td>7</td>
+                                        <td>5</td>
+                                        <td>12</td>
+                                        <td>X1</td>
+                                        <td>31</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sign_info_box">
         <div class="nav_title">签到奖励说明</div>
         <div>
-        不连续第一次奖励 1，连续签到奖励递加 1，最大上限为 7<br>
-        VIP1每日签到额外奖励 1<br>
-        VIP2每日签到额外奖励 2<br>
-        VIP3每日签到额外奖励 3<br>
-        VIP4每日签到额外奖励 4<br>
-        VIP5每日签到额外奖励 5<br>
-        随机奖励：有一定的几率额外获得 1 - 20 的额外金币奖励，100 - 1000额外经验奖励<br>
-        暴击：有一定的几率产生暴击，获得双倍奖励<br>
+        不连续<u>第一次</u>奖励<b>1</b>，连续签到奖励<u>递加</u><b>1</b>，最大上限为<b>7</b><br>
+        VIP奖励：v1奖<b>1</b> | v2奖<b>2</b> | v3奖<b>3</b> | v4奖<b>4</b> | v5奖<b>5</b><br>
+        随机奖励：有一定的几率<u>额外</u>获得<b>1 - 20</b> 的金币奖励<br>
+        暴击：有一定的几率产生<u>暴击</u>，获得<u>双倍</u>奖励<br>
         </div>
     </div>
 </div>

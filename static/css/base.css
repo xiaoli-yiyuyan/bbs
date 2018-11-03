@@ -583,10 +583,10 @@ i.svg-more {
 }
 
 .input-search {
-    margin: .3rem;
-    padding: 0;
-    background-color: #eee;
-    border-radius: .4rem;
+    /* margin: .3rem; */
+    /* padding: 0; */
+    /* background-color: #eee; */
+    /* border-radius: .4rem; */
 
 }
 .ss-input {
@@ -1146,7 +1146,7 @@ i.svg-more {
     color: #333;
     line-height: 1.6rem;
     margin: .125rem;
-    border: .05rem solid #eee;
+    border: .05rem solid #ddd;
     border-radius: .1rem;
 }
 /* .feel.feel_0 {
@@ -1190,5 +1190,85 @@ i.svg-more {
     border-color: #ac0000;
 } */
 .sign_input_box {
-    background: #F8F8F8;
+    /* background: #F8F8F8; */
+}
+.sign_info_box {
+    color: #333;
+    background: #FFFFFF;
+}
+.sign_input {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+.sign_info_box .nav_title {
+    text-align: center;
+    line-height: 2rem;
+    font-size: .8rem;
+    border-top: .05rem solid #EEE;
+    border-bottom: .05rem solid #EEE;
+}
+.sign_info_box u,
+.sign_info_box b
+{
+    padding: 0 .1rem;
+}
+
+.sign_info_box u {
+    color: #00cc77;
+}
+
+.sign_info_box b {
+    color: #cc4b00;
+}
+.sign_log_box .nav_title {
+    text-align: center;
+    line-height: 1.6rem;
+    font-size: .8rem;
+    border-top: .05rem solid #EEE;
+    /* border-bottom: .05rem solid #EEE; */
+}
+.sign_log_box .list .list-group .list-item {
+    display: flex;
+    padding: .5rem;
+    line-height: 1rem;
+}
+.sign_table td {
+    text-align: center;
+}
+.img_head img {
+    width: 2rem;
+    height: 2rem;
+}
+.sign_user_info {
+    text-align: left;
+    padding: .25rem;
+}
+.sign_text_info {
+    position: relative;
+    padding: .25rem;
+    text-align: center;
+    font-size: .7rem;
+    line-height: 1.2rem;
+}
+.sign_info {
+    padding: .25rem;
+}
+.sign_info_memo {
+    font-size: .6rem;
+    line-height: .7rem;
+    background: #32393e;
+    color: #00ca7d;
+    border-radius: .5rem;
+    box-shadow: 0, 0, .2rem, #32393e;
+}
+.sign_table {
+    width: 100%;
+    color: #00acca;
+}
+.datatime {
+    color: #999;
+    font-size: .6rem;
+}
+.sign_user_info .datatime {
+    float: right;
 }
