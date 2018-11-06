@@ -4,6 +4,7 @@ namespace App;
 use Iam\View;
 use Iam\Page;
 use app\Setting;
+use Iam\Url;
 use Iam\Request;
 use Model\SignLog;
 use Model\User;
@@ -47,6 +48,10 @@ class Sign extends Common
 
     public function sign()
     {
+        if (!$this->isLogin()) {
+            Url::redirect('/login');
+            exit();
+        }
         $content = Request::post('content');
         $content = htmlspecialchars($content);
         $new_log = SignLog::where('user_id', $this->user['id'])->order('id DESC')->find();
