@@ -6,6 +6,7 @@ use Iam\Page;
 use app\Setting;
 use Iam\Request;
 use Model\SignLog;
+use Model\User;
 
 class Sign extends Common
 {
@@ -26,8 +27,22 @@ class Sign extends Common
     public function index()
     {
         $today_log = SignLog::where('user_id', $this->user['id'])->order('id DESC')->find();
+        $last_time = strtotime($today_log['create_time']);
+        $_last_time = strtotime(date('Y-m-d', $last_time));
+        $now_time = time();
+        $diff_time = $now_time - $_last_time;
 
-    	View::load('sign/index');
+        // 如果今天已经签到
+        $is_sign = $diff_time < 86400;
+        // if ($diff_time < 86400) {
+        //     return Page::error('签到失败！');
+        // }
+
+        $list = SignLog::order('id', 'DESC')->limit(20)->select();
+    	View::load('sign/index', [
+            'is_sign' => $is_sign,
+            'list' => $list
+        ]);
     }
 
     public function sign()
@@ -49,7 +64,7 @@ class Sign extends Common
         $time = $diff_time >= 86400 * 2 ? 1 : $new_log['time'] + 1;
         $reward_coin = $this->getSignCoin($time, $this->user['vip_level']);
         $coin = array_sum($reward_coin['coin']) * $reward_coin['mul'];
-        MUser::changeCoin($this->user['id'], $coin);
+        User::changeCoin($this->user['id'], $coin);
         SignLog::create([
             'user_id' => $this->user['id'],
             'memo' => json_encode($reward_coin),
@@ -66,7 +81,7 @@ class Sign extends Common
         $coin = [];
         $coin[] = $sign_reward['start'];
         $coin[] = max($time * $sign_reward['next'], $sign_reward['max']);
-        $coin[] = $sign_reward[$vip_level];
+        $coin[] = $sign_reward['vip'][$vip_level];
         $coin[] = call_user_func_array('mt_rand', $sign_reward['rand']);
         $mul = 1;
         if ($sign_reward['is_mul']) {

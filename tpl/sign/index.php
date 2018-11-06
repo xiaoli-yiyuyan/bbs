@@ -2,6 +2,7 @@
 <?php self::load('common/header_nav',['title' => '每日签到', 'back_url' => '/','message_count' => 0]); ?>
 <div class="m_body">
     <div class="sign_input_box">
+    <?php if (!$is_sign) { ?>
         <div class="sign_word flex-box">
             <div>
                 <div class="feel feel_0">求好运</div>
@@ -34,24 +35,28 @@
                 <div class="feel feel_9">生气ing</div>
             </div>
         </div>
-        <div class="input-search sign_input">
-            <input type="text" class="input" placeholder="我知道你想说点什么">
-            <span class="btn btn-fill">签到</span>
-        </div>
+        <form class="input-search sign_input" action="/sign/sign" method="post">
+            <input type="text" name="content" class="input" placeholder="我知道你想说点什么">
+            <button class="btn btn-fill">签到</button>
+        </form>
+    <?php } else { ?>
+        今日签到任务已完成！
+    <?php } ?>
     </div>
 
     <div class="sign_log_box">
         <div class="nav_title">最新签到记录</div>
         <div class="list">
+        <?php foreach ($list as $item) { ?>
             <div class="list-group">
                 <div class="list-item flex-box border-t">
                     <div class="img_head">
-                        <img src="/static/images/photo.jpg" alt="">
+                        <img src="<?=$item['user_info']['photo']?>" alt="">
                     </div>
                     <div class="flex">
-                        <div class="sign_user_info"><span class="nickname">小包</span> <span class="user_lv">lv.21</span> <span class="vip_icon vip_0">vip5</span> <span class="datatime">2018-01-01 01:01:01</span></div>
+                        <div class="sign_user_info"><span class="nickname"><?=$item['user_info']['nickname']?></span> <span class="user_lv">lv.<?=$item['user_info']['lv']['level']?></span> <span class="vip_icon vip_0">vip<?=$item['user_info']['vip_level']?></span> <span class="datatime"><?=$item['friendly_create_time']?></span></div>
                         <div class="sign_info_memo"> 
-                            <div class="sign_text_info border-b">生气ing</div>
+                            <div class="sign_text_info border-b"><?=$item['content']?></div>
                             <div class="sign_info">
                                 <table class="sign_table">
                                     <tr>
@@ -64,13 +69,13 @@
                                         <th>合计</th>
                                     </tr>
                                     <tr>
-                                        <td>7 天</td>
-                                        <td>1</td>
-                                        <td>7</td>
-                                        <td>5</td>
-                                        <td>12</td>
-                                        <td>X1</td>
-                                        <td>31</td>
+                                        <td><?=$item['time']?> 天</td>
+                                        <td><?=$item['info']['coin'][0]?></td>
+                                        <td><?=$item['info']['coin'][1]?></td>
+                                        <td><?=$item['info']['coin'][2]?></td>
+                                        <td><?=$item['info']['coin'][3]?></td>
+                                        <td>X<?=$item['info']['mul']?></td>
+                                        <td><?=$item['coin']?></td>
                                     </tr>
                                 </table>
                             </div>
@@ -78,6 +83,7 @@
                     </div>
                 </div>
             </div>
+        <?php } ?>
         </div>
     </div>
 
@@ -91,4 +97,10 @@
         </div>
     </div>
 </div>
+<script>
+    $('.sign_word .feel').click(function() {
+        var $input = $('input[name=content]');
+        $input.val($input.val() + $(this).text());
+    });
+</script>
 <?php self::load('common/footer'); ?>
