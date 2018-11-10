@@ -258,7 +258,7 @@ class Forum extends Common
         $data = [
             'title' => $options['title'],
             'context' => $options['context'],
-            'user_id' => $this->user['id'],
+            // 'user_id' => $this->user['id'],
             'class_id' => $class_id,
             'img_data' => $options['img_data'],
             'file_data' => $options['file_data'],
