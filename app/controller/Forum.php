@@ -331,8 +331,13 @@ class Forum extends Common
             $info['context'] = $this->rule($info['context'], $info['id'], $info['user_id']);
             $info['context'] = $this->setViewImages($info['context'], $info['img_data']);
         }
-        Db::query('UPDATE `forum` SET `read_count` = `read_count` + 1 WHERE `id` = ?', [$options['id']]);
+        
+        $info['strip_tags_context'] = str_replace('&nbsp;', chr(32), $info['context']);
+        $info['strip_tags_context'] = strip_tags($info['strip_tags_context']);
+        $info['strip_tags_context'] = preg_replace('/\s+/', ' ', $info['strip_tags_context']);
+        $info['keywords'] = getKeywords($info['title'], $info['strip_tags_context']);
 
+        Db::query('UPDATE `forum` SET `read_count` = `read_count` + 1 WHERE `id` = ?', [$options['id']]);
         return ['err' => 0, 'info' => $info, 'user' => $forum_user, 'class_info' => $class_info];
     }
 

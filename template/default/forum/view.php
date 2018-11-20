@@ -4,7 +4,11 @@
         exit();
     }
 ?>
-<?php $this->load('/components/common/header', ['title' => $view['info']['title']]); ?>
+<?php $this->load('/components/common/header', [
+    'title' => $view['info']['title'],
+    'keywords' => implode($view['info']['keywords'], ','),
+    'description' => mb_substr($view['info']['strip_tags_context'], 0, 100)
+]); ?>
 <style>
     body {
         background: #FFF;

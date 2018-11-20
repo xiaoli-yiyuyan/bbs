@@ -16,6 +16,5 @@ class Main
         if (!$component->load($url)) {
             \Iam\App::runTpl();
         }
-        
     }
 }

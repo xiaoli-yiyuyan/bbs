@@ -17,7 +17,7 @@
       <img class="user-photo photo" src="<?=$userinfo['photo']?>" alt="">
       <div class="info-box">
         <div class="user-nc">
-            <span><?=$userinfo['nickname']?><span class="user_lv">lv.<?=$userinfo['level']?></span><span class="user_coin">金币：<?=$userinfo['coin']?></span></span>
+            <span><?=$userinfo['nickname']?> <span class="vip_icon vip_0">vip <?=$userinfo['vip_level']?></span><span class="user_lv">lv.<?=$userinfo['level']?></span><span class="user_coin">金币: <?=$userinfo['coin']?></span></span>
             
         </div>
         <div class="user-ep"><?=$userinfo['explain']?></div>
@@ -58,6 +58,17 @@
             <div class="li-box-word">最近历史</div>
         </a>
     </div> -->
+
+
+    <div class="li-box border-b">
+        <a href="/sign/index" class="flex-box flex">
+            <i class="li-box-svg icon-svg b_qiandao"></i>
+            <div class="li-box-word">签到</div>
+            <div class="flex">
+                <span class="word_right sign_status_no">未完成</span>
+            </div>
+        </a>
+    </div>
 
     <!-- 论坛统计 Begin -->
     <div class="li-box border-b">

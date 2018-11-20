@@ -26,46 +26,53 @@ class App
 		Loader::addClassMap(self::$namespace, $appPath); //添加命名空间
 		$modelPath = self::$approot . DS . 'model';
 		Loader::addClassMap('Model', $modelPath); //添加命名空间
-		// linux 下和 windows 下斜杠和反斜杠问题
-		if (!(self::$namespace == 'App' && self::$class == self::$admin)) {
-			$appClass = new \app\Main;
-			$appClass->index(self::$baseUrl);
-			return; 
-		}
-		$runClass = '\\' . self::$namespace . '\\' . self::$class;
-		if (class_exists($runClass)) {
-			$appClass = new $runClass;
-			$appAction = self::$action;
-			if (method_exists($appClass, $appAction)) {
-				$appClass->$appAction();
-			} else {
-				echo '404 您访问的网页不存在[1]';
-			}
-		} else {
-			echo '404 您访问的网页不存在[2]';
-		}
+		$appClass = new \app\Main;
+		$appClass->index(self::$baseUrl);
 	}
 
 	public static function runTpl()
 	{
 		$runClass = '\\' . self::$namespace . '\\' . self::$class;
-		if (class_exists($runClass)) {
-			$appClass = new $runClass;
-			$appAction = self::$action;
-			if (method_exists($appClass, $appAction)) {
-				$appClass->$appAction();
-			} else {
-				header('HTTP/1.1 404 Not Found');
-				header("status: 404 Not Found");
-				echo '404 您访问的网页不存在[1] <a href="/">点击返回首页</a>';
-			}
-		} else {
-			header('HTTP/1.1 404 Not Found');
-			header("status: 404 Not Found");
-			echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+		if (!class_exists($runClass)) {
+			return self::setErrorPage();
 		}
+		$appClass = new $runClass;
+		$appAction = self::$action;
+		if (!method_exists($appClass, $appAction)) {
+			return self::setErrorPage();
+		}
+
+		// 执行带参数的方法
+		$method = new \ReflectionMethod($runClass, $appAction);
+		$params = $method->getParameters();
+		$args = [];
+		// 设置参数
+		foreach ($params as $param) {
+			$paramName = $param->getName();
+			if (isset($_REQUEST[$paramName])) {
+				$args[] = $_REQUEST[$paramName];
+			} elseif ($param->isDefaultValueAvailable()) {
+				$args[] = $param->getDefaultValue();
+			}
+		}
+
+		// 执行方法
+		if (count($args) == $method->getNumberOfParameters()) {
+			$method->invokeArgs($appClass, $args);
+		} else {
+			throw new \Exception('参数错误，缺少参数');
+		}
+
+		//$appClass->$appAction();
 	}
 
+	private static function setErrorPage()
+	{
+		header('HTTP/1.1 404 Not Found');
+		header("status: 404 Not Found");
+		echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+	}
+	
 	private static function parseUrl()
 	{
 		$requestUrl = $_SERVER['REQUEST_URI'];

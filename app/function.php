@@ -143,3 +143,34 @@ function code($name)
         }
     }
 }
+
+/** 
+ * 关键字提取方法
+ * @param $title string  进行分词的标题 
+ * @param $content string  进行分词的内容 
+ * @return array 得到的关键词数组 
+ */
+function getKeywords($title = "", $content = "") {  
+    if (empty ( $title )) {  
+        return array ();  
+    }  
+    if (empty ( $content )) {  
+        return array ();  
+    }  
+    $data = $title . $title . $title . $content; // 为了增加title的权重，这里连接3次  
+
+    //这个地方写上phpanalysis对应放置路径  
+    // require_once './phpanalysis/phpanalysis.class.php';  
+
+    app\ext\phpanalysis\PhpAnalysis::$loadInit = false;  //初始化类时是否直接加载词典，选是载入速度较慢，但解析较快；选否载入较快，但解析较慢
+    $pa = new app\ext\phpanalysis\PhpAnalysis ( 'utf-8', 'utf-8', false );  
+
+    $pa->LoadDict ();  //载入词典
+    $pa->SetSource ( $data );  //设置源字符串
+    $pa->StartAnalysis ( true );  //是否对结果进行优化
+
+    $tags = $pa->GetFinallyKeywords (9); // 获取文章中的五个关键字  
+
+    $tagsArr = explode (",",$tags);  
+    return $tagsArr;//返回关键字数组
+}

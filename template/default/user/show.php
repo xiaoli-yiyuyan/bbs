@@ -5,7 +5,7 @@
     <img class="user-photo photo" src="<?=$userinfo['photo']?>" alt="">
     <div class="info-box">
         <div class="user-nc">
-            <span><?=$userinfo['nickname']?><span class="user_lv">lv.<?=$userinfo['level']?></span></span>
+            <span><?=$userinfo['nickname']?> <span class="vip_icon vip_0">vip <?=$userinfo['vip_level']?></span><span class="user_lv">lv.<?=$userinfo['level']?></span></span>
             <?php if ($user['id'] != 0 && $user['id'] != $userinfo['id']) { ?>
             <?php if ($is_care) { ?>
             <span class="care_btn">
@@ -132,5 +132,4 @@
         }
     });
 </script>
-
 <?php $this->load('components/common/footer'); ?>

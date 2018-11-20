@@ -44,9 +44,14 @@
 </div>
 
 
-<div class="link_title">更新于：2018-09-14</div>
+<div class="link_title">更新于：2018-10-26</div>
 <div class="m_nav">
-    <div class="nav_title"><a href="/forum/view?id=1613">[安米程序] 安米程序V0.3.2(测试版)下载</a></div>
+  	新《<a href="/sign/index">暴击签到</a>》 今天签到了吗，来看看今天人品如何。<br>
+  	《<a href="/chat/room?id=2">第一聊天室</a>》 再次上线！实时聊天，无需刷新等待！
+</div>
+</div>
+<div class="m_nav">
+    <div class="nav_title"><a href="/forum/view?id=4589">[安米程序] 安米程序V1.0.0正式版下载</a></div>
     <div class="nav_memo">
         安米程序[新一代H5手机建站程序]是一款专注于H5手机网站/app建设的一款程序，具有免费开源，上手难度低，程序精简（程序不足1M），功能强大，不懂编程也能轻松定制自己想要的功能。后台强大的组件编写功能，可以像堆积木一样，随意组合出你想要的功能。
     </div>
@@ -77,4 +82,6 @@ $(function() {
   <div>安米程序 2018新鲜出炉</div>
     <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
 </div>
+<?php Iam\View::load('common/footer_nav'); ?>
+
 <?php $this->load('/components/common/footer'); ?>

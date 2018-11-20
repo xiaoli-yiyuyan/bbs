@@ -612,6 +612,16 @@
           'type' => 'value',
           'value' => '0.2.0e',
         ),
+        'keywords' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+        'description' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
       ),
       'source' => 
       array (
