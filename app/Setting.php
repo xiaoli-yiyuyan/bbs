@@ -36,6 +36,7 @@ class Setting
             $set[$name] = $value;
             $return = $value;
         }
+
         foreach ($set as $k => $v) {
             static::db()->setValue($k, $v, $title);
         }

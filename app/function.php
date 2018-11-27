@@ -100,7 +100,8 @@ function downloadImage($url, $filename = '', $path = 'images/')
     fwrite($resource, $file);
     fclose($resource);
     return $path . $filename;
-} 
+}
+
 function redirect($url, $params = [])
 {
     \Iam\Url::redirect($url, $params);

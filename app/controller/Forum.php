@@ -7,6 +7,7 @@ use Iam\View;
 use Iam\Page;
 use Iam\Request;
 use Iam\Response;
+use Iam\Image;
 use app\common\Ubb;
 use Model\Forum as MForum;
 use Model\User as MUser;
@@ -142,6 +143,12 @@ class Forum extends Common
                 if (!File::setUserFile($this->user['id'], $item)) {
                     return ['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。'];
                 }
+                
+                if (Setting::get('forum_water_mark_status') == '1' && $file = File::get($item)) {
+                    $image = new Image;
+                    $image->imageMark($file['path'], Setting::get('forum_water_mark_path'));
+                }
+
             }
         }
 
@@ -242,6 +249,12 @@ class Forum extends Common
                     Db::$db->pdo->rollback();
                     return ['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。'];
                 }
+                
+                if (Setting::get('forum_water_mark_status') == '1' && $file = File::get($item)) {
+                    $image = new Image;
+                    $image->imageMark($file['path'], Setting::get('forum_water_mark_path'));
+                }
+
             }
         }
 
