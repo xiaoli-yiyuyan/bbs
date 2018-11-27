@@ -71,6 +71,10 @@ class Forum extends Common
     public function list($options)
     {
         $list = MForum::getList($options);
+        foreach ($list['data'] as &$item) {
+            $item['img_list'] = $this->setViewFiles($item['img_data']);
+            $item['file_list'] = $this->setViewFiles($item['file_data']);
+        }
         $this->parseList($list['data']);
         return $list;
     }
@@ -584,10 +588,16 @@ class Forum extends Common
         '做操' => 'zuocao.gif',
     ];
 
-    private function face($context){
+    private function face($context)
+    {
         foreach ($this->faceCode as $key => $value) {
             $context = str_replace("[表情:{$key}]", "<img class=\"face-chat\" src=\"/static/images/face/{$value}\" alt=\"{$key}\">", $context);
         }
         return $context;
+    }
+
+    public function imagecropper($path = '')
+    {
+        imagecropper($path, 200, 200);
     }
 }

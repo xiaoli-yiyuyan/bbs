@@ -1352,3 +1352,27 @@ i.svg-more {
 .svg-x-kf {
     background-image: url('/static/svg/x/kf.svg');
 }
+
+.img_flex_box {
+    display: flex;
+}
+.img_flex_box .img_bx {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 4rem;
+    overflow: hidden;
+}
+.img_bx img {
+    width: 100%;
+}
+.img_bbs_list_item {
+    padding: .5rem;
+}
+.img_list a{
+    color: #333;
+    font-size: .8rem;
+    line-height: 1rem;
+}

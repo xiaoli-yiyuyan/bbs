@@ -19,6 +19,7 @@
     <div class="icon-svg menu left-menu"></div>
     </div>
 </header>
+<?php //$list = source('Forum.list'); ?>
 <?php $this->load('/components/common/left_menu'); ?>
 <div class="index_top_nav index_link">
     <a href="/forum/list?id=1">综合</a>
@@ -64,7 +65,7 @@
 </div>
 <div class="link_title">最新资讯</div>
 
-<?php $this->load('/components/forum/easy_list', ['list' => $list]); ?>
+<?php $this->load('/components/forum/img_list', ['list' => $list]); ?>
 
 <script>
 $(function() {
