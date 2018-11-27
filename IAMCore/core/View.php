@@ -23,8 +23,11 @@ class View
 	 * @param string $name 模板路径
 	 * @param array $data 变量参数
 	 */
-	public static function load($name, $data = [])
+	public static function load($name, $data = [], $allow_json = false)
 	{
+		if (Request::isAjax() && $allow_json) {
+			return Response::json($data);
+		}
 		$config = Config::get('TEMPLATE');
 		$tpl_path = ROOT_PATH . $config['PATH'] . DS . $name . $config['EXT'];
 
