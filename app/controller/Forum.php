@@ -7,6 +7,7 @@ use Iam\View;
 use Iam\Page;
 use Iam\Request;
 use Iam\Response;
+use Iam\Image;
 use app\common\Ubb;
 use Model\Forum as MForum;
 use Model\User as MUser;
@@ -71,6 +72,10 @@ class Forum extends Common
     public function list($options)
     {
         $list = MForum::getList($options);
+        foreach ($list['data'] as &$item) {
+            $item['img_list'] = $this->setViewFiles($item['img_data']);
+            $item['file_list'] = $this->setViewFiles($item['file_data']);
+        }
         $this->parseList($list['data']);
         return $list;
     }
@@ -138,6 +143,12 @@ class Forum extends Common
                 if (!File::setUserFile($this->user['id'], $item)) {
                     return ['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。'];
                 }
+                
+                if (Setting::get('forum_water_mark_status') == '1' && $file = File::get($item)) {
+                    $image = new Image;
+                    $image->imageMark($file['path'], Setting::get('forum_water_mark_path'));
+                }
+
             }
         }
 
@@ -238,6 +249,12 @@ class Forum extends Common
                     Db::$db->pdo->rollback();
                     return ['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。'];
                 }
+                
+                if (Setting::get('forum_water_mark_status') == '1' && $file = File::get($item)) {
+                    $image = new Image;
+                    $image->imageMark($file['path'], Setting::get('forum_water_mark_path'));
+                }
+
             }
         }
 
@@ -584,10 +601,16 @@ class Forum extends Common
         '做操' => 'zuocao.gif',
     ];
 
-    private function face($context){
+    private function face($context)
+    {
         foreach ($this->faceCode as $key => $value) {
             $context = str_replace("[表情:{$key}]", "<img class=\"face-chat\" src=\"/static/images/face/{$value}\" alt=\"{$key}\">", $context);
         }
         return $context;
+    }
+
+    public function imagecropper($path = '')
+    {
+        imagecropper($path, 200, 200);
     }
 }

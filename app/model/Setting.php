@@ -33,10 +33,10 @@ class Setting extends Model
         }
 
         if (!$this->hasValue($name)) {
-            return $this->save($data);
+            return $this->create($data);
         }
 
-        self::$config[$name] = $value;        
+        self::$config[$name] = $value;
         return $this->where(['name' => $name])->update($data);
     }
 

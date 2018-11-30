@@ -1010,6 +1010,31 @@
       ),
       'template' => 'template\\default/components/forum\\easy_list_item.php',
     ),
+    'img_list' => 
+    array (
+      'props' => 
+      array (
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template\\default/components/forum\\img_list.php',
+    ),
+    'img_list_item' => 
+    array (
+      'props' => 
+      array (
+        'item' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template\\default/components/forum\\img_list_item.php',
+    ),
   ),
   '/components/user' => 
   array (

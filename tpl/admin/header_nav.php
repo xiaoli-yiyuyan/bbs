@@ -20,6 +20,7 @@
                     <div><a href="/admin/page">组件管理</a></div>
                 </div>
                 <div class="tab-page tab2">
+                    <div><a href="/admin/water_mark">水印设置</a></div>
                     <div><a href="/admin/column">全部栏目</a></div>
                 </div>
                 <div class="tab-page tab3">

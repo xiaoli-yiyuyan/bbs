@@ -43,7 +43,7 @@ class Sign extends Common
     	View::load('sign/index', [
             'is_sign' => $is_sign,
             'list' => $list
-        ]);
+        ], true);
     }
 
     public function sign()

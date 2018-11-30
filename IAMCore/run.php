@@ -7,6 +7,7 @@
 	// require CORE_PATH . 'Loader.php'; //自动加载类
 
 	require ROOT_PATH . 'vendor/autoload.php';
+	require IAM_PATH . 'function.php';
 
 	$config = \Iam\Config::set(include APP_PATH . 'datebase' . EXT); //设置并返回配置
 

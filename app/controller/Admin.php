@@ -519,6 +519,12 @@ class Admin extends Common
         $setting = Setting::get(['login_reward', 'forum_reward', 'reply_reward']);
         View::load('admin/reward', $setting);
     }
+
+    public function waterMark()
+    {
+        $setting = Setting::get(['forum_water_mark_path', 'forum_water_mark_status']);
+        View::load('admin/water_mark', $setting);
+    }
     
     public function saveSetting()
     {
