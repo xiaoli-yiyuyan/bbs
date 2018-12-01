@@ -1,5 +1,9 @@
 html, body {
-    margin: 0;
+    margin: auto;
+}
+body {
+    max-width: 28rem;
+
 }
 * {
     box-sizing:border-box;

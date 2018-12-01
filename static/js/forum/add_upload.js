@@ -218,5 +218,5 @@ $(function() {
         });
         return false;
     });
-    this.remove();
+    // this.remove();
 });

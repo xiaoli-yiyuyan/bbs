@@ -83,6 +83,6 @@ $(function() {
   <div>安米程序 2018新鲜出炉</div>
     <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
 </div>
-<?php Iam\View::load('common/footer_nav'); ?>
+<?php //Iam\View::load('common/footer_nav'); ?>
 
 <?php $this->load('/components/common/footer'); ?>
