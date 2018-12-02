@@ -331,10 +331,11 @@ ul li {
 }
 .card {
   background: #fff;
-  box-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.05rem 0.1rem #a7adaf;
   margin: 0.5rem;
   position: relative;
-  border-radius: 0.1rem;
+  border-radius: 0.2rem;
+  overflow: hidden;
 }
 .card.card-line {
   box-shadow: none;
@@ -537,8 +538,8 @@ ul li {
 .header {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
+  max-width: 28rem;
   z-index: 99;
   display: flex;
   line-height: 2.25rem;

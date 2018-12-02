@@ -356,11 +356,11 @@ ul li {
 
     }
     background: #fff;
-    box-shadow: 0 1/@rem 0.1rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1/@rem 0.1rem #a7adaf;
     margin: 10/@rem;
     position: relative;
-    .border-radius();
-
+    .border-radius(4);
+    overflow: hidden;
 }
 .card-header {
     position: relative;
@@ -557,8 +557,8 @@ ul li {
 .header {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
+    max-width: 28rem;
     z-index: 99;
     .flex-box();
     line-height: 45/@rem;

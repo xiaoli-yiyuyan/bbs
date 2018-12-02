@@ -19,7 +19,7 @@
     <div class="icon-svg menu left-menu"></div>
     </div>
 </header>
-<?php //$list = source('Forum.list'); ?>
+<?//=source('app/common/Ubb/getTips?msg=123456&type=1')?>
 <?php $this->load('/components/common/left_menu'); ?>
 <div class="index_top_nav index_link">
     <a href="<?=href('/forum/list?id=1')?>">综合</a>
