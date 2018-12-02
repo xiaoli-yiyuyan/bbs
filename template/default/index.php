@@ -22,13 +22,12 @@
 <?php //$list = source('Forum.list'); ?>
 <?php $this->load('/components/common/left_menu'); ?>
 <div class="index_top_nav index_link">
-    <a href="/forum/list?id=1">综合</a>
-    <a href="/forum/list?id=2">源码</a>
-    <a href="/forum/list?id=3">任务</a>
-    <a href="/user/index">个人</a>
-    <a href="/user/friend">粉丝</a>
+    <a href="<?=href('/forum/list?id=1')?>">综合</a>
+    <a href="<?=href('/forum/list?id=2')?>">源码</a>
+    <a href="<?=href('/forum/list?id=3')?>">任务</a>
+    <a href="<?=href('/user/index')?>">个人</a>
+    <a href="<?=href('/user/friend')?>">粉丝</a>
 </div>
-
 
 <div class="column_nav">
     <?php foreach ($column_list['data'] as $item) { ?>
@@ -83,6 +82,6 @@ $(function() {
   <div>安米程序 2018新鲜出炉</div>
     <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
 </div>
-<?php Iam\View::load('common/footer_nav'); ?>
+<?php // Iam\View::load('common/footer_nav'); ?>
 
 <?php $this->load('/components/common/footer'); ?>

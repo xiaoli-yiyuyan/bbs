@@ -260,3 +260,8 @@ function imagecropper($source_path, $target_width, $target_height)
     //imagedestroy($target_image);
     imagedestroy($cropped_image);
 }
+
+function href($url)
+{
+    return $url;
+}
