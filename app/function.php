@@ -102,6 +102,39 @@ function downloadImage($url, $filename = '', $path = 'images/')
     return $path . $filename;
 }
 
+function downloadFile($url, $filename = '', $path = '')
+{
+    $mime_to_ext = [
+        'image/x-ms-bmp' => '.bmp',
+        'image/jpeg' => '.jpg',
+        'image/gif' => '.gif',
+        'image/png' => '.png',
+        'application/zip' => '.zip'
+    ];
+    $header = [];
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    // curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    $file = curl_exec($ch);
+    curl_close($ch);
+
+    if (!$img = @getimagesizefromstring($file)) {
+        return;
+    }
+    if (!isset($mime_to_ext[$img['mime']])) {
+        return;
+    }
+
+    $filename .= $mime_to_ext[$img['mime']];
+    $resource = fopen($path . $filename, 'a');
+    fwrite($resource, $file);
+    fclose($resource);
+    return $path . $filename;
+}
+
 function redirect($url, $params = [])
 {
     \Iam\Url::redirect($url, $params);
@@ -311,7 +344,8 @@ function http($url, $params, $method = 'GET', $header = array(), $multi = false)
  */
 function unzip($fromName, $toName)
 {
-    echo filesize($fromName);
+    // print_r($fromName);
+    // echo filesize($fromName);
     if(!file_exists($fromName)){
         return FALSE;
     }
