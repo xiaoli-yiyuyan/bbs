@@ -14,5 +14,11 @@ class CheckUpdate extends Common
     {
         $res = http('http://ianmi.com/update.php?version=' . IamVersion::$version, 'POST');
         $res = json_decode($res);
+        $res = [
+            'id' => '1',
+            'version' => '1.2.1',
+            'update' => ['update_1.2.1.zip']
+        ];
+        unzip($res['update'], '/');
     }
 }
