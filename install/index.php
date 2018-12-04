@@ -6,8 +6,7 @@ define('IAM_PATH', dirname(__DIR__) . DS . 'IAMCore');
 define('EXT', '.php');
 define('CORE_PATH', IAM_PATH . DS . 'core' . DS);
 define('ROOT_PATH', dirname(__DIR__) . DS);
-require '../IAMCore/core/Loader.php'; //自动加载类
-\Iam\Loader::register();
+require ROOT_PATH . 'vendor/autoload.php';
 
 use Iam\View;
 use Iam\Mysql;

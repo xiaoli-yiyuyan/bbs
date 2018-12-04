@@ -4,7 +4,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Iam\\": "IAMCore/core"
+            "Iam\\": "IAMCore/core/",
+            "App\\": "app/controller/",
+            "app\\": "app/",
+            "Model\\": "app/model/"
         }
     }
 }

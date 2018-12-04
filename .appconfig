@@ -1,0 +1,8 @@
+RewriteBase /
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^/data1/www/htdocs/825/ianmi/1/(.*)$ index.php?/$1 [QSA,PT,L]
+</IfModule>

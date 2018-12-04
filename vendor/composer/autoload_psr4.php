@@ -7,5 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'think\\' => array($vendorDir . '/topthink/think-orm/src'),
+    'app\\' => array($baseDir . '/app'),
+    'Model\\' => array($baseDir . '/app/model'),
     'Iam\\' => array($baseDir . '/IAMCore/core'),
+    'App\\' => array($baseDir . '/app/controller'),
 );

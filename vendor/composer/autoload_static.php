@@ -15,9 +15,21 @@ class ComposerStaticInitfd190dac51dd8f09a2e3200228f7261f
         array (
             'think\\' => 6,
         ),
+        'a' => 
+        array (
+            'app\\' => 4,
+        ),
+        'M' => 
+        array (
+            'Model\\' => 6,
+        ),
         'I' => 
         array (
             'Iam\\' => 4,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -26,9 +38,21 @@ class ComposerStaticInitfd190dac51dd8f09a2e3200228f7261f
         array (
             0 => __DIR__ . '/..' . '/topthink/think-orm/src',
         ),
+        'app\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app',
+        ),
+        'Model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/model',
+        ),
         'Iam\\' => 
         array (
             0 => __DIR__ . '/../..' . '/IAMCore/core',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/controller',
         ),
     );
 

@@ -39,7 +39,7 @@
 		],
 	]);
 
-	\Iam\Loader::register();
+	// \Iam\Loader::register();
 	// \Iam\Url::$hide = true;
 	\Iam\Config::set(include IAM_PATH . 'convention' . EXT);
 	\Iam\App::run();
