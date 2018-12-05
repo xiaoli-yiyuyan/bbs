@@ -1,7 +1,5 @@
 <div class="card img_bbs_list_item">
-
         <a href="/forum/view/?id=<?=$item['id']?>">
-        <div class="">
             <?php if (!empty($item['img_list'])) { ?>
             <div class="img_flex_box">
                 <?php for($i = 0; $i < count($item['img_list']) && $i < 3; $i ++) { ?>
@@ -9,15 +7,11 @@
                 <?php } ?>
             </div>
             <?php } ?>
-            <?=$item['title']?>
-            </div>
+            <div class="img_list_title"><?=$item['title']?></div>
         </a>
         <div class="bbs_info">
 			<div class="flex-box">
             <?php $this->load('/components/forum/list_user', ['user_id' => $item['user_id']]); ?>
-			<span class="reply_str">
-				发布于
-			</span>
 			<span class="reply_time"><?=$item['create_time']?></span>
 			</div>
             <div class="create_time">

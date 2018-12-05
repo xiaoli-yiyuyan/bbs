@@ -331,7 +331,7 @@ ul li {
 }
 .card {
   background: #fff;
-  box-shadow: 0 0.05rem 0.1rem #a7adaf;
+  box-shadow: 0 0.05rem 0.1rem #c8cfd1;
   margin: 0.5rem;
   position: relative;
   border-radius: 0.2rem;
@@ -536,7 +536,7 @@ ul li {
   height: 2.25rem;
 }
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   max-width: 28rem;

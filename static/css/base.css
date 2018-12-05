@@ -377,7 +377,7 @@ i.svg-more {
 .bbs_info {
     position: relative;
     padding-top: 0.25rem;
-    color: #666;
+    color: rgb(143, 143, 143);
     display: flex;
     justify-content: space-between;
     line-height: 1rem;
@@ -385,14 +385,16 @@ i.svg-more {
 }
 .bbs_user {
 	font-size: .7rem;
-	color: #333;
+	/* color: #333; */
 }
 .bbs_user_photo {
-    width: .9rem;
-    height: .9rem;
-    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 10%;
     vertical-align: middle;
     margin-top: -0.25rem;
+    margin-right: 0.25rem;
+    box-shadow: 0 .05rem .1rem #32393e;
 }
 .create_time {
     color: #aaa;
@@ -400,6 +402,7 @@ i.svg-more {
 }
 
 .reply_time {
+    margin-left: .5rem;
 }
 .reply_str {
 	font-size: .6rem;
@@ -407,7 +410,7 @@ i.svg-more {
 	margin: 0 .25rem;
 }
 .bbs_replay_num {
-    color: #666;
+    color: rgb(143, 143, 143);
 }
 .bbs_replay_num .icon-svg {
 	display: inline-block;
@@ -1365,17 +1368,26 @@ i.svg-more {
     align-items: center;
     justify-content: center;
     flex: 1;
-    height: 4rem;
+    height: 5rem;
     overflow: hidden;
 }
 .img_bx img {
     width: 100%;
 }
 .img_bbs_list_item {
-    padding: .5rem;
+    /* padding: .5rem; */
 }
 .img_list a{
-    color: #333;
+    color: #32393e;
     font-size: .8rem;
     line-height: 1rem;
+}
+.img_list_title {
+    padding: .5rem;
+    padding-bottom: .25rem;
+
+}
+.img_bbs_list_item .bbs_info {
+    padding: .5rem;
+    padding-top: .25rem;
 }

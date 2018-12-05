@@ -65,7 +65,11 @@
             <i class="li-box-svg icon-svg b_qiandao"></i>
             <div class="li-box-word">签到</div>
             <div class="flex">
+                <?php if ($userinfo['is_today_sign']) { ?>
+                <span class="word_right sign_status_ok">已完成</span>
+                <?php } else { ?>
                 <span class="word_right sign_status_no">未完成</span>
+                <?php } ?>
             </div>
         </a>
     </div>

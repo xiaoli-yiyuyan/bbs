@@ -13,6 +13,7 @@ use Iam\FileUpload;
 use Model\Friend;
 use Model\User as MUser;
 use Model\Message as MMessage;
+use Model\SignLog;
 
 class User extends Common
 {
@@ -106,6 +107,7 @@ class User extends Common
 		$user = Db::table('user')->where(['id' => $options['id']])->find();
 		$level_info = getUserLevel($user['exp'], $this->upExp);
         $user = array_merge($user, $level_info);
+        $user['is_today_sign'] = SignLog::isTodaySign($user['id']);
         return $user;
     }
 

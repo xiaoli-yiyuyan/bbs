@@ -9,6 +9,7 @@ use Model\Category;
 use app\common\IamVersion;
 use Model\User as MUser;
 use app\Setting;
+use Model\SignLog;
 
 class Common
 {
@@ -39,6 +40,7 @@ class Common
                 Db::table('user')->where('sid', Session::get('sid'))->update(['last_time' => now(), 'exp' => $exp]);
                 $level_info = getUserLevel($this->user['exp'], $this->upExp);
                 $this->user = array_merge($this->user, $level_info);
+                $this->user['is_today_sign'] = SignLog::isTodaySign($this->user['id']);
             }
         } else {
         }
