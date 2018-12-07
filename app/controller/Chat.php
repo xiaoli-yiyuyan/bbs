@@ -45,7 +45,7 @@ class Chat extends Common
         // if ($classInfo['type'] != 'chat') {
         //     return Page::error('页面未找到！');
         // }
-        View::load('Chat/room', ['classInfo' => $classInfo]);
+        View::load('chat/room', ['classInfo' => $classInfo]);
     }
 
     public function fistList()
