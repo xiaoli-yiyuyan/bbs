@@ -47,7 +47,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\index.php',
+      'template' => 'template/default/user/index.php',
     ),
     'edit_info' => 
     array (
@@ -295,7 +295,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\show.php',
+      'template' => 'template/default/user/show.php',
     ),
     'ajax_base64_upload' => 
     array (
@@ -354,7 +354,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\ajax_care.php',
+      'template' => 'template/default/user/ajax_care.php',
     ),
     'friend' => 
     array (
@@ -397,7 +397,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\friend.php',
+      'template' => 'template/default/user/friend.php',
     ),
     'message' => 
     array (
@@ -420,7 +420,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\message.php',
+      'template' => 'template/default/user/message.php',
     ),
     'rank' => 
     array (
@@ -448,7 +448,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\rank.php',
+      'template' => 'template/default/user/rank.php',
     ),
   ),
   '/' => 
@@ -528,7 +528,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/\\index.php',
+      'template' => 'template/default/index.php',
     ),
     'login' => 
     array (
@@ -538,7 +538,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default//login.php',
+      'template' => 'template/default/login.php',
     ),
     'register' => 
     array (
@@ -548,7 +548,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default//register.php',
+      'template' => 'template/default/register.php',
     ),
     'error' => 
     array (
@@ -568,7 +568,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/\\error.php',
+      'template' => 'template/default/error.php',
     ),
     'success' => 
     array (
@@ -593,7 +593,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/\\success.php',
+      'template' => 'template/default/success.php',
     ),
   ),
   '/components/common' => 
@@ -626,7 +626,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/common\\header.php',
+      'template' => 'template/default/components/common/header.php',
     ),
     'footer' => 
     array (
@@ -636,7 +636,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/common\\footer.php',
+      'template' => 'template/default/components/common/footer.php',
     ),
     'header_nav' => 
     array (
@@ -666,7 +666,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/common\\header_nav.php',
+      'template' => 'template/default/components/common/header_nav.php',
     ),
     'page_jump' => 
     array (
@@ -715,7 +715,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/common\\index_link.php',
+      'template' => 'template/default/components/common/index_link.php',
     ),
     'left_menu' => 
     array (
@@ -725,7 +725,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/common\\left_menu.php',
+      'template' => 'template/default/components/common/left_menu.php',
     ),
   ),
   '/components/forum' => 
@@ -796,7 +796,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/forum\\reply_form.php',
+      'template' => 'template/default/components/forum/reply_form.php',
     ),
     'reply_item' => 
     array (
@@ -826,7 +826,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\list_item.php',
+      'template' => 'template/default/components/forum/list_item.php',
     ),
     'index_count_list' => 
     array (
@@ -963,7 +963,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\reply_list.php',
+      'template' => 'template/default/components/forum/reply_list.php',
     ),
     'simple_list' => 
     array (
@@ -978,7 +978,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\simple_list.php',
+      'template' => 'template/default/components/forum/simple_list.php',
     ),
     'easy_list' => 
     array (
@@ -993,7 +993,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\easy_list.php',
+      'template' => 'template/default/components/forum/easy_list.php',
     ),
     'easy_list_item' => 
     array (
@@ -1008,7 +1008,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\easy_list_item.php',
+      'template' => 'template/default/components/forum/easy_list_item.php',
     ),
     'img_list' => 
     array (
@@ -1018,7 +1018,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\img_list.php',
+      'template' => 'template/default/components/forum/img_list.php',
     ),
     'img_list_item' => 
     array (
@@ -1033,7 +1033,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\img_list_item.php',
+      'template' => 'template/default/components/forum/img_list_item.php',
     ),
   ),
   '/components/user' => 
@@ -1059,7 +1059,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/user\\new_user_list.php',
+      'template' => 'template/default/components/user/new_user_list.php',
     ),
     'forum_index_show' => 
     array (
@@ -1172,7 +1172,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/user\\friend_list.php',
+      'template' => 'template/default/components/user/friend_list.php',
     ),
     'friend_item_care' => 
     array (
@@ -1210,7 +1210,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/user\\friend_item_care.php',
+      'template' => 'template/default/components/user/friend_item_care.php',
     ),
     'friend_item' => 
     array (
@@ -1239,7 +1239,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/user\\friend_item.php',
+      'template' => 'template/default/components/user/friend_item.php',
     ),
     'message_item' => 
     array (
@@ -1273,7 +1273,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/user\\message_item.php',
+      'template' => 'template/default/components/user/message_item.php',
     ),
     'message_list' => 
     array (
@@ -1288,7 +1288,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/user\\message_list.php',
+      'template' => 'template/default/components/user/message_list.php',
     ),
   ),
   '/login' => 
@@ -1394,7 +1394,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/login\\register.php',
+      'template' => 'template/default/login/register.php',
     ),
   ),
   '/forum' => 
@@ -1440,7 +1440,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/forum\\my_list.php',
+      'template' => 'template/default/forum/my_list.php',
     ),
     'view' => 
     array (
@@ -1500,7 +1500,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/forum\\view.php',
+      'template' => 'template/default/forum/view.php',
     ),
     'reply' => 
     array (
@@ -1675,7 +1675,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/forum\\ajax_upload.php',
+      'template' => 'template/default/forum/ajax_upload.php',
     ),
     'ajax_add' => 
     array (
@@ -1820,7 +1820,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/forum\\editor.php',
+      'template' => 'template/default/forum/editor.php',
     ),
     'ajax_edit' => 
     array (

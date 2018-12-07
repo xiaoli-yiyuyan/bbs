@@ -24,7 +24,7 @@ class Component
 	public function __construct(array $config = [])
 	{
         $this->config = array_merge($this->config, $config);
-        $this->dir = $this->config['template_path'] . DS . $this->config['model'];
+        $this->dir = $this->config['template_path'] . $this->ds . $this->config['model'];
 		$this->namespace = new Cache($this->dir, $this->config['namespace_name']);
 		$this->components = new Cache($this->dir, $this->config['components_name']);
 	}
@@ -132,14 +132,15 @@ class Component
 			}
 			if (isset($value['code'])) {
 				$template_root = ROOT_PATH . $this->dir;
-				$path = $template_root . $namespaceName . DS . $componentName . '.php';
+				$path = $template_root . $namespaceName . $this->ds . $componentName . '.php';
 				$dirname = dirname($path);
 				if (! file_exists($dirname)) {
 					mkdir ($dirname, 0777, true);
 				}
 				file_put_contents($path, $value['code']);
 				unset($value['code']);
-				$value['template'] = $this->dir . $namespaceName . DS . $componentName . '.php';
+
+				$value['template'] = $this->dir . $this->ds . trim($namespaceName . $this->ds . $componentName . '.php', $this->ds);
 			}
 			$tree[$namespaceName][$componentName] = $value;
 			$this->components->save($tree);
@@ -150,9 +151,9 @@ class Component
 			if ($componentName === null) {
 				// 删除命名下级所有组件
 				foreach ($tree as $key => $value) {
-					$preg = '/^' . $namespaceName . DS . '.+/';
+					$preg = '/^' . $namespaceName . $this->ds . '.+/';
 					// if (DS == '\\') {
-						$preg = str_replace(DS, DS . DS, $preg);
+						$preg = str_replace($this->ds, $this->ds . $this->ds, $preg);
 					// }
 					if ($key == $namespaceName || preg_match($preg, $key)) {
 						// print_r($key);
