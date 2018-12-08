@@ -25,4 +25,11 @@ class Index extends Common
         $mark = Db::query('SELECT * FROM `novel_mark` WHERE `id` IN(SELECT `markid` FROM `novel_mark_body` WHERE `novelid`=?)', [$novelid]);
         return $mark;
     }
+
+    public function tes($param = '',$s) {
+        print_r($param);
+        $ref = new \ReflectionClass('App\Index');
+        print_r((new \ReflectionMethod('App\Index', 'tes'))->getParameters());
+        $methods = $ref->getMethods();
+    }
 }

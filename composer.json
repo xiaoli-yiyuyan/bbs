@@ -1,0 +1,13 @@
+{
+    "require": {
+        "topthink/think-orm": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iam\\": "IAMCore/core/",
+            "App\\": "app/controller/",
+            "app\\": "app/",
+            "Model\\": "app/model/"
+        }
+    }
+}

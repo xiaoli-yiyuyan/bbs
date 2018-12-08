@@ -3,8 +3,10 @@ namespace Model;
 
 use Iam\Db;
 use Iam\Page;
+use think\Model;
+use app\Setting as ASetting;
 
-class Forum extends Common
+class Forum extends Model
 {
     private static $options = [
         // 'path' => '/forum/list',
@@ -12,7 +14,9 @@ class Forum extends Common
         'pagesize' => 10,
         'order' => 0,
         'sort' => 0,
-        'status' => 0
+        'status' => 0,
+        'query' => [],
+        'page_name' => 'p'
     ];
     // array (
     //     'class_id' => 0,
@@ -37,6 +41,8 @@ class Forum extends Common
         if (!empty($options['user_id'])) {
             $where['user_id'] = $options['user_id'];
         }
+
+        $where['status'] = 0;
         if (!empty($options['status'])) {
             $where['status'] = $options['status'];
         }
@@ -78,5 +84,25 @@ class Forum extends Common
             'page' => $page,
             'data' => $list
         ];
+    }
+
+    /**
+     * 模糊搜索
+     * @param string $keyword 要查询的关键词
+     */
+    public function search($keyword = '')
+    {
+        $forum = new Forum;
+        if ($keyword !== '') {
+            $forum->where(function($query) use($keyword) {
+                $query->whereOr('title', 'like', '%' . $keyword . '%');
+                // 需要手动开启正文搜索（很消耗性能）
+                if (false) {
+                    $query->whereOr('context', 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+        $forum->order('id', 'desc');
+        return $forum->paginate(ASetting::get('pagesize'));
     }
 }

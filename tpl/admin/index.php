@@ -19,29 +19,29 @@
         <div class="count_group">
             <div class="count_item">
                 <div>会员总数</div>
-                <div>0</div>
+                <div><?=$count?></div>
             </div>
             <div class="count_item">
                 <div>今日注册</div>
-                <div>0</div>
+                <div><?=$today_count?></div>
             </div>
             <div class="count_item">
                 <div>当前在线</div>
-                <div>0</div>
+                <div><?=$online_count?></div>
             </div>
         </div>
         <div class="count_group">
             <div class="count_item">
                 <div>发帖总数</div>
-                <div>0</div>
+                <div><?=$forum_count?></div>
             </div>
             <div class="count_item">
                 <div>今日发帖</div>
-                <div>0</div>
+                <div><?=$forum_today_count?></div>
             </div>
             <div class="count_item">
                 <div>今日回复</div>
-                <div>0</div>
+                <div><?=$forum_reply_today_count?></div>
             </div>
         </div>
     </div>

@@ -47,7 +47,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\index.php',
+      'template' => 'template/default/user/index.php',
     ),
     'edit_info' => 
     array (
@@ -295,7 +295,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\show.php',
+      'template' => 'template/default/user/show.php',
     ),
     'ajax_base64_upload' => 
     array (
@@ -354,7 +354,7 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\ajax_care.php',
+      'template' => 'template/default/user/ajax_care.php',
     ),
     'friend' => 
     array (
@@ -397,16 +397,39 @@
           ),
         ),
       ),
-      'template' => 'template\\default/user\\friend.php',
+      'template' => 'template/default/user/friend.php',
     ),
-    'care_user' => 
+    'message' => 
     array (
       'props' => 
       array (
-        'id' => 
+      ),
+      'source' => 
+      array (
+        0 => 
+        array (
+          'name' => 'Message',
+          'action' => 'list',
+          'param' => 'message_list',
+          'options' => 
+          array (
+            'user_id' => 0,
+            'to_user_id' => 0,
+            'page' => 1,
+            'pagesize' => 10,
+          ),
+        ),
+      ),
+      'template' => 'template/default/user/message.php',
+    ),
+    'rank' => 
+    array (
+      'props' => 
+      array (
+        'type' => 
         array (
           'type' => 'get',
-          'value' => '',
+          'value' => '0',
         ),
       ),
       'source' => 
@@ -414,19 +437,18 @@
         0 => 
         array (
           'name' => 'User',
-          'action' => 'setCare',
-          'param' => 'set_care',
+          'action' => 'list',
+          'param' => 'user_list',
           'options' => 
           array (
-            'care_user_id' => 
-            array (
-              'prop' => 'id',
-              'value' => '',
-            ),
+            'var_page' => 'page',
+            'pagesize' => 10,
+            'order' => '2',
+            'sort' => '1',
           ),
         ),
       ),
-      'template' => 'template\\default/user\\care_user.php',
+      'template' => 'template/default/user/rank.php',
     ),
   ),
   '/' => 
@@ -459,10 +481,29 @@
             ),
             'pagesize' => 10,
             'order' => 0,
-            'sort' => 0,
+            'sort' => '1',
           ),
         ),
         1 => 
+        array (
+          'name' => 'Forum',
+          'action' => 'list',
+          'param' => 'list2',
+          'options' => 
+          array (
+            'class_id' => '1',
+            'user_id' => 0,
+            'page' => 
+            array (
+              'prop' => 'page',
+              'value' => 1,
+            ),
+            'pagesize' => '2',
+            'order' => 0,
+            'sort' => '1',
+          ),
+        ),
+        2 => 
         array (
           'name' => 'Column',
           'action' => 'list',
@@ -476,8 +517,18 @@
             'sort' => 0,
           ),
         ),
+        3 => 
+        array (
+          'name' => 'Message',
+          'action' => 'count',
+          'param' => 'message_count',
+          'options' => 
+          array (
+            'status' => 0,
+          ),
+        ),
       ),
-      'template' => 'template\\default/\\index.php',
+      'template' => 'template/default/index.php',
     ),
     'login' => 
     array (
@@ -559,7 +610,17 @@
         'version' => 
         array (
           'type' => 'value',
-          'value' => '0.0.5',
+          'value' => '0.2.0e',
+        ),
+        'keywords' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+        'description' => 
+        array (
+          'type' => 'value',
+          'value' => '',
         ),
       ),
       'source' => 
@@ -594,6 +655,16 @@
       ),
       'source' => 
       array (
+        0 => 
+        array (
+          'name' => 'Message',
+          'action' => 'count',
+          'param' => 'message_count',
+          'options' => 
+          array (
+            'status' => 0,
+          ),
+        ),
       ),
       'template' => 'template/default/components/common/header_nav.php',
     ),
@@ -636,6 +707,16 @@
       ),
       'template' => 'template/default/components/common/user_header.php',
     ),
+    'index_link' => 
+    array (
+      'props' => 
+      array (
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/common/index_link.php',
+    ),
     'left_menu' => 
     array (
       'props' => 
@@ -644,7 +725,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/common\\left_menu.php',
+      'template' => 'template/default/components/common/left_menu.php',
     ),
   ),
   '/components/forum' => 
@@ -882,7 +963,77 @@
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/forum\\reply_list.php',
+      'template' => 'template/default/components/forum/reply_list.php',
+    ),
+    'simple_list' => 
+    array (
+      'props' => 
+      array (
+        'list' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/forum/simple_list.php',
+    ),
+    'easy_list' => 
+    array (
+      'props' => 
+      array (
+        'list' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/forum/easy_list.php',
+    ),
+    'easy_list_item' => 
+    array (
+      'props' => 
+      array (
+        'item' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/forum/easy_list_item.php',
+    ),
+    'img_list' => 
+    array (
+      'props' => 
+      array (
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/forum/img_list.php',
+    ),
+    'img_list_item' => 
+    array (
+      'props' => 
+      array (
+        'item' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/forum/img_list_item.php',
     ),
   ),
   '/components/user' => 
@@ -901,10 +1052,10 @@
           'param' => 'user_list',
           'options' => 
           array (
-            'page' => 1,
+            'var_page' => 'page',
             'pagesize' => '6',
-            'order' => '1',
-            'sort' => 0,
+            'order' => '0',
+            'sort' => '1',
           ),
         ),
       ),
@@ -1003,34 +1154,25 @@
       ),
       'template' => 'template/default/components/user/is_login.php',
     ),
-    'friend_item' => 
+    'friend_list' => 
     array (
       'props' => 
       array (
-        'user_id' => 
+        'list' => 
         array (
           'type' => 'value',
           'value' => '',
         ),
+        'is_fans_care' => 
+        array (
+          'type' => 'value',
+          'value' => 'care',
+        ),
       ),
       'source' => 
       array (
-        0 => 
-        array (
-          'name' => 'User',
-          'action' => 'info',
-          'param' => 'userinfo',
-          'options' => 
-          array (
-            'id' => 
-            array (
-              'prop' => 'user_id',
-              'value' => 0,
-            ),
-          ),
-        ),
       ),
-      'template' => 'template\\default/components/user\\friend_item.php',
+      'template' => 'template/default/components/user/friend_list.php',
     ),
     'friend_item_care' => 
     array (
@@ -1068,9 +1210,72 @@
           ),
         ),
       ),
-      'template' => 'template\\default/components/user\\friend_item_care.php',
+      'template' => 'template/default/components/user/friend_item_care.php',
     ),
-    'friend_list' => 
+    'friend_item' => 
+    array (
+      'props' => 
+      array (
+        'user_id' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+        0 => 
+        array (
+          'name' => 'User',
+          'action' => 'info',
+          'param' => 'userinfo',
+          'options' => 
+          array (
+            'id' => 
+            array (
+              'prop' => 'user_id',
+              'value' => 0,
+            ),
+          ),
+        ),
+      ),
+      'template' => 'template/default/components/user/friend_item.php',
+    ),
+    'message_item' => 
+    array (
+      'props' => 
+      array (
+        'user_id' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+        'content' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+        0 => 
+        array (
+          'name' => 'User',
+          'action' => 'info',
+          'param' => 'userinfo',
+          'options' => 
+          array (
+            'id' => 
+            array (
+              'prop' => 'user_id',
+              'value' => 0,
+            ),
+          ),
+        ),
+      ),
+      'template' => 'template/default/components/user/message_item.php',
+    ),
+    'message_list' => 
     array (
       'props' => 
       array (
@@ -1079,16 +1284,11 @@
           'type' => 'value',
           'value' => '',
         ),
-        'is_fans_care' => 
-        array (
-          'type' => 'value',
-          'value' => 'care',
-        ),
       ),
       'source' => 
       array (
       ),
-      'template' => 'template\\default/components/user\\friend_list.php',
+      'template' => 'template/default/components/user/message_list.php',
     ),
   ),
   '/login' => 
@@ -1266,8 +1466,8 @@
               'prop' => 'id',
               'value' => 0,
             ),
-            'is_html' => 1,
-            'is_ubb' => 1,
+            'is_html' => '1',
+            'is_ubb' => '1',
           ),
         ),
         1 => 
@@ -1398,7 +1598,7 @@
             ),
             'pagesize' => 10,
             'order' => 0,
-            'sort' => 0,
+            'sort' => '1',
           ),
         ),
         1 => 
@@ -1451,6 +1651,16 @@
     array (
       'props' => 
       array (
+        'file_name' => 
+        array (
+          'type' => 'post',
+          'value' => '',
+        ),
+        'file_memo' => 
+        array (
+          'type' => 'post',
+          'value' => '',
+        ),
       ),
       'source' => 
       array (

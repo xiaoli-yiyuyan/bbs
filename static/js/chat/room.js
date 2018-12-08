@@ -27,9 +27,39 @@ require(['vue'], function(Vue) {
             return {
                 value: '',
                 height:'0px',
-                face: ["爱你","抱抱","不活了","不要","超人","大哭","嗯嗯","发呆","飞呀","奋斗",
-                "尴尬","感动","害羞","感动","嘿咻","画圈圈","惊吓","敬礼","快跑","路过","抢劫",
-                "杀气","上吊","调戏","跳舞","万岁","我走了","喜欢","吓死人","嚣张","疑问","做操"]
+                face: [
+                    { name: "爱你", src: "aini.gif" },
+                    { name: "抱抱", src: "baobao.gif" },
+                    { name: "不活了", src: "buhuole.gif" },
+                    { name: "不要", src: "buyao.gif" },
+                    { name: "超人", src: "chaoren.gif" },
+                    { name: "大哭", src: "daku.gif" },
+                    { name: "嗯嗯", src: "enen.gif" },
+                    { name: "发呆", src: "fadai.gif" },
+                    { name: "飞呀", src: "feiya.gif" },
+                    { name: "奋斗", src: "fendou.gif" },
+                    { name: "尴尬", src: "ganga.gif" },
+                    { name: "感动", src: "gandong.gif" },
+                    { name: "害羞", src: "haixiu.gif" },
+                    { name: "嘿咻", src: "heixiu.gif" },
+                    { name: "画圈圈", src: "huaquanquan.gif" },
+                    { name: "惊吓", src: "jinxia.gif" },
+                    { name: "敬礼", src: "jingli.gif" },
+                    { name: "快跑", src: "kuaipao.gif" },
+                    { name: "路过", src: "luguo.gif" },
+                    { name: "抢劫", src: "qiangjie.gif" },
+                    { name: "杀气", src: "shaqi.gif" },
+                    { name: "上吊", src: "shangdiao.gif" },
+                    { name: "调戏", src: "tiaoxi.gif" },
+                    { name: "跳舞", src: "tiaowu.gif" },
+                    { name: "万岁", src: "wanshui.gif" },
+                    { name: "我走了", src: "wozoule.gif" },
+                    { name: "喜欢", src: "xihuan.gif" },
+                    { name: "吓死人", src: "xiasiren.gif" },
+                    { name: "嚣张", src: "xiaozhang.gif" },
+                    { name: "疑问", src: "yiwen.gif" },
+                    { name: "做操", src: "zuocao.gif" }
+                ]
             };
         },
         template: '<div class="chat-input border-t">\
@@ -37,7 +67,7 @@ require(['vue'], function(Vue) {
                 <span class="face" v-on:click="showFaceBox"></span><input type="text" v-model="value"><button v-on:click="send">发送</button>\
             </div>\
             <div class="chat-face-box transition" :style="{height: height}"><div class="face-box">\
-                <span v-for="img of face" class="face-out"><img :src="\'/static/images/face/\' + img + \'.gif\'" alt="img" v-on:click="addFacs(img)"></span>\
+                <span v-for="img of face" class="face-out"><img :src="\'/static/images/face/\' + img.src" alt="img" v-on:click="addFacs(img.name)"></span>\
             </div></div>\
         </div>',
         methods: {

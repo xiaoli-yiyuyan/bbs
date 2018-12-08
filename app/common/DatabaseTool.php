@@ -27,8 +27,8 @@ class DatabaseTool
      * @param array $config
      */
     public function __construct($config = array())
-    {
-        $_config = Config::set(include APP_PATH . 'datebase' . EXT); //设置并返回配置
+    {        
+        $_config = Config::set(include dirname(__DIR__) . DS . 'datebase' . EXT); //设置并返回配置
         $this->config['host'] = $_config['host'];
         $this->config['port'] = $_config['port'];
         $this->config['user'] = $_config['user'];
@@ -40,7 +40,7 @@ class DatabaseTool
         //启动PDO连接
         try
         {
-            $this->handler = new PDO("mysql:host={$this->config['host']}:{$this->config['port']};dbname={$this->config['database']}", $this->config['user'], $this->config['password']);
+            $this->handler = new PDO("mysql:host={$this->config['host']}:{$this->config['port']};dbname={$this->config['database']};charset=utf8", $this->config['user'], $this->config['password']);
         }
         catch (PDOException $e)
         {
@@ -218,7 +218,7 @@ class DatabaseTool
         }
         if (!file_exists($path))
         {
-            $this->error('SQL文件不存在!');
+            $this->error = 'SQL文件不存在!';
             return false;
         }
         else

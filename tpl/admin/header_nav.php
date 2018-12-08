@@ -15,9 +15,12 @@
         </div>
         <div class="tab-content">
                 <div class="tab-page tab1">
+                    <div><a href="/admin/code">代码自定义</a></div>
+                    <div><a href="/admin/reward">奖励设置</a></div>
                     <div><a href="/admin/page">组件管理</a></div>
                 </div>
                 <div class="tab-page tab2">
+                    <div><a href="/admin/water_mark">水印设置</a></div>
                     <div><a href="/admin/column">全部栏目</a></div>
                 </div>
                 <div class="tab-page tab3">
@@ -30,9 +33,9 @@
                 </div>
                 <div class="tab-page tab4">
                     <!-- <div>系统通知</div> -->
-                    <div><a href="/admin/forum">帖子</a></div>
-                    <!-- <div>聊天室</div>
-                    <div>友链</div> -->
+                    <div><a href="/admin/forum">帖子回收站</a></div>
+                    <div><a href="/admin/forum_auto">待审核帖子</a></div>
+                    <!-- <div>友链</div> -->
                 </div>
                 <div class="tab-page tab5">
                     <div><a href="/admin/database">数据库备份/还原</a></div>

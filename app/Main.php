@@ -13,6 +13,8 @@ class Main
         $component = new Component([
             'model' => 'default'
         ]);
-        $component->load($url);
+        if (!$component->load($url)) {
+            \Iam\App::runTpl();
+        }
     }
 }

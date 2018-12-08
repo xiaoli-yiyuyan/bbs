@@ -1,4 +1,4 @@
-<?php $this->load('components/common/header',['title' => '用户中心']); ?>
+<?php $this->load('components/common/user_header',['title' => '用户中心']); ?>
 <?php $this->load('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
 
 <div class="tab ">

@@ -23,10 +23,14 @@ class View
 	 * @param string $name 模板路径
 	 * @param array $data 变量参数
 	 */
-	public static function load($name, $data = [])
+	public static function load($name, $data = [], $allow_json = false)
 	{
+		if (Request::isAjax() && $allow_json) {
+			return Response::json($data);
+		}
 		$config = Config::get('TEMPLATE');
 		$tpl_path = ROOT_PATH . $config['PATH'] . DS . $name . $config['EXT'];
+
 		if (file_exists($tpl_path)) {
 			(function() use($data, $tpl_path){
 				extract(array_merge(self::$data, $data)); //数组转化为变量
@@ -34,6 +38,7 @@ class View
 			})();
 		} else {
 			$tpl = '404';
+			echo $tpl_path;
 		}
 		//return $tpl;
 	}

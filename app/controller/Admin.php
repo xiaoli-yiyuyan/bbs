@@ -10,6 +10,8 @@ use Iam\Request;
 use Iam\Response;
 use Iam\Component;
 use Model\CategoryGroup;
+use Model\Code;
+use app\Setting;
 use app\common\DatabaseTool;
 
 class Admin extends Common
@@ -25,7 +27,21 @@ class Admin extends Common
 
     public function index()
     {
-    	View::load('admin/index');
+        $count = Db::query('SELECT COUNT(*) as num FROM `user`')[0]['num'];
+        $today_count = Db::query('SELECT COUNT(*) as num FROM `user` WHERE `create_time` > CURDATE()')[0]['num'];
+        $online_count = Db::query('SELECT COUNT(*) as num FROM `user` WHERE TIMESTAMPDIFF(MINUTE, last_time, NOW()) < 20')[0]['num'];
+        $forum_count = Db::query('SELECT COUNT(*) as num FROM `forum`')[0]['num'];
+        $forum_today_count = Db::query('SELECT COUNT(*) as num FROM `forum` WHERE `create_time` > CURDATE()')[0]['num'];
+        $forum_reply_today_count = Db::query('SELECT COUNT(*) as num FROM `forum_reply` WHERE `create_time` > CURDATE()')[0]['num'];
+
+        View::load('admin/index', [
+            'count'=> $count,
+            'today_count'=> $today_count,
+            'online_count'=> $online_count,
+            'forum_count'=> $forum_count,
+            'forum_today_count'=> $forum_today_count,
+            'forum_reply_today_count'=> $forum_reply_today_count,
+        ]);
     }
 
     private function initComponent()
@@ -318,6 +334,7 @@ class Admin extends Common
     public function updateColumn()
     {
         $post = Request::post();
+        // print_r($post);
         $column = new Column;
         $res = $column->save($post);
         return Response::json($res);
@@ -360,7 +377,7 @@ class Admin extends Common
         $list = $user->list([
             'order' => 0,
             'sort' => 0,
-            'page' => Request::get('p', 1)
+            'var_page' => 'p'
         ]);
         View::load('admin/user', [
             'list' => $list
@@ -418,6 +435,15 @@ class Admin extends Common
         $forum = new Forum;
         $list = $forum->list(['status' => 9999]);
         View::load('admin/forum', [
+            'list' => $list
+        ]);
+    }
+
+    public function forumAuto()
+    {
+        $forum = new Forum;
+        $list = $forum->list(['status' => 1]);
+        View::load('admin/forum_auto', [
             'list' => $list
         ]);
     }
@@ -487,7 +513,85 @@ class Admin extends Common
         return Response::json(['name' => $name]);
         // View::load('success', ['msg' => '删除成功', 'url' => '/admin/database']);
     }
+
+    public function reward()
+    {
+        $setting = Setting::get(['login_reward', 'forum_reward', 'reply_reward']);
+        View::load('admin/reward', $setting);
+    }
+
+    public function waterMark()
+    {
+        $setting = Setting::get(['forum_water_mark_path', 'forum_water_mark_status']);
+        View::load('admin/water_mark', $setting);
+    }
     
+    public function saveSetting()
+    {
+        $data = Request::post();
+        // $config = json_decode($data, true);
+        $setting = Setting::set($data);
+        return Response::json(['err' => 0]);
+    }
+
+    public function code()
+    {
+        $list = Code::order('id', 'DESC')->paginate(10);
+        View::load('admin/code', ['list' => $list, 'page' => $list->render()]);
+    }
+
+    public function addCode()
+    {
+        View::load('admin/add_code');
+    }
+
+    public function codeAdd()
+    {
+        $data = Request::post(['name', 'title', 'content']);
+        if (Code::get(['name' => $data['name']])) {
+            return View::load('error', ['msg' => '添加失败，可能原因：名称重复']);
+        }
+        if (!Code::create($data)) {
+            return View::load('error', ['msg' => '添加失败！']);
+        }
+        return View::load('success', ['msg' => '添加成功', 'url' => '/admin/code']);
+    }
+
+    public function editCode()
+    {
+        $id = Request::get('id');
+        if (!$code = Code::get($id)) {
+            return View::load('error', ['msg' => '自定义不存在！']);
+        }
+        View::load('admin/edit_code', ['code' => $code]);
+    }
+
+    public function codeEdit()
+    {
+        $id = Request::get('id');
+        $data = Request::post(['name', 'title', 'content']);
+        if ($code = Code::get(['name' => $data['name']])) {
+            if ($code->id != $id) {
+                return View::load('error', ['msg' => '修改失败，可能原因：名称重复']);
+            }     
+        }
+        if (!Code::where('id', $id)->update($data)) {
+            return View::load('error', ['msg' => '修改失败！']);
+        }
+        return View::load('success', ['msg' => '修改成功', 'url' => '/admin/code']);
+    }
+
+
+    public function removeCode()
+    {
+        $id = Request::get('id');
+        if (!$code = Code::get($id)) {
+            return View::load('error', ['msg' => '自定义不存在！']);
+        }
+        $code->delete();
+        return View::load('success', ['msg' => '删除成功', 'url' => '/admin/code']);
+    }
+
     public function getSource()
     {
         
@@ -601,10 +705,10 @@ class Admin extends Common
                         'title' => '用户列表',
                         'options' => [
                             [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
+                                'name' => 'var_page',
+                                'title' => '翻页参数',
+                                'value' => 'page',
+                                'explain' => '翻页参数，有多个的时候请更换不一样的'
                             ], [
                                 'name' => 'pagesize',
                                 'title' => '显示条数',
@@ -614,7 +718,7 @@ class Admin extends Common
                                 'name' => 'order',
                                 'title' => '排序依据',
                                 'value' => 0,
-                                'explain' => '0 动态排序，1 最新'
+                                'explain' => '0 动态排序，1 最新，2 经验，3 金币'
                             ], [
                                 'name' => 'sort',
                                 'title' => '排序方式',
@@ -752,6 +856,52 @@ class Admin extends Common
                                 'title' => '对象用户ID',
                                 'value' => '',
                                 'explain' => '查看用户的id'
+                            ]
+                        ]
+                    ]
+                ]
+            ], [
+                'name' => 'Message',
+                'title' => '消息',
+                'action' => [
+                    [
+                        'action' => 'list',
+                        'name' => 'message_list',
+                        'title' => '列表',
+                        'options' => [
+                            [
+                                'name' => 'user_id',
+                                'title' => '发件人id',
+                                'value' => 0,
+                                'explain' => '0 为系统消息'
+                            ], [
+                                'name' => 'to_user_id',
+                                'title' => '收件人id',
+                                'value' => 0,
+                                'explain' => '收件人id'
+                            ], [
+                                'name' => 'page',
+                                'title' => '页数',
+                                'value' => 1,
+                                'explain' => '读取第N页的数据'
+                            ], [
+                                'name' => 'pagesize',
+                                'title' => '显示条数',
+                                'value' => 10,
+                                'explain' => '每页最大显示条数'
+                            ]
+                        ]
+                    ],
+                    [
+                        'action' => 'count',
+                        'name' => 'message_count',
+                        'title' => '数量',
+                        'options' => [
+                            [
+                                'name' => 'status',
+                                'title' => '类型',
+                                'value' => 0,
+                                'explain' => '0 为未读，1 为已读，2 为所有'
                             ]
                         ]
                     ]
@@ -1074,6 +1224,13 @@ class Admin extends Common
     {
         $template = new \Iam\Template;
         $template->test();
+    }
+
+    public function img()
+    {
+        $photo = Request::get('photo');
+        print_r($photo);
+        downloadImage($photo, uniqid(), 'static/novels/');
     }
 
 }

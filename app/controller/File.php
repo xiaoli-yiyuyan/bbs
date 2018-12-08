@@ -43,8 +43,8 @@ class File extends Common
             if (!empty($options['is_save_db'])) {
                 $id = Db::table('file')->add([
                     'user_id' => $options['user_id'],
-                    'name' => isset($options['file_name']) ? $options['file_name'] : $file['name'],
-                    'memo' => isset($options['file_memo']) ? $options['file_memo'] : '',
+                    'name' => !empty($options['file_name']) ? $options['file_name'] : $file['name'],
+                    'memo' => !empty($options['file_memo']) ? $options['file_memo'] : '',
                     'path' => $file_path,
                     'size' => $size,
                     'mine' => $mine

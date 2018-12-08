@@ -1,3 +1,0 @@
-<?php $name=Request::get('name', 'sss1'); ?>  <?php (new User)->info(array (
-  'id' => 0,
-)); ?>  <i-load src="/componemts/common/index_link" name="link" options="{a: 0, b: 2}"/>  <input type="text" value="2222">  <div class="header">      <span class="logo"></span>      <div class="head_center">错误提示</div>      <i-for name="a" value="value" key="key">          <div>{key}、{value}</div>      </i-for>  </div>  

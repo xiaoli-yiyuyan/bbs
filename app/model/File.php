@@ -3,8 +3,9 @@ namespace Model;
 
 use Iam\Db;
 use Iam\Page;
+use think\Model;
 
-class File extends Common
+class File extends Model
 {
     public static function isUserFile($user_id, $file_id)
     {

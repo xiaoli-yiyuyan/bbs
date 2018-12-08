@@ -331,10 +331,11 @@ ul li {
 }
 .card {
   background: #fff;
-  box-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.05rem 0.1rem #c8cfd1;
   margin: 0.5rem;
   position: relative;
-  border-radius: 0.1rem;
+  border-radius: 0.2rem;
+  overflow: hidden;
 }
 .card.card-line {
   box-shadow: none;
@@ -471,12 +472,18 @@ ul li {
 .list.list-border-bottom .list-group .list-item.list-item-icon img {
   left: 1rem;
 }
+.list .list-group.border-bottom .list-item {
+  border-bottom: 0.05rem solid #eee;
+}
+.list .list-group.border-bottom .list-item:last-child {
+  border-bottom: none;
+}
 .list .list-group.list-arrow .list-item:after {
   content: '';
   position: absolute;
   right: 0.55rem;
   top: 50%;
-  margin-top: -0.5rem;
+  margin-top: -0.4rem;
   width: 0.8rem;
   height: 0.8rem;
   background-image: url(/static/svg/arrow-right.svg);
@@ -487,6 +494,7 @@ ul li {
 .list .list-group .list-item {
   position: relative;
   display: block;
+  color: #333;
   padding: 0 0.5rem;
   padding-right: 1.9rem;
   background: #FFF;
@@ -528,10 +536,10 @@ ul li {
   height: 2.25rem;
 }
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
+  max-width: 28rem;
   z-index: 99;
   display: flex;
   line-height: 2.25rem;
@@ -752,4 +760,19 @@ ul li {
 .banner img {
   display: block;
   width: 100%;
+}
+.btn2 {
+  box-shadow: 0 0 2px #665ce6;
+  padding: .5rem;
+  color: #FFF;
+  border-radius: .05rem;
+  background: linear-gradient(#665ce6, #665ce6);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.btn2:active {
+  color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(#9088ec, #9088ec);
 }

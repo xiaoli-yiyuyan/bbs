@@ -1,0 +1,102 @@
+body {
+    max-width: 30rem;
+}
+.content {
+    padding: .5rem;
+    background: #FFFFFF;
+}
+.nav_title {
+    font-size: .8rem;
+    color: #6d7982;
+    font-weight: 700;
+    padding: .5rem;
+    border-bottom: .05rem solid #f0f0f0;
+}
+.next {
+    margin-left: .5rem;
+}
+.version {
+    padding: .75rem .5rem;
+    color: #f0f0f0;
+    background: #32393e;
+}
+.version span{
+    color: #00d0ff;
+}
+.check_box {
+    margin: .5rem 0;
+    border-top: .05rem solid #f0f0f0;
+    border-left: .05rem solid #f0f0f0;
+    border-right: .05rem solid #f0f0f0;
+}
+.check_box .nav_title {
+    font-size: .75rem;
+    background: #414a50;
+}
+.check_box .flex-box {
+    padding: .5rem 0;
+    border-bottom: .05rem solid #f0f0f0;
+}
+
+.check_box .check_title {
+    padding: .55rem 0;
+    border-bottom: .05rem solid #f0f0f0;
+
+}
+.check_box .flex-box .error {
+    color: #f22;
+}
+.check_box .flex-box .success {
+    color: #08c36d;
+}
+.input_group {
+    padding: .5rem;
+    color: #6d7982;
+    font-weight: 700;
+}
+.install_success,
+.install_error {
+    padding: .5rem;
+    line-height: 1.2rem;
+    border: .05rem solid #f0f0f0;
+    margin-bottom: .5rem;
+}
+.install_error {
+    text-align: center;
+    color: #F00;
+}
+.i_s_str {
+    padding: .5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #08c36d;
+}
+.tips {
+    background: #414a50;
+    color: #FFF;
+    padding: .5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    border-radius: .1rem;
+}
+.red {
+    color: #f00;
+    font-weight: 700;
+}
+.s_tips {
+    margin-top: .5rem;
+    text-align: center;
+    color: #aaa;
+    font-size: .6rem;
+}
+.by {
+    text-align: right;
+}
+
+.b_i_msg {
+    padding: .5rem;
+    margin: .5rem 0;
+    line-height: 1.2rem;
+    border: .05rem solid #f0f0f0;
+}

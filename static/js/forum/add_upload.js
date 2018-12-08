@@ -17,6 +17,8 @@ $(function() {
     var allow_type = ["png","gif","jpg","bmp","jpeg"];
     $('.add_img').click(function() {
         var file_input = $('<input type="file">');
+        file_input.hide();
+        $('body').append(file_input);
         file_input.change(upImg);
         file_input.click();
     });
@@ -59,6 +61,7 @@ $(function() {
                 // box.find('.btn_setting').text('设置');
             }
         });
+        this.remove();
     }
 
     var upImg = function() {
@@ -215,4 +218,5 @@ $(function() {
         });
         return false;
     });
+    // this.remove();
 });

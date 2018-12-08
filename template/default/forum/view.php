@@ -4,7 +4,11 @@
         exit();
     }
 ?>
-<?php $this->load('/components/common/header', ['title' => $view['info']['title']]); ?>
+<?php $this->load('/components/common/header', [
+    'title' => $view['info']['title'],
+    'keywords' => implode($view['info']['keywords'], ','),
+    'description' => mb_substr($view['info']['strip_tags_context'], 0, 100)
+]); ?>
 <style>
     body {
         background: #FFF;
@@ -16,7 +20,7 @@
     <div class="view_head border-b">
         <div class="view_title">
             <?=$view['info']['title']?>
-            <?php if ($view['info']['user_id'] == $userinfo['id']) { ?>
+            <?php if ($view['info']['user_id'] == $userinfo['id'] || $view['class_info']['is_admin']) { ?>
             <div class="view_action">
                 <a class="btn" href="/forum/editor?id=<?=$view['info']['id']?>">修改</a>
                 <a class="btn btn_remove" data-id="<?=$view['info']['id']?>">删除</a>
@@ -41,14 +45,17 @@
         <div class="box_content">
         <?php foreach ($view['info']['file_list'] as $key => $value) { ?>
             <div class="forum_file_list">
-                <div><?=$value['name']?></div>
-                <a href="<?=$value['path']?>">点击下载(<?=$value['format_size']?>)</a>
+                <div class="forum_down_name"><?=$value['name']?></div>
+                <a  class="forum_down_link" href="<?=$value['path']?>">点击下载(<?=$value['format_size']?>)</a>
             </div>
         <?php } ?>
         </div>
     </div>
     <?php } ?>
 </div>
+<!-- 代码自定义 BEGIN -->
+<?=code('ad_forum')?>
+<!-- 代码自定义 END -->
 
 <div class="replay_box content-main">
     <div class="replay_title border-b">全部回复 <?=$reply_list['page']['count']?> 条</div>
@@ -82,7 +89,6 @@
         });
     });
 </script>
-
 <?php $this->load('/components/forum/reply_form', ['forum_id' => $view['info']['id']]); ?>
 
 <?php $this->load('components/common/footer'); ?>

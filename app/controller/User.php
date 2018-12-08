@@ -12,6 +12,8 @@ use Iam\Response;
 use Iam\FileUpload;
 use Model\Friend;
 use Model\User as MUser;
+use Model\Message as MMessage;
+use Model\SignLog;
 
 class User extends Common
 {
@@ -40,7 +42,7 @@ class User extends Common
         if (mb_strlen($options['explain']) > 500) {
             return ['err' => 5, 'msg' => '你的小尾巴了太长了，我记不住！'];
         }
-        DB::table('user')->where(['id' => $this->user['id']])->update($options);
+        DB::table('user')->where(['id' => $this->user['id']])->update(['nickname' => $options['nickname'], 'explain' => $options['explain']]);
         return ['id' => $this->user['id']];
 
     }
@@ -102,7 +104,11 @@ class User extends Common
             unset($options['id']);
             return $this->user;
         }
-        return Db::table('user')->where(['id' => $options['id']])->find();
+		$user = Db::table('user')->where(['id' => $options['id']])->find();
+		$level_info = getUserLevel($user['exp'], $this->upExp);
+        $user = array_merge($user, $level_info);
+        $user['is_today_sign'] = SignLog::isTodaySign($user['id']);
+        return $user;
     }
 
     public function list($options)
@@ -222,9 +228,16 @@ class User extends Common
 
         if ($this->isCare($options)) {
             Db::table('friend')->where(['user_id' => $options['user_id'], 'care_user_id' => $options['care_user_id']])->remove();
+
+            $content = '<a href="/user/show?id=' . $this->user['id'] . '">' .$this->user['nickname'] . '</a> 取消了对你的关注！';
+            MMessage::create(0, $options['care_user_id'], $content);
             return ['msg' => '取消关注成功', 'is_care' => 0];
+
         }
         Db::table('friend')->add(['user_id' => $options['user_id'], 'care_user_id' => $options['care_user_id']]);
+        
+        $content = '<a href="/user/show?id=' . $this->user['id'] . '">' .$this->user['nickname'] . '</a> 关注了你！';
+        MMessage::create(0, $options['care_user_id'], $content);
         return ['msg' => '关注成功', 'is_care' => 1];
     }
 
@@ -233,12 +246,6 @@ class User extends Common
         if (empty($options['care_user_id'])) {
             $options['care_user_id'] = $this->user['id'];
         }
-        // $options = array_merge([
-        //     'care_user_id' => $this->user['id']
-        // ], $options);
-        // if (empty($options['user_id'])) {
-        //     return ['err' => 1, 'msg' => '用户未登录'];
-        // }
         return Friend::getList($options);
     }
 
@@ -247,12 +254,14 @@ class User extends Common
         if (empty($options['user_id'])) {
             $options['user_id'] = $this->user['id'];
         }
-        // $options = array_merge([
-        //     'user_id' => $this->user['id']
-        // ], $options);
-        // if (empty($options['user_id'])) {
-        //     return ['err' => 1, 'msg' => '用户未登录'];
-        // }
         return Friend::getList($options);
+    }
+
+    /**
+     * 获取用户排行榜
+     */
+    public function rank($options)
+    {
+        return MUser::rank($options['type']);
     }
 }

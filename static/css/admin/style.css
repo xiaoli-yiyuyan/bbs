@@ -142,6 +142,9 @@ body {
 .tree.list .svg-component {
   background-image: url(/static/svg/admin/component.svg?s);
 }
+.tree.list .svg-code {
+  background-image: url(/static/svg/admin/code.svg?s);
+}
 .btn-margin-left {
   margin-left: .25rem;
 }
@@ -153,6 +156,7 @@ body {
   background-color: #FFF;
   background-position: center center;
   background-size: 100% auto;
+  background-repeat: no-repeat;
 }
 .column_photo .column_photo_progress {
   position: absolute;
@@ -176,4 +180,8 @@ body {
 }
 .input-search {
   background: #FFF;
+}
+.code_name {
+  margin: 0 .1rem;
+  color: #3f7290;
 }
