@@ -90,7 +90,7 @@ class Forum extends Model
      * 模糊搜索
      * @param string $keyword 要查询的关键词
      */
-    public function search($keyword = '')
+    public static function search($keyword = '')
     {
         $forum = new Forum;
         if ($keyword !== '') {

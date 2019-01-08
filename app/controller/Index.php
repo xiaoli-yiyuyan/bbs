@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Iam\Db;
+use think\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Listen;
@@ -10,13 +10,13 @@ class Index extends Common
 {
     public function index()
     {
-        $mark = Db::table('novel_mark')->select();
-        $new_list = Db::table('novel')->order('`id` DESC')->select(0,10);
-        foreach ($new_list as &$item) {
-            $item['mark'] = $this->getMarkTitle($item['id']);
-         }
+        // $mark = Db::table('novel_mark')->select();
+        // $new_list = Db::table('novel')->order('`id` DESC')->select(0,10);
+        // foreach ($new_list as &$item) {
+        //     $item['mark'] = $this->getMarkTitle($item['id']);
+        //  }
         // Url::redirect('/chat/room/?id=2');
-    	View::load('index',['mark' => $mark, 'new_list' => $new_list]);
+    	View::load('index');
     }
 
     public function getMarkTitle($novelid)

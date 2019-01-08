@@ -3,6 +3,7 @@ namespace Iam;
 
 use Iam\Db;
 use Iam\Listen;
+use Iam\Component;
 
 class View
 {
@@ -88,15 +89,19 @@ class View
 	 */
 	public static function loadComponent($name, $data = [])
 	{
-		Listen::hook('loadComponentBefore', ['name' => $name]);
-		$component = self::$components[$name];
-		foreach ($component['props'] as $key => &$value) {
-			if (isset($data[$key])) {
-				$value = $data[$key];
-			}
-		}
-		$data = $component['data']($component);
-		self::load($component['template'], $data);
+		$component = new Component([
+            'model' => 'default'
+        ]);
+        $component->load($name);
+		// Listen::hook('loadComponentBefore', ['name' => $name]);
+		// $component = self::$components[$name];
+		// foreach ($component['props'] as $key => &$value) {
+		// 	if (isset($data[$key])) {
+		// 		$value = $data[$key];
+		// 	}
+		// }
+		// $data = $component['data']($component);
+		// self::load($component['template'], $data);
 	}
 
 

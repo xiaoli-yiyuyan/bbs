@@ -613,4 +613,15 @@ class Forum extends Common
     {
         imagecropper($path, 200, 200);
     }
+
+    public function search($keyword = '')
+    {
+        if ($keyword === '') {
+            return Page::error('请输入您要搜索的关键词！');
+        }
+        $list = MForum::search($keyword);
+        View::load('forum/search', [
+            'list' => $list
+        ]);
+    }
 }

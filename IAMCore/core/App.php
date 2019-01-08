@@ -1,6 +1,6 @@
 <?php
 namespace Iam;
-use Iam\Loader;
+// use Iam\Loader;
 
 class App
 {
@@ -21,13 +21,14 @@ class App
 	public static function run()
 	{
 		self::init();
-		$appPath = self::$approot . DS . self::$controller;
+		self::runTpl();
+		// $appPath = self::$approot . DS . self::$controller;
 		// print_r($appPath);
-		Loader::addClassMap(self::$namespace, $appPath); //添加命名空间
-		$modelPath = self::$approot . DS . 'model';
-		Loader::addClassMap('Model', $modelPath); //添加命名空间
-		$appClass = new \app\Main;
-		$appClass->index(self::$baseUrl);
+		// Loader::addClassMap(self::$namespace, $appPath); //添加命名空间
+		// $modelPath = self::$approot . DS . 'model';
+		// Loader::addClassMap('Model', $modelPath); //添加命名空间
+		// $appClass = new \app\Main;
+		// $appClass->index(self::$baseUrl);
 	}
 
 	public static function runTpl()
