@@ -17,9 +17,9 @@ class Column extends Common
         return $info;
     }
 
-    public function list($options)
+    public function list()
     {
-        $list = Category::getList($options);
+        $list = Category::getList();
         return $list;
     }
 

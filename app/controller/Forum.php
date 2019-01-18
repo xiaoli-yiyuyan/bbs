@@ -69,15 +69,17 @@ class Forum extends Common
         }
     }
 
-    public function list($options)
+    public function list($id = '')
     {
-        $list = MForum::getList($options);
+        $list = MForum::getList(['id' =>$id]);
         foreach ($list['data'] as &$item) {
             $item['img_list'] = $this->setViewFiles($item['img_data']);
             $item['file_list'] = $this->setViewFiles($item['file_data']);
         }
         $this->parseList($list['data']);
-        return $list;
+        View::load('forum/list', [
+            'list' => $list
+        ]);
     }
 
     public function add2()

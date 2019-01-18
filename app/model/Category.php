@@ -1,10 +1,11 @@
 <?php
 namespace Model;
 
-use Iam\Db;
+use think\Db;
 use Iam\Page;
+use think\Model;
 
-class Category extends Common
+class Category extends Model
 {
     public static function info($classid)
     {
@@ -33,7 +34,12 @@ class Category extends Common
     private static $order = ['id', 'order'];
     private static $sort = ['ASC', 'DESC'];
 
-    public static function getList($options = []/*$class_id = 0, $page = 1, $pagesize = 10*/)
+    public static function getList()
+    {
+        return self::select();
+    }
+
+    public static function getList_old($options = []/*$class_id = 0, $page = 1, $pagesize = 10*/)
     {
         // $query = [];
         $options = array_merge(self::$options, $options);

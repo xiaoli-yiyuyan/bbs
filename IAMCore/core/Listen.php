@@ -5,13 +5,24 @@ class Listen
 {
 	public static $func = [];
 
+	/**
+	 * 监听注入
+	 */
 	public static function on($name, $callback = ''){ //注入代码
-		self::$func[$name] = $callback;
+		if (!isset(self::$func[$name])) {
+			self::$func[$name] = [];
+		}
+		self::$func[$name][] = $callback;
 	}
 
+	/**
+	 * 运行注入
+	 */
 	public static function hook($name, $arguments = []){ //运行注入
 		if (isset(self::$func[$name])) {
-			call_user_func_array(self::$func[$name], $arguments);
+			foreach (self::$func[$name] as $func) {
+				call_user_func_array($func, $arguments);
+			}
 		}
 	}
 

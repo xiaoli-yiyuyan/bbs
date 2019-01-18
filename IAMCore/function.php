@@ -7,22 +7,11 @@ function source($cmd)
 	// source('api/list?user_name=1&b=2c=3');
 	// $param = func_get_args();
 	// 要调用的方法
-	// $action = $param[0];
-	if (!$url = parse_url($cmd)) {
-		return;
-	}
 
-	if (!isset($url['path'])) {
-		return;
-	}
+	$data = cmdParse($cmd);
 
-	// 参数解析
-	$query = [];
-	if (isset($url['query'])) {
-		parse_str($url['query'], $query);
-	}
-
-	$appClass = explode('/', trim($url['path'], '/'));
+	$appClass = $data['action'];
+	$query = $data['query'];
 	if (count($appClass) == 1) {
 		// 先检查函数存在不
 		$appFunction = $appClass[0];
@@ -53,6 +42,7 @@ function source($cmd)
 		$appAction = end($appClass);
 		array_pop($appClass);
 		$appClass = implode('\\', $appClass);
+
 		if (!class_exists($appClass, $appAction)) {
 			return;
 		}
@@ -72,10 +62,11 @@ function source($cmd)
 				$args[] = $param->getDefaultValue();
 			}
 		}
+		// print_r($appClass);die();
 
 		// 执行方法
 		if (count($args) == $method->getNumberOfParameters()) {
-			return $method->invokeArgs($method->isStatic() ? null : $appClass, $args);
+			return $method->invokeArgs($method->isStatic() ? null : new $appClass, $args);
 		} else {
 			throw new \Exception('参数错误，缺少参数');
 		}
@@ -83,4 +74,49 @@ function source($cmd)
 	}
 
 	// return parse_url($cmd);
+}
+
+/**
+ * 指令解析数据
+ */
+function cmdParse($cmd)
+{
+	if (!$url = parse_url($cmd)) {
+		return;
+	}
+
+	if (!isset($url['path'])) {
+		return;
+	}
+
+	// 参数解析
+	$query = [];
+	if (isset($url['query'])) {
+		parse_str($url['query'], $query);
+	}
+
+	$action = explode('/', trim($url['path'], '/'));
+
+	return [
+		'action' => $action,
+		'query' => $query
+	];
+}
+
+/**
+ * 加载自定义组件
+ * @param string $cmd 	指令
+ * @param array $query 	附加参数
+ */
+function component($cmd, $query = [])
+{
+	$data = cmdParse($cmd);
+	$action = implode('/', $data['action']);
+	$component = new Iam\Component([
+		'model' => 'default'
+	]);
+	if (!empty($query)) {
+		$data['query'] = array_merge($data['query'], $query);
+	}
+	$component->load($action, $data['query']);
 }

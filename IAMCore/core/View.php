@@ -104,7 +104,6 @@ class View
 		// self::load($component['template'], $data);
 	}
 
-
 	private static $components = [];
 
 	/**
