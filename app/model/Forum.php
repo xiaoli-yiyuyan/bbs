@@ -30,7 +30,7 @@ class Forum extends Model
     private static $order = ['update_time', 'id', 'read_count', 'reply_count'];
     private static $sort = ['ASC', 'DESC'];
 
-    public static function getList($options = []/*$class_id = 0, $page = 1, $pagesize = 10, $status*/)
+    public static function getList2($options = []/*$class_id = 0, $page = 1, $pagesize = 10, $status*/)
     {
         $options = array_merge(self::$options, $options);
         $query = $options['query'];
@@ -84,6 +84,58 @@ class Forum extends Model
             'page' => $page,
             'data' => $list
         ];
+    }
+
+    /**
+     * 获取论坛数据列表
+     */
+    public static function getListByClassId($class_id = '')
+    {
+        $list = self::where('class_id', $class_id);
+        return $list->paginate(ASetting::get('pagesize'));
+    }
+
+    /**
+     * 转换地址
+     */
+    public function setViewImages($context)
+    {
+        // $context = $this->context;
+        if (!empty($this->img_data)) {
+            $img_arr = explode(',', $this->img_data);
+            foreach ($img_arr as $key => $value) {
+                $file = File::get($value);
+                $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
+            }
+        }
+        return $context;
+    }
+
+    /**
+     * 转换地址
+     */
+    public function setViewFiles($file_data)
+    {
+        $file_list = [];
+        if (!empty($file_data)) {
+            $file_arr = explode(',', $file_data);
+            foreach ($file_arr as $key => $value) {
+                $file = File::get($value);
+                $file['format_size'] = byteFormat($file['size']);
+                $file_list[] = $file;
+            }
+        }
+        return $file_list;
+    }
+
+    public function getAuthorAttr($val, $data)
+    {
+        return User::getAuthor($data['user_id']);
+    }
+
+    public function getClassInfoAttr($val, $data)
+    {
+        return Category::field('title')->get($data['class_id']);
     }
 
     /**

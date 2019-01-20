@@ -3,9 +3,36 @@ namespace Model;
 
 use Iam\Db;
 use Iam\Page;
+use think\Model;
 
-class Friend extends Common
+class Friend extends Model
 {
+    /**
+     * 获取粉丝列表
+     */
+    public static function getList($user_id = '', $type = 'fans' /** fans|care */, $page = 1, $pagesize = 10)
+    {
+        $friend = self::where('1','1');
+        if ($type == 'fans') {
+            $friend->where('care_user_id', $user_id);
+        } else {
+            $friend->where('user_id', $user_id);
+        }
+        
+        return $friend->paginate(Setting::get('pagesize'));
+    }
+
+    /**
+     * 判断用户a是否关注b
+     */
+    public static function isCare($user_id, $care_user_id)
+    {
+        return self::get([
+            'user_id' => $user_id,
+            'care_user_id' => $care_user_id,
+        ]);
+    }
+
     private static $options = [
         // 'path' => '/forum/list',
         'page' => 1,
@@ -25,7 +52,7 @@ class Friend extends Common
     private static $order = ['id'];
     private static $sort = ['ASC', 'DESC'];
 
-    public static function getList($options = []/*$class_id = 0, $page = 1, $pagesize = 10, $status*/)
+    public static function getList2($options = []/*$class_id = 0, $page = 1, $pagesize = 10, $status*/)
     {
         $options = array_merge(self::$options, $options);
         $query = $options['query'];

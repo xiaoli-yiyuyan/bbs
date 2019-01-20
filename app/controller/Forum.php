@@ -69,7 +69,7 @@ class Forum extends Common
         }
     }
 
-    public function list($id = '')
+    public function listData($id = '')
     {
         $list = MForum::getList(['id' =>$id]);
         foreach ($list['data'] as &$item) {
@@ -77,73 +77,72 @@ class Forum extends Common
             $item['file_list'] = $this->setViewFiles($item['file_data']);
         }
         $this->parseList($list['data']);
+        return $list;
+    }
+
+    public function list($id = '')
+    {
+        $class_info = Category::get($id);
+        $forum = MForum::where('class_id', $id);
+        $list = $forum->paginate(Setting::get('pagesize'));
+        foreach ($list as &$item) {
+            $item['img_list'] = $this->setViewFiles($item['img_data']);
+            $item['file_list'] = $this->setViewFiles($item['file_data']);
+        }
+        $this->parseList($list);
         View::load('forum/list', [
-            'list' => $list
+            'list' => $list,
+            'page' => $list->render(),
+            'class_info' => $class_info
         ]);
     }
 
-    public function add2()
+    public function addPage($class_id = '')
     {
         $this->isLogin();
-        $classid = Request::get('classid');
-        $category = new Category;
-        if (!$classInfo = $category->info($classid)) {
+        if (!$class_info = Category::get($class_id)) {
             return Page::error('页面未找到！');
         }
-        if (Request::isPost()) {
-            $post = Request::post(['title', 'context']);
-
-            $data = [
-                'title' => $post['title'],
-                'context' => $post['context'],
-                'user_id' => $this->user['id'],
-                'class_id' => $classInfo['id']
-            ];
-
-            if (!$id = Db::table('forum')->add($data)) {
-                return Response::json(['err' => 1, 'msg' => '添加失败']);
-            }
-
-            Url::redirect('/forum/view?id=' . $id);
-        } else {
-            View::load('forum/add', ['class_info' => $classInfo]);
+        
+        if (!$class_info['user_add'] && !$this->isAdmin($this->user['id'], $class_info['id'])) {
+            return Page::error('该栏目禁止发帖');
         }
+
+        View::load('forum/add', ['column_info' => $class_info]);
     }
 
-    public function add($options/*title, context, img_data, file_data, class_id, user_id*/)
+    /**
+     * 发布帖子
+     */
+    public function add($class_id = '', $title = '', $context = '', $img_data = '', $file_data = '')
     {
+
         if (!$this->isLogin()) {
-            return ['err' => 6, 'msg' => '会员未登录'];
+            return Response::json(['err' => 6, 'msg' => '会员未登录']);
         }
 
-        if (!$class_info = Db::table('category')->where([
-            'id' => $options['class_id']
-        ])->find()) {
-            return ['err' => 1, 'msg' => '帖子发表栏目不存在！'];
+        if (!$class_info = Category::get($class_id)) {
+            return Response::json(['err' => 1, 'msg' => '帖子发表栏目不存在！']);
         }
 
         if (!$class_info['user_add'] && !$this->isAdmin($this->user['id'], $class_info['id'])) {
-            return ['err' => 2, 'msg' => '该栏目禁止发帖'];
+            return Response::json(['err' => 2, 'msg' => '该栏目禁止发帖']);
+        }
+
+        if (empty($title)) {
+            return Response::json(['err' => 2, 'msg' => '帖子标题不能为空！']);
+        }
+
+        if (empty($context)) {
+            return Response::json(['err' => 3, 'msg' => '帖子内容不能为空！']);
 
         }
 
-        if (empty($options['title'])) {
-            return ['err' => 2, 'msg' => '帖子标题不能为空！'];
-
-        }
-
-        if (empty($options['context'])) {
-            return ['err' => 3, 'msg' => '帖子内容不能为空！'];
-
-        }
-        // $options['title'] = htmlspecialchars($options['title']);
-        // $options['context'] = htmlspecialchars($options['context']);
-        
-        if (!empty($options['img_data'])) {
-            $img_arr = explode(',', $options['img_data']);
+        if (!empty($img_data)) {
+            $img_arr = explode(',', $img_data);
             foreach ($img_arr as $item) {
                 if (!File::setUserFile($this->user['id'], $item)) {
-                    return ['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。'];
+                    return Response::json(['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。']);
                 }
                 
                 if (Setting::get('forum_water_mark_status') == '1' && $file = File::get($item)) {
@@ -154,33 +153,32 @@ class Forum extends Common
             }
         }
 
-        if (!empty($options['file_data'])) {
-            $file_arr = explode(',', $options['file_data']);
+        if (!empty($file_data)) {
+            $file_arr = explode(',', $file_data);
             foreach ($file_arr as $item) {
                 if (!File::setUserFile($this->user['id'], $item)) {
-                    return ['err' => 5, 'msg' => '上传的文件不存在，或者已经被发布。'];
+                    return Response::json(['err' => 5, 'msg' => '上传的文件不存在，或者已经被发布。']);
                 }
             }
         }
 
+        
         $data = [
-            'title' => $options['title'],
-            'context' => $options['context'],
+            'title' => $title,
+            'context' => $context,
             'user_id' => $this->user['id'],
-            'class_id' => $options['class_id'],
-            'img_data' => $options['img_data'],
-            'file_data' => $options['file_data'],
+            'class_id' => $class_id,
+            'img_data' => $img_data,
+            'file_data' => $file_data,
             'update_time' => now()
         ];
 
-        if (!$id = Db::table('forum')->add($data)) {
-            MUser::changeCoin($this->user['id'], $this->addForumCoin);
-            return ['err' => 6, 'msg' => '发表失败'];
+        if (!$id = MForum::create($data)) {
+            return Response::json(['err' => 1, 'msg' => '添加失败']);
         }
-
-        return ['id' => $id, 'reward_coin' => $this->addForumCoin];
+        MUser::changeCoin($this->user['id'], $this->addForumCoin);
+        return Response::json(['id' => $id, 'reward_coin' => $this->addForumCoin]);
     }
-
 
     public function edit($options/*id, title, context, img_data, file_data, class_id, user_id*/)
     {

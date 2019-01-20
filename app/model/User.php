@@ -76,4 +76,13 @@ class User extends Model
         }
         return $user->limit(20)->select()->toArray();
     }
+    
+    /**
+     * 获取用户作者格式
+     */
+    public static function getAuthor($id)
+    {
+        $user = self::get($id);
+        return $user;
+    }
 }

@@ -1,4 +1,5 @@
 <?php self::load('common/header',['title' => '论坛中心']); ?>
+<div class="header-height"></div>
 <div class="header">
     <span class="back"></span>
     <a href="/" class="left-word">首页</a>
@@ -13,11 +14,11 @@
         <img class="bbs_photo" src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2779070586,3489688379&fm=58" alt="">
         <div>
             <div class="bbas_action_title"><?=$class_info['title']?></div>
-            <div class="create_time">总数：<?=$page['count']?></div>
+            <div class="create_time">总数：<?=$list->toArray()['total']?></div>
         </div>
     </div>
     <div>
-        <a class="btn" href="/forum/add?classid=<?=$class_info['id']?>" style="display:inline-block;">发帖</a>
+        <a class="btn" href="/forum/add_page?class_id=<?=$class_info['id']?>" style="display:inline-block;">发帖</a>
     </div>
 </div>
 
@@ -25,7 +26,7 @@
     <div class="bbs_order_title">话题</div>
     <div>最近回复</div>
 </div>
-<?php if (empty($list)) { ?>
+<?php if ($list->toArray()['total'] == 0) { ?>
     <div class="bbs_empty">这个地方空空如也！</div>
 <?php } else { ?>
 <div class="list bbs_list">
@@ -43,26 +44,8 @@
         </div>
     </div>
 <?php } ?>
-<div class="bbs_page">
-    <div class="bbs_page_action">
-        <div class="bbs_page_jump_box">
-            <a class="bbs_page_jump" href="<?=$page['href'][0]?>">首页</a>
-            <a class="bbs_page_jump" href="<?=$page['href'][1]?>">上页</a>
-            <input type="text" class="input bbs_page_jump" placeholder="<?=$page['page']?>/<?=$page['page_count']?>">
-            <a class="bbs_page_jump" href="<?=$page['href'][2]?>">下页</a>
-            <a class="bbs_page_jump" href="<?=$page['href'][3]?>">尾页</a>
-        </div>
-    </div>
-    <!-- <div class="bbs_page_jump flex-box">
-        <div>当前第1页，共2000页</div>
-        <div>
-            <div class="input-search">
-                <input type="text" class="input" placeholder="页数">
-                <span class="btn btn-fill">跳页</span>
-            </div>
-        </div>
-    </div> -->
-</div>
+<!-- 分页 -->
+<?=$page?>
 </div>
 <?php } ?>
 <?php self::load('common/footer'); ?>

@@ -8,6 +8,7 @@ use Iam\Page;
 use Iam\Session;
 use Iam\Request;
 use Iam\Response;
+use Model\User;
 
 class Login extends Common
 {
@@ -21,24 +22,20 @@ class Login extends Common
     	View::load('login/index');
     }
 
-    public function login()
+    public function login($username = '', $password = '')
     {
-        if (Request::isPost()) {
-            $post = Request::post(['username', 'password']);
-            if (empty($post['username']) || empty($post['password'])) {
-                return Page::error('用户名或密码为空！');
-            }
-
-            $where = ['username' => $post['username'], 'password' => md5($post['password'])];
-            if (!$user = Db::table('user')->where($where)->find()) {
-                return Page::error('登录失败！');
-            }
-
-            Session::set('sid', $user['sid']);
-            Url::redirect('/user/index');
-        } else {
-            View::load('login/index');
+        $post = Request::post(['username', 'password']);
+        if (empty($username) || empty($password)) {
+            return Page::error('用户名或密码为空！');
         }
+
+        $where = ['username' => $username, 'password' => md5($password)];
+        if (!$user = User::where($where)->find()) {
+            return Page::error('登录失败！');
+        }
+
+        Session::set('sid', $user['sid']);
+        Url::redirect('/user/index');
     }
 
     public function loginApi()

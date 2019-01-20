@@ -2,7 +2,7 @@
 /**
  * 数据源获取
  */
-function source($cmd)
+function source($cmd, $query = [])
 {
 	// source('api/list?user_name=1&b=2c=3');
 	// $param = func_get_args();
@@ -11,7 +11,9 @@ function source($cmd)
 	$data = cmdParse($cmd);
 
 	$appClass = $data['action'];
-	$query = $data['query'];
+	
+	$query = array_merge($data['query'], $query);
+	
 	if (count($appClass) == 1) {
 		// 先检查函数存在不
 		$appFunction = $appClass[0];
@@ -62,7 +64,6 @@ function source($cmd)
 				$args[] = $param->getDefaultValue();
 			}
 		}
-		// print_r($appClass);die();
 
 		// 执行方法
 		if (count($args) == $method->getNumberOfParameters()) {

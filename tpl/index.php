@@ -16,7 +16,7 @@
     </div>
 </header>
 <?//=source('app/common/Ubb/getTips?msg=123456&type=1')?>
-<?php self::loadComponent('/components/common/left_menu'); ?>
+<?php component('/components/common/left_menu'); ?>
 <div class="index_top_nav index_link">
     <a href="<?=href('/forum/list?id=1')?>">综合</a>
     <a href="<?=href('/forum/list?id=2')?>">源码</a>
@@ -32,7 +32,7 @@
         <div class="column_info">
             <div class="column_title"><?=$item['title']?></div>
             <div class="column_count">
-                总数: <?php component('/components/forum/get_count_by_class_id', ['class_id' => $item['id']]); ?>
+                总数: <?php //component('/components/forum/get_count_by_class_id', ['class_id' => $item['id']]); ?>
             </div>
         </div>
     </a>

@@ -11,6 +11,8 @@ use Iam\Request;
 use Iam\Response;
 use Iam\FileUpload;
 use Model\Friend;
+use Model\Forum;
+use Model\ForumReply;
 use Model\User as MUser;
 use Model\Message as MMessage;
 use Model\SignLog;
@@ -23,71 +25,115 @@ class User extends Common
         // $this->isLogin();
     }
 
-    public function editInfo($options/*id, 'nickname', 'explain'*/)
+    public function index()
+    {
+        $fans_count = Friend::where('care_user_id', $this->user['id'])->count();
+        $care_count = Friend::where('user_id', $this->user['id'])->count();
+
+        // 帖子相关
+        $forum_count = Forum::where('user_id', $this->user['id'])->count();
+        $forum_data = Forum::where('user_id', $this->user['id'])->order('id', 'desc')->find();
+
+        // 评论相关
+        $reply_count = ForumReply::where('user_id', $this->user['id'])->count();
+        $reply_data = ForumReply::where('user_id', $this->user['id'])->order('id', 'desc')->find();
+
+        View::load('user/index',[
+            'fans_count' => $fans_count,
+            'care_count' => $care_count,
+            'forum_count' => $forum_count,
+            'forum_data' => $forum_data,
+            'reply_count' => $reply_count,
+            'reply_data' => $reply_data
+        ]);
+    }
+
+    /**
+     * 资料修改界面
+     */
+    public function editPage()
+    {
+        View::load('user/edit_page');
+    }
+
+    /**
+     * 修改资料
+     */
+    public function editInfo($nickname = '', $explain = '')
     {
         if (!$this->isLogin()) {
             return ['err' => 1, 'msg' => '会员未登录'];
         }
-        $options['nickname'] = htmlspecialchars($options['nickname']);
-        $options['explain'] = htmlspecialchars($options['explain']);
-        if (mb_strlen($options['nickname']) < 2) {
-            return ['err' => 2, 'msg' => '昵称长度不能小于2个字符哦！'];
+        $nickname = htmlspecialchars($nickname);
+        $explain = htmlspecialchars($explain);
+        if (mb_strlen($nickname) < 2) {
+            return Response::json(['err' => 2, 'msg' => '昵称长度不能小于2个字符哦！']);
         }
-        if (mb_strlen($options['nickname']) > 16) {
-            return ['err' => 3, 'msg' => '昵称太长啦，我记不住！'];
+        if (mb_strlen($nickname) > 16) {
+            return Response::json(['err' => 3, 'msg' => '昵称太长啦，我记不住！']);
         }
-        if (empty($options['explain'])) {
-            return ['err' => 4, 'msg' => '你忘了你的小尾巴了！'];
+        if (empty($explain)) {
+            return Response::json(['err' => 4, 'msg' => '你忘了你的小尾巴了！']);
         }
-        if (mb_strlen($options['explain']) > 500) {
-            return ['err' => 5, 'msg' => '你的小尾巴了太长了，我记不住！'];
+        if (mb_strlen($explain) > 500) {
+            return Response::json(['err' => 5, 'msg' => '你的小尾巴了太长了，我记不住！']);
         }
-        DB::table('user')->where(['id' => $this->user['id']])->update(['nickname' => $options['nickname'], 'explain' => $options['explain']]);
-        return ['id' => $this->user['id']];
+        MUser::where(['id' => $this->user['id']])->update(['nickname' => $nickname, 'explain' => $explain]);
+        return Response::json(['id' => $this->user['id']]);
 
     }
 
-    public function updatePassword($options/*id, password, password1, password2*/){
+    /**
+     * 密码修改界面
+     */
+    public function updatePasswordPage()
+    {
+        View::load('user/update_password_page');
+    }
+
+    /**
+     * 修改密码
+     */
+    public function updatePassword($password = '', $password1 = '', $password2 = ''){
         if (!$this->isLogin()) {
-            return ['err' => 1, 'msg' => '会员未登录'];
+            return Response::json(['err' => 1, 'msg' => '会员未登录']);
         }
         $id = $this->user['id'];
 
-        if (md5($options['password']) != $this->user['password']) {
-            return ['err' => 2, 'msg' => '原始密码错误！'];
+        if (md5($password) != $this->user['password']) {
+            return Response::json(['err' => 2, 'msg' => '原始密码错误！']);
         }
 
-        if(!preg_match("/^.{6,12}$/", $options['password1'])){
-            return ['err' => 3, 'msg' => '新密码位数必须在 6~12 位之间'];
+        if(!preg_match("/^.{6,12}$/", $password1)){
+            return Response::json(['err' => 3, 'msg' => '新密码位数必须在 6~12 位之间']);
         }
 
-        if($options['password1'] != $options['password2']){
-            return ['err' => 4, 'msg' => '两次密码输入不一致'];
+        if($password1 != $password2){
+            return Response::json(['err' => 4, 'msg' => '两次密码输入不一致']);
         }
 
-        if($options['password'] == $options['password1']){
-            return ['err' => 5, 'msg' => '新密码与原始密码不能一致'];
+        if($password == $password1){
+            return Response::json(['err' => 5, 'msg' => '新密码与原始密码不能一致']);
         }
 
-        if (!DB::table('user')->where(['id' => $id])->update([
-            'password'=>md5($options['password1']),
+        if (!MUser::where(['id' => $id])->update([
+            'password'=>md5($password1),
             'sid' => $this->user['id'] . '_' . getRandChar(16)
         ])) {
-            return ['err' => 5, 'msg' => '修改失败'];
+            return Response::json(['err' => 5, 'msg' => '修改失败']);
         }
-        return ['id' => $this->user['id']];
+        return Response::json(['id' => $this->user['id']]);
     }
 
-    public function base64Upload($options/*id, $base64, path*/)
+    public function base64Upload($base64 = '')
     {
         if (!$this->isLogin()) {
-            return ['err' => 1, 'msg' => '会员未登录'];
+            return Response::json(['err' => 1, 'msg' => '会员未登录']);
         }
-        $base64 = $options['base64'];
-        if ($path = base64Upload($base64, $options['path'], $this->user['id']) . '?t=' . time()) {
-            Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => $path]);
+        if ($path = base64Upload($base64, 'upload/user/', $this->user['id']) . '?t=' . time()) {
+            MUser::where(['id' => $this->user['id']])->update(['photo' => $path]);
         }
-        return ['msg' => $path];
+        return Response::json(['msg' => $path]);
 
         // Db::table('user')->where(['id' => $this->user['id']])->update(['photo' => substr($photoPath, 1) . $photoUrl]);
     }
@@ -95,7 +141,80 @@ class User extends Common
     public function quit(){
       session_destroy();
       $this->user = ['id' => 0];
-      return [1];
+      Url::redirect('/login');
+    }
+
+    /**
+     * 我的粉丝
+     */
+    public function friendFans()
+    {
+        $fans_list = source('Model/Friend/getList', [
+            'user_id' => $this->user['id']
+        ]);
+        
+        $care_list = source('Model/Friend/getList', [
+            'user_id' => $this->user['id'],
+            'type' => 'care'
+        ]);
+        View::load('user/friend_fans', [
+            'fans_list' => $fans_list,
+            'care_list' => $care_list
+
+        ]);
+    }
+
+    /**
+     * 我关注的
+     */
+    public function friendCare()
+    {
+        $fans_list = source('Model/Friend/getList', [
+            'user_id' => $this->user['id']
+        ]);
+        
+        $care_list = source('Model/Friend/getList', [
+            'user_id' => $this->user['id'],
+            'type' => 'care'
+        ]);
+        View::load('user/friend_care', [
+            'fans_list' => $fans_list,
+            'care_list' => $care_list
+
+        ]);
+    }
+
+    /**
+     * 关注/取消关注
+     */
+    public function careUser($id = '')
+    {
+        if (!$this->isLogin()) {
+            return Response::json(['err' => 1, 'msg' => '会员未登录']);
+        }
+
+        if ($id == $this->user['id']) {
+            return Response::json(['err' => 2, 'msg' => '不能关注自己']);
+        }
+
+
+        if (empty($id) || !MUser::get($id)) {
+            return Response::json(['err' => 3, 'msg' => '关注的用户不存在']);
+        }
+
+        if (source('Model/Friend/isCare', ['user_id' => $this->user['id'], 'care_user_id' => $id])) {
+            Friend::where(['user_id' => $this->user['id'], 'care_user_id' => $id])->delete();
+
+            $content = '<a href="/user/show?id=' . $this->user['id'] . '">' . $this->user['nickname'] . '</a> 取消了对你的关注！';
+            MMessage::create(0, $id, $content);
+            return Response::json(['msg' => '取消关注成功', 'is_care' => 0]);
+
+        }
+        Friend::create(['user_id' => $this->user['id'], 'care_user_id' => $id]);
+        
+        $content = '<a href="/user/show?id=' . $this->user['id'] . '">' . $this->user['nickname'] . '</a> 关注了你！';
+        MMessage::create(0, $id, $content);
+        return Response::json(['msg' => '关注成功', 'is_care' => 1]);
     }
 
     public function info($options = [])
