@@ -37,7 +37,7 @@
                 <?=$item['create_time']?>
             </div>
         </div>
-        <div class=" class="list-item"">
+        <div class="list-item">
             <?=$item['context']?>
         </div>
     </div>

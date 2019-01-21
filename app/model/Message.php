@@ -3,9 +3,15 @@ namespace Model;
 
 use Iam\Db;
 use Iam\Page;
+use think\Model;
 
-class Message
+class Message extends Model
 {
+    public function getReadStatusAttr($val, $data)
+    {
+
+    }
+
     private static $options = [
         // 'path' => '/forum/list',
         'page' => 1,
@@ -20,12 +26,12 @@ class Message
     private static $order = ['id', 'read_time'];
     private static $sort = ['ASC', 'DESC'];
 
-    public static function create($user_id, $to_user_id, $content)
+    public static function send($user_id, $to_user_id, $content)
     {
         if ($user_id == $to_user_id) {
             return;
         }
-        Db::table('message')->add([
+        self::create([
             'user_id' => $user_id,
             'to_user_id' => $to_user_id,
             'content' => $content

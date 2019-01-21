@@ -29,11 +29,13 @@ class Url
 
 	public static function redirect($url, $params = [])
 	{
-		$url = explode('?', $url);
-		if (count($url) > 1) {
-			$params = array_merge(explode('&', $url[1]), $params);
+		$data = cmdParse($url);
+		$params = array_merge($data['query'], $params);
+		$action = implode('/', $data['action']);
+		$url = '/' . $action;
+		if (!empty($params)) {
+			$url .= '?' . http_build_query($params);
 		}
-		$url = !empty($params) ? $url[0] .= '?' . http_build_query($params) : $url[0];
 		header("Location: $url");
 	}
 }

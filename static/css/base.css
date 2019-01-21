@@ -3,6 +3,7 @@ html, body {
 }
 body {
     max-width: 28rem;
+    background: #F8F8F8;
 }
 * {
     box-sizing:border-box;
@@ -605,10 +606,31 @@ i.svg-more {
     background-color: transparent;
 }
 
-.search {
+/* .search {
     width: 1.6rem;
     height: 1.6rem;
     background-image: url(/static/svg/ss.svg);
+} */
+
+.search {
+    margin: 0 .5rem;
+    background: rgba(255, 255, 255, .2);
+    border-radius: .1rem;
+    overflow: hidden;
+}
+.search .input {
+    background: transparent;
+    line-height: 1.2rem;
+}
+.btn_search {
+    background: transparent;
+    color: #999;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 3rem;
+    text-align: center;
+    line-height: 1.4rem;
 }
 .m_nav {
     padding: .5rem;
@@ -1391,3 +1413,56 @@ i.svg-more {
     padding: .5rem;
     padding-top: .25rem;
 }
+.list-img {
+    background: #FFFFFF;
+}
+.hr {
+    height: 1px;
+    background: rgba(0, 0, 0, .1);
+    transform: scaleY(.8);
+  }
+.list-img .list-t-item {
+      padding: 0.75rem;
+      display: block;
+
+  }
+  .list-img .title {
+    color: #333;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .list-img .text-image {
+    margin-top: 0.4rem;
+  }
+  .list-img .context {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    white-space: normal;
+    color: #666666;
+    line-height: 1.1rem;
+  }
+  .list-img .user {
+    margin-top: 0.4rem;
+    color: #888;
+    line-height: 1rem;
+    /* background: rgba(0, 0, 0, .5); */
+  }
+  .list-img .more {
+    padding: 0 0.2rem;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .list-img .image {
+    margin-left: 0.1rem;
+    width: 5rem;
+    height: 3.3rem;
+    border-radius: 0.2rem;
+  }
+  .list-img .flex {
+      text-align: left;
+  }

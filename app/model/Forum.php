@@ -8,91 +8,47 @@ use app\Setting as ASetting;
 
 class Forum extends Model
 {
-    private static $options = [
-        // 'path' => '/forum/list',
-        'page' => 1,
-        'pagesize' => 10,
-        'order' => 0,
-        'sort' => 0,
-        'status' => 0,
-        'query' => [],
-        'page_name' => 'p'
-    ];
-    // array (
-    //     'class_id' => 0,
-    //     'user_id' => 0,
-    //     'page' => 1,
-    //     'pagesize' => 10,
-    //     'order' => 0,0 动态排序，1 最新，2 阅读量 3 回复量
-    //     'sort' => 0,0 正序 1 倒序
-    //   )
 
-    private static $order = ['update_time', 'id', 'read_count', 'reply_count'];
-    private static $sort = ['ASC', 'DESC'];
-
-    public static function getList2($options = []/*$class_id = 0, $page = 1, $pagesize = 10, $status*/)
+    public function getMiniContextAttr($val, $data)
     {
-        $options = array_merge(self::$options, $options);
-        $query = $options['query'];
-        $where = [];
-        if (!empty($options['class_id'])) {
-            $where['class_id'] = $options['class_id'];
-        }
-        if (!empty($options['user_id'])) {
-            $where['user_id'] = $options['user_id'];
-        }
-
-        $where['status'] = 0;
-        if (!empty($options['status'])) {
-            $where['status'] = $options['status'];
-        }
-        // $_where = array_merge($where, ['status' => 0]);
-        $count = Db::table('forum')->field('count(1) as count')->where($where)->find()['count'];
-
-        $order = [];
-
-        $order_value = $options['order'];
-
-        if (isset(self::$order[$order_value])) {
-            $order_key = self::$order[$order_value];
-            $order[$order_key] = 'ASC';
-
-            $sort_value = $options['sort'];
-            if (isset(self::$sort[$sort_value])) {
-                $sort_key = self::$sort[$sort_value];
-                $order[$order_key] = $sort_key;
-            }
-        }
-
-        $forum = Db::table('forum')->where($where);
-
-        if (!empty($order)) {
-            $forum->order($order);
-        }
-        $page = new Page([
-            'count' => $count,
-            'page' => $options['page'],
-            'page_name' => $options['page_name'],
-            'path' => '',
-            'query' => $query,
-            'pagesize' => $options['pagesize']
-        ]);
-        $page = $page->parse();
-        $list = $forum->select(($page['page'] - 1) * $page['pagesize'], $page['pagesize']);
-        
-        return [
-            'page' => $page,
-            'data' => $list
-        ];
+        // if (!empty($is_html)) {
+        //     $info['title'] = htmlspecialchars($info['title']);
+        //     $info['context'] = htmlspecialchars($info['context']);
+        //     $info['context'] = str_replace(chr(13).chr(10), '<br>', $info['context']);
+        //     $info['context'] = str_replace(chr(32), '&nbsp;', $info['context']);
+        // }
+        $data['context'] = self::ubbFilter($data['context']);
+        $data['strip_tags_context'] = str_replace('&nbsp;', chr(32), $data['context']);
+        $data['strip_tags_context'] = strip_tags($data['strip_tags_context']);
+        $data['strip_tags_context'] = preg_replace('/\s+/', ' ', $data['strip_tags_context']);
+        return mb_substr($data['strip_tags_context'], 0, 100);
     }
 
-    /**
-     * 获取论坛数据列表
-     */
-    public static function getListByClassId($class_id = '')
+
+    public function getImgListAttr($val, $data)
     {
-        $list = self::where('class_id', $class_id);
-        return $list->paginate(ASetting::get('pagesize'));
+        return $this->setViewFiles($data['img_data']);
+    }
+
+    public function getFileListAttr($val, $data)
+    {
+        return $this->setViewFiles($data['file_data']);
+    }
+
+    private static function ubbFilter($text)
+    {
+        // $text = '[read_login]内容-登录可见[/read_login]
+        // [read_reply]内容-回复可见[/read_reply]
+        // [read_buy_10]内容-已购买可见够买可见（一篇帖子最多只能有一个内容够买，多个够买以第一个为基准）[/read_buy_10][img_0]';
+
+        $text = preg_replace_callback('/\[(read_login|read_reply|read_buy_(\d+))\](.*?)\[\/(read_login|read_reply|read_buy_(\2))\]/', function($matches) {
+            // print_r($matches);
+            return $matches[3];
+        }, $text);
+        $text = preg_replace_callback('/\[img_\d+\]/', function() {
+            return;
+        }, $text);
+        return $text;
     }
 
     /**
@@ -156,5 +112,50 @@ class Forum extends Model
         }
         $forum->order('id', 'desc');
         return $forum->paginate(ASetting::get('pagesize'));
+    }
+
+    /**
+     * 获取列表数据
+     * @param string|array  $class_id 栏目id，字符串用','分隔
+     * @param string|array  $user_id 会员id，字符串用','分隔
+     * @param string        $type 查询类型，1最新，2动态, 3热度，4精华
+     * @param string        $order asc正序 desc倒序
+     */
+    public static function getList($class_id = '', $user_id = '', $type = 1, $order = 'desc', $toArray = 1, $pagesize = 10)
+    {
+        $forum = self::where('1', '1');
+        if (!empty($class_id)) {
+            if (gettype($class_id) == 'string') {
+                $class_id = explode(',', $class_id);
+            }
+            $forum->where('class_id', 'in', $class_id);
+        }
+
+        if (!empty($user_id)) {
+            if (gettype($user_id) == 'string') {
+                $user_id = explode(',', $user_id);
+            }
+            $forum->where('user_id', 'in', $user_id);
+        }
+
+        // 排序
+        $order = strtolower($order);
+
+        if ($order != 'asc') {
+            $order = 'desc';
+        }
+
+        if ($type == 2) {
+            $forum->order('read_count', $order);
+        } else {
+            $forum->order('id', $order);
+        }
+        $list = $forum->paginate($pagesize);
+        $list->append(['author', 'mini_context', 'img_list', 'file_list']);
+
+        if ($toArray == 1) {
+            return $list->toArray();
+        }
+        return $list;
     }
 }

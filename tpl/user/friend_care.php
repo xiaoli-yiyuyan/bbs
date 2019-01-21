@@ -26,7 +26,7 @@
                             <?php $is_care = source('Model/Friend/isCare', ['user_id' => $user['id'], 'care_user_id' => $userinfo['id']]); ?>
 
                             <?php if ($is_care) { ?>
-                                <button data-id="<?=$userinfo['id']?>" data-href="/user/care_user?id=<?=$userinfo['id']?>" class="btn btn-shadow btn-sm btn_care">已关注</button>
+                                <button data-id="<?=$userinfo['id']?>" data-href="/user/care_user?id=<?=$userinfo['id']?>" class="btn  btn-sm btn_care">已关注</button>
                             <?php } else { ?>
                                 <button data-id="<?=$userinfo['id']?>" data-href="/user/care_user?id=<?=$userinfo['id']?>" class="btn btn-shadow btn-fill btn-sm btn_care">关注</button>
                             <?php } ?>

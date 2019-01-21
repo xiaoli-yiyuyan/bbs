@@ -217,6 +217,17 @@ class User extends Common
         return Response::json(['msg' => '关注成功', 'is_care' => 1]);
     }
 
+    /**
+     * 用户信息展示
+     */
+    public function show($id = '')
+    {
+        $userinfo = MUser::get($id);
+        View::load('user/show', [
+            'userinfo' => $userinfo
+        ]);
+    }
+
     public function info($options = [])
     {
         if (empty($options['id'])) {

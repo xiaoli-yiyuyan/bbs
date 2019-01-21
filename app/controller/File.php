@@ -11,9 +11,18 @@ class File extends Common
             'is_save_db' => 1
         ]
     ];
-    public function upload($options/*user_id, path, size, allow_type, file_name, is_rand_name, input_name, is_save_db*/)
+    public function upload($user_id = '', $path = '', $size = 20480000, $allow_type = 'jpeg,jpg,gif,png,rar,zip', $file_name = '', $is_rand_name = true, $input_name = '', $is_save_db = 1)
     {
-        $options = array_merge($this->options['upload'], $options);
+        $options = [
+            'user_id' => $user_id,
+            'path' => $path,
+            'size' => $size,
+            'allow_type' => $allow_type,
+            'file_name' => $file_name,
+            'is_rand_name' => $is_rand_name,
+            'input_name' => $input_name,
+            'is_save_db' => $is_save_db
+        ];
         $path = $options['path'];
         $up = new FileUpload();
         //设置属性（上传的位置、大小、类型、设置文件名是否要随机生成）

@@ -655,16 +655,6 @@
       ),
       'source' => 
       array (
-        0 => 
-        array (
-          'name' => 'Message',
-          'action' => 'count',
-          'param' => 'message_count',
-          'options' => 
-          array (
-            'status' => 0,
-          ),
-        ),
       ),
       'template' => 'template/default/components/common/header_nav.php',
     ),

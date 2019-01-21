@@ -56,4 +56,4 @@
 <?=code('forum_ubb')?>
 <!-- 代码自定义 END -->
 <script src="/static/js/forum/add_upload.js"></script>
-<?php $this->load('/components/common/footer'); ?>
+<?php component('/components/common/footer'); ?>

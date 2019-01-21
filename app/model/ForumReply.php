@@ -7,6 +7,13 @@ use think\Model;
 
 class ForumReply extends Model
 {
+
+    public function getAuthorAttr($val, $data)
+    {
+        return User::getAuthor($data['user_id']);
+    }
+
+
     public static function getList2($forum_id = 0, $page = 1, $pagesize = 10)
     {
         $forum = Db::table('forum_reply');

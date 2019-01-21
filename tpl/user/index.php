@@ -39,7 +39,7 @@
 <div class="change-info">
 
     <div class="li-box border-b message_line_item">
-        <a href="/user/message" class="flex-box flex">
+        <a href="/message" class="flex-box flex">
             <i class="li-box-svg icon-svg b_message"></i>
             <div class="li-box-word">消息通知</div>
         </a>
