@@ -351,7 +351,7 @@ class Forum extends Common
         $forum['strip_tags_context'] = str_replace('&nbsp;', chr(32), $forum['context']);
         $forum['strip_tags_context'] = strip_tags($forum['strip_tags_context']);
         $forum['strip_tags_context'] = preg_replace('/\s+/', ' ', $forum['strip_tags_context']);
-        $forum['keywords'] = getKeywords($forum['title'], $forum['strip_tags_context']);
+        // $forum['keywords'] = getKeywords($forum['title'], $forum['strip_tags_context']);
 
         // 阅读量+1
         $forum->read_count = $forum->read_count + 1;

@@ -3,6 +3,6 @@
 nodejs/
 NovelChapter/
 static/novel/
-static/uploads/
+/upload/
 /data
 .composer.lock

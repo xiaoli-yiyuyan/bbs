@@ -1,6 +1,6 @@
 <?php component('/components/common/header', [
     'title' => $forum['title'],
-    'keywords' => implode($forum['keywords'], ','),
+    // 'keywords' => implode($forum['keywords'], ','),
     'description' => mb_substr($forum['strip_tags_context'], 0, 100)
 ]); ?>
 <style>
