@@ -44,9 +44,9 @@ class Cache{
         if (strlen($name)) {
             $this->setName($name);
         }
-        if(!isset($this->cacheData)){
+        // if(!isset($this->cacheData)){
             $this->cacheData = file_exists($this->path) ? include($this->path) : array();
-        }
+        // }
         return $this->cacheData;
     }
 

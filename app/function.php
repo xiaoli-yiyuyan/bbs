@@ -121,14 +121,6 @@ function downloadFile($url, $filename = '', $path = '')
     $file = curl_exec($ch);
     curl_close($ch);
 
-    if (!$img = @getimagesizefromstring($file)) {
-        return;
-    }
-    if (!isset($mime_to_ext[$img['mime']])) {
-        return;
-    }
-
-    $filename .= $mime_to_ext[$img['mime']];
     $resource = fopen($path . $filename, 'a');
     fwrite($resource, $file);
     fclose($resource);
@@ -299,7 +291,7 @@ function href($url)
     return $url;
 }
 
-function http($url, $params, $method = 'GET', $header = array(), $multi = false)
+function http($url, $params = [], $method = 'GET', $header = array(), $multi = false)
 {
     $opts = array(
             CURLOPT_TIMEOUT        => 1,

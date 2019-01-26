@@ -13,6 +13,7 @@ use Model\CategoryGroup;
 use Model\Code;
 use app\Setting;
 use app\common\DatabaseTool;
+use app\common\CheckUpdate;
 
 class Admin extends Common
 {
@@ -34,6 +35,12 @@ class Admin extends Common
         $forum_today_count = Db::query('SELECT COUNT(*) as num FROM `forum` WHERE `create_time` > CURDATE()')[0]['num'];
         $forum_reply_today_count = Db::query('SELECT COUNT(*) as num FROM `forum_reply` WHERE `create_time` > CURDATE()')[0]['num'];
 
+        $new_version_res = CheckUpdate::checkVersion();
+        $new_version = 'v-.-.-';
+        if (!empty($new_version_res)) {
+            $new_version = $new_version_res['version'];
+        }
+
         View::load('admin/index', [
             'count'=> $count,
             'today_count'=> $today_count,
@@ -41,7 +48,13 @@ class Admin extends Common
             'forum_count'=> $forum_count,
             'forum_today_count'=> $forum_today_count,
             'forum_reply_today_count'=> $forum_reply_today_count,
+            'new_version' => $new_version
         ]);
+    }
+
+    public function sysUpdate()
+    {
+        return Response::json(CheckUpdate::update());
     }
 
     private function initComponent()
