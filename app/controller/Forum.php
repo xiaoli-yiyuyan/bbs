@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Iam\Db;
+use think\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Page;
@@ -184,48 +184,39 @@ class Forum extends Common
         return Response::json(['id' => $id->id, 'reward_coin' => $this->addForumCoin]);
     }
 
-    public function edit($options/*id, title, context, img_data, file_data, class_id, user_id*/)
+    /**
+     * 帖子编辑逻辑
+     */
+    public function ajaxEdit($id = '', $title = '', $context = '', $img_data = '', $file_data = '', $class_id = '')
     {
-        if (!$info = Db::table('forum')->find($options['id'])) {
-            return ['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！'];
+        if (!$forum = MForum::get($id)) {
+            return Response::json(['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！']);
         }
         
-
-        if ($info['user_id'] != $this->user['id'] && !$this->isAdmin($this->user['id'], $info['class_id'])) {
-            return ['err' => 2, 'msg' => '你无权进行此操作！'];
+        if (!empty($class_id) && !$class_info = Category::get($class_id)) {
+            return Response::json(['err' => 1, 'msg' => '帖子发表栏目不存在！']);
         }
 
-        $class_id = $info['class_id'];
-        if (!empty($options['class_id'])) {
-
-            if (!$class_info = Db::table('category')->where([
-                'id' => $options['class_id']
-            ])->find()) {
-                return ['err' => 3, 'msg' => '帖子发表栏目不存在！'];
-            }
-            $class_id = $options['class_id'];
-    
-        }
-        if (empty($options['title'])) {
-            return ['err' => 4, 'msg' => '帖子标题不能为空！'];
-
+        if ($forum['user_id'] != $this->user['id'] && !$this->isAdmin($this->user['id'], $forum['class_id'])) {
+            return Response::json(['err' => 2, 'msg' => '你无权进行此操作！']);
         }
 
-        if (empty($options['context'])) {
-            return ['err' => 5, 'msg' => '帖子内容不能为空！'];
-
+        if (empty($title)) {
+            return Response::json(['err' => 2, 'msg' => '帖子标题不能为空！']);
         }
-        // $options['title'] = htmlspecialchars($options['title']);
-        // $options['context'] = htmlspecialchars($options['context']);
+
+        if (empty($context)) {
+            return Response::json(['err' => 3, 'msg' => '帖子内容不能为空！']);
+        }
 
         // 检索图片
         $info_img = [];
         $img_arr = [];
-        if (!empty($info['img_data'])) {
-            $info_img = explode(',', $info['img_data']);
+        if (!empty($forum['img_data'])) {
+            $info_img = explode(',', $forum['img_data']);
         }
-        if (!empty($options['img_data'])) {
-            $img_arr = explode(',', $options['img_data']);
+        if (!empty($img_data)) {
+            $img_arr = explode(',', $img_data);
         }
         $remove_img = array_diff($info_img, $img_arr);
         $add_img = array_diff($img_arr, $info_img);
@@ -233,15 +224,16 @@ class Forum extends Common
         // 检索文件
         $info_file = [];
         $file_arr = [];
-        if (!empty($info['file_data'])) {
-            $info_file = explode(',', $info['file_data']);
+        if (!empty($forum['file_data'])) {
+            $info_file = explode(',', $forum['file_data']);
         }
-        if (!empty($options['file_data'])) {
-            $file_arr = explode(',', $options['file_data']);
+        if (!empty($file_data)) {
+            $file_arr = explode(',', $file_data);
         }
         $remove_file = array_diff($info_file, $file_arr);
         $add_file = array_diff($file_arr, $info_file);
-        Db::$db->pdo->beginTransaction();
+
+        Db::startTrans();
         if (!empty($remove_img)) {
             foreach ($remove_img as $item) {
                 File::removeFile($item);
@@ -250,8 +242,8 @@ class Forum extends Common
         if (!empty($add_img)) {
             foreach ($add_img as $item) {
                 if (!File::setUserFile($this->user['id'], $item)) {
-                    Db::$db->pdo->rollback();
-                    return ['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。'];
+                    Db::rollback();
+                    return Response::json(['err' => 4, 'msg' => '上传的图片不存在，或者已经被发布。']);
                 }
                 
                 if (Setting::get('forum_water_mark_status') == '1' && $file = File::get($item)) {
@@ -270,29 +262,31 @@ class Forum extends Common
         if (!empty($add_file)) {
             foreach ($add_file as $item) {
                 if (!File::setUserFile($this->user['id'], $item)) {
-                    Db::$db->pdo->rollback();
-                    return ['err' => 4, 'msg' => '上传的文件不存在，或者已经被发布。'];
+                    Db::rollback();
+                    return Response::json(['err' => 4, 'msg' => '上传的文件不存在，或者已经被发布。']);
                 }
             }
         }
 
         $data = [
-            'title' => $options['title'],
-            'context' => $options['context'],
-            // 'user_id' => $this->user['id'],
-            'class_id' => $class_id,
-            'img_data' => $options['img_data'],
-            'file_data' => $options['file_data'],
-            'log' => $info['log'] . '<br>' .$this->user['id'] . ' 修改与: ' . now(),
+            'title' => $title,
+            'context' => $context,
+            // 'class_id' => $class_id,
+            'img_data' => $img_data,
+            'file_data' => $file_data,
+            'log' => $forum['log'] . '<br>' .$this->user['id'] . ' 修改与: ' . now(),
             'update_time' => now()
         ];
+        // print_r($data);
+        // die();
 
-        if (!$id = Db::table('forum')->where(['id' => $info['id']])->update($data)) {
-            Db::$db->pdo->rollback();
-            return ['err' => 6, 'msg' => '修改失败'];
+        if (!$id = MForum::where(['id' => $forum['id']])->update($data)) {
+            Db::rollback();
+            return Response::json(['err' => 6, 'msg' => '修改失败']);
         }
-        Db::$db->pdo->commit();
-        return ['id' => $options['id']];
+        
+        Db::commit();
+        return Response::json(['id' => $id]);
     }
 
     // 回收状态码
@@ -306,6 +300,20 @@ class Forum extends Common
         Db::table('forum')->where(['id' => $options['id']])->update(['status' => $this->rec_code]);
         Db::table('forum_reply')->where(['forum_id' => $options['id']])->update(['status' => $this->rec_code]);
         return ['class_id' => $info['class_id']];
+    }
+
+    /**
+     * 帖子编辑
+     */
+    public function editPage($id = '')
+    {
+        if (!$forum = MForum::get($id)) {
+            return Page::error('要查看的内容不存在！');
+        }
+        
+        View::load('forum/edit_page', [
+            'forum' => $forum
+        ]);
     }
 
     /**
@@ -575,26 +583,11 @@ class Forum extends Common
 
     public function myList()
     {
-        $this->isLogin();
+        if (!$this->isLogin()) {
+            return Page::error('会员未登录');
+        }
 
-        $count = Db::table('forum')->field('count(1) as count')->where(['user_id' => $this->user['id']])->find()['count'];
-
-        $nowPage = Request::get('p') ? Request::get('p') : 1;
-
-        $page = new Page([
-            'count' => $count,
-            'p' => $nowPage,
-            'path' => '/forum/my_list',
-            // 'query' => ['id' => $id],
-            'pagesize' => 10
-        ]);
-        $page = $page->parse();
-        $list = MForum::getList(['user_id' => $this->user['id'], 'page' => $page['page'], 'pagesize' => $page['pagesize']]);
-        $this->parseList($list);
-        View::load('forum/myList', [
-            'list' => $list,
-            'page' => $page
-        ]);
+        View::load('forum/my_list');
     }
     
     private $faceCode = [

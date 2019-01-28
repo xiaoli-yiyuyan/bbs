@@ -102,9 +102,21 @@
   `sid` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
-  `last_time` datetime DEFAULT NULL COMMENT '活跃时间',
+  `last_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '活跃时间',
   `create_ip` varchar(255) DEFAULT NULL,
   `vip_time` datetime DEFAULT NULL COMMENT 'VIP到期时间',
   `lock_time` datetime DEFAULT NULL COMMENT '锁定结束时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+CREATE TABLE `sign_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT '0',
+  `time` int(11) DEFAULT '0' COMMENT '连续签到次数',
+  `content` varchar(255) DEFAULT '',
+  `coin` int(11) DEFAULT '0',
+  `exp` int(11) DEFAULT '0',
+  `memo` varchar(255) DEFAULT '',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

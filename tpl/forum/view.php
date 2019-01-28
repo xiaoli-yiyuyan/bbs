@@ -16,7 +16,7 @@
             <?=$forum['title']?>
             <?php if ($forum['user_id'] == $user['id'] || $class_info['is_admin']) { ?>
             <div class="view_action">
-                <a class="btn" href="/forum/editor?id=<?=$forum['id']?>">修改</a>
+                <a class="btn" href="/forum/edit_page?id=<?=$forum['id']?>">修改</a>
                 <a class="btn btn_remove" data-id="<?=$forum['id']?>">删除</a>
             </div>
             <?php } ?>

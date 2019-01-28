@@ -24,6 +24,6 @@ class File extends Model
 
     public static function removeFile($file_id)
     {
-        return Db::table('file')->where(['id' => $file_id])->update(['status' => 0]);
+        return self::where(['id' => $file_id])->update(['status' => 0]);
     }
 }

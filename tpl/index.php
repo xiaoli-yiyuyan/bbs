@@ -5,10 +5,10 @@
 <header class="header">
     <span class="logo"></span>
     
-    <div class="search flex flex-box">
-      <input class="input input-line" placeholder="关键词" type="text">
-      <div class="btn_search">搜索</div>
-    </div>
+    <form action="<?=href('/forum/search')?>" class="search flex flex-box">
+      <input name="keyword" class="input input-line" placeholder="关键词" type="text">
+      <button class="btn_search">搜索</button>
+    </form>
     <div class="flex-box">
     <?php if (source('app/Message/count') > 0) { ?>
         <a href="/user/message" class="new_message_icon"><?=$message_count?></a>
@@ -54,27 +54,6 @@
         安米程序[新一代H5手机建站程序]是一款专注于H5手机网站/app建设的一款程序，具有免费开源，上手难度低，程序精简（程序不足1M），功能强大，不懂编程也能轻松定制自己想要的功能。后台强大的组件编写功能，可以像堆积木一样，随意组合出你想要的功能。
     </div>
 </div>
-<?php $list = source('Model/Forum/getList'); ?>
-<div class="list list-img">
-<?php foreach($list['data'] as $item) { ?>
-<div class="list-group">
-    <div class="list-t-item">
-        <div class="title"><?=$item['title']?></div>
-        <div class="text-image flex-box">
-            <div class="flex context"><?=$item['mini_context']?></div>
-            <?php if (!empty($item['img_list'])) { ?>
-                <img class="image" src="<?=$item['img_list'][0]['path']?>" alt="加载中...">
-            <?php } ?>
-            </div>
-            <div class="user flex-box">
-            <div class="flex"><?=$item['author']['nickname']?> · <?=$item['reply_count']?> 评论</div>
-            <div class="more"></div>
-            </div>
-        </div>
-        <div class="hr"></div>
-</div>
-<?php } ?>
-</div>
 
 <div class="m_body">
     <div class="title-nav"><span class="title-i"></span>最近活跃会员 <a class="user_rank_link" href="/user/rank">Top 排行榜</a></div>
@@ -82,7 +61,12 @@
 </div>
 <div class="link_title">最新资讯</div>
 
-<?php //self::load('/components/forum/img_list', ['list' => $list]); ?>
+<?php $list = source('Model/Forum/getList'); ?>
+<div class="list list-img">
+<?php foreach($list as $item) { ?>
+<?php component('/components/forum/list_img_text', ['item' => $item]); ?>
+<?php } ?>
+</div>
 
 <?php self::loadComponent('/components/common/index_link'); ?>
 <div class="footer_nav">

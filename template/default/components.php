@@ -1025,6 +1025,21 @@
       ),
       'template' => 'template/default/components/forum/img_list_item.php',
     ),
+    'list_img_text' => 
+    array (
+      'props' => 
+      array (
+        'item' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/forum/list_img_text.php',
+    ),
   ),
   '/components/user' => 
   array (

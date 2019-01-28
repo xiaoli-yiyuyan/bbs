@@ -100,7 +100,7 @@ class Forum extends Model
      */
     public static function search($keyword = '')
     {
-        $forum = new Forum;
+        $forum = self::where('1', '1');
         if ($keyword !== '') {
             $forum->where(function($query) use($keyword) {
                 $query->whereOr('title', 'like', '%' . $keyword . '%');
@@ -111,7 +111,9 @@ class Forum extends Model
             });
         }
         $forum->order('id', 'desc');
-        return $forum->paginate(ASetting::get('pagesize'));
+        return $forum->paginate(ASetting::get('pagesize'), false, [
+            'query' => ['keyword' => $keyword]
+        ]);
     }
 
     /**
@@ -121,7 +123,7 @@ class Forum extends Model
      * @param string        $type 查询类型，1最新，2动态, 3热度，4精华
      * @param string        $order asc正序 desc倒序
      */
-    public static function getList($class_id = '', $user_id = '', $type = 1, $order = 'desc', $toArray = 1, $pagesize = 10)
+    public static function getList($class_id = '', $user_id = '', $type = 1, $order = 'desc', $toArray = 0, $pagesize = 10)
     {
         $forum = self::where('1', '1');
         if (!empty($class_id)) {

@@ -22,6 +22,7 @@ $(function() {
         $parent.find('.tab-content').find($this.data('to-tab')).addClass('tab-active');
     });
     $(document).on('click', '.left-menu, .left-menu-list .modal-overlay', function() {
+        $('body').toggleClass('left-menu-list-open');
         $('.left-menu-list').toggleClass('left-menu-list-show');
     });
 });
@@ -130,4 +131,4 @@ $(function() {
         }, time)
     }
 
-})($);
+})(Zepto);

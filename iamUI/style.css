@@ -588,6 +588,9 @@ ul li {
   position: absolute;
   right: 0;
 }
+.left-menu-list-open {
+  overflow: hidden;
+}
 .left-menu-list {
   position: fixed;
   left: 0;
@@ -605,6 +608,7 @@ ul li {
   margin-left: -66%;
   bottom: 0;
   z-index: 10011;
+  overflow: auto;
   background: #FFF;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;

@@ -304,7 +304,7 @@ class Component
 				}
 			}
 		}
-		$data = array_merge($data, $props_data);
+		$data = array_merge($data, $props_data, View::$data);
 
 		if (file_exists($config['template'])) {
 			(function() use($data, $config){

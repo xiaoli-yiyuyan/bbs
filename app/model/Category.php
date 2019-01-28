@@ -85,4 +85,9 @@ class Category extends Model
             'data' => $list
         ];
     }
+
+    public function getTotal()
+    {
+        return Forum::where('class_id', $this->id)->count();
+    }
 }
