@@ -11,9 +11,11 @@ use Iam\Response;
 use Iam\Component;
 use Model\CategoryGroup;
 use Model\Code;
+use Model\Category;
 use app\Setting;
 use app\common\DatabaseTool;
 use app\common\CheckUpdate;
+use Model\Forum;
 
 class Admin extends Common
 {
@@ -312,11 +314,7 @@ class Admin extends Common
 
     public function column()
     {
-        $column = new Column;
-        $list = $column->list([
-            'order' => 0,
-            'sort' => 0
-        ]);
+        $list = Category::getList();
         View::load('admin/column', [
             'list' => $list
         ]);
@@ -356,7 +354,7 @@ class Admin extends Common
     public function uoploadColumnPhoto()
     {
         $file = new File;
-        $res = $file->upload([
+        $res = source('/App/File/upload', [
             'path' => '/upload/column',
             'size' => 20480000,
             'allow_type' => 'jpeg,jpg,gif,png',
@@ -445,8 +443,7 @@ class Admin extends Common
 
     public function forum()
     {
-        $forum = new Forum;
-        $list = $forum->list(['status' => 9999]);
+        $list = source('/Model/Forum/getList', ['status' => 9999]);
         View::load('admin/forum', [
             'list' => $list
         ]);
@@ -455,14 +452,15 @@ class Admin extends Common
     public function forumAuto()
     {
         $forum = new Forum;
-        $list = $forum->list(['status' => 1]);
+        $list = source('/Model/Forum/getList', ['status' => 1]);
+
         View::load('admin/forum_auto', [
             'list' => $list
         ]);
     }
 
     /**
-     * 删除用户
+     * 恢复帖子
      */
     public function backForum()
     {

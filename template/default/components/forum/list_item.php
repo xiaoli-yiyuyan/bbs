@@ -4,7 +4,8 @@
         </a>
         <div class="bbs_info">
 			<div class="flex-box">
-            <?php $this->load('/components/forum/list_user', ['user_id' => $item['user_id']]); ?>
+            <div class="bbs_user"><img class="bbs_user_photo" src="<?=$item->author['photo']?>" alt=""> <?=$item->author['nickname']?></div>
+
 			<span class="reply_str">
 				发布于
 			</span>

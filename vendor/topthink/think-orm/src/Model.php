@@ -40,6 +40,12 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     private $force = false;
 
     /**
+     * 是否Replace
+     * @var bool
+     */
+    private $replace = false;
+
+    /**
      * 更新条件
      * @var array
      */
@@ -289,9 +295,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             call_user_func_array([$this, 'base'], [ & $query]);
         }
 
-        $globalScope = is_array($useBaseQuery) && $useBaseQuery ?: $this->globalScope;
+        $globalScope = is_array($useBaseQuery) && $useBaseQuery ? $useBaseQuery : $this->globalScope;
 
-        if ($globalScope) {
+        if ($globalScope && false !== $useBaseQuery) {
             $query->scope($globalScope);
         }
 
@@ -340,6 +346,18 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     public function isForce()
     {
         return $this->force;
+    }
+
+    /**
+     * 新增数据是否使用Replace
+     * @access public
+     * @param  bool $replace
+     * @return $this
+     */
+    public function replace($replace = true)
+    {
+        $this->replace = $replace;
+        return $this;
     }
 
     /**
@@ -631,7 +649,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         try {
             $result = $db->strict(false)
                 ->field($allowFields)
-                ->insert($this->data);
+                ->insert($this->data, $this->replace, false, $sequence);
 
             // 获取自动增长主键
             if ($result && $insertId = $db->getLastInsID($sequence)) {
@@ -757,7 +775,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
                 if (!empty($auto) && isset($data[$pk])) {
                     $result[$key] = self::update($data, [], $this->field);
                 } else {
-                    $result[$key] = self::create($data, $this->field);
+                    $result[$key] = self::create($data, $this->field, $this->replace);
                 }
             }
 
@@ -848,11 +866,12 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 写入数据
      * @access public
-     * @param array      $data  数据数组
-     * @param array|true $field 允许字段
-     * @return $this
+     * @param  array      $data  数据数组
+     * @param  array|true $field 允许字段
+     * @param  bool       $replace 使用Replace
+     * @return static
      */
-    public static function create($data = [], $field = null)
+    public static function create($data = [], $field = null, $replace = false)
     {
         $model = new static();
 
@@ -860,7 +879,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             $model->allowField($field);
         }
 
-        $model->isUpdate(false)->save($data, []);
+        $model->isUpdate(false)->replace($replace)->save($data, []);
 
         return $model;
     }

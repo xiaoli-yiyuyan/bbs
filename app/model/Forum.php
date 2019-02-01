@@ -121,9 +121,10 @@ class Forum extends Model
      * @param string|array  $class_id 栏目id，字符串用','分隔
      * @param string|array  $user_id 会员id，字符串用','分隔
      * @param string        $type 查询类型，1最新，2动态, 3热度，4精华
+     * @param string        $status 0正常 1审核中，9999回收站
      * @param string        $order asc正序 desc倒序
      */
-    public static function getList($class_id = '', $user_id = '', $type = 1, $order = 'desc', $toArray = 0, $pagesize = 10)
+    public static function getList($class_id = '', $user_id = '', $type = 1, $status = 0, $order = 'desc', $toArray = 0, $pagesize = 10)
     {
         $forum = self::where('1', '1');
         if (!empty($class_id)) {
@@ -145,6 +146,14 @@ class Forum extends Model
 
         if ($order != 'asc') {
             $order = 'desc';
+        }
+
+        if ($status == 9999) {
+            $forum->where('status', 9999);
+        } elseif ($status == 1) {
+            $forum->where('status', 1);
+        } else {
+            $forum->where('status', 0);
         }
 
         if ($type == 2) {

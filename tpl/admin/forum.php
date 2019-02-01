@@ -4,30 +4,20 @@
     <div class="namespace">
         <a href="/admin/forum/">帖子回收站</a> \
     </div>
-    <?php if (empty($list['data'])) { ?>
+    <?php if ($list->isEmpty()) { ?>
     <div class="bbs_empty">这个地方空空如也！</div>
     <?php } else { ?>
     <div class="list">
         <div class="list-group list-arrow">
-            <?php foreach ($list['data'] as $key => $item) { ?>
-            <div class="list-item ellipsis border-b">
+            <?php foreach ($list as $key => $item) { ?>
+            <div class="list-item border-b">
                 ID:<?=$item['id']?>) <a href="/forum/view?id=<?=$item['id']?>"><?=$item['title']?></a>
                 [<a class="btn_forum_back" data-href="/admin/back_forum?id=<?=$item['id']?>">恢复</a>
                 <a class="btn_forum_remove" data-href="/admin/remove_forum?id=<?=$item['id']?>">删除</a>]
             </div>
             <?php } ?>
         </div>
-        <div class="bbs_page">
-            <div class="bbs_page_action">
-                <div class="bbs_page_jump_box">
-                    <a class="bbs_page_jump" href="<?=$list['page']['href'][0]?>">首页</a>
-                    <a class="bbs_page_jump" href="<?=$list['page']['href'][1]?>">上页</a>
-                    <input type="text" class="input bbs_page_jump" placeholder="<?=$list['page']['page']?>/<?=$list['page']['page_count']?>">
-                    <a class="bbs_page_jump" href="<?=$list['page']['href'][2]?>">下页</a>
-                    <a class="bbs_page_jump" href="<?=$list['page']['href'][3]?>">尾页</a>
-                </div>
-            </div>
-        </div>
+        <?=$list->render()?>
     </div>
     <?php } ?>
 </div>

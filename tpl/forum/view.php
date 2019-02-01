@@ -126,6 +126,22 @@
 </div>
 <script>
 $(function() {
+    $('.btn_remove').click(function() {
+        var id = $(this).data('id');
+        $.confirm('确定删除该帖子？', {
+            yes: function() {
+                $.getJSON('/forum/ajax_remove', {id: id}).then(function(data) {
+                    $.msg('删除成功');
+                    setTimeout(function() {
+                        location.href = '/forum/list?id=' + data.class_id;
+                    }, 1000);
+                });
+            },
+            no: function() {
+                $.alert('好吧，我以为你想清楚了。');
+            }
+        });
+    });
     $('.input_face').click(function() {
         $('.chat-face-box').height($('.chat-face-box').height() == 0 ? $('.face-box').innerHeight() : 0);
     });

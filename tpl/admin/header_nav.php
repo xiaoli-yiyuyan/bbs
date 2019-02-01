@@ -34,7 +34,7 @@
                 <div class="tab-page tab4">
                     <!-- <div>系统通知</div> -->
                     <div><a href="/admin/forum">帖子回收站</a></div>
-                    <div><a href="/admin/forum_auto">待审核帖子</a></div>
+                    <!-- <div><a href="/admin/forum_auto">待审核帖子</a></div> -->
                     <!-- <div>友链</div> -->
                 </div>
                 <div class="tab-page tab5">

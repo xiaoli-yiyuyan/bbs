@@ -36,7 +36,7 @@ class Category extends Model
 
     public static function getList()
     {
-        return self::select();
+        return self::paginate(20);
     }
 
     public static function getList_old($options = []/*$class_id = 0, $page = 1, $pagesize = 10*/)

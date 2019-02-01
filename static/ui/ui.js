@@ -131,4 +131,4 @@ $(function() {
         }, time)
     }
 
-})(Zepto);
+})(jQuery || Zepto);

@@ -6,7 +6,7 @@ use Iam\Response;
 
 class CheckUpdate
 {
-    public static $ianmi = 'http://127.0.0.1:819';
+    public static $ianmi = 'http://version.ianmi.com';
 
     public function getVersion()
     {

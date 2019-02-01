@@ -84,6 +84,7 @@ class Forum extends Common
     {
         $class_info = Category::get($id);
         $forum = MForum::where('class_id', $id);
+        $forum->where('status', '<>', 9999);
         $forum->order('active_time', 'desc');
         $list = $forum->paginate(Setting::get('pagesize'), false, [
             'query' => ['id' => $id]
@@ -292,14 +293,15 @@ class Forum extends Common
     // 回收状态码
     private $rec_code = 9999;
 
-    public function remove($options/*id*/)
+    public function ajaxRemove($id = '')
     {
-        if (!$info = Db::table('forum')->find($options['id'])) {
-            return ['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！'];
+        if (!$info = MForum::get($id)) {
+            return Response::json(['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！']);
         }
-        Db::table('forum')->where(['id' => $options['id']])->update(['status' => $this->rec_code]);
-        Db::table('forum_reply')->where(['forum_id' => $options['id']])->update(['status' => $this->rec_code]);
-        return ['class_id' => $info['class_id']];
+        $info->status = $this->rec_code;
+        $info->save();
+        ForumReply::where('forum_id', $id)->update(['status' => $this->rec_code]);
+        return Response::json(['class_id' => $info->class_id]);
     }
 
     /**
@@ -324,7 +326,6 @@ class Forum extends Common
         if (!$forum = MForum::get($id)) {
             return Page::error('要查看的内容不存在！');
         }
-        
         if (!$forum_user = $forum->author) {
             return Page::error('楼主信息异常，暂时无法查看该帖子！');
         }
@@ -332,17 +333,18 @@ class Forum extends Common
         if (!$class_info = Category::get($forum['class_id'])) {
             return Page::error('帖子发表栏目不存在，暂时无法查看该帖子！');
         }
-
+        $class_info['is_admin'] = $this->isAdmin($this->user['id'], $class_info['id']);
+        if ($forum->status == 9999 && !$class_info['is_admin']) {
+            return Page::error('要查看的内容不存在！');
+        }
         $this->viewInfo = $forum;
         
         $forum['img_list'] = $this->setViewFiles($forum['img_data']);
         $forum['file_list'] = $this->setViewFiles($forum['file_data']);
 
-        $class_info['is_admin'] = $this->isAdmin($this->user['id'], $class_info['id']);
-
+        
         // 启用HTML过滤
-        $is_html = $class_info['is_html'];
-        if (!empty($is_html)) {
+        if ($class_info->is_html) {
             $forum['title'] = htmlspecialchars($forum['title']);
             $forum['context'] = htmlspecialchars($forum['context']);
             $forum['context'] = str_replace(chr(13).chr(10), '<br>', $forum['context']);
@@ -350,20 +352,19 @@ class Forum extends Common
         }
 
         // 启用UBB语法
-        $is_ubb = $class_info['is_ubb'];
-        if (!empty($is_ubb)) {
+        if ($class_info->is_ubb) {
             $forum['context'] = $this->rule($forum['context'], $forum['id'], $forum['user_id']);
             $forum['context'] = $this->setViewImages($forum['context'], $forum['img_data']);
         }
-        
         $forum['strip_tags_context'] = str_replace('&nbsp;', chr(32), $forum['context']);
         $forum['strip_tags_context'] = strip_tags($forum['strip_tags_context']);
         $forum['strip_tags_context'] = preg_replace('/\s+/', ' ', $forum['strip_tags_context']);
         // $forum['keywords'] = getKeywords($forum['title'], $forum['strip_tags_context']);
 
         // 阅读量+1
-        $forum->read_count = $forum->read_count + 1;
-        $forum->save();
+        MForum::where('id', $forum->id)->setInc('read_count');
+        // $forum->read_count = $forum->read_count + 1;
+        // $forum->save();
         // 获取回复数据
         $forum_reply = ForumReply::where('forum_id', $forum['id'])->paginate(20, false, [
             'query' => ['id' => $forum['id']]

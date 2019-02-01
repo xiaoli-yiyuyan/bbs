@@ -34,7 +34,7 @@
         <div class="column_info">
             <div class="column_title"><?=$item['title']?></div>
             <div class="column_count">
-                总数: <?php //component('/components/forum/get_count_by_class_id', ['class_id' => $item['id']]); ?>
+                总数: <?=$item->getTotal()?>
             </div>
         </div>
     </a>
@@ -62,9 +62,9 @@
 <div class="link_title">最新资讯</div>
 
 <?php $list = source('Model/Forum/getList'); ?>
-<div class="list list-img">
+<div class="list img_list">
 <?php foreach($list as $item) { ?>
-<?php component('/components/forum/list_img_text', ['item' => $item]); ?>
+<?php component('/components/forum/img_list_item', ['item' => $item]); ?>
 <?php } ?>
 </div>
 

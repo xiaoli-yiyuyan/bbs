@@ -1388,15 +1388,18 @@ i.svg-more {
 
 .img_flex_box {
     display: flex;
+    padding: .25rem;
 }
 .img_flex_box .img_bx {
-    display: block;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
     height: 5rem;
+    border-radius: .15rem;
     overflow: hidden;
+    margin: .25rem;
+    box-shadow: 0 0 0.15rem #ddd;
 }
 .img_bx img {
     width: 100%;
@@ -1412,7 +1415,7 @@ i.svg-more {
 .img_list_title {
     padding: .5rem;
     padding-bottom: .25rem;
-
+    font-weight: 700;
 }
 .img_bbs_list_item .bbs_info {
     padding: .5rem;

@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "topthink/think-orm",
-            "version": "v1.2.12",
+            "version": "v1.2.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "7c1de8b1045ecdd3a9a2b0a7713cae95f68db85d"
+                "reference": "b5aa176d373f379381c2e9685a89e10dd4044c39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/7c1de8b1045ecdd3a9a2b0a7713cae95f68db85d",
-                "reference": "7c1de8b1045ecdd3a9a2b0a7713cae95f68db85d",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/b5aa176d373f379381c2e9685a89e10dd4044c39",
+                "reference": "b5aa176d373f379381c2e9685a89e10dd4044c39",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "think orm",
-            "time": "2018-10-18T02:26:56+00:00"
+            "time": "2019-01-08T03:03:12+00:00"
         }
     ],
     "packages-dev": [],
