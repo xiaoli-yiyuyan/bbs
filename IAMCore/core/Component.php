@@ -82,7 +82,7 @@ class Component
 			if ($name === null) {
 				$last_key = end($namespace_array);
 				unset($namespace[$i - 1][$last_key]);
-				$this->namespace->save($tree);
+				$this->namespace->set($tree);
 			}
 		}
 
@@ -149,16 +149,20 @@ class Component
 		if ($value === null) {
 			$result = [];
 			if ($componentName === null) {
+				// print_r($this->dir . $namespaceName);die();
+
 				// 删除命名下级所有组件
 				foreach ($tree as $key => $value) {
-					$preg = '/^' . $namespaceName . $this->ds . '.+/';
+					$preg = '{^' . $namespaceName . $this->ds . '.+}';
 					// if (DS == '\\') {
-						$preg = str_replace($this->ds, $this->ds . $this->ds, $preg);
+						// $preg = str_replace($this->ds, $this->ds . $this->ds, $preg);
 					// }
 					if ($key == $namespaceName || preg_match($preg, $key)) {
-						// print_r($key);
+						foreach ($tree[$key] as $fileName => $item) {
+							$this->remove($namespaceName, $fileName);
+						}
+						rmdir($this->dir . $namespaceName);
 						unset($tree[$key]);
-
 					}
 				}
 				// print_r($tree);
@@ -166,7 +170,7 @@ class Component
 				// $result = $tree[$namespaceName];
 			} else {
 				// 删除指定有组件
-				// $result = $tree[$namespaceName][$componentName];
+				unlink($tree[$namespaceName][$componentName]['template']);
 				unset($tree[$namespaceName][$componentName]);
 				$this->components->save($tree);
 			}

@@ -24,7 +24,7 @@
     <a href="<?=href('/forum/list?id=2')?>">源码</a>
     <a href="<?=href('/forum/list?id=3')?>">任务</a>
     <a href="<?=href('/user/index')?>">个人</a>
-    <a href="<?=href('/user/friend')?>">粉丝</a>
+    <a href="<?=href('/user/friend_care')?>">粉丝</a>
 </div>
 <?php $column = source('App/Column/list'); ?>
 <div class="column_nav">
