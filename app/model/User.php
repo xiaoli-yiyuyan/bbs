@@ -10,7 +10,7 @@ class User extends Model
     public function getIsOnlineAttr($value, $data)
     {
         $diff = time() - strtotime($data['last_time']);
-        return $diff < 20 * 60;
+        return $diff < 20 * 60 ? 1 : 0;
     }
 
     public function getLvAttr($value, $data)
@@ -74,7 +74,9 @@ class User extends Model
         } else {
             $user->order('exp', 'DESC');
         }
-        return $user->limit(20)->select()->toArray();
+        $list = $user->limit(20)->select();
+        $list->append(['lv', 'is_online']);
+        return $list->toArray();
     }
     
     /**

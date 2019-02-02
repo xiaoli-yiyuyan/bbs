@@ -88,6 +88,6 @@ class Category extends Model
 
     public function getTotal()
     {
-        return Forum::where('class_id', $this->id)->count();
+        return Forum::where('class_id', $this->id)->where('status', 0)->count();
     }
 }

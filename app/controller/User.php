@@ -390,8 +390,9 @@ class User extends Common
     /**
      * 获取用户排行榜
      */
-    public function rank($options)
+    public function rank()
     {
-        return MUser::rank($options['type']);
+
+        View::load('user/rank');
     }
 }

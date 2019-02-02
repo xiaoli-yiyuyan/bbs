@@ -576,7 +576,7 @@ class Forum extends Common
         
         if ($this->user['id'] != $forum['user_id']) {
             MUser::changeCoin($this->user['id'], $this->addReplyCoin);
-            $content = '<a href="' . href('/user/show?id=' . $this->user['id']) . '">' .$this->user['nickname'] . '</a> 评论了你的主题，快去<a href="' . href('/forum/view?id=' . $forum_id) . '">查看</a>吧！';
+            $content = '<a href="' . href('/user/show?id=' . $this->user['id']) . '">' .$this->user['nickname'] . '</a> 评论了你的主题，快去<a href="' . href('/forum/view?id=' . $id) . '">查看</a>吧！';
             Message::send(0, $forum['user_id'], $content);
         }
         return Url::redirect('/forum/view?id=' . $id);
