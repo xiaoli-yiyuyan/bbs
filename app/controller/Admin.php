@@ -252,7 +252,7 @@ class Admin extends Common
         if (!$component->namespace($namespace, $name)) {
             return Page::error('名称错误，[名称重复]或[格式必须为数字，英文，下划线任意组合]');
         }
-        Url::redirect('/admin/page?namespace=' . $namespace . $name . DS);
+        Url::redirect('/admin/page?namespace=' . $namespace . $name);
     }
 
     public function addComponent()

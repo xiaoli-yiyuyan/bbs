@@ -209,7 +209,6 @@ $(function() {
     $('#add').submit(function() {
         var $this = $(this)
         $.post($this.attr('action'), $this.serialize()).then(function(data) {
-            return;
             if (data.err) {
                 $.alert(data.msg);
             } else {

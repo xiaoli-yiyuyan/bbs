@@ -1,5 +1,5 @@
-<?php $this->load('components/common/header',['title' => '登陆网站']); ?>
-<?php $this->load('/components/common/header_nav', ['back_url' => '/', 'title' => '首页']); ?>
+<?php component('components/common/header',['title' => '登陆网站']); ?>
+<?php component('/components/common/header_nav', ['back_url' => '/', 'title' => '首页']); ?>
 <div class="login-main">
     <a class="logo" href="/">
 
@@ -10,9 +10,9 @@
         <div><button class="btn btn-fill btn-block btn-lg">登陆</button></div>
         <div class="login-reg-nav">
             <a class="func-null">忘记密码</a>
-            <a href="/register">立即注册</a>
+            <a href="/login/register">立即注册</a>
         </div>
     </form>
 </div>
 <div class="g_word">安米社区 - 手机建站</div>
-<?php $this->load('components/common/footer'); ?>
+<?php component('components/common/footer'); ?>

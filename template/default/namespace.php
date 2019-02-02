@@ -11,13 +11,4 @@
     array (
     ),
   ),
-  'user' => 
-  array (
-  ),
-  'login' => 
-  array (
-  ),
-  'forum' => 
-  array (
-  ),
 ) ?>
