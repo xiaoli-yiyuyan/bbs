@@ -351,3 +351,31 @@ function unzip($fromName, $toName)
     }
     return $zipArc->close();
 }
+
+
+/**
+ * 友好格式化时间
+ * 
+ * @param string 时间
+ * @return string
+ */
+function friendlyDateFormat($strtime /* timestamp */)
+{
+    $timestamp = strtotime($strtime);
+    /* 计算出时间差 */
+    $seconds = time() - $timestamp;
+    $minutes = floor($seconds / 60);
+    $hours   = floor($minutes / 60);
+    $days    = floor($hours / 24);
+    if ($seconds < 60) {
+        return '刚刚';
+    } elseif ($minutes < 60) {
+        return $minutes . '分钟前';
+    } elseif ($hours < 24) {
+        return $hours . '小时前';
+    } elseif ($days < 3) {
+        return $days . '天前';
+    } else {
+        return date('m-d H:i', $timestamp);
+    }
+}

@@ -681,8 +681,9 @@ class Forum extends Common
 
     public function getListByUserId($user_id = '')
     {
-        $forum = MForum::field('id,user_id,title,context,img_data,file_data, reply_count')->where('status', '<>', 9999);
+        $forum = MForum::field('id,user_id,title,context,img_data,file_data,reply_count,create_time')->where('status', '<>', 9999);
         $forum->where('user_id', $user_id);
+        $forum->order('id', 'desc');
         $list = $forum->paginate(Setting::get('pagesize'));
         $list->append(['author', 'mini_context', 'img_list', 'file_list']);
         $list->hidden(['context']);

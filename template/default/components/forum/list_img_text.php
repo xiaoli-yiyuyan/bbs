@@ -9,7 +9,7 @@
             </div>
             <div class="user flex-box">
             <div class="flex"><?=$item['author']['nickname']?> · <?=$item['reply_count']?> 评论</div>
-            <div class="more"></div>
+            <div class="create_time"><?=$item['create_time']?></div>
         </div>
             </a>
     <div class="hr"></div>

@@ -9,7 +9,7 @@ class Message extends Common
 {
     public function index()
     {
-        $list = MMessage::where('to_user_id', $this->user['id'])->paginate(Setting::get('pagesize'));
+        $list = MMessage::where('to_user_id', $this->user['id'])->order('id', 'desc')->paginate(Setting::get('pagesize'));
         View::load('message/index', [
             'list' => $list
         ]);
