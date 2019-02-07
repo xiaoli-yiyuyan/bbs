@@ -7,7 +7,7 @@
 <?php } else { ?>
 <div class="list">
 <?php foreach ($list as $item) { ?>
-<?php $userinfo = source('Model/User/getAuthor', ['id' => $item['user_id']]); ?>
+<?php $userinfo = source('Model/User/getAuthor', ['id' => $item['user_id']]) ?? ['nickname' => '系统消息', 'photo' => '/static/svg/sys_message.svg']; ?>
     <div class="list-group friend_list message_list">
         <div class="list-item list-item-image-text border-b">
             <div class="list-item-image">

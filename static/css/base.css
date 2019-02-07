@@ -916,6 +916,7 @@ i.svg-more {
 .friend_list .nickname{
     color: #333;
     font-size: 1rem;
+    font-weight: 700;
 }
 .friend_list .explain{
     color: #666;

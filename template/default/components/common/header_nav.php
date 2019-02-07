@@ -7,7 +7,7 @@
     <div class="flex-box">
       
         <?php if ($message_count = source('App/Message/count') > 0) { ?>
-            <a href="/user/message" class="new_message_icon"><?=$message_count?></a>
+            <a href="/message" class="new_message_icon"><?=$message_count?></a>
         <?php } ?>
     <a href="/user/index" class="icon-svg user"></a>
     <div class="icon-svg menu left-menu"></div>
