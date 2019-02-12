@@ -199,7 +199,13 @@ class Forum extends Common
             return Response::json(['err' => 1, 'msg' => '帖子发表栏目不存在！']);
         }
 
-        if ($forum['user_id'] != $this->user['id'] && !$this->isAdmin($this->user['id'], $forum['class_id'])) {
+        $isAdmin = !$this->isAdmin($this->user['id'], $forum['class_id']);
+
+        if(!$class_info['user_add'] && $isAdmin){
+            return Response::json(['err' => 2, 'msg' => '移动到的栏目仅VIP方能操作']);
+        }
+
+        if ($forum['user_id'] != $this->user['id'] && $isAdmin) {
             return Response::json(['err' => 2, 'msg' => '你无权进行此操作！']);
         }
 
@@ -273,7 +279,7 @@ class Forum extends Common
         $data = [
             'title' => $title,
             'context' => $context,
-            // 'class_id' => $class_id,
+            'class_id' => $class_id,
             'img_data' => $img_data,
             'file_data' => $file_data,
             'log' => $forum['log'] . '<br>' .$this->user['id'] . ' 修改与: ' . now(),
@@ -313,8 +319,10 @@ class Forum extends Common
         if (!$forum = MForum::get($id)) {
             return Page::error('要查看的内容不存在！');
         }
+        $navList = (new Category)->where('user_add', 1)->column('id,title');
         View::load('forum/edit_page', [
-            'forum' => $forum
+            'forum' => $forum,
+            'navList' => $navList
         ]);
     }
 

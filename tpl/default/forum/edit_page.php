@@ -14,6 +14,17 @@
             <textarea name="context" class="add_context input input-line input-lg" placeholder="内容"><?=$forum['context']?></textarea>
         </div>
     </div>
+    <div class="item-line item-lg">
+        <div class="item-title">移动</div>
+        <div class="item-input class_id">
+                <select class="input input-lg" name="class_id" id="" >
+                    <option value="<?=$forum['class_id']?>"><?=$navList[$forum['class_id']]?></option>
+                    <?php   foreach($navList as $key => $value){ ?> 
+                        <option value="<?=$key?>"><?=$value?></option>
+                    <?php }?>
+                </select>
+            </div>
+    </div>
     <div class="file_box">
         <div class="tab">
             <div class="tab-header">
