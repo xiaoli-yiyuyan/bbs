@@ -190,6 +190,7 @@ class Forum extends Common
      */
     public function ajaxEdit($id = '', $title = '', $context = '', $img_data = '', $file_data = '', $class_id = '')
     {
+        
         if (!$forum = MForum::get($id)) {
             return Response::json(['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！']);
         }
@@ -281,7 +282,7 @@ class Forum extends Common
         // print_r($data);
         // die();
 
-        if (!$id = MForum::where(['id' => $forum['id']])->update($data)) {
+        if (!$result = MForum::where(['id' => $forum['id']])->update($data)) {
             Db::rollback();
             return Response::json(['err' => 6, 'msg' => '修改失败']);
         }
@@ -312,7 +313,6 @@ class Forum extends Common
         if (!$forum = MForum::get($id)) {
             return Page::error('要查看的内容不存在！');
         }
-        
         View::load('forum/edit_page', [
             'forum' => $forum
         ]);

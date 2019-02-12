@@ -7,6 +7,8 @@
     body {
         background: #FFF;
     }
+    .read_count{margin-right:5px; color: #897777;}
+    .create_time{line-height: 25px;}
 </style>
 <?php component('/components/common/header_nav', ['back_url' => '/forum/list?id=' . $class_info['id'], 'title' => $class_info['title']]); ?>
 <?php if ($forum_reply->currentPage() == 1) { ?>
@@ -27,8 +29,8 @@
                 <img class="view_user_info_photo" src="<?=$forum_user['photo']?>" alt="">
                 <?=$forum_user['nickname']?></a>
             </div>
-            
-            <div class="create_time"><?=$forum['create_time']?></div>
+            <div class="create_time">
+            浏览量:<span class="read_count"><?=$forum['read_count']+1?></span><?=$forum['create_time']?> </div>
         </div>
     </div>
     <div class="view_context">
