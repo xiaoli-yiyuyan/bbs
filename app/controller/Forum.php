@@ -542,7 +542,7 @@ class Forum extends Common
     /**
      * 回复帖子
      */
-    public function replyAdd($id = '', $context = '')
+    public function replyAdd($id = '', $context = '', $alt = '')
     {
         if (!$this->isLogin()) {
             return Page::error('会员未登录');
