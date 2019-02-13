@@ -713,4 +713,29 @@ class Forum extends Common
         ]);
         return Response::json($res);
     }
+
+    /**
+     * 置顶与取消
+     * 加精与取消
+     */
+    public function topCreamWay($id = '', $way = 'top')
+    {
+        if(!$forum = MForum::get($id)){
+           return Page::error("该帖子不存在");
+        }
+        if(!$this->isAdmin($this->user['id'], $forum->class_id)){
+            return Page::error("您没有权限修改");
+        }
+
+        if($way == 'top'){
+            $result = $forum->setTop();
+        } else {
+            $result = $forum->setCream();
+        }
+
+        if(!$result){
+           return Page::error("设置失败");
+        }
+        return Page::success('设置成功', '');
+    }
 }

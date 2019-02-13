@@ -169,4 +169,34 @@ class Forum extends Model
         }
         return $list;
     }
+
+    /**
+     * 置顶/取消置顶
+     * @param string|int $value 设置值
+     * @return boolean 成功或者失败
+     */
+    public function setTop($value = '')
+    {
+        if ($value != '') {
+            $this->is_top = $value;
+        } else {
+            $this->is_top = $this->is_top == 0 ? 1 : 0;
+        }
+        return $this->save();
+    }
+
+    /**
+     * 加精/取消加精
+     * @param string|int $value 设置值
+     * @return boolean 成功或者失败
+     */
+    public function setCream($value = '')
+    {
+        if ($value != '') {
+            $this->is_cream = $value;
+        } else {
+            $this->is_cream = $this->is_cream == 0 ? 1 : 0;
+        }
+        return $this->save();
+    }
 }

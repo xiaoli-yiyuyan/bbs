@@ -20,6 +20,25 @@
             <div class="view_action">
                 <a class="btn" href="/forum/edit_page?id=<?=$forum['id']?>">修改</a>
                 <a class="btn btn_remove" data-id="<?=$forum['id']?>">删除</a>
+                <?php if ($class_info['is_admin']) { ?>
+                
+                    <a class="btn" href="/forum/top_cream_way?id=<?=$forum['id']?>">
+                        <?php if ($forum['is_top']) { ?>
+                            取消置顶
+                        <?php } else{?>
+                            置顶
+                        <?php } ?>
+                    </a>
+
+                    <a class="btn" href="/forum/top_cream_way?id=<?=$forum['id']?>&way=cream">
+                        <?php if ($forum['is_cream']) { ?>
+                            取消加精
+                        <?php } else{?>
+                            加精
+                        <?php } ?>
+                    </a>
+
+                <?php } ?>
             </div>
             <?php } ?>
         </div>
