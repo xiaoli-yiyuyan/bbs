@@ -85,7 +85,7 @@ class Forum extends Common
         $class_info = Category::get($id);
         $forum = MForum::where('class_id', $id);
         $forum->where('status', '<>', 9999);
-        $forum->order('active_time', 'desc');
+        $forum->order('is_top desc, active_time desc');
         $list = $forum->paginate(Setting::get('pagesize'), false, [
             'query' => ['id' => $id]
         ]);
