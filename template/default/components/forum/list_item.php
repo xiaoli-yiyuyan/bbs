@@ -1,5 +1,10 @@
     <div class="list-group">
         <a href="/forum/view/?id=<?=$item['id']?>" class="list-item">
+            <?php if($item['is_top'] == 1){?> <span style="color:red">[顶]</span><?php }?>
+            <?php if($item['is_cream'] == 1){?> <span style="color:red">[精]</span><?php }?>
+            <?php if($item['img_data'] != ''){?> [图]<?php }?>
+            <?php if($item['file_data'] != ''){?> [包]<?php }?>
+            
             <?=$item['title']?>
         </a>
         <div class="bbs_info">

@@ -7,7 +7,9 @@
                 <?php } ?>
             </div>
             <?php } ?>
-            <div class="img_list_title"><?=$item['title']?></div>
+                <div class="img_list_title">
+                    <?=$item['title']?>
+                </div>
         </a>
         <div class="bbs_info">
 			<div class="flex-box">

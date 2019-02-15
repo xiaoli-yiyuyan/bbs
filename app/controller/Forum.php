@@ -85,7 +85,7 @@ class Forum extends Common
         $class_info = Category::get($id);
         $forum = MForum::where('class_id', $id);
         $forum->where('status', '<>', 9999);
-        $forum->order('active_time', 'desc');
+        $forum->order('is_top desc, active_time desc');
         $list = $forum->paginate(Setting::get('pagesize'), false, [
             'query' => ['id' => $id]
         ]);
@@ -190,6 +190,7 @@ class Forum extends Common
      */
     public function ajaxEdit($id = '', $title = '', $context = '', $img_data = '', $file_data = '', $class_id = '')
     {
+        
         if (!$forum = MForum::get($id)) {
             return Response::json(['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！']);
         }
@@ -198,7 +199,13 @@ class Forum extends Common
             return Response::json(['err' => 1, 'msg' => '帖子发表栏目不存在！']);
         }
 
-        if ($forum['user_id'] != $this->user['id'] && !$this->isAdmin($this->user['id'], $forum['class_id'])) {
+        $isAdmin = !$this->isAdmin($this->user['id'], $forum['class_id']);
+
+        if(!$class_info['user_add'] && $isAdmin){
+            return Response::json(['err' => 2, 'msg' => '移动到的栏目仅VIP方能操作']);
+        }
+
+        if ($forum['user_id'] != $this->user['id'] && $isAdmin) {
             return Response::json(['err' => 2, 'msg' => '你无权进行此操作！']);
         }
 
@@ -272,7 +279,7 @@ class Forum extends Common
         $data = [
             'title' => $title,
             'context' => $context,
-            // 'class_id' => $class_id,
+            'class_id' => $class_id,
             'img_data' => $img_data,
             'file_data' => $file_data,
             'log' => $forum['log'] . '<br>' .$this->user['id'] . ' 修改与: ' . now(),
@@ -281,7 +288,7 @@ class Forum extends Common
         // print_r($data);
         // die();
 
-        if (!$id = MForum::where(['id' => $forum['id']])->update($data)) {
+        if (!$result = MForum::where(['id' => $forum['id']])->update($data)) {
             Db::rollback();
             return Response::json(['err' => 6, 'msg' => '修改失败']);
         }
@@ -312,9 +319,10 @@ class Forum extends Common
         if (!$forum = MForum::get($id)) {
             return Page::error('要查看的内容不存在！');
         }
-        
+        $navList = (new Category)->where('user_add', 1)->column('id,title');
         View::load('forum/edit_page', [
-            'forum' => $forum
+            'forum' => $forum,
+            'navList' => $navList
         ]);
     }
 
@@ -717,5 +725,30 @@ class Forum extends Common
             'input_name' => 'file'
         ]);
         return Response::json($res);
+    }
+
+    /**
+     * 置顶与取消
+     * 加精与取消
+     */
+    public function topCreamWay($id = '', $way = 'top')
+    {
+        if(!$forum = MForum::get($id)){
+           return Page::error("该帖子不存在");
+        }
+        if(!$this->isAdmin($this->user['id'], $forum->class_id)){
+            return Page::error("您没有权限修改");
+        }
+
+        if($way == 'top'){
+            $result = $forum->setTop();
+        } else {
+            $result = $forum->setCream();
+        }
+
+        if(!$result){
+           return Page::error("设置失败");
+        }
+        return Page::success('设置成功', '');
     }
 }
