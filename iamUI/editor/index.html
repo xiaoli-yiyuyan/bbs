@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./test/iamEditor.min.js"></script>
+
+    <title>安米网 - IamPHP 免费开源项目</title>
+</head>
+<body>
+    <style>
+        .box {
+            width: 100%;
+            min-height: 100px;
+            background: #eee;
+        }
+        .alt_user {
+            color: #09f;
+        }
+    </style>
+    <button class="a_btn" data-user-id='1' data-nickname='用户昵称'>@别人</button>
+    <button class="a_btn_img" data-src="">插图片</button>
+    <button class="a_btn_range">获取range</button>
+    <button class="a_btn_ubb">输出ubb</button>
+    <div class="box"></div>
+    <script>
+        var iamEditor = new IamEditor();
+        iamEditor.getBox(document.querySelector('.box'));
+        var alt = document.querySelector('.a_btn');
+        var btn_img = document.querySelector('.a_btn_img');
+        var btn_ubb = document.querySelector('.a_btn_ubb');
+        alt.addEventListener('click', function(event) {
+            // iamEditor.insertHTML('<b>asdadsad</b>');
+
+            iamEditor.insertHTML('<b data-code="[@:123456]" class="alt_user" unit="true">@' + this.dataset.nickname + '</b>');
+        });
+        btn_img.addEventListener('click', function(event) {
+            iamEditor.insertHTML('<img data-code="[表情:抱抱]" src="http://ianmi.com/upload/column/20180909234237_202.png"/>');
+        });
+        btn_ubb.addEventListener('click', function(event) {
+            console.log(iamEditor.toUbb());
+        });
+    </script>
+</body>
+</html>

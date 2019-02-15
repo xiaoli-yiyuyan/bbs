@@ -102,5 +102,14 @@
         var $input = $('input[name=content]');
         $input.val($input.val() + $(this).text());
     });
+    window.onpopstate=function() {
+        var json = window.history.state;
+        if (json.time) {
+            window.location.reload();
+        }
+    }
+    $('.sign_input').submit(function() {
+        history.replaceState({time: new Date().getTime()}, null, window.location);
+    });
 </script>
 <?php self::load('common/footer'); ?>

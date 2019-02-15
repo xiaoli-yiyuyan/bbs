@@ -77,7 +77,7 @@ class Sign extends Common
             'content' => $content,
             'time' => $time
         ]);
-        return Page::success('签到成功！', '/sign/index');
+        return Page::success('签到成功！');
     }
 
     private function getSignCoin($time, $vip_level)

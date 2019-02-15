@@ -370,6 +370,7 @@ class Forum extends Common
             'query' => ['id' => $forum['id']]
         ])->each(function($item, $key) {
             $item->context = $this->face($item->context);
+            $item->context = Ubb::altUser($item->context);
         });
 
         View::load('forum/view', [
@@ -556,7 +557,7 @@ class Forum extends Common
             return Page::error('回复的主题可能已经删除或不存在！');
         }
 
-        if (!$new_reply = ForumReply::get([
+        if ($new_reply = ForumReply::order('id desc')->get([
             'forum_id' => $forum['id'],
             'user_id' => $this->user['id'],
         ])) {
@@ -564,11 +565,23 @@ class Forum extends Common
                 return Page::error('访问过于频繁！');
             }
         }
+        $context = htmlspecialchars($context);
+        $pattern = '/\[@:(\d+)]/';
 
+        preg_match_all($pattern, $context, $matTags);
+
+        $alt_user = array_unique($matTags[1]);
+        foreach ($alt_user as $item) {
+            if ($item == $this->user['id']) {
+                continue;
+            }
+            $sys_message = '<a href="' . href('/user/show?id=' . $this->user['id']) . '">' .$this->user['nickname'] . '</a> 在《<a href="' . href('/forum/view?id=' . $id) . '">' . $forum->title . '</a>》中召唤你，快去<a href="' . href('/forum/view?id=' . $id) . '">查看</a>吧！';
+            Message::send(0, $item, $sys_message);
+        }
         $forum_reply = ForumReply::create([
             'forum_id' => $id,
             'user_id' => $this->user['id'],
-            'context' => htmlspecialchars($context)
+            'context' => $context
         ]);
         $forum->active_time = now();
         $forum->reply_count = $forum->reply_count + 1;

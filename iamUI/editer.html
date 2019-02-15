@@ -4,16 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="zepto.min.js"></script>
+
     <title>安米网 - IamPHP 免费开源项目</title>
 </head>
 <body>
     <style>
         .box {
             width: 100%;
-            height: 100px;
+            min-height: 100px;
+            background: #eee;
+        }
+        .alt_user {
+            color: #09f;
         }
     </style>
-    <div contenteditable="true" class="box">
-    </div>
+    <button class="a_btn" data-userid='1' data-nickname='用户昵称'>@别人</button>
+    <button class="a_btn_range">获取range</button>
+    <div contenteditable="true" class="box"></div>
+    <script>
+        var IamEditor = function() {
+            this.selection = window.getSelection();
+        }
+        IamEditor.prototype = {
+            // dom: null,
+            init: function() {
+                this.dom.setAttribute('contenteditable', true);
+                this.dom.addEventListener('keydown', function(event) {
+                    console.log(event);
+                    var range = this.getRange();
+                    if (range.commonAncestorContainer.parentNode.getAttribute('class') == 'alt_user') {
+                        if ([37, 38, 39, 40].indexOf(event.keyCode) == -1) {
+                            $(range.commonAncestorContainer.parentNode).remove();
+                        }
+                            
+                        if (event.keyCode === 8) {
+                            return false;
+                        }
+                    }
+                });
+            },
+            getRange: function() {
+                return this.selection.getRangeAt(0);
+            },
+            getBox: function(dom) {
+                this.dom = dom;
+                this.init();
+            },
+            focus: function() {
+                var range = this.selection.getRangeAt(0)
+                this.dom.focus();
+            },
+            insertHTML: function(html) {
+                document.execCommand('insertHTML', false, html + '&#8203;');
+            }
+        }
+
+        var iamEditor = new IamEditor();
+        iamEditor.getBox(document.querySelector('.box'));
+
+        // var selection = window.getSelection();
+
+        // var $box = $('.box');
+        // var $btn = $('.a_btn');
+        // $btn.click(function() {
+        //     var $this = $(this);
+
+            document.execCommand('insertHTML', false, '<b class="alt_user">@' + $this.data('nickname') + '</b>&#8203;');
+            var range = selection.getRangeAt(0);
+
+            range.setStart(range.endContainer,  0);
+            range.setEnd(range.endContainer,  0);
+            var $this = $(this);
+            $box.append('<b class="alt_user">@' + $this.data('nickname') + '</b> ');
+            getFocus();
+        // });
+
+        // function getFocus() {
+
+        //     var range = selection.getRangeAt(0)
+        //     console.log(range);
+        //     $box.focus();
+        // }
+
+        // document.querySelector('.box').addEventListener('paste', function(event){
+        //     let plainText  =  event.clipboardData.getData('text/plain');  // 无格式文本
+        //     document.execCommand('insertText', false, plainText);
+        //     event.preventDefault();
+        // });
+
+        // $('.a_btn_range').click(function() {
+        //     getFocus();
+        // });
+        // $box.click(function() {
+        //     var range = selection.getRangeAt(0);
+        //     if ($(range.commonAncestorContainer.parentNode).attr('class') == 'alt_user') {
+        //         console.log('点击alt_user', range.startContainer);
+        //         var textEle  =  range.commonAncestorContainer;
+                
+        //         range.setStart(range.startContainer,  0);
+        //         range.setEnd(range.endContainer,  textEle.length);
+        //     }
+        // });
+        // $(document).on('keydown', '.box', function(event) { 
+        //     var range = selection.getRangeAt(0);
+
+        //     if ($(range.commonAncestorContainer.parentNode).attr('class') == 'alt_user') {
+        //         if ([37, 38, 39, 40].indexOf(event.keyCode) == -1) {
+        //             $(range.commonAncestorContainer.parentNode).remove();
+        //         }
+                    
+        //         if (event.keyCode === 8) {
+        //             return false;
+        //         }
+        //     }
+        // });
+    </script>
 </body>
 </html>

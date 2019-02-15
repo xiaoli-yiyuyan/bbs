@@ -3,6 +3,7 @@
     // 'keywords' => implode($forum['keywords'], ','),
     'description' => mb_substr($forum['strip_tags_context'], 0, 100)
 ]); ?>
+<script src="/static/js/iamEditor.min.js?v=<?=$version?>"></script>
 <style>
     body {
         background: #FFF;
@@ -64,11 +65,14 @@
         <div class="bbs_info">
             <div class="bbs_user">
                 <a href="<?=href('/user/show?id=' . $item->author['id'])?>">
-                    <img class="bbs_user_photo" src="<?=$item->author['photo']?>" alt=""> <?=$item->author['nickname']?>
+                    <img class="bbs_user_photo" src="<?=$item->author['photo']?>" alt="">
+                    <?=$item->author['nickname']?>
                 </a>
             </div>
             <div class="create_time">
                 <?=$item['create_time']?>
+                <button class="btn btn-sm btn_alt_user" data-user-id="<?=$item->author['id']?>" data-nickname="<?=$item->author['nickname']?>">@Ta</button>
+
             </div>
         </div>
         <div class="list-item">
@@ -83,7 +87,8 @@
     <div class="reply_input border-t">
         <form class="reply_index" action="/forum/reply_add?id=<?=$forum['id']?>" method="post">
             <div class="icon-svg input_face"></div>
-            <input class="input_show input" name="context">
+            <div class="input_show input"></div>
+            <input type="hidden" name="context">
             <button class="btn btn_reply">回复</button>
         </form>
         <div class="chat-face-box transition" style="height: 0;">
@@ -126,6 +131,18 @@
 </div>
 <script>
 $(function() {
+    
+    var iamEditor = new IamEditor();
+    iamEditor.getBox(document.querySelector('.input_show'));
+    // var alt = document.querySelector('.a_btn');
+    // var btn_img = document.querySelector('.a_btn_img');
+    // alt.addEventListener('click', function(event) {
+    //     iamEditor.insertHTML('<b data-code="[@:123456]" class="alt_user" unit="true">@' + this.dataset.nickname + '</b>');
+    // });
+    // btn_img.addEventListener('click', function(event) {
+    //     iamEditor.insertHTML('<img data-code="[表情:抱抱]" src="http://ianmi.com/upload/column/20180909234237_202.png"/>');
+    // });
+
     $('.btn_remove').click(function() {
         var id = $(this).data('id');
         $.confirm('确定删除该帖子？', {
@@ -148,7 +165,15 @@ $(function() {
     $('.face-box .face-out img').click(function() {
         var img_tag = $(this).data('img');
         var face_code = '[表情:' + img_tag + ']';
-        $('.input_show').val($('.input_show').val() + face_code);
+        iamEditor.insertHTML('<img data-code="' + face_code + '" src="' + $(this).attr('src') + '"/>');
+        // $('.input_show').val($('.input_show').val() + face_code);
+    });
+    $('.btn_alt_user').click(function() {
+        var code = '[@:' + $(this).data('user-id') + ']';
+        iamEditor.insertHTML('<b data-code="' + code + '" class="alt_user_nickname" unit="true">@' + $(this).data('nickname') + '</b>');
+    });
+    $('.reply_index').submit(function() {
+        $(this).find('input[name=context]').val(iamEditor.toUbb());
     });
 });
 

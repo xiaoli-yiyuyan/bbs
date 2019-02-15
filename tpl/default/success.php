@@ -13,7 +13,8 @@
         <?php if (empty($url)) { ?>
             history.go(-1);
         <?php } else { ?>
-            location.href="<?=$url?>";
+            history.replaceState(null, null, "<?=$url?>");
+            window.location.reload();
         <?php } ?>
     }, 1000);
 </script>

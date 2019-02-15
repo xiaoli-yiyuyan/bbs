@@ -558,8 +558,15 @@ i.svg-more {
 .input_show {
     flex: 1;
     margin: 0 .25rem;
-    background: #eee;
+    background: #FFFFFF;
     border-radius: .1rem;
+}
+.input_show img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.input_show .alt_user_nickname {
+    color: #09f;
 }
 .reply_index {
     position: relative;
@@ -1497,4 +1504,7 @@ i.svg-more {
 }
 .left_user_box .info-box .user-ep {
     margin-top: .5rem;
+}
+.btn_alt_user {
+    color: #09f;
 }
