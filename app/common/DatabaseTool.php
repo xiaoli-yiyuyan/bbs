@@ -224,15 +224,10 @@ class DatabaseTool
         else
         {
             $sql = $this->parseSQL($path);
-            try
-            {
-                $this->handler->exec($sql);
+            if ($this->handler->exec($sql)) {
                 return ['msg' => '还原成功!花费时间', (microtime(true) - $this->begin) . 'ms'];
-                // echo '还原成功!花费时间', (microtime(true) - $this->begin) . 'ms';
-            }
-            catch (PDOException $e)
-            {
-                $this->error = $e->getMessage();
+            } else {
+                $this->error = $this->handler->errorInfo();
                 return false;
             }
         }

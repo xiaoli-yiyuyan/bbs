@@ -379,3 +379,38 @@ function friendlyDateFormat($strtime /* timestamp */)
         return date('m-d H:i', $timestamp);
     }
 }
+
+/**
+ * 递归获取文件夹内所有文件
+ * 返回一个TREE结构的文件系统
+ * @param string $dir
+ * @param array $filter
+ * @return array $files
+ */
+function scan_dir($dir, $filter = []){
+    if(!is_dir($dir))return false;
+    $files = array_diff(scandir($dir), array('.', '..'));
+
+    // 如果是个文件夹
+    if(is_array($files)){
+
+        // 遍历下面所有文件
+        foreach($files as $key => $value){
+
+            $path = $dir . '/' . $value;
+
+            if(is_dir($path)){
+                $files[$value] = scan_dir($path, $filter);
+                unset($files[$key]);
+                continue;
+            }
+            $pathinfo = pathinfo($path);
+            $extension = array_key_exists('extension', $pathinfo) ? $pathinfo['extension'] : '';
+            if(!empty($filter) && !in_array($extension, $filter)){
+                unset($files[$key]);
+            }
+        }
+    }
+    unset($key, $value);
+    return $files;
+}
