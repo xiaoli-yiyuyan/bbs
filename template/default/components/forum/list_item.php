@@ -1,10 +1,9 @@
     <div class="list-group">
         <a href="/forum/view/?id=<?=$item['id']?>" class="list-item">
-            <?php if($item['is_top'] == 1){?> <span style="color:red">[顶]</span><?php }?>
-            <?php if($item['is_cream'] == 1){?> <span style="color:red">[精]</span><?php }?>
-            <?php if($item['img_data'] != ''){?> [图]<?php }?>
-            <?php if($item['file_data'] != ''){?> [包]<?php }?>
-            
+            <?php if($item['is_top'] == 1){?><span class='forum_top'>顶</span><?php }?>
+            <?php if($item['is_cream'] == 1){?><span class='forum_cream'>精</span><?php }?>
+            <?php if($item['img_data'] != ''){?><span class='forum_img'>图</span><?php }?>
+            <?php if($item['file_data'] != ''){?><span class='forum_file'>附</span><?php }?>
             <?=$item['title']?>
         </a>
         <div class="bbs_info">

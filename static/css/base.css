@@ -1508,3 +1508,21 @@ i.svg-more {
 .btn_alt_user {
     color: #09f;
 }
+.forum_top,
+.forum_cream,
+.forum_img,
+.forum_file {
+    padding: .1rem .25rem;
+    background: #09f;
+    color: #FFFFFF;
+    border-radius: .15rem;
+}
+.forum_cream {
+    background: #90f;
+}
+.forum_img {
+    background: #f90;
+}
+.forum_file {
+    background: #f09;
+}

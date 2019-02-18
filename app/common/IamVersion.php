@@ -3,6 +3,6 @@ namespace app\common;
 
 class IamVersion
 {
-    public static $version = '1.3.5';
-    public static $datetime = '2019-02-12';
+    public static $version = '1.4.0';
+    public static $datetime = '2019-02-18';
 }
