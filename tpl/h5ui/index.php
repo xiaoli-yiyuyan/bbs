@@ -12,6 +12,7 @@
         <i class="icon-svg svg-mail"></i>
     </div>
 </header>
+
 <?php $list = source('Model/Forum/getList'); ?>
 <div class="list img_list">
 <?php foreach($list as $item) { ?>
