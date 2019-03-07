@@ -123,6 +123,16 @@
       ),
       'template' => 'template/default/components/common/left_menu.php',
     ),
+    'footer_nav' => 
+    array (
+      'props' => 
+      array (
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'template/default/components/common/footer_nav.php',
+    ),
   ),
   '/components/forum' => 
   array (

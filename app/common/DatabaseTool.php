@@ -224,11 +224,11 @@ class DatabaseTool
         else
         {
             $sql = $this->parseSQL($path);
-            if ($this->handler->exec($sql)) {
-                return ['msg' => '还原成功!花费时间', (microtime(true) - $this->begin) . 'ms'];
-            } else {
+            if (false === $this->handler->exec($sql)) {
                 $this->error = $this->handler->errorInfo();
                 return false;
+            } else {
+                return ['msg' => '还原成功!花费时间', (microtime(true) - $this->begin) . 'ms'];
             }
         }
     }

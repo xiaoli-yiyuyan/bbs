@@ -174,3 +174,7 @@ CREATE TABLE `user` (
   `lock_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '锁定结束时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+
+ALTER TABLE `forum` ADD `is_top` tinyint(3) DEFAULT '0' COMMENT '0不加顶 1加顶';
+ALTER TABLE `forum` ADD `is_cream` tinyint(3) DEFAULT '0' COMMENT '0不精 1加精';

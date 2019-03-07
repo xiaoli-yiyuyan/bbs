@@ -99,7 +99,7 @@ function check_dirfile()
 {
     $items = [
         ['dir', '可写', 'success', 'template'],
-        ['dir', '可写', 'success', 'static/uploads']
+        ['dir', '可写', 'success', 'upload']
     ];
 
     foreach ($items as &$val) {

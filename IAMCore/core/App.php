@@ -76,6 +76,10 @@ class App
 	
 	private static function parseUrl()
 	{
+		if (!isset($_SERVER['REQUEST_URI'])) {
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'],1 );
+			if (isset($_SERVER['QUERY_STRING'])) { $_SERVER['REQUEST_URI'].='?'.$_SERVER['QUERY_STRING']; }
+		}
 		$requestUrl = $_SERVER['REQUEST_URI'];
 		self::baseUrl($requestUrl);
 		$url = explode('/', self::$baseUrl);

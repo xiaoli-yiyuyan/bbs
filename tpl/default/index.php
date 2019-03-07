@@ -5,6 +5,9 @@
 <header class="header">
     <span class="logo"></span>
     
+    <?php if ($message_count = source('App/Message/count') > 0) { ?>
+            <a href="/message" class="new_message_icon"><?=$message_count?></a>
+        <?php } ?>
     <form action="<?=href('/forum/search')?>" class="search flex flex-box">
       <input name="keyword" class="input input-line" placeholder="关键词" type="text">
       <button class="btn_search">搜索</button>

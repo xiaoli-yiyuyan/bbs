@@ -252,7 +252,7 @@ class Component
 	public function load($name, $data = [])
 	{
         // $name = str_replace('/', DS, $name);
-        $name = $this->ds . trim($name, $this->ds);
+		$name = $this->ds . trim($name, $this->ds);
         if ($name == $this->ds) {
             $namespace = $this->ds;
             $component_name = 'index';
@@ -309,7 +309,7 @@ class Component
 			}
 		}
 		$data = array_merge($data, $props_data, View::$data);
-
+		$config['template'] = $this->dir . $this->ds . $config['template'];
 		if (file_exists($config['template'])) {
 			(function() use($data, $config){
 				extract($data); //数组转化为变量

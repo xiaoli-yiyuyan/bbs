@@ -3,7 +3,7 @@ namespace App;
 
 use Iam\View;
 use Model\Message as MMessage;
-use Model\Setting;
+use app\Setting;
 
 class Message extends Common
 {

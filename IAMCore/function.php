@@ -44,7 +44,6 @@ function source($cmd, $query = [])
 		$appAction = end($appClass);
 		array_pop($appClass);
 		$appClass = implode('\\', $appClass);
-
 		if (!class_exists($appClass, $appAction)) {
 			return;
 		}
@@ -114,7 +113,7 @@ function component($cmd, $query = [])
 	$data = cmdParse($cmd);
 	$action = implode('/', $data['action']);
 	$component = new Iam\Component([
-		'model' => 'default'
+		'model' => 'h5ui'
 	]);
 	if (!empty($query)) {
 		$data['query'] = array_merge($data['query'], $query);
