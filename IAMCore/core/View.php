@@ -18,7 +18,7 @@ class View
 	/**
 	 * 配置
 	 */
-	public static function setConfig($options)
+	public static function setConfig($options = [])
 	{
 		$config = Config::get('TEMPLATE');
 		self::$config = array_merge($config, $options);
@@ -58,7 +58,9 @@ class View
 				extract(array_merge(self::$data, $data)); //数组转化为变量
 				include($tpl_path);
 			})();
+			return true;
 		} else {
+			return;
 			$tpl = '404';
 			echo $tpl_path;
 		}

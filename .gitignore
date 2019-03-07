@@ -3,7 +3,7 @@
 nodejs/
 NovelChapter/
 static/novel/
-/upload/
+/upload/*
 /data
 .composer.lock
 /sys_update

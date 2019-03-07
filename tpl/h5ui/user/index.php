@@ -192,5 +192,5 @@
         return false;
     });
 </script>
-
+<?php component('/components/common/footer_nav', ['index' => 4]); ?>
 <?php component('components/common/footer'); ?>

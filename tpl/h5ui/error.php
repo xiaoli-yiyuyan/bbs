@@ -1,9 +1,5 @@
-<?php self::load('common/header',['title' => '错误提示']); ?>
-<div class="header">
-    <span class="logo"></span>
-    <div class="head_center">错误提示</div>
-    <div></div>
-</div>
+<?php component('components/common/header',['title' => '错误提示']); ?>
+<?php component('/components/common/header_nav', ['back_url' => '/', 'title' => '错误提示']); ?>
 
 <div class="page-msg-box">
     <i class="icon-svg svg-false"></i>

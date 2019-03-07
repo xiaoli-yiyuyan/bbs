@@ -17,10 +17,11 @@ use Iam\Response;
 use app\common\DatabaseTool;
 
 Config::set(['TEMPLATE' => [
-    'PATH' => 'install' . DS . 'tpl',
+    'DIR' => 'install',
+    'PATH' => 'tpl',
     'EXT' => '.php'
 ]]);
-
+View::setConfig();
 /**
  * 系统环境检测
  * @return array 系统环境数据

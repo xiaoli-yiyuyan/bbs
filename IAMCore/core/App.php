@@ -1,6 +1,5 @@
 <?php
 namespace Iam;
-// use Iam\Loader;
 
 class App
 {
@@ -69,9 +68,12 @@ class App
 
 	private static function setErrorPage()
 	{
-		header('HTTP/1.1 404 Not Found');
-		header("status: 404 Not Found");
-		echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+		$path = self::parseViewPath();
+		if (!View::load($path, $_REQUEST)) {
+			header('HTTP/1.1 404 Not Found');
+			header("status: 404 Not Found");
+			echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+		}
 	}
 	
 	private static function parseUrl()
@@ -99,6 +101,27 @@ class App
 			}
 			self::$action = lcfirst(implode('', $action));
 		}
+	}
+
+	/**
+	 * 解析成实际路径
+	 */
+	private static function parseViewPath()
+	{
+		$class = self::toLastState(self::$class);
+		$action = self::toLastState(self::$action);
+		return $class . '\\' . $action;
+	}
+
+	/**
+	 * 驼峰转下划线
+	 */
+	private static function toLastState($str)
+	{
+		$str = lcfirst($str);
+		$splitChar = '_';
+		$formatStr = preg_replace('/([A-Z])/', $splitChar . '\\1', $str);
+		return strtolower($formatStr);
 	}
 
 	private static function baseUrl($url)

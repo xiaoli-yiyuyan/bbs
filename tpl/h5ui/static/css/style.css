@@ -1141,3 +1141,41 @@ ul li {
   justify-content: space-between;
   align-items: center;
 }
+.page-msg-box {
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #809626;
+}
+.page-msg-box .icon-svg {
+  margin: auto;
+  width: 5rem;
+  height: 5rem;
+}
+.page-msg-box .false {
+  color: #E22D2D;
+}
+.svg-true {
+  background-image: url(/static/svg/true.svg);
+}
+.svg-false {
+  background-image: url(/static/svg/false.svg);
+}
+.column_nav.list .list-group {
+  border-bottom: 1px solid #dddddd;
+}
+.column_nav.list .list-group .list-item.list-item-image-text {
+  height: inherit;
+}
+.column_nav.list .list-group .list-item.list-item-image-text .list-item-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.column_nav .column_title {
+  font-size: .9rem;
+}
+.column_nav .column_count {
+  color: #aaaaaa;
+}
