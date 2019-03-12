@@ -76,12 +76,12 @@ class CommonPublic
     public function getUserInfo($userid = '') //$field, 
     {
         if (empty($user_id)) {
-            if ($this->user['id'] > 0) {
-                return $this->user;
-            }
-            return;
+            return $this->user;
         }
-        return User::get($userid);
+        if ($user = User::get($userid)) {
+            return $user;
+        }
+        return ['id' => 0];
     }
 
     /**
