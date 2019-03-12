@@ -331,8 +331,10 @@ class Admin extends Common
     public function editColumn()
     {
         $id = Request::get('id');
-        $column = new Column;
-        $info = $column->info(['id' => $id]);
+        if (!$info = Category::info($id)) {
+            return ['err' => 1, 'msg' => '你要查看的栏目不存在！'];
+        }
+        $info['is_admin'] = $this->isAdmin($this->user['id'], $info['id']);
         $this->getErr($info);
         View::load('admin/edit_column', ['info' => $info]);
     }
