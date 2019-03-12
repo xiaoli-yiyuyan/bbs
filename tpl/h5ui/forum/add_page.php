@@ -1,6 +1,5 @@
-<?php component('/components/common/user_header', ['title' => $column_info['title'] . '-帖子发布']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/forum/list?id=' . $column_info['id'], 'title' => $column_info['title']]); ?>
-
+<?php component('/components/common/user_header', ['title' => '帖子发布']); ?>
+<?php component('/components/common/header_nav', ['title' => '内容发布']); ?>
 <style media="screen">
     .mark-out {
         padding-right: .5rem;
@@ -12,9 +11,27 @@
         display: inline-block;
     }
 </style>
-<form id="add" class="box-padding" action="/forum/ajax_add/?class_id=<?=$column_info['id']?>" method="post">
+<form id="add" class="box-padding" action="/forum/ajax_add" method="post">
     <input type="hidden" name="img_data">
     <input type="hidden" name="file_data">
+    
+
+
+    <?php $column = source('App/Column/list'); ?>
+    
+    <div class="item-line item-lg">
+        <div class="item-title">分类</div>
+        <div class="item-input">
+            <select class="input input-line input-lg" name="class_id" id="">
+                <option>请选择分类</option>
+
+            <?php foreach ($column as $item) { ?>
+                <option value="<?=$item['id']?>" <?=(!empty($column_info) && $column_info['id'] == $item['id']) ? 'selected="selected"' : ''?>><?=$item['title']?></option>
+            <?php } ?>
+            </select>
+        </div>
+    </div>
+
     <div class="item-line item-lg">
         <div class="item-title">标题</div>
         <div class="item-input"><input type="text" class="input input-line input-lg" name="title" placeholder="标题"></div>
@@ -49,9 +66,17 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="mark_body">
+    <div class="item-line item-lg">
+        <div class="item-title">标签</div>
+        <div class="item-input">
+        <div class="input mark_input btn-sm" contenteditable="true"></div><span class="btn_add_mark">添加</span>
+        </div>
+    </div>
     <p><button class="btn btn-fill btn-lg btn-block">立即发表</button></p>
 </form>
-
+<script>
+</script>
 <!-- 代码自定义 BEGIN -->
 <?=code('forum_ubb')?>
 <!-- 代码自定义 END -->

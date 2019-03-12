@@ -1,5 +1,19 @@
 <style>
-
+.left_user_box .user-info {
+    justify-content: center;
+}
+.left_user_box .info-box {
+    align-items: center;
+    margin-bottom: .5rem;
+}
+.left_user_box .user-photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+.left_user_box {
+    border-bottom: .05rem solid #eee;
+}
 .left-menu-list-open {
   overflow: hidden;
 }
@@ -61,7 +75,7 @@
     <div class="modal-overlay"></div>
     <div class="menu-list-body">
         <div class="left_user_box border-b">
-            
+        <?php $user = source('app/common/CommonPublic/getUserInfo'); ?>
         <?php if ($user['id'] > 0) { ?>
             <div class="user-info">
                 <img class="user-photo photo" src="<?=$user['photo']?>" alt="">
@@ -88,7 +102,7 @@
         <?php } else { ?>
             <a href="<?=href('/login')?>">
                 <div class="user-info">
-                    <img class="user-photo photo" src="" alt="">
+                    <img class="user-photo photo" src="/static/images/empty-photo.png" alt="">
                 </div>
                 <div class="info-box">
                     <div class="user-nc">登录/注册</div>
@@ -96,11 +110,33 @@
             </a>
         <?php } ?>
         </div>
-        
-<div class="h5ui-bar h5ui-searchbar">
+<style>
+    .search-bar {
+        display: flex;
+        padding: .5rem;
+    }
+    .searchbar-content {
+        flex: 1;
+    }
+    .searchbar-cancel {
+        display: none;
+        padding: 0 .25rem;
+        line-height: 1.5rem;
+        color: #09f;
+    }
+    .search-form-input {
+        border: none;
+        line-height: 1.5rem;
+        padding-left: 1.5rem;
+        border-radius: 3px;
+        background: #eeeeee url(/tpl/h5ui/static/svg/icon_search.svg) .5rem 50% no-repeat;
+        background-size: 1rem;
+    }
+</style>
+<div class="search-bar">
     <div class="searchbar-content clearfix">
         <form action="<?=href('/forum/search')?>">
-            <input type="search" name="keyword" id="title" class="h5ui-form-input" placeholder="搜一下">
+            <input type="search" name="keyword" id="title" class="input search-form-input" placeholder="搜一下">
         </form>
     </div>
     <div class="searchbar-cancel">取消</div>
@@ -125,13 +161,12 @@
     </div>
 </div>
 <script>
-    $(document).on('click', '.left-menu, .left-menu-list .modal-overlay', function() {
-        $('body').toggleClass('left-menu-list-open');
-        $('.left-menu-list').toggleClass('left-menu-list-show');
-    });
-    $(".searchbar-content .h5ui-form-input").focus(function(){
+    $(".searchbar-content .search-form-input").focus(function(){
         $(".searchbar-content").addClass("focus");
         $(".searchbar-cancel").show();
+    });
+    $('.search-form-input').blur(function() {
+        $(".searchbar-cancel").click();
     });
     $(".searchbar-cancel").click(function(){
         $(".searchbar-content").removeClass("focus");

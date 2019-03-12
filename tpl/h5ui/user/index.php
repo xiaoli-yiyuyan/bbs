@@ -7,6 +7,19 @@
 <style>
 .select-photo-page {
     display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+.select-photo {
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 </style>
 <?php component('/components/common/header_nav', ['back_url' => '/', 'title' => '个人中心']); ?>
@@ -116,20 +129,17 @@
     </div>
 </div>
 <div class="select-photo-page">
-    
-    <div class="header">
-        <span class="header-back">
-            <span class="back-word back-info">
-            < 返回
-            </span>
-        </span>
-        <span class="header-nav">
-            <span class="nav-word btn-save">
-                保存
-            </span>
-        </span>
+    <div class="header-bar">
+        <div class="header-item back-info">
+            <i class="icon-svg svg-left"></i>
+        </div>
+        
+        <div class="header-title">更换头像</div>
+        
+        <div class="header-item btn-save">
+        保存
+        </div>
     </div>
-
     <div class="select-photo">
         <img src="" alt="">
     </div>
@@ -154,13 +164,15 @@
     });
     $('.photo').click(function() {
         var $this = $(this);
-        $.alert('从相册中选择', function() {
-            $file.click();
+        $.confirm('从相册中选择', {
+            'yes': function() {
+                $file.click();
+            }
         });
     });
     $('.back-info').click(function() {
         $('.select-photo-page').hide();
-        console.log(cropper.getImageData());
+        // console.log(cropper.getImageData());
         cropper.destroy();
     });
     $('.btn-save').click(function() {

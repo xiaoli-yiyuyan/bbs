@@ -69,6 +69,9 @@ class App
 	private static function setErrorPage()
 	{
 		$path = self::parseViewPath();
+        View::setConfig([
+            'DIR' => Config::get('TEMPLATE.DIR')
+        ]);
 		if (!View::load($path, $_REQUEST)) {
 			header('HTTP/1.1 404 Not Found');
 			header("status: 404 Not Found");
@@ -108,9 +111,10 @@ class App
 	 */
 	private static function parseViewPath()
 	{
-		$class = self::toLastState(self::$class);
-		$action = self::toLastState(self::$action);
-		return $class . '\\' . $action;
+		return trim(self::$baseUrl, '/');
+		// $class = self::toLastState(self::$class);
+		// $action = self::toLastState(self::$action);
+		// return $class . '\\' . $action;
 	}
 
 	/**

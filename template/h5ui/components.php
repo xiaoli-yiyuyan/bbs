@@ -64,6 +64,27 @@
       ),
       'template' => 'components/common/header_nav.php',
     ),
+    
+    'header_menu_nav' => 
+    array (
+      'props' => 
+      array (
+        'back_url' => 
+        array (
+          'type' => 'value',
+          'value' => '#',
+        ),
+        'title' => 
+        array (
+          'type' => 'value',
+          'value' => '',
+        ),
+      ),
+      'source' => 
+      array (
+      ),
+      'template' => 'components/common/header_menu_nav.php',
+    ),
     'page_jump' => 
     array (
       'props' => 

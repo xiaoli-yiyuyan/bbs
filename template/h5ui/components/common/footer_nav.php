@@ -8,10 +8,10 @@
         <i class="icon-svg svg-workset"></i>
         <span>版块</span>
     </a>
-    <a href="" class="footer-bar_add footer-bar_item<?=($index == 2 ? ' active': '')?>">
+    <a href="/forum/add_page" class="footer-bar_add footer-bar_item<?=($index == 2 ? ' active': '')?>">
         <i class="icon-svg svg-add"></i>
     </a>
-    <a href="" class="footer-bar_item<?=($index == 3 ? ' active': '')?>">
+    <a href="/active" class="footer-bar_item<?=($index == 3 ? ' active': '')?>">
         <i class="icon-svg svg-star"></i>
         <span>动态</span>
     </a>

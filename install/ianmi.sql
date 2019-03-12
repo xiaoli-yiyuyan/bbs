@@ -178,3 +178,7 @@ CREATE TABLE `user` (
 
 ALTER TABLE `forum` ADD `is_top` tinyint(3) DEFAULT '0' COMMENT '0不加顶 1加顶';
 ALTER TABLE `forum` ADD `is_cream` tinyint(3) DEFAULT '0' COMMENT '0不精 1加精';
+
+
+ALTER TABLE `forum_mark` ADD `user_id` int(11) DEFAULT '0' COMMENT '添加的会员的ID';
+ALTER TABLE `forum_mark` ADD `status` tinyint(3) DEFAULT '0' COMMENT '0审核中 1审核通过';

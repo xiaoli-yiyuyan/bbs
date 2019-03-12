@@ -3,10 +3,10 @@
         <i class="icon-svg svg-left"></i>
     </div>
     
-    <div class="header-title"><?=$title?></div>
+    <div class="header-title ellipsis"><?=$title?></div>
     
     <div class="header-item">
-        <i class="icon-svg svg-mail"></i>
+        <a href="/message"><i class="icon-svg svg-mail"></i></a>
     </div>
 </div>
 <script>

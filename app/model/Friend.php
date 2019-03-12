@@ -23,6 +23,24 @@ class Friend extends Model
     }
 
     /**
+     * 获取所有粉丝的id
+     * @param int $user_id 指定用户的id
+     */
+    public static function getAllFansId($user_id)
+    {
+        return self::where('care_user_id', $user_id)->column('user_id');
+    }
+
+    /**
+     * 获取所有关注的id
+     * @param int $user_id 指定用户的id
+     */
+    public static function getAllCareId($user_id)
+    {
+        return self::where('user_id', $user_id)->column('care_user_id');
+    }
+
+    /**
      * 判断用户a是否关注b
      */
     public static function isCare($user_id, $care_user_id)

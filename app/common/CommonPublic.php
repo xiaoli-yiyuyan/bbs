@@ -23,7 +23,7 @@ class CommonPublic
     {
         $this->version = IamVersion::$version;
         if (Session::has('sid')) {
-            if ($this->user = Db::table('user')->find('sid', Session::get('sid'))) {
+            if ($this->user = User::get(['sid', Session::get('sid')])->toArray()) {
                 $last_time = strtotime($this->user['last_time']);
                 $_last_time = strtotime(date('Y-m-d', $last_time));
                 $now_time = time();
@@ -73,8 +73,14 @@ class CommonPublic
     /**
      * 获取用户信息
      */
-    protected function getUserInfo($field, $userid)
+    public function getUserInfo($userid = '') //$field, 
     {
+        if (empty($user_id)) {
+            if ($this->user['id'] > 0) {
+                return $this->user;
+            }
+            return;
+        }
         return User::get($userid);
     }
 

@@ -16,6 +16,8 @@ use Model\File;
 use Model\Category;
 use Model\Message;
 use Model\ForumBuy;
+use Model\ForumMark;
+use Model\ForumMarkBody;
 use Model\Setting;
 
 class Forum extends Common
@@ -104,21 +106,25 @@ class Forum extends Common
     public function addPage($class_id = '')
     {
         $this->isLogin();
-        if (!$class_info = Category::get($class_id)) {
-            return Page::error('页面未找到！');
-        }
-        
-        if (!$class_info['user_add'] && !$this->isAdmin($this->user['id'], $class_info['id'])) {
-            return Page::error('该栏目禁止发帖');
+        // 如果传入指定栏目
+        if (!empty($class_id)) {
+            if (!$class_info = Category::get($class_id)) {
+                return Page::error('页面未找到！');
+            }
+            
+            if (!$class_info['user_add'] && !$this->isAdmin($this->user['id'], $class_info['id'])) {
+                return Page::error('该栏目禁止发帖');
+            }
+            View::data('column_info', $class_info);
         }
 
-        View::load('forum/add_page', ['column_info' => $class_info]);
+        View::load('forum/add_page');
     }
 
     /**
      * 发布帖子
      */
-    public function ajaxAdd($class_id = '', $title = '', $context = '', $img_data = '', $file_data = '')
+    public function ajaxAdd($class_id = '', $title = '', $context = '', $img_data = '', $file_data = '', $mark_body = '')
     {
 
         if (!$this->isLogin()) {
@@ -181,6 +187,20 @@ class Forum extends Common
         if (!$id = MForum::create($data)) {
             return Response::json(['err' => 1, 'msg' => '添加失败']);
         }
+        
+
+        if (!empty($mark_body)) {
+            $mark_arr = explode(',', $mark_body);
+            foreach ($mark_arr as $item) {
+                if (ForumMark::get($item)) {
+                    ForumMarkBody::create([
+                        'forum_id' => $id,
+                        'mark_id' => $item
+                    ]);
+                }
+            }
+        }
+
         MUser::changeCoin($this->user['id'], $this->addForumCoin);
         return Response::json(['id' => $id->id, 'reward_coin' => $this->addForumCoin]);
     }
@@ -188,7 +208,7 @@ class Forum extends Common
     /**
      * 帖子编辑逻辑
      */
-    public function ajaxEdit($id = '', $title = '', $context = '', $img_data = '', $file_data = '', $class_id = '')
+    public function ajaxEdit($id = '', $title = '', $context = '', $img_data = '', $file_data = '', $class_id = '', $mark_body = '')
     {
         
         if (!$forum = MForum::get($id)) {
@@ -334,6 +354,7 @@ class Forum extends Common
         if (!$forum = MForum::get($id)) {
             return Page::error('要查看的内容不存在！');
         }
+
         if (!$forum_user = $forum->author) {
             return Page::error('楼主信息异常，暂时无法查看该帖子！');
         }
@@ -380,7 +401,7 @@ class Forum extends Common
             $item->context = $this->face($item->context);
             $item->context = Ubb::altUser($item->context);
         });
-
+        $forum = $forum->append(['mark_body']);
         View::load('forum/view', [
             'forum' => $forum,
             'forum_user' => $forum_user,
@@ -702,11 +723,11 @@ class Forum extends Common
 
     public function getListByUserId($user_id = '')
     {
-        $forum = MForum::field('id,user_id,title,context,img_data,file_data,reply_count,create_time')->where('status', '<>', 9999);
+        $forum = MForum::field('id,user_id,class_id,title,context,img_data,file_data,reply_count,create_time')->where('status', '<>', 9999);
         $forum->where('user_id', $user_id);
         $forum->order('id', 'desc');
         $list = $forum->paginate(Setting::get('pagesize'));
-        $list->append(['author', 'mini_context', 'img_list', 'file_list']);
+        $list->append(['author', 'mini_context', 'img_list', 'file_list', 'class_info']);
         $list->hidden(['context']);
         return Response::json($list);
     }
@@ -750,5 +771,31 @@ class Forum extends Common
            return Page::error("设置失败");
         }
         return Page::success('设置成功', '');
+    }
+
+    /**
+     * 标签检索
+     * @param string $title 标签名
+     */
+    public function markCheck($title = '')
+    {
+        if (!$this->isLogin()) {
+            return Page::error('会员未登录');
+        }
+
+        if (empty($title)) {
+            return Page::error('回复内容不能为空哦！');
+        }
+
+        if (!$mark = ForumMark::get(['title' => $title])) {
+            $mark = ForumMark::create([
+                'title' => $title,
+                'user_id' => $this->user['id']
+            ]);
+            $mark = ForumMark::get($mark->id);
+        }
+        // print_r($mark);
+        $mark->visible(['id', 'title', 'status']);
+        return Response::json($mark->toArray());
     }
 }

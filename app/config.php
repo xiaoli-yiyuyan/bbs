@@ -3,5 +3,11 @@ return [
     'data_backup_path' => '../data',
     'data_backup_part_size' => 20971520,
     'data_backup_compress' => 1,
-    'data_backup_compress_level' => 9
+    'data_backup_compress_level' => 9,
+    'TEMPLATE' => [
+        'DIR' => 'tpl',
+        'PATH' => 'h5ui',
+        'EXT' => '.php'
+    ],
+    'REWRITE' => 1 //是否开启伪静态哦 0关闭 1开启
 ];

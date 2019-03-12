@@ -11,13 +11,19 @@
     .read_count{margin-right:5px; color: #897777;}
     .create_time{line-height: 25px;}
 </style>
-<?php component('/components/common/header_nav', ['back_url' => '/forum/list?id=' . $class_info['id'], 'title' => $class_info['title']]); ?>
+<?php component('/components/common/header_nav', ['title' => $forum['title']]); ?>
 <?php if ($forum_reply->currentPage() == 1) { ?>
 <div class="content-main">
     <div class="view_head border-b">
         <div class="view_title">
             <?=$forum['title']?>
-            <?php if ($forum['user_id'] == $user['id'] || $class_info['is_admin']) { ?>
+        </div>
+        <div class="view_info">
+            <a class="view_info_item" href="<?=href('/forum/list?id=' . $forum->class_id)?>"><?=$forum->class_info['title']?></a> · 
+            <span class="view_info_item"><?=friendlyDateFormat($forum->create_time)?></span> · 
+            <span class="view_info_item"><?=$forum['read_count']+1?>阅读</span>
+        </div>
+        <?php if ($forum['user_id'] == $user['id'] || $class_info['is_admin']) { ?>
             <div class="view_action">
                 <a class="btn" href="/forum/edit_page?id=<?=$forum['id']?>">修改</a>
                 <a class="btn btn_remove" data-id="<?=$forum['id']?>">删除</a>
@@ -41,18 +47,28 @@
 
                 <?php } ?>
             </div>
+        <?php } ?>
+        <div class="view_user_info">
+            <a class="view_user_info_item" href="<?=href('/user/show?id=' . $forum_user['id'])?>">
+                <img class="view_user_info_photo" src="<?=$forum_user['photo']?>" alt="">
+                <div class="user_up">
+                    <div class="view_user_info_nickname"><?=$forum_user['nickname']?></div>
+                    <div><span class="user_lv">lv32</span> · 125粉丝</div>
+                </div>
+            </a>
+            <?php if ($user['id'] != 0 && $user['id'] != $forum_user['id']) { ?>
+            
+            <span class="care_btn">
+                <?php $is_care = source('Model/Friend/isCare', ['user_id' => $user['id'], 'care_user_id' => $forum_user['id']]); ?>
+
+                <?php if ($is_care) { ?>
+                    <button data-id="<?=$forum_user['id']?>" class="btn btn-sm btn_care">已关注</button>
+                <?php } else { ?>
+                    <button data-id="<?=$forum_user['id']?>" class="btn btn-shadow btn-fill btn-sm btn_care">关注</button>
+                <?php } ?>
+            </span>
             <?php } ?>
         </div>
-        <div class="view_user_info">
-            <div>
-                <a href="<?=href('/user/show?id=' . $forum_user['id'])?>">
-                <img class="view_user_info_photo" src="<?=$forum_user['photo']?>" alt="">
-                <?=$forum_user['nickname']?></a>
-            </div>
-            <div class="create_time">
-            浏览量:<span class="read_count"><?=$forum['read_count']+1?></span><?=$forum['create_time']?> </div>
-        </div>
-    </div>
     <div class="view_context">
         <?=$forum['context']?>
     </div>
@@ -67,6 +83,14 @@
             </div>
         <?php } ?>
         </div>
+    </div>
+    <?php } ?>
+    <?php if (!empty($forum->mark_body)) { ?>
+    <div class="view_mark">
+        标签：
+        <?php foreach ($forum->mark_body as $item) { ?>
+        <a href="/forum/search?mark_id=<?=$item['id']?>" class="mark-item"><?=$item['title']?></a>
+        <?php } ?>
     </div>
     <?php } ?>
 </div>
@@ -153,6 +177,26 @@
 <script>
 $(function() {
     
+    var care_time = $.now() - 1000 * 5;
+    $('.btn_care').click(function() {
+        var $this = $(this);
+        var diff_time = 5 - Math.ceil(($.now() - care_time) / 1000);
+        if (diff_time > 0) {
+            return $.alert('请再等 ' + diff_time + ' 秒后操作');
+        }
+        care_time = $.now();
+        $.getJSON('/user/care_user', {id: $this.data('id')}).then(function(data) {
+            if (data.err) {
+                return $.alert(data.msg);
+            }
+            $.msg(data.msg);
+            if (data.is_care) {
+                $this.removeClass('btn-fill').text('已关注');
+            } else {
+                $this.addClass('btn-fill').text('关注');
+            }
+        });
+    });
     var iamEditor = new IamEditor();
     iamEditor.getBox(document.querySelector('.input_show'));
     // var alt = document.querySelector('.a_btn');

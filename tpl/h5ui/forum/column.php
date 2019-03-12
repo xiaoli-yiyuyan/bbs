@@ -1,5 +1,5 @@
 <?php component('/components/common/header', ['title' => '全部板块']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/', 'title' => '全部板块']); ?>
+<?php component('/components/common/header_menu_nav?title=全部板块' ); ?>
 
 <style>
     
