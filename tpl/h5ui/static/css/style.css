@@ -1653,6 +1653,8 @@ body {
   border-radius: 2.5%;
   border-radius: 50%;
   margin-right: .75rem;
+  width: 2rem;
+  height: 2rem;
 }
 .view_head .view_user_info .view_user_info_item .view_user_info_nickname {
   font-size: .75rem;
