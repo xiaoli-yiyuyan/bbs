@@ -16,6 +16,7 @@ use app\Setting;
 use app\common\DatabaseTool;
 use app\common\CheckUpdate;
 use Model\Forum;
+use Model\User;
 
 class Admin extends Common
 {
@@ -390,7 +391,7 @@ class Admin extends Common
     public function user()
     {
         $user = new User;
-        $list = $user->list([
+        $list = $user->getList([
             'order' => 0,
             'sort' => 0,
             'var_page' => 'p'
