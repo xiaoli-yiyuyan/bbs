@@ -50,7 +50,7 @@ class Forum extends Common
     private function parseList(&$list)
     {
         foreach ($list as &$item) {
-            $info = $this->getUserInfo(['photo', 'exp', 'explain'], $item['user_id']);
+            $info = $this->getUserInfo($item['user_id']);
             $level_info = getUserLevel($info['exp'], $this->upExp);
             $item['nickname'] = $this->getNickname($item['user_id']);
             $item['photo'] = $info['photo'];

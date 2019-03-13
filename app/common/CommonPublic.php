@@ -73,12 +73,12 @@ class CommonPublic
     /**
      * 获取用户信息
      */
-    public function getUserInfo($userid = '') //$field, 
+    public function getUserInfo($user_id = '') //$field, 
     {
         if (empty($user_id)) {
             return $this->user;
         }
-        if ($user = User::get($userid)) {
+        if ($user = User::get($user_id)) {
             return $user;
         }
         return ['id' => 0];

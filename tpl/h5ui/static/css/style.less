@@ -1075,3 +1075,36 @@ body {
         width: 100%;
     }
 }
+
+.pagination {
+    display: flex;
+    margin: .5rem;
+    line-height: 1.6rem;
+
+}
+.pagination li,
+.pagination input {
+    flex: 1;
+    text-align: center;
+    
+    display: block;
+    margin: 0 .1rem;
+    background-color: #fff;
+    border: .05rem solid #eee;
+    border-radius: .1rem;
+}
+/* .pagination span,
+.pagination input,
+.pagination a {
+    display: block;
+    margin: 0 .25rem;
+    background-color: #fff;
+    border: .05rem solid #eee;
+    border-radius: .1rem;
+} */
+.pagination *:first-child {
+    margin-left: 0;
+}
+.pagination *:last-child {
+    margin-right: 0;
+}
