@@ -8,6 +8,7 @@ use Iam\Page;
 use Iam\Cache;
 use Iam\Request;
 use Iam\Response;
+use Iam\Config;
 use Iam\Component;
 use Model\CategoryGroup;
 use Model\Code;
@@ -65,8 +66,9 @@ class Admin extends Common
 
     private function initComponent()
     {
+        $component_mark = Config::get('component');
         $component = new Component([
-            'model' => 'default'
+            'model' => $component_mark
         ]);
         return $component;
     }
@@ -655,5 +657,13 @@ class Admin extends Common
     //     downloadImage($photo, uniqid(), 'static/novels/');
     // }
 
+    /**
+     * 主题管理
+     */
+    public function tpl()
+    {
+        $setting = Setting::get(['theme', 'component']);
+        View::load('admin/tpl', $setting);
+    }
 
 }

@@ -110,10 +110,11 @@ function cmdParse($cmd)
  */
 function component($cmd, $query = [])
 {
+	$component_mark = \Iam\Config::get('component');
 	$data = cmdParse($cmd);
 	$action = implode('/', $data['action']);
 	$component = new Iam\Component([
-		'model' => 'h5ui'
+		'model' => $component_mark
 	]);
 	if (!empty($query)) {
 		$data['query'] = array_merge($data['query'], $query);

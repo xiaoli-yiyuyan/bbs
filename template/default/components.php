@@ -32,7 +32,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/header.php',
+      'template' => 'components/common/header.php',
     ),
     'footer' => 
     array (
@@ -42,7 +42,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/footer.php',
+      'template' => 'components/common/footer.php',
     ),
     'header_nav' => 
     array (
@@ -62,7 +62,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/header_nav.php',
+      'template' => 'components/common/header_nav.php',
     ),
     'page_jump' => 
     array (
@@ -77,7 +77,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/page_jump.php',
+      'template' => 'components/common/page_jump.php',
     ),
     'user_header' => 
     array (
@@ -101,7 +101,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/common/user_header.php',
+      'template' => 'components/common/user_header.php',
     ),
     'index_link' => 
     array (
@@ -111,7 +111,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/index_link.php',
+      'template' => 'components/common/index_link.php',
     ),
     'left_menu' => 
     array (
@@ -121,7 +121,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/left_menu.php',
+      'template' => 'components/common/left_menu.php',
     ),
     'footer_nav' => 
     array (
@@ -131,7 +131,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/footer_nav.php',
+      'template' => 'components/common/footer_nav.php',
     ),
     'header_menu_nav' => 
     array (
@@ -151,7 +151,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/common/header_menu_nav.php',
+      'template' => 'components/common/header_menu_nav.php',
     ),
   ),
   '/components/forum' => 
@@ -183,7 +183,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/forum/list_user.php',
+      'template' => 'components/forum/list_user.php',
     ),
     'list' => 
     array (
@@ -198,7 +198,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/list.php',
+      'template' => 'components/forum/list.php',
     ),
     'reply_form' => 
     array (
@@ -222,7 +222,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/forum/reply_form.php',
+      'template' => 'components/forum/reply_form.php',
     ),
     'reply_item' => 
     array (
@@ -237,7 +237,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/reply_item.php',
+      'template' => 'components/forum/reply_item.php',
     ),
     'list_item' => 
     array (
@@ -252,7 +252,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/list_item.php',
+      'template' => 'components/forum/list_item.php',
     ),
     'index_count_list' => 
     array (
@@ -286,7 +286,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/forum/index_count_list.php',
+      'template' => 'components/forum/index_count_list.php',
     ),
     'get_count_by_class_id' => 
     array (
@@ -320,7 +320,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/forum/get_count_by_class_id.php',
+      'template' => 'components/forum/get_count_by_class_id.php',
     ),
     'upload_json' => 
     array (
@@ -374,7 +374,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/forum/upload_json.php',
+      'template' => 'components/forum/upload_json.php',
     ),
     'reply_list' => 
     array (
@@ -389,7 +389,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/reply_list.php',
+      'template' => 'components/forum/reply_list.php',
     ),
     'simple_list' => 
     array (
@@ -404,7 +404,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/simple_list.php',
+      'template' => 'components/forum/simple_list.php',
     ),
     'easy_list' => 
     array (
@@ -419,7 +419,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/easy_list.php',
+      'template' => 'components/forum/easy_list.php',
     ),
     'easy_list_item' => 
     array (
@@ -434,7 +434,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/easy_list_item.php',
+      'template' => 'components/forum/easy_list_item.php',
     ),
     'img_list' => 
     array (
@@ -444,7 +444,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/img_list.php',
+      'template' => 'components/forum/img_list.php',
     ),
     'img_list_item' => 
     array (
@@ -459,7 +459,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/img_list_item.php',
+      'template' => 'components/forum/img_list_item.php',
     ),
     'list_img_text' => 
     array (
@@ -474,7 +474,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/forum/list_img_text.php',
+      'template' => 'components/forum/list_img_text.php',
     ),
   ),
   '/components/user' => 
@@ -500,7 +500,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/new_user_list.php',
+      'template' => 'components/user/new_user_list.php',
     ),
     'forum_index_show' => 
     array (
@@ -534,7 +534,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/forum_index_show.php',
+      'template' => 'components/user/forum_index_show.php',
     ),
     'forum_reply_index_show' => 
     array (
@@ -568,7 +568,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/forum_reply_index_show.php',
+      'template' => 'components/user/forum_reply_index_show.php',
     ),
     'is_login' => 
     array (
@@ -593,7 +593,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/is_login.php',
+      'template' => 'components/user/is_login.php',
     ),
     'friend_list' => 
     array (
@@ -613,7 +613,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/user/friend_list.php',
+      'template' => 'components/user/friend_list.php',
     ),
     'friend_item_care' => 
     array (
@@ -651,7 +651,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/friend_item_care.php',
+      'template' => 'components/user/friend_item_care.php',
     ),
     'friend_item' => 
     array (
@@ -680,7 +680,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/friend_item.php',
+      'template' => 'components/user/friend_item.php',
     ),
     'message_item' => 
     array (
@@ -714,7 +714,7 @@
           ),
         ),
       ),
-      'template' => 'template/default/components/user/message_item.php',
+      'template' => 'components/user/message_item.php',
     ),
     'message_list' => 
     array (
@@ -729,7 +729,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/components/user/message_list.php',
+      'template' => 'components/user/message_list.php',
     ),
   ),
   '/asdasdasd' => 
@@ -742,7 +742,7 @@
       'source' => 
       array (
       ),
-      'template' => 'template/default/asdasdasd/asdsadasd.php',
+      'template' => 'asdasdasd/asdsadasd.php',
     ),
   ),
 ) ?>
