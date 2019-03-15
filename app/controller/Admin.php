@@ -525,6 +525,19 @@ class Admin extends Common
         // View::load('success', ['msg' => '删除成功', 'url' => '/admin/database']);
     }
 
+    public function systemSet()
+    {
+        $setting = Setting::get(['is_register']);
+        View::load('admin/system_set', $setting);
+    }
+
+    public function  saveSystem()
+    {
+        $post = Request::post();
+        $res = Setting::set($post);
+        return Response::json(['err'=> 0]);
+    }
+
     public function reward()
     {
         $setting = Setting::get(['login_reward', 'forum_reward', 'reply_reward']);
