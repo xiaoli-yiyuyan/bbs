@@ -666,4 +666,13 @@ class Admin extends Common
         View::load('admin/tpl', $setting);
     }
 
+    /**
+     * 我的主题管理
+     */
+    public function myTpl()
+    {
+        $setting = Setting::get(['theme', 'component']);
+        View::load('admin/my_tpl', $setting);
+    }
+
 }

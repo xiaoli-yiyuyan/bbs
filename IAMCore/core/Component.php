@@ -321,4 +321,24 @@ class Component
 
 		return true;
 	}
+
+	/**
+	 * 模板加载
+	 * @param string $name 模板路径
+	 * @param array $data 变量参数
+	 */
+	public function use($name, $data = [])
+	{
+		$path = $this->dir . $this->ds . $name . '.php';
+		if (file_exists($path)) {
+			(function() use($data, $config){
+				extract($data); //数组转化为变量
+				include($path);
+			})();
+		} else {
+			$tpl = '404';
+		}
+
+		return true;
+	}
 }

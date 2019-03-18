@@ -1,4 +1,9 @@
 <?php
+function request()
+{
+	return new \Iam\Request;
+}
+
 /**
  * 数据源获取
  */

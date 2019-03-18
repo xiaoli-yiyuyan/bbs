@@ -2,8 +2,12 @@
 @border-color: #eee;
 @background-color: #FFF;
 @border-radius-size: .1rem;
-
+html, body {
+    height: 100%;
+}
 body {
+    display: flex;
+    flex-direction: column;
     background: #F8F8F8;
 }
 .header_nav {
@@ -57,11 +61,40 @@ body {
     }
 }
 .content {
+    flex: 1;
     overflow: hidden;
     margin: .5rem;
     background: @background-color;
     border: .05rem solid @border-color;
     border-radius: @border-radius-size;
+}
+
+.pre(@style,@value){
+    -webkit-@{style}: @value;
+       -moz-@{style}: @value;
+        -ms-@{style}: @value;
+            @{style}: @value;
+}
+.tpl_title {
+    display: flex;
+    align-items: center;
+    font-size: .8rem;
+    &::before {
+        margin-right: .25rem;
+        content: '';
+        width: .8rem;
+        height: .8rem;
+        background: linear-gradient(to top, rgb(255, 94, 0), rgb(255, 184, 143));
+        border-radius: 50%;
+    }
+}
+.btn_box {
+    display: flex;
+    padding: .25rem;
+    justify-content: flex-end;
+    .btn {
+        margin: .25rem;
+    }
 }
 .namespace {
     padding: .5rem;
