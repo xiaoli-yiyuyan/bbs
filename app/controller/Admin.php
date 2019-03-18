@@ -18,6 +18,7 @@ use app\common\DatabaseTool;
 use app\common\CheckUpdate;
 use Model\Forum;
 use Model\User;
+use Model\Theme;
 
 class Admin extends Common
 {
@@ -672,7 +673,23 @@ class Admin extends Common
     public function myTpl()
     {
         $setting = Setting::get(['theme', 'component']);
-        View::load('admin/my_tpl', $setting);
+        $list = (new Theme)->paginate(10);
+        View::load('admin/my_tpl', ['setting' =>$setting, 'list' => $list]);
+    }
+    
+    /**
+     * 主题切换（这里的主题切换选择，影响到上方的我的主题管理，若选择@1上述需修改）
+     */
+    public function themeUse()
+    {
+        $data = Request::post();
+        if(!isset($data['id'])){
+            return json(['err' => 1, 'msg' => '参数错误']);
+        }
+        /**@1保存theme表中的status完成主题切换，在@1和@2中任选一个 */
+        $res = (new Theme)->setStatus(intval($data['id']));
+        /**@2使用setting表中的主题标识完成主题切换，在@1和@2中任选一个 */
+        return json($res);
     }
 
 }

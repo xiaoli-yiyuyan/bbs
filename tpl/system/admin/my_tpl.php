@@ -16,21 +16,40 @@
     </div>
     <div class="list">
         <div class="list-group">
-            <div class="list-item">
-                <div class="tpl_title">白色简约（安米官方主题）v1.0.0</div>
-                <div class="btn_box">
-                    <button class="btn btn-sm">修改</button>
-                    <button class="btn btn-sm">编辑</button>
+            <?php foreach ($list as $key => $item) {?>
+                <div class="list-item">
+                    <div class="tpl_title"><?=$item['title']?> <?=$item['version']?> (<?=$item['name']?>)</div>
+                    <div class="btn_box">
+                        <button class="btn btn-sm">修改</button>
+                        <?php if($item['name'] == $setting['theme']) {?>
+                            <button class="btn btn-sm">编辑</button>
+                        <?php }else{?>
+                            <button class="btn btn-sm btn-use" name="<?=$item['id']?>">使用</button>
+                        <?php }?>
+                    </div>
                 </div>
-            </div>
-            <div class="list-item">
-                <div class="tpl_title">深色简约（安米官方主题）v1.0.0</div>
-                <div>
-                    <button class="btn btn-sm">修改</button>
-                    <button class="btn btn-sm">使用</button>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
 </div>
+<script>
+    $(".btn-use").click(function(){
+        var id = parseInt($(this).attr('name'));
+        if(isNaN(id) || id < 1){
+            $.alert('参数错误');
+            return false;
+        }
+        
+        $.confirm('是否要使用该主题', {
+            yes: function() {
+                $.post('/admin/theme_use', {id : id},function(res){
+                    $.alert(res.msg);
+                })
+            },
+            no: function() {
+                $.alert('你点击了取消');
+            }
+        });
+    })
+</script>
 <?php self::load('common/footer'); ?>
