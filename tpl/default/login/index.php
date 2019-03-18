@@ -10,7 +10,7 @@
         <div><button class="btn btn-fill btn-block btn-lg">登陆</button></div>
         <div class="login-reg-nav">
             <a class="func-null">忘记密码</a>
-            <a href="/login/register">立即注册</a>
+            <?php if($is_register == 1) {?><a href="/login/register">立即注册</a><?php }?>
         </div>
     </form>
 </div>
