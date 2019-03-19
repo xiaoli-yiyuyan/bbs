@@ -699,4 +699,24 @@ class Admin extends Common
         return  Response::json($res);
     }
 
+    /**
+     * 主题修改名称
+     */
+    public function tplTitle()
+    {
+        $data = Request::post();
+        if(!isset($data['id']) || !isset($data['title'])){
+            return  Response::json(['err' => 1, 'msg' => '参数错误']);
+        }
+        $info = Theme::get(intval($data['id']));
+        if($info){
+            $info->title = $data['title'];
+            $res = $info->save();
+            if($res){
+                return  Response::json(['err' => 0, 'msg' => '修改成功']);
+            }
+        }
+        return  Response::json(['err' => 2, 'msg' => '数据不存在']);
+
+    }
 }

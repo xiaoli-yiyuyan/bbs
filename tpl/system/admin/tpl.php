@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <form id="add" class="form-group" method="post" action="/admin/save_setting">
+    <!-- <form id="add" class="form-group" method="post" action="/admin/save_setting">
         
     <div class="item-line item-lg">
             <div class="item-title">主题标识</div>
@@ -45,7 +45,7 @@
         </div>
 
         <button class="btn btn-fill btn-lg btn-block">保存</button>
-    </form>
+    </form> -->
 </div>
 <div class="footer_nav">
     <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>

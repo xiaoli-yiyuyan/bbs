@@ -23,7 +23,7 @@ class CommonPublic
     {
         $this->version = IamVersion::$version;
         if (Session::has('sid')) {
-            if ($this->user = User::get(['sid', Session::get('sid')])->toArray()) {
+            if ($this->user = User::get(['sid'=> Session::get('sid')])->toArray()) {
                 $last_time = strtotime($this->user['last_time']);
                 $_last_time = strtotime(date('Y-m-d', $last_time));
                 $now_time = time();
