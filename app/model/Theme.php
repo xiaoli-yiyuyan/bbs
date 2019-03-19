@@ -15,16 +15,16 @@ class Theme extends Model
     public static function setStatus($id)
     {
 
-        $res = slef::where('id', 'neq', $id)->setField('status', 0);
+        $res = self::where('status', 1)->setField('status', 0);
         if(!$res){
             return ['err' => 1, 'msg' => '数据修改失败'];
         }
-        $result = slef::where(['id' => $id])->setField('status', 1);
+        $result = self::where(['id' => $id])->setField('status', 1);
         if(!$result){
             return ['err' => 1, 'msg' => '设置失败'];
         }
         
-        $field = slef::get($id);
+        $field = self::get($id);
         $themeName = $field->getData('name');
         ASetting::set(['theme' => $themeName, 'component'=>$themeName]);
         return ['err' => 0 , 'msg' => '设置成功'];

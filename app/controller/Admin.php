@@ -684,12 +684,19 @@ class Admin extends Common
     {
         $data = Request::post();
         if(!isset($data['id'])){
-            return json(['err' => 1, 'msg' => '参数错误']);
+            return  Response::json(['err' => 1, 'msg' => '参数错误']);
         }
         /**@1保存theme表中的status完成主题切换，在@1和@2中任选一个 */
-        $res = (new Theme)->setStatus(intval($data['id']));
+        // $res = Theme::setStatus(intval($data['id']));
+        /****************@1***************/
+        
         /**@2使用setting表中的主题标识完成主题切换，在@1和@2中任选一个 */
-        return json($res);
+        $info = Theme::get(intval($data['id']));
+        Setting::set(['theme' => $info->name, 'component'=>$info->name]);
+        $res = ['err' => 0];
+        /*****************@2***********/
+
+        return  Response::json($res);
     }
 
 }

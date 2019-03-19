@@ -43,7 +43,11 @@
         $.confirm('是否要使用该主题', {
             yes: function() {
                 $.post('/admin/theme_use', {id : id},function(res){
-                    $.alert(res.msg);
+                    if(res.err){
+                        $.alert(res.msg);
+                        return false;
+                    }
+                    location.href='';
                 })
             },
             no: function() {
