@@ -1,5 +1,7 @@
 <?php self::load('common/header',['title' => '后台管理-奖励设置']); ?>
 <?php self::load('admin/header_nav'); ?>
+<script src="/static/js/template.js?v=<?=$version?>"></script>
+
 <style>
     .list-item {
         border-bottom: 1px solid #eee;
@@ -16,43 +18,48 @@
     </div>
     <div class="list">
         <div class="list-group">
-            <div class="list-item">
-                <div>白色简约（安米官方主题）v1.0.0</div>
-                <div>
-                    <button class="btn">克隆</button>
-                    <button class="btn">升级-v1.1.0</button>
+            <?php foreach ($list['data'] as $key => $item) {?>
+                <div class="list-item">
+                    <div><span class="title"><?=$item['title']?></span> <span class="version"><?=$item['version']?></span></div>
+                    <div>
+                        <button class="btn btn-clone" name="<?=$item['name']?>">克隆</button>
+                    </div>
                 </div>
-            </div>
-            <div class="list-item">
-                <div>深色简约（安米官方主题）v1.0.0</div>
-                <div>
-                    <button class="btn">克隆</button>
-                    <button class="btn">升级-v1.1.0</button>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
-    <!-- <form id="add" class="form-group" method="post" action="/admin/save_setting">
-        
-    <div class="item-line item-lg">
-            <div class="item-title">主题标识</div>
-            <div class="item-input"><input type="text" name="theme" class="input input-lg" placeholder="主题标识" value="<?=$theme?>"></div>
-        </div>
-
-        <div class="item-line item-lg">
-            <div class="item-title">组件标识</div>
-            <div class="item-input"><input type="text" name="component" class="input input-lg" placeholder="组件标识" value="<?=$component?>"></div>
-        </div>
-
-        <button class="btn btn-fill btn-lg btn-block">保存</button>
-    </form> -->
 </div>
 <div class="footer_nav">
     <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>
     <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
 </div>
 
+<script id="clone_form" type="text/html">
+    <div class="list newlist">
+        <div class="list-group">
+            <div class="list-item ellipsis list-item-icon">
+                主题名称
+            </div>
+            <div class="list-item ellipsis list-item-icon">
+                <input type="text" name="title" value="{{=title}}">
+            </div>
+            <div class="list-item ellipsis list-item-icon">
+                主题标识
+            </div>
+            <div class="list-item ellipsis list-item-icon">
+                <input type="text" name="name" placeholder="主题唯一标识，唯一">
+            </div>
+            <div class="list-item ellipsis">
+                版本号 {{=version}}
+            </div>
+        </div>
+    </div>
+</script>
 <script>
+    template.config({
+        sTag: '{{',
+        eTag: '}}'
+    });
     $('#add').submit(function() {
         var $this = $(this)
         $.post($this.attr('action'), $this.serialize()).then(function(data) {
@@ -66,5 +73,44 @@
         });
         return false;
     });
+    $(".btn-clone").click(function(){
+        var _this = $(this);
+        var name = _this.attr('name');
+        var parent = _this.parent().parent();
+        var version = parent.find(".version").text();
+        var title = parent.find(".title").text();
+        var data = {
+            version: version,
+            title: title,
+        };
+        $.confirm("是否克隆该主题" ,{
+            yes: function(){
+                $.modal({
+                title: '设置主题参数',
+                content: template($('#clone_form').html(), data),
+                btn: [
+                    function($btn) {
+                        $btn.text('取消');
+                    },
+                    function($btn) {
+                        $btn.text('确认');
+                        $btn.click(function() {
+                            var new_title = $(".newlist").find('input[name="title"]').val();
+                            var new_name = $(".newlist").find('input[name="name"]').val();
+                            if(new_name == ''){
+                                $.alert('请设置标识且唯一');
+                                return false;
+                            }
+                            $.post('/admin/clone_theme',{version:version, title: new_title, name: new_name, old_name: name},function(res){
+                                 $.alert(res.msg);
+                            });
+                        });
+                    },
+                ],
+
+            });
+            }
+        })
+    })
 </script>
 <?php self::load('common/footer'); ?>

@@ -663,8 +663,15 @@ class Admin extends Common
      */
     public function tpl()
     {
-        $setting = Setting::get(['theme', 'component']);
-        View::load('admin/tpl', $setting);
+        // $setting = Setting::get(['theme', 'component']);
+        // View::load('admin/tpl', $setting);
+        
+    //    $url = 'http://localhost:805/clone_theme';
+    //    $list = $this->curlWay($url);
+    //    $list = (array) json_decode($list, true);
+    
+        $list = (new Theme)->paginate(10)->toArray();//显示实验
+       View::load('admin/tpl', ['list' => $list]);
     }
 
     /**
@@ -718,5 +725,50 @@ class Admin extends Common
         }
         return  Response::json(['err' => 2, 'msg' => '数据不存在']);
 
-    }
+    }  
+
+   /**
+    * 克隆主题
+   */
+   public function cloneTheme()
+   {
+       $data = Request::post();
+       /**查看标识是否唯一 */
+       $res = Theme::get(['name' => $data['name']]);
+       if($res){
+           return Response::json(['err' => 1, 'msg' => '该标识已存在，请重新设置']);
+       }
+       $url = 'http://localhost:805/theme/'.$data['old_name'].'.zip';
+       $field = $this->curlWay($url);
+       $file_url = "./theme/".$data['name'].".zip";
+       $resource = fopen($file_url, "w+");
+       fwrite($resource, $field);
+       fclose($resource);
+       $result = unzip($file_url, './theme/'.$data['name']);
+       if($result){
+           unlink($file_url);
+           $theme = new Theme;
+           $theme->name = $data['name'];
+           $theme->title = $data['title'];
+           $theme->version = $data['version'];
+           $theme->save();
+           return Response::json(['err' => 0, 'msg' => '解压成功']);
+       }
+       return Response::json(['err' => 2, 'msg' => '解压失败']);
+   }
+
+   /**
+    * 抓取远程信息
+    * @param string $url 抓取地址
+    */
+   private function curlWay($url)
+   {
+       $ch = curl_init();
+       curl_setopt($ch, CURLOPT_URL,$url);
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+       curl_setopt($ch, CURLOPT_HEADER, 0);
+       $data = curl_exec($ch);
+       curl_close($ch);
+       return $data;
+   }
 }
