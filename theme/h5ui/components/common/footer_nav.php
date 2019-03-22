@@ -1,28 +1,22 @@
-<footer class="h5ui-bar bar-fixed">
-    <a href="" class="h5ui-bar_item active">
-        <i class="h5ui-bar_icon">
-            <img src="http://s.h5ui.io/img/mark-green.png" width="100%">
-        </i>
-        <span>首页</span>
+<footer class="copyright"></footer>
+<footer class="footer-bar bar-fixed">
+    <a href="/" class="footer-bar_item<?=($index == 0 ? ' active' : '')?>">
+        <i class="icon-svg svg-secret"></i>
+        <span>推荐</span>
     </a>
-    <a href="" class="h5ui-bar_item">
-        <i class="h5ui-bar_icon">
-            <img src="http://s.h5ui.io/img/mark.png" width="100%">
-            <span class="h5ui-badge h5ui-badge_dot"></span>
-        </i>
+    <a href="/forum/column" class="footer-bar_item<?=($index == 1 ? ' active': '')?>">
+        <i class="icon-svg svg-workset"></i>
+        <span>版块</span>
+    </a>
+    <a href="/forum/add_page" class="footer-bar_add footer-bar_item<?=($index == 2 ? ' active': '')?>">
+        <i class="icon-svg svg-add"></i>
+    </a>
+    <a href="/active" class="footer-bar_item<?=($index == 3 ? ' active': '')?>">
+        <i class="icon-svg svg-star"></i>
         <span>动态</span>
     </a>
-    <a href="" class="h5ui-bar_item">
-        <i class="h5ui-bar_icon">
-            <img src="http://s.h5ui.io/img/mark.png" width="100%">
-        </i>
-        <span>发起</span>
-    </a>
-    <a href="" class="h5ui-bar_item">
-        <i class="h5ui-bar_icon">
-            <img src="http://s.h5ui.io/img/mark.png" width="100%">
-            <span class="h5ui-badge">8</span>
-        </i>
+    <a href="<?=href('/user/index')?>" class="footer-bar_item<?=($index == 4 ? ' active': '')?>">
+        <i class="icon-svg svg-user"></i>
         <span>我</span>
     </a>
 </footer>

@@ -659,6 +659,17 @@ class Admin extends Common
     // }
 
     /**
+     * 测试专用，用于生成主题json文件
+     */
+    public function themeJson()
+    {
+        $list = (new Theme)->select()->toarray();//显示实验
+        $list = json_encode($list);
+        $file = fopen('./themejson.txt', "w+");
+        fwrite($file, $list);
+        fclose($file);
+    }
+    /**
      * 主题管理
      */
     public function tpl()
@@ -666,12 +677,15 @@ class Admin extends Common
         // $setting = Setting::get(['theme', 'component']);
         // View::load('admin/tpl', $setting);
         
-    //    $url = 'http://localhost:805/clone_theme';
-    //    $list = $this->curlWay($url);
-    //    $list = (array) json_decode($list, true);
+        // $url = 'http://localhost:805/themejson.txt';
+        // $list = $this->curlWay($url);
+        // $list = (array) json_decode($list, true);
     
-        $list = (new Theme)->paginate(10)->toArray();//显示实验
-       View::load('admin/tpl', ['list' => $list]);
+        $file = fopen('./themejson.txt', "r");
+        $list = fgets($file);
+        fclose($file);
+        $data['data'] = json_decode($list,true);
+        View::load('admin/tpl', ['list' => $data]);
     }
 
     /**

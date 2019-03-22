@@ -18,7 +18,7 @@ use Model\Message;
 use Model\ForumBuy;
 use Model\ForumMark;
 use Model\ForumMarkBody;
-use Model\Setting;
+// use Model\Setting;
 
 class Forum extends Common
 {

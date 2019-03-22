@@ -6,8 +6,8 @@ $config = [
     'data_backup_compress' => 1,
     'data_backup_compress_level' => 9,
     'TEMPLATE' => [
-        'DIR' => 'tpl',
-        'PATH' => 'h5ui',
+        'DIR' => 'theme',
+        'PATH' => $setting['theme'].'/template',
         'EXT' => '.php'
     ],
     'REWRITE' => 1, //是否开启伪静态哦 0关闭 1开启

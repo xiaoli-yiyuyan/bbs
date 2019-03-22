@@ -12,7 +12,7 @@ class Common extends CommonPublic
     {
         $theme = Setting::get('theme');
         View::setConfig([
-            'PATH' => $theme
+            'PATH' => $theme.'/template'
         ]);
         parent::__construct();
     }

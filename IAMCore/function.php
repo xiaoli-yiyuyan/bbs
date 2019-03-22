@@ -119,7 +119,8 @@ function component($cmd, $query = [])
 	$data = cmdParse($cmd);
 	$action = implode('/', $data['action']);
 	$component = new Iam\Component([
-		'model' => $component_mark
+		'model' => $component_mark,
+		'template_path' => 'theme/'
 	]);
 	if (!empty($query)) {
 		$data['query'] = array_merge($data['query'], $query);
