@@ -830,28 +830,28 @@ body {
   max-width: 28rem;
 }
 .svg-add {
-  background-image: url('/theme/h5ui/template/static/svg/icon_add.svg');
+  background-image: url('../svg/icon_add.svg');
 }
 .svg-user {
-  background-image: url('/theme/h5ui/template/static/svg/icon_principal.svg');
+  background-image: url('../svg/icon_principal.svg');
 }
 .svg-secret {
-  background-image: url('/theme/h5ui/template/static/svg/icon_secret.svg');
+  background-image: url('../svg/icon_secret.svg');
 }
 .svg-star {
-  background-image: url('/theme/h5ui/template/static/svg/icon_star.svg');
+  background-image: url('../svg/icon_star.svg');
 }
 .svg-workset {
-  background-image: url('/theme/h5ui/template/static/svg/icon_workset.svg');
+  background-image: url('../svg/icon_workset.svg');
 }
 .svg-menu {
-  background-image: url('/theme/h5ui/template/static/svg/icon_threeline_fill.svg');
+  background-image: url('../svg/icon_threeline_fill.svg');
 }
 .svg-mail {
-  background-image: url('/theme/h5ui/template/static/svg/icon_dmail.svg');
+  background-image: url('../svg/icon_dmail.svg');
 }
 .svg-left {
-  background-image: url('/theme/h5ui/template/static/svg/icon_left.svg');
+  background-image: url('../svg/icon_left.svg');
 }
 .header-bar {
   display: flex;

@@ -129,7 +129,7 @@
         line-height: 1.5rem;
         padding-left: 1.5rem;
         border-radius: 3px;
-        background: #eeeeee url(/theme/h5ui/template/static/svg/icon_search.svg) .5rem 50% no-repeat;
+        background: #eeeeee url(/theme/<?=source('App/Index/getTheme')?>/template/static/svg/icon_search.svg) .5rem 50% no-repeat;
         background-size: 1rem;
     }
 </style>

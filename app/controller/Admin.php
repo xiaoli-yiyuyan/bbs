@@ -679,6 +679,9 @@ class Admin extends Common
         
         // $url = 'http://localhost:805/themejson.txt';
         // $list = $this->curlWay($url);
+        // if(isset($list['err'])){
+        //         return Response::json($list);
+        //     }
         // $list = (array) json_decode($list, true);
     
         $file = fopen('./themejson.txt', "r");
@@ -752,8 +755,11 @@ class Admin extends Common
        if($res){
            return Response::json(['err' => 1, 'msg' => '该标识已存在，请重新设置']);
        }
-       $url = 'http://localhost:805/theme/'.$data['old_name'].'.zip';
+       $url = 'http://localhost:805/download/'.$data['old_name'].'.zip';
        $field = $this->curlWay($url);
+       if(isset($field['err'])){
+           return Response::json($field);
+       }
        $file_url = "./theme/".$data['name'].".zip";
        $resource = fopen($file_url, "w+");
        fwrite($resource, $field);
@@ -782,7 +788,11 @@ class Admin extends Common
        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
        curl_setopt($ch, CURLOPT_HEADER, 0);
        $data = curl_exec($ch);
+       $res = curl_getinfo($ch, CURLINFO_HTTP_CODE);
        curl_close($ch);
+       if($res == '404'){
+           return ['err' => 3, 'msg' => '源文件出错'];
+       }
        return $data;
    }
 }

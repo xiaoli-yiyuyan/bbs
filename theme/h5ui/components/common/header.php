@@ -8,8 +8,8 @@
 	<meta name="keywords" content="<?=empty($keywords) ? '手机网站制作,手机建站,手机建站程序,wap建站程序,免费开源程序,安米程序,安米cms' : $keywords?>" />
 	<meta name="description" content="<?=empty($description) ? '安米手机建站程序，打造免费开源的纯移动端建站程序。' : $description?>" />
 	<link rel="shortcut icon" href="favicon.ico?v=<?=$version?>">
-	<link rel="stylesheet" href="/theme/h5ui/template/static/css/style.css?v=<?=$version?>">
-	<script src="/theme/h5ui/template/static/js/jquery.min.js?v=<?=$version?>"></script>
+	<link rel="stylesheet" href="/theme/<?=source('App/Index/getTheme')?>/template/static/css/style.css?v=<?=$version?>">
+	<script src="/theme/<?=source('App/Index/getTheme')?>/template/static/js/jquery.min.js?v=<?=$version?>"></script>
 	<script src="/static/ui/ui.js?v=<?=$version?>"></script>
 </head>
 <body>
