@@ -33,7 +33,7 @@
                         </div>
                         <button class="btn btn-sm btn-change-name">修改</button>
                         <?php if($item['name'] == $setting['theme']) {?>
-                            <button class="btn btn-sm">编辑</button>
+                            <!-- <button class="btn btn-sm">编辑</button> -->
                         <?php }else{?>
                             <button class="btn btn-sm btn-use" name="<?=$item['id']?>">使用</button>
                         <?php }?>
