@@ -527,13 +527,22 @@ class Admin extends Common
 
     public function systemSet()
     {
-        $setting = Setting::get(['is_register']);
+        $setting = Setting::get(['is_register','webname', 'webdomain', 'weblogo']);
         View::load('admin/system_set', $setting);
     }
 
     public function  saveSystem()
     {
         $post = Request::post();
+        if(isset($post['webname'])){
+            $post['webname'] = htmlspecialchars($post['webname']);
+        }
+        if(isset($post['weblogo'])){
+            $post['weblogo'] = htmlspecialchars($post['weblogo']);
+        }
+        if(isset($post['webdomain'])){
+            $post['webdomain'] = htmlspecialchars($post['webdomain']);
+        }
         $res = Setting::set($post);
         return Response::json(['err'=> 0]);
     }
@@ -616,6 +625,19 @@ class Admin extends Common
         return View::load('success', ['msg' => '删除成功', 'url' => '/admin/code']);
     }
 
+    //上传LOGO
+    public function uoploadLogoPhoto()
+    {
+        // $file = new File;
+        $res = source('/App/File/upload', [
+            'path' => '/upload/logo',
+            'size' => 20480000,
+            'allow_type' => 'jpeg,jpg,gif,png',
+            'is_rand_name' => 1,
+            'input_name' => 'photo'
+        ]);
+        return Response::json($res);
+    }
     public function getSource()
     {
         
