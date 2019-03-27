@@ -3,7 +3,7 @@
 <script src="/static/js/iscroll.js"></script>
 <div class="header-height"></div>
 <header class="header">
-    <span class="logo"></span>
+    <span class="logo" style="background-image:url(<?php echo $weblogo?>)"></span>
     
     <form action="<?=href('/forum/search')?>" class="search flex flex-box">
       <input name="keyword" class="input input-line" placeholder="关键词" type="text">

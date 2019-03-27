@@ -626,17 +626,12 @@ class Admin extends Common
     }
 
     //上传LOGO
-    public function uoploadLogoPhoto()
+    public function uoploadLogoPhoto($base64)
     {
-        // $file = new File;
-        $res = source('/App/File/upload', [
-            'path' => '/upload/logo',
-            'size' => 20480000,
-            'allow_type' => 'jpeg,jpg,gif,png',
-            'is_rand_name' => 1,
-            'input_name' => 'photo'
-        ]);
-        return Response::json($res);
+        if ($path = base64Upload($base64, 'upload/logo/', 'logo').'?t=' . time()) {
+            return Response::json(['err' => 0, 'msg' => $path]);
+        }
+        return Response::json(['err' => 1, 'msg' => "上传失败"]);
     }
     public function getSource()
     {

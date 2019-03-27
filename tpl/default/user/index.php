@@ -5,7 +5,7 @@
 <script src="/static/js/reszieimg.js"></script>
 <div class="header-height"></div>
 <div class="header">
-    <span class="logo"></span>
+    <span class="logo"  style="background-image:url(../<?php echo $weblogo?>)"></span>
     <div class="head_center">个人中心</div>
     <div class="icon-svg menu left-menu"></div>
 

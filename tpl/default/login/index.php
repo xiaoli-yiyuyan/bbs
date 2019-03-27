@@ -1,7 +1,7 @@
 <?php component('components/common/header',['title' => '登陆网站']); ?>
 <?php component('/components/common/header_nav', ['back_url' => '/', 'title' => '首页']); ?>
 <div class="login-main">
-    <a class="logo" href="/">
+    <a class="logo" href="/" style="background-image:url(../<?php echo $weblogo?>);">
 
     </a>
     <form class="" action="/login/login" method="post">

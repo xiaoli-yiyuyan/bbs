@@ -15,7 +15,6 @@ class Common
 {
     public $user = ['id' => 0];
     public $upExp = 25;
-
     private $version;
     private $expMax = 60;
 
@@ -44,9 +43,12 @@ class Common
             }
         } else {
         }
+        
+        $weblogo = Setting::get('weblogo') ?? 'upload/logo/logo.png';
         View::data([
             'user' => $this->user,
-            'version' => $this->version
+            'version' => $this->version,
+            'weblogo' => $weblogo
         ]);
 
     }

@@ -11,8 +11,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
 }
-}
-.btn-image{float:right;width:180px}
+.btn-add-image{padding: 0.2rem 1.7rem !important;}
 </style>
 <div class = "content">
     <div class="namespace">
@@ -46,38 +45,34 @@
         </div>
         <div class="item-line item-lg">
             <div class="item-title" style="padding: 0;">
-                <div class="add_btn add_img" <?php if(isset($weblogo)){?> style="background-image:url(<?=$weblogo?>)"<?php }?>>
-                    <div class="column_photo_progress" style="height:0"></div>
-                </div>
+                <img  class="add_img" <?php if(isset($weblogo)){?> src='<?=$weblogo?>'<?php }?> alt="">
             </div>
             <div class="item-input">
                     <div>点击上传图片选择文件</div>
-                    <button class="btn add_column_photo btn-add-image" >选择LOGO</button>
+                    <span class="btn btn-add-image" >选择LOGO</span>
             </div>
         </div>
-        <button class="btn btn-fill btn-lg btn-block">保存</button>
+        <button class="btn btn-fill btn-lg btn-block btn-save">保存</button>
     </form>
 </div>
 <div class="footer_nav">
     <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>
     <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
 </div>
+<?php self::load('common/footer'); ?>
 <script>
-     $('#add').submit(function() {
-        var $this = $(this)
-        $.post($this.attr('action'), $this.serialize()).then(function(data) {
+    $('#add').submit(function() {
+        var _this = $(this)
+        $.post(_this.attr('action'), _this.serialize()).then(function(data) {
             if (data.err) {
                 $.alert(data.msg);
             } else {
                 $.alert('保存成功');
-                // location.href = '/admin/user';
             }
         });
         return false;
     });
-</script>
-<?php self::load('common/footer'); ?>
-<script>
+
     $(".btn-add-image").click(function(){
         var file_input = $('<input type="file">');
         file_input.hide();
@@ -86,6 +81,7 @@
         file_input.click();        
 
     })
+
     var allow_type = ["png","gif","jpg","bmp","jpeg"];
     var upImg = function() {
         var e = this;
@@ -102,7 +98,8 @@
         if(window.URL){
             var r = new FileReader();  
             var pic = $(".add_img");
-            r.readAsDataURL(file);  
+            r.readAsDataURL(file); 
+            var imageName = '';
             r.onload = function() {
                 var img = new Image();
                 img.src = this.result;
@@ -111,52 +108,34 @@
                         pic.css("background-size","auto 100%");
                     }
                 }
-                pic.css("background-image","url("+this.result+")");
+                imageName = this.result;
+                pic.attr("src",imageName);
             }
-            
-            ajaxUpload({
-                form: { 'photo': file },
-                url: '/admin/uopload_logo_photo',
-                progress: function(e) {
-                    if(e.lengthComputable){
-                        var w = parseInt(e.loaded * 100 / e.total);
-                        pic.find(".column_photo_progress").css("height",(100-w)+"%");
+            setTimeout(() => {
+                ajaxUpload({
+                    form: { 'photo': file },
+                    url: '/admin/uopload_logo_photo',
+                    name: imageName,
+                    success: function(data) {
+                        if(data.err){
+                            $.alert(data.msg);
+                            return false;
+                        }
+                        $('input[name=weblogo]').val(data.msg);
                     }
-                },
-                success: function(data) {
-                    console.log(data)
-                    if(data.err){
-                        $.alert(data.msg);
-                        return false;
-                    }
-                    $('input[name=file_id]').val(data.id);
-                    $('input[name=weblogo]').val(data.path);
-                }
-            });
+                });
+                
+            }, 100);
         } else {
             $.alert('您的浏览器当前不支持在线预览上传');
         }
     }
-    
     var ajaxUpload = function(options) {
-        var fd = new FormData();
-        for (var p in options.form) {
-            fd.append(p, options.form[p]);
-        }
         $.ajax({
             url: options.url,
             type: "POST",
             dataType: 'json',
-            xhr: function() {
-                myXhr = $.ajaxSettings.xhr();
-                if(myXhr.upload){
-                    myXhr.upload.addEventListener('progress', options.progress, false);
-                }
-                return myXhr;
-            },
-            processData: false,
-            contentType: false,
-            data: fd,
+            data : {base64 : options.name},
             success: options.success
         });
     }
