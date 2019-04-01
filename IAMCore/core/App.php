@@ -38,7 +38,6 @@ class App
 		}
 
 		if (!class_exists($runClass)) {
-			print_r($runClass);
 			return self::setErrorPage();
 		}
 		$appClass = new $runClass;
