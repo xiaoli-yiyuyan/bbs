@@ -34,12 +34,16 @@ class App
 	{
 		$runClass = '\\' . self::$namespace . '\\' . self::$class;
 		if (!class_exists($runClass)) {
+			Listen::hook('appBeforeCreateError', [&$runClass]);
+		}
+
+		if (!class_exists($runClass)) {
+			print_r($runClass);
 			return self::setErrorPage();
 		}
 		$appClass = new $runClass;
 		$appAction = self::$action;
 		Listen::hook('appBeforeCreate', [&$appClass, &$appAction]);
-
 		if (!method_exists($appClass, $appAction)) {
 			return self::setErrorPage();
 		}

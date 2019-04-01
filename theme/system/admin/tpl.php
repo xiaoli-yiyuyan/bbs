@@ -19,7 +19,7 @@
     <div class="list">
         <div class="list-group">
             <?php foreach ($list['data'] as $key => $item) {?>
-                <div class="list-item">
+                <div class="list-item" data-url="<?=$item['path']?>">
                     <div><span class="title"><?=$item['title']?></span> <span class="version"><?=$item['version']?></span></div>
                     <div>
                         <button class="btn btn-clone" name="<?=$item['name']?>">克隆</button>
@@ -76,8 +76,9 @@
     $(".btn-clone").click(function(){
         var _this = $(this);
         var name = _this.attr('name');
-        var parent = _this.parent().parent();
+        var parent = _this.parents('.list-item');
         var version = parent.find(".version").text();
+        var url = parent.data("url");
         var title = parent.find(".title").text();
         var data = {
             version: version,
@@ -101,7 +102,7 @@
                                 $.alert('请设置标识且唯一');
                                 return false;
                             }
-                            $.post('/admin/clone_theme',{version:version, title: new_title, name: new_name, old_name: name},function(res){
+                            $.post('/admin/clone_theme',{version:version, title: new_title, name: new_name, old_name: name, url: url},function(res){
                                  $.alert(res.msg);
                             });
                         });

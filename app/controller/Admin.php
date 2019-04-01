@@ -669,26 +669,21 @@ class Admin extends Common
         fwrite($file, $list);
         fclose($file);
     }
+
+    public $themeHost = 'http://theme.ianmi.com';
+
     /**
      * 主题管理
      */
     public function tpl()
     {
-        // $setting = Setting::get(['theme', 'component']);
-        // View::load('admin/tpl', $setting);
-        
-        // $url = 'http://localhost:805/themejson.txt';
-        // $list = $this->curlWay($url);
-        // if(isset($list['err'])){
-        //         return Response::json($list);
-        //     }
-        // $list = (array) json_decode($list, true);
-    
-        $file = fopen('./themejson.txt', "r");
-        $list = fgets($file);
-        fclose($file);
-        $data['data'] = json_decode($list,true);
-        View::load('admin/tpl', ['list' => $data]);
+        $url = $this->themeHost . '/theme/getJson';
+        $list = $this->curlWay($url);
+        if(isset($list['err'])){
+            return Response::json($list);
+        }
+        $list = json_decode($list, true);
+        View::load('admin/tpl', ['list' => $list]);
     }
 
     /**
@@ -742,35 +737,34 @@ class Admin extends Common
         }
         return  Response::json(['err' => 2, 'msg' => '数据不存在']);
 
-    }  
+    }
 
    /**
     * 克隆主题
    */
-   public function cloneTheme()
+   public function cloneTheme($old_name = '', $name = '', $title = '', $version = '', $url = '')
    {
-       $data = Request::post();
        /**查看标识是否唯一 */
-       $res = Theme::get(['name' => $data['name']]);
+       $res = Theme::get(['name' => $name]);
        if($res){
            return Response::json(['err' => 1, 'msg' => '该标识已存在，请重新设置']);
        }
-       $url = 'http://localhost:805/download/'.$data['old_name'].'.zip';
+       $url = $this->themeHost . '/' . $url;
        $field = $this->curlWay($url);
        if(isset($field['err'])){
            return Response::json($field);
        }
-       $file_url = "./theme/".$data['name'].".zip";
+       $file_url = "./theme/" . $name . ".zip";
        $resource = fopen($file_url, "w+");
        fwrite($resource, $field);
        fclose($resource);
-       $result = unzip($file_url, './theme/'.$data['name']);
+       $result = unzip($file_url, './theme/'.$name);
        if($result){
            unlink($file_url);
            $theme = new Theme;
-           $theme->name = $data['name'];
-           $theme->title = $data['title'];
-           $theme->version = $data['version'];
+           $theme->name = $name;
+           $theme->title = $title;
+           $theme->version = $version;
            $theme->save();
            return Response::json(['err' => 0, 'msg' => '解压成功']);
        }
@@ -795,4 +789,12 @@ class Admin extends Common
        }
        return $data;
    }
+
+    /**
+    * 插件管理
+    */
+    public function plugin()
+    {
+        View::load('admin/plugin');
+    }
 }

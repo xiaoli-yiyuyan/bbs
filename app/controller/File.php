@@ -11,6 +11,7 @@ class File extends Common
             'is_save_db' => 1
         ]
     ];
+    
     public function upload($user_id = '', $path = '', $size = 20480000, $allow_type = 'jpeg,jpg,gif,png,rar,zip', $file_name = '', $is_rand_name = true, $input_name = '', $is_save_db = 1)
     {
         $options = [
@@ -36,7 +37,6 @@ class File extends Common
         }
         //使用对象中的upload方法，上传文件，方法需要传一个上传表单的名字name：pic
         //如果成功返回true，失败返回false
-
         if (!isset($_FILES[$options['input_name']])) {
             return ['err' => 1, 'msg' => '文件上传失败[1]' . $options['input_name']];
         }
