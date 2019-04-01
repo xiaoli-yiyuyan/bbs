@@ -38,12 +38,14 @@ class App
 		}
 		$appClass = new $runClass;
 		$appAction = self::$action;
+		Listen::hook('appBeforeCreate', [&$appClass, &$appAction]);
+
 		if (!method_exists($appClass, $appAction)) {
 			return self::setErrorPage();
 		}
 
 		// 执行带参数的方法
-		$method = new \ReflectionMethod($runClass, $appAction);
+		$method = new \ReflectionMethod(get_class($appClass), $appAction);
 		$params = $method->getParameters();
 		$args = [];
 		// 设置参数
@@ -59,6 +61,7 @@ class App
 		// 执行方法
 		if (count($args) == $method->getNumberOfParameters()) {
 			$method->invokeArgs($appClass, $args);
+			Listen::hook('appCreated', [$appClass, $method]);
 		} else {
 			throw new \Exception('参数错误，缺少参数');
 		}

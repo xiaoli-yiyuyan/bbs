@@ -43,4 +43,8 @@
 	// \Iam\Url::$hide = true;
 	\Iam\Config::set(include IAM_PATH . 'convention' . EXT);
 	\Iam\Config::set(include APP_PATH . 'config' . EXT);
+	\Iam\Plugin::load();
+	\Iam\Listen::hook('beforeCreate');
 	\Iam\App::run();
+	\Iam\Listen::hook('created');
+	\Iam\Listen::hook('destroyed');

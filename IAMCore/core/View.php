@@ -22,6 +22,8 @@ class View
 	{
 		$config = Config::get('TEMPLATE');
 		self::$config = array_merge($config, $options);
+		// 修改配置
+		Listen::hook('viewConfigUpdate', [&self::$config]);
 	}
 
 	/**
@@ -29,7 +31,10 @@ class View
 	 */
 	public static function getPath($name)
 	{
-		return ROOT_PATH . self::$config['DIR'] . DS . self::$config['PATH'] . DS . $name . self::$config['EXT'];
+		
+		$path = ROOT_PATH . self::$config['DIR'] . DS . self::$config['PATH'] . DS . $name . self::$config['EXT'];
+		Listen::hook('viewGetPath', [&$path]);
+		return $path;
 	}
 
 	public static function show($str, $data = []){
@@ -49,17 +54,27 @@ class View
 	 */
 	public static function load($name, $data = [], $allow_json = false)
 	{
+		$use_data = array_merge(self::$data, $data);
+		// 开始加载模板
+		Listen::hook('viewBeforeLoad', [&$name, &$use_data]);
+
 		if (Request::isAjax() && $allow_json) {
 			return Response::json($data);
 		}
 		$tpl_path = self::getPath($name);
 		if (file_exists($tpl_path)) {
-			(function() use($data, $tpl_path){
-				extract(array_merge(self::$data, $data)); //数组转化为变量
+			(function() use($use_data, $tpl_path){
+				extract($use_data); //数组转化为变量
 				include($tpl_path);
 			})();
+
+			// 模板加载结束
+			Listen::hook('viewLoaded', [&$name, &$use_data]);
 			return true;
 		} else {
+
+			// 模板加载错误
+			Listen::hook('viewLoadError', [&$name, &$use_data]);
 			return;
 			$tpl = '404';
 			echo $tpl_path;
@@ -93,6 +108,7 @@ class View
 	 */
 	public static function data($name, $value = '')
 	{
+		Listen::hook('viewDataUpdate', [&$name, &$value]);
 		if (is_string($name)) {
 			if (empty($value)) { //取值操作
 				return self::$data[$name];

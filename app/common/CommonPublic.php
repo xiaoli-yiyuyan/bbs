@@ -5,13 +5,14 @@ use Iam\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Session;
+use Iam\Controller;
 use Model\Category;
 use app\common\IamVersion;
 use Model\User;
 use app\Setting;
 use Model\SignLog;
 
-class CommonPublic
+class CommonPublic extends Controller
 {
     public $user = ['id' => 0];
     public $upExp = 25;

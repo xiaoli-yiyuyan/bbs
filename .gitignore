@@ -7,4 +7,6 @@ static/novel/
 /data
 .composer.lock
 /sys_update
+/theme
+!/theme/default
 node_modules/
