@@ -9,4 +9,5 @@ static/novel/
 /sys_update
 /theme/*
 !/theme/default
+/plugin/*
 node_modules/
