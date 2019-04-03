@@ -9,6 +9,6 @@
         <div><button class="btn btn-fill btn-block btn-lg">立即注册</button></div>
     </form>
 </div>
-<div class="g_word">安米社区 - 手机建站</div>
+<div class="g_word"><?=$webname?> - 手机建站</div>
 
 <?php component('components/common/footer'); ?>

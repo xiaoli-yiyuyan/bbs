@@ -1,7 +1,7 @@
 <?php component('components/common/header',['title' => '登陆网站']); ?>
 <?php component('/components/common/header_nav', ['back_url' => '/', 'title' => '首页']); ?>
 <div class="login-main">
-    <a class="logo" href="/" style="background-image:url(../<?php echo $weblogo?>);">
+    <a class="logo" href="/" style="background-image:url(../<?=$weblogo?>);">
 
     </a>
     <form class="" action="/login/login" method="post">
@@ -14,5 +14,5 @@
         </div>
     </form>
 </div>
-<div class="g_word">安米社区 - 手机建站</div>
+<div class="g_word"><?=$webname?> - 手机建站</div>
 <?php component('components/common/footer'); ?>

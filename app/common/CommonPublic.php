@@ -23,6 +23,8 @@ class CommonPublic extends Controller
     public function __construct()
     {
         $this->version = IamVersion::$version;
+        
+        $setting = Setting::get(['login_reward', 'weblogo', 'webname']);
         if (Session::has('sid')) {
             if ($this->user = User::get(['sid'=> Session::get('sid')])->toArray()) {
                 $last_time = strtotime($this->user['last_time']);
@@ -31,7 +33,7 @@ class CommonPublic extends Controller
 
                 if ($now_time - $_last_time >= 86400) {
 
-                    $login_reward = Setting::get('login_reward');
+                    $login_reward = $setting['login_reward'];
                     User::changeCoin($this->user['id'], $login_reward);
                 }
 
@@ -47,7 +49,9 @@ class CommonPublic extends Controller
         }
         View::data([
             'user' => $this->user,
-            'version' => $this->version
+            'version' => $this->version,
+            'weblogo' => $setting['weblogo'],
+            'webname' => $setting['webname'],
         ]);
 
     }

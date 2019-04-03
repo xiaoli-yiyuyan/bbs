@@ -1,9 +1,9 @@
-<?php component('/components/common/header?title=安米社区-专注于手机网站建设' ); ?>
+<?php component("/components/common/header?title=$webname-专注于手机网站建设" ); ?>
 <link rel="stylesheet" href="/static/css/novel/style.css?v=0.0.1">
 <script src="/static/js/iscroll.js"></script>
 <div class="header-height"></div>
 <header class="header">
-    <span class="logo" style="background-image:url(<?php echo $weblogo?>)"></span>
+    <span class="logo" style="background-image:url(<?=$weblogo?>)"></span>
     
     <?php if ($message_count = source('App/Message/count') > 0) { ?>
             <a href="/message" class="new_message_icon"><?=$message_count?></a>
