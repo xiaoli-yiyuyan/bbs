@@ -766,7 +766,12 @@ class Admin extends Common
    */
    public function cloneTheme($old_name = '', $name = '', $title = '', $version = '', $url = '')
    {
-       /**查看标识是否唯一 */
+       /**查看标识是否唯一  1不能和默认名一致 2 不能和数据库中存在的关键字一样*/
+       $name = trim($name);
+       if($name == 'default' || $name == 'system'){
+            return Response::json(['err' => 1, 'msg' => '该标识为关键字，请重新设置']);
+       }
+
        $res = Theme::get(['name' => $name]);
        if($res){
            return Response::json(['err' => 1, 'msg' => '该标识已存在，请重新设置']);
@@ -793,6 +798,56 @@ class Admin extends Common
        return Response::json(['err' => 2, 'msg' => '解压失败']);
    }
 
+   /**
+    * 删除主题
+    *@param int $id 主题id
+    *@param string $name 主题标识
+    */
+
+    public function deleteTheme($id, $name)
+    {
+        $id = intval($id); 
+        $name = trim($name);
+        if($name == 'default' || $name == 'system'){
+            return Response::json(['err' => 5, 'msg' => '该主题为默认主题不能删除']);
+        }
+        $info = Theme::get(['id' => $id, 'name' => $name]);
+        if(!$info){
+           return Response::json(['err' => 1, 'msg' => '删除错误，请确认删除主题']);
+        }
+        $res = $info->delete();
+        if(!$res){
+           return Response::json(['err' => 2, 'msg' => '删除错误，请重试']);
+        }
+        /**删除文件夹 */
+        $dir = './theme/'.$name;
+        $fileExists = file_exists($dir);
+        if($fileExists){
+            $this->deleteDir($dir);
+        }
+        return Response::json(['err' => 0, 'msg' => '删除成功']);
+    }
+
+    private function deleteDir($dir)
+    {
+        $handle = opendir($dir);
+        if(!$handle){
+            return false;
+        }
+        
+        while (false !== ($file = readdir($handle))) {
+            if ($file !== "." && $file !== "..") {       //排除当前目录与父级目录
+                $file_url = $dir."/".$file;
+                if (is_dir($file_url)) {
+                    $this->deleteDir($file_url);
+                } else {
+                    unlink($file_url);
+                }
+            }
+        }
+        closedir( $handle );
+        rmdir($dir);
+    }
    /**
     * 抓取远程信息
     * @param string $url 抓取地址

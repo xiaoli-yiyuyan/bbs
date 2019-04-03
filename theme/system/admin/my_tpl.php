@@ -35,7 +35,8 @@
                         <?php if($item['name'] == $setting['theme']) {?>
                             <!-- <button class="btn btn-sm">编辑</button> -->
                         <?php }else{?>
-                            <button class="btn btn-sm btn-use" name="<?=$item['id']?>">使用</button>
+                            <button class="btn btn-sm btn-use" data-id="<?=$item['id']?>">使用</button>
+                            <button class="btn btn-sm btn-delete" data-id="<?=$item['id']?>" data-name="<?=$item['name']?>">删除</button>
                         <?php }?>
                     </div>
                 </div>
@@ -44,9 +45,29 @@
     </div>
 </div>
 <script>
+    //删除主题
+    $(".btn-delete").click(function(){
+        var _this = $(this);
+        var id = parseInt(_this.data('id'));
+        var name = _this.data('name');
+        $.confirm('确定删除该主题？', {
+            yes: function() {
+                $.post('/admin/delete_theme', {id : id,name: name},function(res){
+                    if(res.err){
+                        $.alert(res.msg);
+                        return false;
+                    }
+                    location.href='';
+                })
+            },
+            no: function() {
+            }
+        })
+    })
+
     //主题切换
     $(".btn-use").click(function(){
-        var id = parseInt($(this).attr('name'));
+        var id = parseInt($(this).data('id'));
         if(isNaN(id) || id < 1){
             $.alert('参数错误');
             return false;
