@@ -13,6 +13,7 @@ class Listen
 			self::$func[$name] = [];
 		}
 		self::$func[$name][] = $callback;
+
 	}
 
 	/**

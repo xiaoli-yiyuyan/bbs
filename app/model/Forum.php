@@ -35,6 +35,15 @@ class Forum extends Model
         return $this->setViewFiles($data['file_data']);
     }
 
+    public function getMarkBodyAttr($val, $data)
+    {
+        $mark_body = ForumMarkBody::where('forum_id', $data['id'])->column('mark_id');
+        if (!empty($mark_body)) {
+            return ForumMark::where('status', 1)->all($mark_body)->toArray();
+        }
+        return [];
+    }
+
     private static function ubbFilter($text)
     {
         // $text = '[read_login]内容-登录可见[/read_login]
@@ -134,7 +143,7 @@ class Forum extends Model
             $forum->where('class_id', 'in', $class_id);
         }
 
-        if (!empty($user_id)) {
+        if ($user_id !== '') {
             if (gettype($user_id) == 'string') {
                 $user_id = explode(',', $user_id);
             }

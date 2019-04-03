@@ -1,6 +1,5 @@
 <?php
 namespace Iam;
-// use Iam\Loader;
 
 class App
 {
@@ -35,16 +34,21 @@ class App
 	{
 		$runClass = '\\' . self::$namespace . '\\' . self::$class;
 		if (!class_exists($runClass)) {
+			Listen::hook('appBeforeCreateError', [&$runClass]);
+		}
+
+		if (!class_exists($runClass)) {
 			return self::setErrorPage();
 		}
 		$appClass = new $runClass;
 		$appAction = self::$action;
+		Listen::hook('appBeforeCreate', [&$appClass, &$appAction]);
 		if (!method_exists($appClass, $appAction)) {
 			return self::setErrorPage();
 		}
 
 		// 执行带参数的方法
-		$method = new \ReflectionMethod($runClass, $appAction);
+		$method = new \ReflectionMethod(get_class($appClass), $appAction);
 		$params = $method->getParameters();
 		$args = [];
 		// 设置参数
@@ -60,6 +64,7 @@ class App
 		// 执行方法
 		if (count($args) == $method->getNumberOfParameters()) {
 			$method->invokeArgs($appClass, $args);
+			Listen::hook('appCreated', [$appClass, $method]);
 		} else {
 			throw new \Exception('参数错误，缺少参数');
 		}
@@ -69,13 +74,23 @@ class App
 
 	private static function setErrorPage()
 	{
-		header('HTTP/1.1 404 Not Found');
-		header("status: 404 Not Found");
-		echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+		$path = self::parseViewPath();
+        View::setConfig([
+            'DIR' => Config::get('TEMPLATE.DIR')
+        ]);
+		if (!View::load($path, $_REQUEST)) {
+			header('HTTP/1.1 404 Not Found');
+			header("status: 404 Not Found");
+			echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';
+		}
 	}
 	
 	private static function parseUrl()
 	{
+		if (!isset($_SERVER['REQUEST_URI'])) {
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'],1 );
+			if (isset($_SERVER['QUERY_STRING'])) { $_SERVER['REQUEST_URI'].='?'.$_SERVER['QUERY_STRING']; }
+		}
 		$requestUrl = $_SERVER['REQUEST_URI'];
 		self::baseUrl($requestUrl);
 		$url = explode('/', self::$baseUrl);
@@ -95,6 +110,28 @@ class App
 			}
 			self::$action = lcfirst(implode('', $action));
 		}
+	}
+
+	/**
+	 * 解析成实际路径
+	 */
+	private static function parseViewPath()
+	{
+		return trim(self::$baseUrl, '/');
+		// $class = self::toLastState(self::$class);
+		// $action = self::toLastState(self::$action);
+		// return $class . '\\' . $action;
+	}
+
+	/**
+	 * 驼峰转下划线
+	 */
+	private static function toLastState($str)
+	{
+		$str = lcfirst($str);
+		$splitChar = '_';
+		$formatStr = preg_replace('/([A-Z])/', $splitChar . '\\1', $str);
+		return strtolower($formatStr);
 	}
 
 	private static function baseUrl($url)

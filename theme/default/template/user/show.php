@@ -96,7 +96,7 @@
                 $box.find('.list-group').empty();
                 for (var p in data.data) {
                     var value = data.data[p];
-                    var item_tpl = `<div class="list-t-item"><div class="title">` + value.title + `</div>
+                    var item_tpl = `<a href="/forum/view?id=` + value.id + `" class="list-t-item"><div class="title">` + value.title + `</div>
                     <div class="text-image flex-box">
                     <div class="flex context">` + value.mini_context + `</div>`;
                     if (value.img_list.length > 0) {
@@ -106,7 +106,7 @@
                     <div class="user flex-box">
                     <div class="flex">` + value.author.nickname + ` · ` + value.reply_count + ` 评论</div>
                     <div class="more"></div>
-                    </div></div><div class="hr"></div>`
+                    </div></a><div class="hr"></div>`
 
                     $box.find('.list-group').append(item_tpl);
                 }
@@ -125,7 +125,7 @@
                 forum_next_page = Number(data.current_page) + 1;
                 for (var p in data.data) {
                     var value = data.data[p];
-                    var item_tpl = `<div class="list-t-item"><div class="title">` + value.title + `</div>
+                    var item_tpl = `<a href="/forum/view?id=` + value.id + `"class="list-t-item"><div class="title">` + value.title + `</div>
                     <div class="text-image flex-box">
                     <div class="flex context">` + value.mini_context + `</div>`;
                     if (value.img_list.length > 0) {
@@ -135,7 +135,7 @@
                     <div class="user flex-box">
                     <div class="flex">` + value.author.nickname + ` · ` + value.reply_count + ` 评论</div>
                     <div class="create_time">` + getFriendlyTime(value.create_time) + `</div>
-                    </div></div><div class="hr"></div>`
+                    </div></a><div class="hr"></div>`
 
                     $box.find('.list-group').append(item_tpl);
                 }

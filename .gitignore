@@ -3,8 +3,11 @@
 nodejs/
 NovelChapter/
 static/novel/
-/upload/
+/upload/*
 /data
 .composer.lock
 /sys_update
+/theme/*
+!/theme/default/
+!/theme/system/
 node_modules/

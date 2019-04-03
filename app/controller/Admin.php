@@ -8,6 +8,7 @@ use Iam\Page;
 use Iam\Cache;
 use Iam\Request;
 use Iam\Response;
+use Iam\Config;
 use Iam\Component;
 use Model\CategoryGroup;
 use Model\Code;
@@ -16,6 +17,8 @@ use app\Setting;
 use app\common\DatabaseTool;
 use app\common\CheckUpdate;
 use Model\Forum;
+use Model\User;
+use Model\Theme;
 
 class Admin extends Common
 {
@@ -26,6 +29,9 @@ class Admin extends Common
             Page::error('仅限管理员访问');
             exit();
         }
+        View::setConfig([
+            'PATH' => 'system'
+        ]);
     }
 
     public function index()
@@ -61,8 +67,9 @@ class Admin extends Common
 
     private function initComponent()
     {
+        $component_mark = Config::get('component');
         $component = new Component([
-            'model' => 'default'
+            'model' => $component_mark
         ]);
         return $component;
     }
@@ -328,8 +335,10 @@ class Admin extends Common
     public function editColumn()
     {
         $id = Request::get('id');
-        $column = new Column;
-        $info = $column->info(['id' => $id]);
+        if (!$info = Category::info($id)) {
+            return ['err' => 1, 'msg' => '你要查看的栏目不存在！'];
+        }
+        $info['is_admin'] = $this->isAdmin($this->user['id'], $info['id']);
         $this->getErr($info);
         View::load('admin/edit_column', ['info' => $info]);
     }
@@ -385,7 +394,7 @@ class Admin extends Common
     public function user()
     {
         $user = new User;
-        $list = $user->list([
+        $list = $user->getList([
             'order' => 0,
             'sort' => 0,
             'var_page' => 'p'
@@ -616,6 +625,14 @@ class Admin extends Common
         return View::load('success', ['msg' => '删除成功', 'url' => '/admin/code']);
     }
 
+    /**
+     * 模板管理页
+     */
+    public function theme()
+    {
+
+    }
+
     public function getSource()
     {
         
@@ -636,625 +653,161 @@ class Admin extends Common
                         'options' => []
                     ]
                 ]
-            ], [
-                'name' => 'User',
-                'title' => '用户',
-                'action' => [
-                    [
-                        'action' => 'base64Upload',
-                        'name' => 'user_base64_upload',
-                        'title' => 'base64头像接口',
-                        'options' => [
-                            [
-                                'name' => 'path',
-                                'title' => '存放路径',
-                                'value' => 'static/uploads/photo/',
-                                'explain' => '用户头像存放路径'
-                            ], [
-                                'name' => 'base64',
-                                'title' => 'base64数据',
-                                'value' => '',
-                                'explain' => 'base64头像上传'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'info',
-                        'name' => 'userinfo',
-                        'title' => '用户信息',
-                        'options' => [
-                            [
-                                'name' => 'id',
-                                'title' => '用户id',
-                                'value' => 0,
-                                'explain' => '获取用户信息'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'editInfo',
-                        'name' => 'user_edit_info',
-                        'title' => '修改资料',
-                        'options' => [
-                            [
-                                'name' => 'id',
-                                'title' => '用户id',
-                                'value' => 0,
-                                'explain' => '要修改的用户的ID'
-                            ], [
-                                'name' => 'nickname',
-                                'title' => '昵称',
-                                'value' => '',
-                                'explain' => '新昵称'
-                            ], [
-                                'name' => 'explain',
-                                'title' => '签名',
-                                'value' => '',
-                                'explain' => '新签名'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'updatePassword',
-                        'name' => 'user_edit_pwd',
-                        'title' => '修改密码',
-                        'options' => [
-                            [
-                                'name' => 'id',
-                                'title' => '用户id',
-                                'value' => 0,
-                                'explain' => '要修改的用户的ID'
-                            ], [
-                                'name' => 'password',
-                                'title' => '原密码',
-                                'value' => '',
-                                'explain' => '原始密码'
-                            ], [
-                                'name' => 'password1',
-                                'title' => '新密码',
-                                'value' => '',
-                                'explain' => '新密码'
-                            ], [
-                                'name' => 'password2',
-                                'title' => '确认密码',
-                                'value' => '',
-                                'explain' => '确认密码'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'quit',
-                        'name' => 'user_quit',
-                        'title' => '退出登录',
-                        'options' => []
-                    ], [
-                        'action' => 'list',
-                        'name' => 'user_list',
-                        'title' => '用户列表',
-                        'options' => [
-                            [
-                                'name' => 'var_page',
-                                'title' => '翻页参数',
-                                'value' => 'page',
-                                'explain' => '翻页参数，有多个的时候请更换不一样的'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ], [
-                                'name' => 'order',
-                                'title' => '排序依据',
-                                'value' => 0,
-                                'explain' => '0 动态排序，1 最新，2 经验，3 金币'
-                            ], [
-                                'name' => 'sort',
-                                'title' => '排序方式',
-                                'value' => 0,
-                                'explain' => '0 正序<br>1 倒序'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'login',
-                        'name' => 'user_login',
-                        'title' => '登录接口',
-                        'options' => [
-                            [
-                                'name' => 'username',
-                                'title' => '用户名',
-                                'value' => '',
-                                'explain' => '登录时候的用户名（用户必填）'
-                            ], [
-                                'name' => 'password',
-                                'title' => '登录密码',
-                                'value' => '',
-                                'explain' => '登录时候的密码（用户必填）'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'register',
-                        'name' => 'user_reg',
-                        'title' => '注册接口',
-                        'options' => [
-                            [
-                                'name' => 'username',
-                                'title' => '用户名',
-                                'value' => '',
-                                'explain' => '登录时候的用户名（用户必填）'
-                            ], [
-                                'name' => 'password',
-                                'title' => '登录密码',
-                                'value' => '',
-                                'explain' => '登录时候的密码（用户必填）'
-                            ], [
-                                'name' => 'password2',
-                                'title' => '重复密码',
-                                'value' => '',
-                                'explain' => '效验登录密码（用户必填）'
-                            ], [
-                                'name' => 'email',
-                                'title' => '邮箱',
-                                'value' => '',
-                                'explain' => '找回密码或通知用到'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'careList',
-                        'name' => 'care_list',
-                        'title' => '关注列表',
-                        'options' => [
-                            [
-                                'name' => 'user_id',
-                                'title' => '用户ID',
-                                'value' => 0,
-                                'explain' => '谁的关注列表'
-                            ], [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ], [
-                                'name' => 'order',
-                                'title' => '排序依据',
-                                'value' => 0,
-                                'explain' => '0 添加时间'
-                            ], [
-                                'name' => 'sort',
-                                'title' => '排序方式',
-                                'value' => 0,
-                                'explain' => '0 正序<br>1 倒序'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'fansList',
-                        'name' => 'fans_list',
-                        'title' => '粉丝列表',
-                        'options' => [
-                            [
-                                'name' => 'care_user_id',
-                                'title' => '用户ID',
-                                'value' => 0,
-                                'explain' => '谁的粉丝列表'
-                            ], [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ], [
-                                'name' => 'order',
-                                'title' => '排序依据',
-                                'value' => 0,
-                                'explain' => '0 添加时间'
-                            ], [
-                                'name' => 'sort',
-                                'title' => '排序方式',
-                                'value' => 0,
-                                'explain' => '0 正序<br>1 倒序'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'isCare',
-                        'name' => 'is_care',
-                        'title' => '是否关注',
-                        'options' => [
-                            [
-                                'name' => 'care_user_id',
-                                'title' => '对象用户ID',
-                                'value' => '',
-                                'explain' => '查看用户的id'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'setCare',
-                        'name' => 'set_care',
-                        'title' => '关注/取消',
-                        'options' => [
-                            [
-                                'name' => 'care_user_id',
-                                'title' => '对象用户ID',
-                                'value' => '',
-                                'explain' => '查看用户的id'
-                            ]
-                        ]
-                    ]
-                ]
-            ], [
-                'name' => 'Message',
-                'title' => '消息',
-                'action' => [
-                    [
-                        'action' => 'list',
-                        'name' => 'message_list',
-                        'title' => '列表',
-                        'options' => [
-                            [
-                                'name' => 'user_id',
-                                'title' => '发件人id',
-                                'value' => 0,
-                                'explain' => '0 为系统消息'
-                            ], [
-                                'name' => 'to_user_id',
-                                'title' => '收件人id',
-                                'value' => 0,
-                                'explain' => '收件人id'
-                            ], [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ]
-                        ]
-                    ],
-                    [
-                        'action' => 'count',
-                        'name' => 'message_count',
-                        'title' => '数量',
-                        'options' => [
-                            [
-                                'name' => 'status',
-                                'title' => '类型',
-                                'value' => 0,
-                                'explain' => '0 为未读，1 为已读，2 为所有'
-                            ]
-                        ]
-                    ]
-                ]
-            ], [
-                'name' => 'Column',
-                'title' => '栏目',
-                'action' => [
-                    [
-                        'action' => 'info',
-                        'name' => 'column_info',
-                        'title' => '栏目详细',
-                        'options' => [
-                            [
-                                'name' => 'id',
-                                'title' => '栏目ID',
-                                'value' => 0,
-                                'explain' => '后台栏目配置查看ID'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'list',
-                        'name' => 'column_list',
-                        'title' => '列表',
-                        'options' => [
-                            [
-                                'name' => 'type',
-                                'title' => '栏目类型',
-                                'value' => 0,
-                                'explain' => '0 普通，1 论坛'
-                            ], [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ], [
-                                'name' => 'order',
-                                'title' => '排序依据',
-                                'value' => 0,
-                                'explain' => '0 添加顺序，1 后台设置顺序'
-                            ], [
-                                'name' => 'sort',
-                                'title' => '排序方式',
-                                'value' => 0,
-                                'explain' => '0 正序<br>1 倒序'
-                            ]
-                        ]
-                    ]
-                ]
-            ], [
-                'name' => 'Forum',
-                'title' => '论坛',
-                'action' => [
-                    [
-                        'action' => 'add',
-                        'name' => 'forum_add',
-                        'title' => '发表帖子',
-                        'options' => [
-                            [
-                                'name' => 'class_id',
-                                'title' => '栏目ID',
-                                'value' => 0,
-                                'explain' => '后台栏目配置查看ID'
-                            ], [
-                                'name' => 'user_id',
-                                'title' => '会员ID',
-                                'value' => 0,
-                                'explain' => '默认为0，此配置只能为0，后台会员管理查看会员ID'
-                            ], [
-                                'name' => 'title',
-                                'title' => '标题',
-                                'value' => '',
-                                'explain' => '文章标题'
-                            ], [
-                                'name' => 'context',
-                                'title' => '内容',
-                                'value' => 10,
-                                'explain' => '文章内容'
-                            ], [
-                                'name' => 'img_data',
-                                'title' => '图片ID',
-                                'value' => 0,
-                                'explain' => '多个用","号分隔，可在后台文件管理查看，通常此参数由会员提供'
-                            ], [
-                                'name' => 'file_data',
-                                'title' => '文件ID',
-                                'value' => 0,
-                                'explain' => '多个用","号分隔，可在后台文件管理查看，通常此参数由会员提供'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'edit',
-                        'name' => 'forum_edit',
-                        'title' => '修改帖子',
-                        'options' => [
-                            [
-                                'name' => 'id',
-                                'title' => '帖子ID',
-                                'value' => 0,
-                                'explain' => '要修改的帖子的ID'
-                            ],[
-                                'name' => 'class_id',
-                                'title' => '栏目ID',
-                                'value' => 0,
-                                'explain' => '后台栏目配置查看ID'
-                            ], [
-                                'name' => 'user_id',
-                                'title' => '会员ID',
-                                'value' => 0,
-                                'explain' => '默认为0，此配置只能为0，后台会员管理查看会员ID'
-                            ], [
-                                'name' => 'title',
-                                'title' => '标题',
-                                'value' => '',
-                                'explain' => '文章标题'
-                            ], [
-                                'name' => 'context',
-                                'title' => '内容',
-                                'value' => 10,
-                                'explain' => '文章内容'
-                            ], [
-                                'name' => 'img_data',
-                                'title' => '图片ID',
-                                'value' => 0,
-                                'explain' => '多个用","号分隔，可在后台文件管理查看，通常此参数由会员提供'
-                            ], [
-                                'name' => 'file_data',
-                                'title' => '文件ID',
-                                'value' => 0,
-                                'explain' => '多个用","号分隔，可在后台文件管理查看，通常此参数由会员提供'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'remove',
-                        'name' => 'forum_remove',
-                        'title' => '回收帖子',
-                        'options' => [
-                            [
-                                'name' => 'id',
-                                'title' => '帖子ID',
-                                'value' => 0,
-                                'explain' => '要回收的帖子的ID'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'list',
-                        'name' => 'list',
-                        'title' => '列表',
-                        'options' => [
-                            [
-                                'name' => 'class_id',
-                                'title' => '栏目ID',
-                                'value' => 0,
-                                'explain' => '后台栏目配置查看ID'
-                            ], [
-                                'name' => 'user_id',
-                                'title' => '会员ID',
-                                'value' => 0,
-                                'explain' => '后台会员管理查看会员ID'
-                            ], [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ], [
-                                'name' => 'order',
-                                'title' => '排序依据',
-                                'value' => 0,
-                                'explain' => '0 动态排序，1 最新，2 最热'
-                            ], [
-                                'name' => 'sort',
-                                'title' => '排序方式',
-                                'value' => 0,
-                                'explain' => '0 正序<br>1 倒序'
-                            ]
-                        ]
-                    ], [
-                        'action' => 'view',
-                        'name' => 'view',
-                        'title' => '帖子详细',
-                        'options' => [[
-                            'name' => 'id',
-                            'title' => '帖子ID',
-                            'value' => 0,
-                            'explain' => '对应主贴的ID'
-                        ], [
-                            'name' => 'is_html',
-                            'title' => 'HTML过滤',
-                            'value' => 1,
-                            'explain' => '0 关闭，1 启用（在仅限管理员发布情况下可关闭该功能，主要为了防止会员xss攻击）'
-                        ], [
-                            'name' => 'is_ubb',
-                            'title' => 'UBB语法',
-                            'value' => 1,
-                            'explain' => '0 关闭，1 启用'
-                        ]]
-                    ], [
-                        'action' => 'replyAdd',
-                        'name' => 'reply_add',
-                        'title' => '回复主题',
-                        'options' => [[
-                            'name' => 'forum_id',
-                            'title' => '帖子ID',
-                            'value' => 0,
-                            'explain' => '对应主贴的ID'
-                        ], [
-                            'name' => 'context',
-                            'title' => '内容',
-                            'value' => '',
-                            'explain' => '回复内容'
-                        ]]
-                    ], [
-                        'action' => 'replyList',
-                        'name' => 'reply_list',
-                        'title' => '回复列表',
-                        'options' => [
-                            [
-                                'name' => 'forum_id',
-                                'title' => '帖子ID',
-                                'value' => 0,
-                                'explain' => '对应主贴的ID'
-                            ], [
-                                'name' => 'user_id',
-                                'title' => '会员ID',
-                                'value' => 0,
-                                'explain' => '后台会员管理查看会员ID'
-                            ], [
-                                'name' => 'page',
-                                'title' => '页数',
-                                'value' => 1,
-                                'explain' => '读取第N页的数据'
-                            ], [
-                                'name' => 'pagesize',
-                                'title' => '显示条数',
-                                'value' => 10,
-                                'explain' => '每页最大显示条数'
-                            ], [
-                                'name' => 'order',
-                                'title' => '排序依据',
-                                'value' => 0,
-                                'explain' => '0 最新'
-                            ], [
-                                'name' => 'sort',
-                                'title' => '排序方式',
-                                'value' => 0,
-                                'explain' => '0 正序，1 倒序'
-                            ]
-                        ]
-                    ]
-                ]
-            ],[
-                'name' => 'File',
-                'title' => '文件',
-                'action' => [
-                    [
-                        'action' => 'upload',
-                        'name' => 'file_upload',
-                        'title' => '文件上传接口',
-                        'options' => [
-                            [
-                                'name' => 'user_id',
-                                'title' => '用户ID',
-                                'value' => 0,
-                                'explain' => '设置文件上传者（用户）ID，0为自动获取。'
-                            ], [
-                                'name' => 'path',
-                                'title' => '保存路径',
-                                'value' => '/upload',
-                                'explain' => '文件保存路径'
-                            ], [
-                                'name' => 'size',
-                                'title' => '上传大小',
-                                'value' => 2048000,
-                                'explain' => '最大允许上传文件的大小 单位 kb'
-                            ], [
-                                'name' => 'file_name',
-                                'title' => '文件名',
-                                'value' => '',
-                                'explain' => '用于展示'
-                            ], [
-                                'name' => 'file_memo',
-                                'title' => '文件说明',
-                                'value' => '',
-                                'explain' => '用于展示'
-                            ], [
-                                'name' => 'allow_type',
-                                'title' => '允许类型',
-                                'value' => 'jpeg,jpg,gif,png',
-                                'explain' => '允许上传文件的类型，多个用逗号","分割'
-                            ], [
-                                'name' => 'is_rand_name',
-                                'title' => '系统命名',
-                                'value' => 0,
-                                'explain' => '使用系统命名，或者保存原文件名（原文件名有可能重复）'
-                            ], [
-                                'name' => 'input_name',
-                                'title' => '表单名',
-                                'value' => 'file',
-                                'explain' => '文件传入的表单对应的name'
-                            ]
-                        ]
-                    ]
-                ]
             ]
         ];
         return Response::json($source);
     }
 
-    public function templateTest()
+    // public function templateTest()
+    // {
+    //     $template = new \Iam\Template;
+    //     $template->test();
+    // }
+
+    // public function img()
+    // {
+    //     $photo = Request::get('photo');
+    //     print_r($photo);
+    //     downloadImage($photo, uniqid(), 'static/novels/');
+    // }
+
+    /**
+     * 测试专用，用于生成主题json文件
+     */
+    public function themeJson()
     {
-        $template = new \Iam\Template;
-        $template->test();
+        $list = (new Theme)->select()->toarray();//显示实验
+        $list = json_encode($list);
+        $file = fopen('./themejson.txt', "w+");
+        fwrite($file, $list);
+        fclose($file);
     }
 
-    public function img()
+    public $themeHost = 'http://theme.ianmi.com';
+
+    /**
+     * 主题管理
+     */
+    public function tpl()
     {
-        $photo = Request::get('photo');
-        print_r($photo);
-        downloadImage($photo, uniqid(), 'static/novels/');
+        $url = $this->themeHost . '/theme/getJson';
+        $list = $this->curlWay($url);
+        if(isset($list['err'])){
+            return Response::json($list);
+        }
+        $list = json_decode($list, true);
+        View::load('admin/tpl', ['list' => $list]);
     }
 
+    /**
+     * 我的主题管理
+     */
+    public function myTpl()
+    {
+        $setting = Setting::get(['theme', 'component']);
+        $list = (new Theme)->paginate(10);
+        View::load('admin/my_tpl', ['setting' =>$setting, 'list' => $list]);
+    }
+    
+    /**
+     * 主题切换（这里的主题切换选择，影响到上方的我的主题管理，若选择@1上述需修改）
+     */
+    public function themeUse()
+    {
+        $data = Request::post();
+        if(!isset($data['id'])){
+            return  Response::json(['err' => 1, 'msg' => '参数错误']);
+        }
+        /**@1保存theme表中的status完成主题切换，在@1和@2中任选一个 */
+        // $res = Theme::setStatus(intval($data['id']));
+        /****************@1***************/
+        
+        /**@2使用setting表中的主题标识完成主题切换，在@1和@2中任选一个 */
+        $info = Theme::get(intval($data['id']));
+        Setting::set(['theme' => $info->name, 'component'=>$info->name]);
+        $res = ['err' => 0];
+        /*****************@2***********/
+
+        return  Response::json($res);
+    }
+
+    /**
+     * 主题修改名称
+     */
+    public function tplTitle()
+    {
+        $data = Request::post();
+        if(!isset($data['id']) || !isset($data['title'])){
+            return  Response::json(['err' => 1, 'msg' => '参数错误']);
+        }
+        $info = Theme::get(intval($data['id']));
+        if($info){
+            $info->title = $data['title'];
+            $res = $info->save();
+            if($res){
+                return  Response::json(['err' => 0, 'msg' => '修改成功']);
+            }
+        }
+        return  Response::json(['err' => 2, 'msg' => '数据不存在']);
+
+    }
+
+   /**
+    * 克隆主题
+   */
+   public function cloneTheme($old_name = '', $name = '', $title = '', $version = '', $url = '')
+   {
+       /**查看标识是否唯一 */
+       $res = Theme::get(['name' => $name]);
+       if($res){
+           return Response::json(['err' => 1, 'msg' => '该标识已存在，请重新设置']);
+       }
+       $url = $this->themeHost . '/' . $url;
+       $field = $this->curlWay($url);
+       if(isset($field['err'])){
+           return Response::json($field);
+       }
+       $file_url = "./theme/" . $name . ".zip";
+       $resource = fopen($file_url, "w+");
+       fwrite($resource, $field);
+       fclose($resource);
+       $result = unzip($file_url, './theme/'.$name);
+       if($result){
+           unlink($file_url);
+           $theme = new Theme;
+           $theme->name = $name;
+           $theme->title = $title;
+           $theme->version = $version;
+           $theme->save();
+           return Response::json(['err' => 0, 'msg' => '解压成功']);
+       }
+       return Response::json(['err' => 2, 'msg' => '解压失败']);
+   }
+
+   /**
+    * 抓取远程信息
+    * @param string $url 抓取地址
+    */
+   private function curlWay($url)
+   {
+       $ch = curl_init();
+       curl_setopt($ch, CURLOPT_URL,$url);
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+       curl_setopt($ch, CURLOPT_HEADER, 0);
+       $data = curl_exec($ch);
+       $res = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+       curl_close($ch);
+       if($res == '404'){
+           return ['err' => 3, 'msg' => '源文件出错'];
+       }
+       return $data;
+   }
+
+    /**
+    * 插件管理
+    */
+    public function plugin()
+    {
+        View::load('admin/plugin');
+    }
 }

@@ -1,4 +1,10 @@
+html,
 body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
   background: #F8F8F8;
 }
 .header_nav {
@@ -51,11 +57,33 @@ body {
   width: 100%;
 }
 .content {
+  flex: 1;
   overflow: hidden;
   margin: .5rem;
   background: #FFF;
   border: 0.05rem solid #eee;
   border-radius: 0.1rem;
+}
+.tpl_title {
+  display: flex;
+  align-items: center;
+  font-size: .8rem;
+}
+.tpl_title::before {
+  margin-right: .25rem;
+  content: '';
+  width: .8rem;
+  height: .8rem;
+  background: linear-gradient(to top, #ff5e00, #ffb88f);
+  border-radius: 50%;
+}
+.btn_box {
+  display: flex;
+  padding: .25rem;
+  justify-content: flex-end;
+}
+.btn_box .btn {
+  margin: .25rem;
 }
 .namespace {
   padding: .5rem;

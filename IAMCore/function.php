@@ -1,4 +1,9 @@
 <?php
+function request()
+{
+	return new \Iam\Request;
+}
+
 /**
  * 数据源获取
  */
@@ -44,7 +49,6 @@ function source($cmd, $query = [])
 		$appAction = end($appClass);
 		array_pop($appClass);
 		$appClass = implode('\\', $appClass);
-
 		if (!class_exists($appClass, $appAction)) {
 			return;
 		}
@@ -111,10 +115,12 @@ function cmdParse($cmd)
  */
 function component($cmd, $query = [])
 {
+	$component_mark = \Iam\Config::get('component');
 	$data = cmdParse($cmd);
 	$action = implode('/', $data['action']);
 	$component = new Iam\Component([
-		'model' => 'default'
+		'model' => $component_mark,
+		'template_path' => 'theme/'
 	]);
 	if (!empty($query)) {
 		$data['query'] = array_merge($data['query'], $query);

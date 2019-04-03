@@ -252,7 +252,7 @@ class Component
 	public function load($name, $data = [])
 	{
         // $name = str_replace('/', DS, $name);
-        $name = $this->ds . trim($name, $this->ds);
+		$name = $this->ds . trim($name, $this->ds);
         if ($name == $this->ds) {
             $namespace = $this->ds;
             $component_name = 'index';
@@ -309,11 +309,31 @@ class Component
 			}
 		}
 		$data = array_merge($data, $props_data, View::$data);
-
+		$config['template'] = $this->dir . $this->ds . $config['template'];
 		if (file_exists($config['template'])) {
 			(function() use($data, $config){
 				extract($data); //数组转化为变量
 				include($config['template']);
+			})();
+		} else {
+			$tpl = '404';
+		}
+
+		return true;
+	}
+
+	/**
+	 * 模板加载
+	 * @param string $name 模板路径
+	 * @param array $data 变量参数
+	 */
+	public function use($name, $data = [])
+	{
+		$path = $this->dir . $this->ds . $name . '.php';
+		if (file_exists($path)) {
+			(function() use($data, $config){
+				extract($data); //数组转化为变量
+				include($path);
 			})();
 		} else {
 			$tpl = '404';

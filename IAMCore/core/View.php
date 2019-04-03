@@ -9,6 +9,34 @@ class View
 {
 	public static $data = [];
 
+	public static $config = [
+		'DIR' => 'tpl',
+		'PATH' => 'default',
+		'EXT' => '.php'
+	];
+
+	/**
+	 * 配置
+	 */
+	public static function setConfig($options = [])
+	{
+		$config = Config::get('TEMPLATE');
+		self::$config = array_merge($config, $options);
+		// 修改配置
+		Listen::hook('viewConfigUpdate', [&self::$config]);
+	}
+
+	/**
+	 * 获取路径
+	 */
+	public static function getPath($name)
+	{
+		
+		$path = ROOT_PATH . self::$config['DIR'] . DS . self::$config['PATH'] . DS . $name . self::$config['EXT'];
+		Listen::hook('viewGetPath', [&$path]);
+		return $path;
+	}
+
 	public static function show($str, $data = []){
 		$str = self::parseInclude($str);
 		if(!empty($data)) {
@@ -26,18 +54,28 @@ class View
 	 */
 	public static function load($name, $data = [], $allow_json = false)
 	{
+		$use_data = array_merge(self::$data, $data);
+		// 开始加载模板
+		Listen::hook('viewBeforeLoad', [&$name, &$use_data]);
+
 		if (Request::isAjax() && $allow_json) {
 			return Response::json($data);
 		}
-		$config = Config::get('TEMPLATE');
-		$tpl_path = ROOT_PATH . $config['PATH'] . DS . $name . $config['EXT'];
-
+		$tpl_path = self::getPath($name);
 		if (file_exists($tpl_path)) {
-			(function() use($data, $tpl_path){
-				extract(array_merge(self::$data, $data)); //数组转化为变量
+			(function() use($use_data, $tpl_path){
+				extract($use_data); //数组转化为变量
 				include($tpl_path);
 			})();
+
+			// 模板加载结束
+			Listen::hook('viewLoaded', [&$name, &$use_data]);
+			return true;
 		} else {
+
+			// 模板加载错误
+			Listen::hook('viewLoadError', [&$name, &$use_data]);
+			return;
 			$tpl = '404';
 			echo $tpl_path;
 		}
@@ -51,8 +89,7 @@ class View
 	 */
 	public static function page($name, $data = [])
 	{
-		$config = Config::get('TEMPLATE');
-		$tpl_path = ROOT_PATH . $config['PATH'] . DS . $name . $config['EXT'];
+		$tpl_path = self::getPath($name);
 		if (file_exists($tpl_path)) {
 			(function() use($data, $tpl_path){
 				extract(array_merge(self::$data, $data)); //数组转化为变量
@@ -71,6 +108,7 @@ class View
 	 */
 	public static function data($name, $value = '')
 	{
+		Listen::hook('viewDataUpdate', [&$name, &$value]);
 		if (is_string($name)) {
 			if (empty($value)) { //取值操作
 				return self::$data[$name];
@@ -93,15 +131,6 @@ class View
             'model' => 'default'
         ]);
         $component->load($name);
-		// Listen::hook('loadComponentBefore', ['name' => $name]);
-		// $component = self::$components[$name];
-		// foreach ($component['props'] as $key => &$value) {
-		// 	if (isset($data[$key])) {
-		// 		$value = $data[$key];
-		// 	}
-		// }
-		// $data = $component['data']($component);
-		// self::load($component['template'], $data);
 	}
 
 	private static $components = [];
@@ -115,32 +144,5 @@ class View
 			return self::$components['name'];
 		}
 		return self::$components[$name] = $options;
-	}
-
-
-	private $config = [
-		'tag_begin' => '<_',
-		'tag_end' => '_>'
-	];
-
-
-	/**
-	 * 模板解析输出
-	 * @param string $context 模板内容
-	 */
-	public static function template($context)
-	{
-		// $config = [
-		// 	'tag_begin' => '<_',
-		// 	'tag_end' => '_>',
-		// 	'tag_over' => '/'
-		// ];
-		// // if(preg_replace_callback('/<\!--include:(.+?)-->/', function($met){
-		// // 	$this->context = str_replace($met[0],file_get_contents(".".$met[1]),$this->context);
-		// // }, $this->context));$pattern
-		// $pattern = '/' . $config['tag_begin'] . '([a-zA-Z0-9]+)( +(.+?)="(.+?)")*?\/' . $config['tag_end'] . '/';
-		// $pattern = '/<_.*? (.+?)="(.+?)"\/_>/';
-		// preg_match_all($pattern, $context,$mat, PREG_SET_ORDER);
-
 	}
 }

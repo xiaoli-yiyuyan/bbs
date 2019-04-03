@@ -71,12 +71,12 @@ class Page
 
 	public static function error($msg, $url = '')
 	{
-		View::load('error', ['msg' => $msg]);
+		View::load('error', ['err' => 1, 'msg' => $msg], true);
 	}
 
 	public static function success($msg, $url = '')
 	{
-		View::load('success', ['msg' => $msg, 'url' => $url]);
+		View::load('success', ['msg' => $msg, 'url' => $url], true);
 	}
 
 	public static function countPage($p, $allnum, $pagesize = 10){

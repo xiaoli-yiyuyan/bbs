@@ -32,4 +32,9 @@ class Index extends Common
         print_r((new \ReflectionMethod('App\Index', 'tes'))->getParameters());
         $methods = $ref->getMethods();
     }
+    
+    public function getTheme()
+    {
+        echo Setting::get('theme');
+    }
 }

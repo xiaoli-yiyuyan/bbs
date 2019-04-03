@@ -206,13 +206,46 @@ $(function() {
         return size+unitArr[index];
     }
 
+    var $mark_input = $('.mark_input');
+    $('.btn_add_mark').click(function() {
+        $.get('/forum/mark_check', {
+            title: $mark_input.text()
+        }).then(function(data) {
+            if (data.err) {
+                return $.alert('标签名不正确，或不能使用！');
+            }
+            var all_mark_id = getAllMarkId();
+            if (all_mark_id.indexOf(data.id) >= 0) {
+                return $.alert('改标签已经添加了，不能重复添加的哦！');
+            }
+            if (data.status == 0) {
+                $.alert('您添加的标签为一个新的标签，系统审核通过之后即可显示！');
+            }
+            $mark_input.text('').before('<span class="mark-item mark-close" data-id="' + data.id + '">' + data.title + '</span>');
+        });
+    });
+
+    $(document).on('click', '.mark-close', function() {
+        $(this).remove();
+    })
+
+    // 获取所有已添加标签
+    var getAllMarkId = function() {
+        var data = [];
+        $('.item-input .mark-item').each(function() {
+            data.push($(this).data('id'));
+        });
+        return data;
+    }
+
     $('#add').submit(function() {
-        var $this = $(this)
+        var $this = $(this);
+        $this.find('input[name=mark_body]').val(getAllMarkId());
         $.post($this.attr('action'), $this.serialize()).then(function(data) {
             if (data.err) {
                 $.alert(data.msg);
             } else {
-                location.href = '/forum/view?id=' + data.id;
+                location.replace('/forum/view?id=' + data.id);
             }
         });
         return false;

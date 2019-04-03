@@ -146,7 +146,7 @@
         var $this = $(this)
         // console.log($this.serializeArray());
         $.post($this.attr('action'), $this.serialize()).then(function(data) {
-            data = JSON.parse(data);
+            // data = JSON.parse(data);
             if (data.err) {
                 $.alert(data.msg);
             } else {
