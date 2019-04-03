@@ -9,6 +9,7 @@ use Iam\Session;
 use Iam\Request;
 use Iam\Response;
 use Model\User;
+use app\Setting;
 
 class Login extends Common
 {
@@ -19,7 +20,9 @@ class Login extends Common
 
     public function index()
     {
-    	View::load('login/index');
+        $setting = Setting::get(['is_register']);
+        $setting['is_register'] = $setting['is_register'] ?? 1;
+    	View::load('login/index',$setting);
     }
 
     public function login($username = '', $password = '')
@@ -56,6 +59,11 @@ class Login extends Common
 
     public function register()
     {
+        $setting = Setting::get(['is_register']);
+        $setting['is_register'] = $setting['is_register'] ?? 1;
+        if($setting['is_register'] == 0){
+            Url::redirect('/Login/index');
+        }
         if (Request::isPost()) {
             $post = Request::post(['username', 'password', 'password2', 'email']);
             $check = $this->dataCheck($post);

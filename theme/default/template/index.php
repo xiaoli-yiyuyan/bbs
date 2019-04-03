@@ -3,7 +3,7 @@
 <script src="/static/js/iscroll.js"></script>
 <div class="header-height"></div>
 <header class="header">
-    <span class="logo"></span>
+    <span class="logo" style="background-image:url(<?php echo $weblogo?>)"></span>
     
     <?php if ($message_count = source('App/Message/count') > 0) { ?>
             <a href="/message" class="new_message_icon"><?=$message_count?></a>
