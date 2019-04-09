@@ -13,6 +13,12 @@ class ForumReply extends Model
         return User::getAuthor($data['user_id']);
     }
 
+    public function getForumArtAttr($val, $data)
+    {
+        $res = Forum::get($data['forum_id']);
+        $res->append(['author', 'img_list']);
+        return $res;
+    }
 
     public static function getList2($forum_id = 0, $page = 1, $pagesize = 10)
     {
@@ -92,5 +98,17 @@ class ForumReply extends Model
             'page' => $page,
             'data' => $list
         ];
+    }
+    
+    /**
+     * 获取回复帖列表 
+     * @param int $reply_userid 回帖用户id
+     * */
+
+    public function replyList($reply_userid = '', $pagesize = 10)
+    {
+        $list = $this->field('user_id, forum_id, context, create_time')->where('user_id', $reply_userid)->order('create_time DESC')->paginate($pagesize);
+        $list->append(['author']);
+        return $list;
     }
 }

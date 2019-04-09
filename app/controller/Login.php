@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Iam\Db;
+use think\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Page;
@@ -70,10 +70,11 @@ class Login extends Common
             if ($check['err']) {
                 return Page::error($check['msg']);
             }
-            if (Db::table('user')->where(['username' => $post['username']])->find()) {
-                return Page::error('用户名重复，请更换！');
+            $user = new User;
+            if ($user->where(['username' => $post['username']])->whereOr(['email' => $post['email']])->find()) {
+                return Page::error('用户名或邮箱重复，请更换！');
             }
-            $id = Db::table('user')->add([
+            $id = $user->insertGetId([
                 'username' => $post['username'],
                 'nickname' => $post['username'],
                 'password' => md5($post['password']),
@@ -82,7 +83,7 @@ class Login extends Common
                 'addip' => Request::ip()
             ]);
             $sid = $id . '_' . getRandChar(16);
-            Db::table('user')->where(['id' => $id])->update([
+            $user->where(['id' => $id])->update([
                 'sid' => $sid
             ]);
 

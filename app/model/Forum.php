@@ -149,7 +149,6 @@ class Forum extends Model
             }
             $forum->where('user_id', 'in', $user_id);
         }
-
         // 排序
         $order = strtolower($order);
 

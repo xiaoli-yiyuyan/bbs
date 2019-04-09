@@ -17,6 +17,7 @@ use Model\Category;
 use Model\Message;
 use Model\ForumBuy;
 use Model\ForumMark;
+use Model\Friend;
 use Model\ForumMarkBody;
 // use Model\Setting;
 
@@ -95,11 +96,17 @@ class Forum extends Common
             $item['img_list'] = $this->setViewFiles($item['img_data']);
             $item['file_list'] = $this->setViewFiles($item['file_data']);
         }
+
+        $ids = array_column($list->toArray()['data'], 'id');
+
         $this->parseList($list);
+        $replyCount = ForumReply::where('forum_id', 'in', $ids)->count(1);
+
         View::load('forum/list', [
             'list' => $list,
             'page' => $list->render(),
-            'class_info' => $class_info
+            'class_info' => $class_info,
+            'reply_count' => $replyCount
         ]);
     }
 
@@ -401,12 +408,15 @@ class Forum extends Common
             $item->context = $this->face($item->context);
             $item->context = Ubb::altUser($item->context);
         });
-        $forum = $forum->append(['mark_body']);
+        $forum = $forum->append(['mark_body', 'author']);
+        
+        $fans_count = Friend::where('care_user_id', $forum->user_id)->count();
         View::load('forum/view', [
             'forum' => $forum,
             'forum_user' => $forum_user,
             'class_info' => $class_info,
-            'forum_reply' => $forum_reply
+            'forum_reply' => $forum_reply,
+            'fans_count' => $fans_count
         ]);
         // return ['err' => 0, 'info' => $info, 'user' => $forum_user, 'class_info' => $class_info];
     }
@@ -515,6 +525,13 @@ class Forum extends Common
         $list = ForumReply::getList($options);
         $this->parseList($list['data']);
         return $list;
+    }   
+    public function replyArtList()
+    {
+        if (!$this->isLogin()) {
+            return Page::error('会员未登录');
+        }
+        View::load('forum/reply_list');
     }
     public function reply()
     {

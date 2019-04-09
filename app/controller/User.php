@@ -37,7 +37,6 @@ class User extends Common
         // 评论相关
         $reply_count = ForumReply::where('user_id', $this->user['id'])->count();
         $reply_data = ForumReply::where('user_id', $this->user['id'])->order('id', 'desc')->find();
-
         View::load('user/index',[
             'fans_count' => $fans_count,
             'care_count' => $care_count,
