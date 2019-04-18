@@ -35,15 +35,16 @@ class Plugin
 		$files = array_diff(scandir($dir), array('.', '..'));
 		if (is_array($files)) {
 			foreach($files as $key => $value){
-				$this->pluginPath = '\\' . $dir . '\\' . $value;
+				$plugin = new self;
+				$plugin->pluginPath = '\\' . $dir . '\\' . $value;
 				// 加载入口文件
 				$runClass = '\\' . $dir . '\\' . $value . '\\Index';
 				if (!class_exists($runClass)) {
 					continue;
 				}
 
-				Listen::on('appBeforeCreateError', [$this, 'controller']);
-				Listen::on('appBeforeCreate', [$this, 'hookController']);
+				Listen::on('appBeforeCreateError', [$plugin, 'controller']);
+				Listen::on('appBeforeCreate', [$plugin, 'hookController']);
 				// 运行插件
 				$pluginClass = new $runClass;
 				if (method_exists($pluginClass, 'init')) {
@@ -71,8 +72,11 @@ class Plugin
 	 */
 	public function controller(&$className)
 	{
-		$className = $this->getClassName($className);
-		$className = $this->pluginPath . '\\' . $this->controller . '\\' . $className; 
+		$class_name = $this->getClassName($className);
+		$class_name = $this->pluginPath . '\\' . $this->controller . '\\' . $class_name;
+		if (class_exists($class_name)) {
+			$className = $class_name;
+		}
 	}
 
 	/**
