@@ -10,6 +10,8 @@ use Iam\Request;
 use Iam\Response;
 use Model\User;
 use app\Setting;
+use Iam\Config;
+use \Firebase\JWT\JWT;
 
 class Login extends Common
 {
@@ -25,6 +27,9 @@ class Login extends Common
     	View::load('login/index',$setting);
     }
 
+    /**
+     * 会员登录
+     */
     public function login($username = '', $password = '')
     {
         $post = Request::post(['username', 'password']);
@@ -36,9 +41,54 @@ class Login extends Common
         if (!$user = User::where($where)->find()) {
             return Page::error('登录失败！');
         }
+        $token = JWT::encode([
+            'id' => $user->id,
+            'time' => time()
+        ], Config::get('TOKEN_KEY')); //输出Token
+        $res = ['err' => 0, 'msg' => '登录成功', 'token' => $token];
 
         Session::set('sid', $user['sid']);
-        Url::redirect('/user/index');
+        Url::redirect('/user/index', $res, true);
+    }
+
+    /**
+     * 微信登录接口
+     */
+    public function wxLogin($code = '', $encryptedData = '', $iv = '')
+    {
+        $params = [
+            'appid' => 'wx334cbe85bc606230',
+            'secret' => '0b3340bbe6c3bf0b256e7593d2c940f0',
+            'js_code' => $code,
+            'grant_type' => 'authorization_code'
+        ];
+        $res = http('https://api.weixin.qq.com/sns/jscode2session', $params);
+        $res = json_decode($res, true);
+        if (!isset($res['openid'])) {
+            return Response::json(['err' => 1, 'msg' => '获取身份信息失败！']);
+        }
+        if (!$user = User::get(['wx_open_id' => $res['openid']])) {
+            $userinfo = decryptData( $params['appid'] , $res['session_key'], $encryptedData, $iv );
+            $user = User::create([
+                'wx_open_id' => $res['openid'],
+                'nickname' => $userinfo['nickName'],
+                'photo' => $userinfo['avatarUrl']
+            ]);
+            // print_r($user);
+            $user = User::get($user->id);
+        }
+        $token = JWT::encode([
+            'id' => $user->id,
+            'time' => time()
+        ], Config::get('TOKEN_KEY')); //输出Token
+        return Response::json(['err' => 0, 'msg' => '登录成功', 'userinfo' => [
+            'nickname' => $user->nickname,
+            'photo' => $user->photo,
+            'id' => $user->id,
+            'coin' => $user->coin,
+            'comm_id' => $user->comm_id,
+            'identity' => $user->identity
+        ],'token' => $token]);
     }
 
     public function loginApi()
@@ -57,6 +107,9 @@ class Login extends Common
         return Response::json(['err' => 0, 'msg' =>'登陆成功']);
     }
 
+    /**
+     * 用户注册
+     */
     public function register()
     {
         $setting = Setting::get(['is_register']);
@@ -87,9 +140,14 @@ class Login extends Common
                 'sid' => $sid
             ]);
 
+            $token = JWT::encode([
+                'id' => $user->id,
+                'time' => time()
+            ], Config::get('TOKEN_KEY')); //输出Token
+            $res = ['err' => 0, 'msg' => '登录成功', 'token' => $token];
             Session::set('sid', $sid);
 
-            Url::redirect('/user/index');
+            Url::redirect('/user/index', $res, true);
         } else {
             View::load('login/register');
         }

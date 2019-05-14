@@ -27,7 +27,7 @@ class Url
 		return $href;
 	}
 
-	public static function redirect($url, $params = [])
+	public static function redirect($url, $params = [], $allow_json = false)
 	{
 		$data = cmdParse($url);
 		$params = array_merge($data['query'], $params);
@@ -35,6 +35,10 @@ class Url
 		$url = '/' . $action;
 		if (!empty($params)) {
 			$url .= '?' . http_build_query($params);
+		}
+		
+		if (Request::isAjax() && $allow_json) {
+			return Response::json($data);
 		}
 		header("Location: $url");
 	}

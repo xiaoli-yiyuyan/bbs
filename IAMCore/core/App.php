@@ -75,10 +75,10 @@ class App
 	private static function setErrorPage()
 	{
 		$path = self::parseViewPath();
-        View::setConfig([
-            'DIR' => Config::get('TEMPLATE.DIR')
-        ]);
-		if (!View::load($path, $_REQUEST)) {
+        // View::setConfig([
+        //     'DIR' => Config::get('TEMPLATE.DIR')
+        // ]);
+		if (!View::load($path, $_REQUEST) && !View::loadStatic($path)) {
 			header('HTTP/1.1 404 Not Found');
 			header("status: 404 Not Found");
 			echo '404 您访问的网页不存在[2] <a href="/">点击返回首页</a>';

@@ -5,12 +5,15 @@ use Iam\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Session;
+use Iam\Request;
+use Iam\Config;
 use Iam\Controller;
 use Model\Category;
 use app\common\IamVersion;
 use Model\User;
 use app\Setting;
 use Model\SignLog;
+use \Firebase\JWT\JWT;
 
 class CommonPublic extends Controller
 {
@@ -25,28 +28,29 @@ class CommonPublic extends Controller
         $this->version = IamVersion::$version;
         
         $setting = Setting::get(['login_reward', 'weblogo', 'webname']);
-        if (Session::has('sid')) {
-            if ($this->user = User::get(['sid'=> Session::get('sid')])->toArray()) {
-                $last_time = strtotime($this->user['last_time']);
-                $_last_time = strtotime(date('Y-m-d', $last_time));
-                $now_time = time();
 
-                if ($now_time - $_last_time >= 86400) {
+        if ($user = $this->getMyUser()) {
+            $this->user = $user;
+            $last_time = strtotime($this->user['last_time']);
+            $_last_time = strtotime(date('Y-m-d', $last_time));
+            $now_time = time();
 
-                    $login_reward = $setting['login_reward'];
-                    User::changeCoin($this->user['id'], $login_reward);
-                }
+            if ($now_time - $_last_time >= 86400) {
 
-                $exp = $now_time - $last_time;
-                $exp = min($exp, $this->expMax) + $this->user['exp'];
-
-                Db::table('user')->where('sid', Session::get('sid'))->update(['last_time' => now(), 'exp' => $exp]);
-                $level_info = getUserLevel($this->user['exp'], $this->upExp);
-                $this->user = array_merge($this->user, $level_info);
-                $this->user['is_today_sign'] = SignLog::isTodaySign($this->user['id']);
+                $login_reward = $setting['login_reward'];
+                User::changeCoin($this->user['id'], $login_reward);
             }
-        } else {
+
+            $exp = $now_time - $last_time;
+            $exp = min($exp, $this->expMax) + $this->user['exp'];
+            $this->user->last_time = now();
+            $this->user->exp = $exp;
+            $this->user->save();
+            $level_info = getUserLevel($this->user['exp'], $this->upExp);
+            $this->user = array_merge($this->user->toArray(), $level_info);
+            $this->user['is_today_sign'] = SignLog::isTodaySign($this->user['id']);
         }
+
         View::data([
             'user' => $this->user,
             'version' => $this->version,
@@ -65,6 +69,28 @@ class CommonPublic extends Controller
         return;
       }
       return true;
+    }
+
+    /**
+     * 获取当前已登录用户信息
+     */
+    private function getMyUser()
+    {
+        if (Session::has('sid') && $user = User::get(['sid'=> Session::get('sid')])) {
+            return $user;
+        } else {
+            $jwt = $_SERVER['HTTP_X_TOKEN'] ?? Request::get('x_token');
+            try {
+                JWT::$leeway = 60;
+                $decoded = JWT::decode($jwt, Config::get('TOKEN_KEY'), ['HS256']);
+                $arr = (array)$decoded;
+                if ($user = User::get($arr['id'])) {
+                    return $user;
+                }
+            } catch (\UnexpectedValueException $e) {
+            } catch(Exception $e) {
+            }
+        }
     }
 
     /**

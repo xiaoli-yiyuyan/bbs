@@ -61,7 +61,7 @@ class File extends Common
             }
             $name = explode('.', $file_name);
             $ext = end($name);
-            return ['id' => $id, 'ext' => $ext, 'mine' => $mine, 'size' => $size, 'path' => $file_path];
+            return ['id' => $id, 'ext' => $ext, 'mine' => $mine, 'size' => $size, 'path' => 'http://192.168.2.188:805' . $file_path];
         } else {
             return ['err' => 1, 'msg' => $up->getErrorMsg()];
         }

@@ -6,6 +6,7 @@ use Iam\Url;
 use Iam\View;
 use Iam\Page;
 use Iam\Cache;
+use Iam\Session;
 use Iam\Request;
 use Iam\Response;
 use Iam\Config;
@@ -19,6 +20,7 @@ use app\common\CheckUpdate;
 use Model\Forum;
 use Model\User;
 use Model\Theme;
+use \Firebase\JWT\JWT;
 
 class Admin extends Common
 {
@@ -873,5 +875,25 @@ class Admin extends Common
     public function plugin()
     {
         View::load('admin/plugin');
+    }
+
+    public function login($username = '', $password = '')
+    {
+        if (empty($username) || empty($password)) {
+            return Page::error('用户名或密码为空！');
+        }
+
+        $where = ['username' => $username, 'password' => md5($password)];
+        if (!$user = User::where($where)->find()) {
+            return Page::error('登录失败！');
+        }
+        $token = JWT::encode([
+            'id' => $user->id,
+            'time' => time()
+        ], Config::get('TOKEN_KEY')); //输出Token
+        $res = ['err' => 0, 'msg' => '登录成功', 'token' => $token];
+
+        Session::set('sid', $user['sid']);
+        Url::redirect('/admin/index', $res, true);
     }
 }
