@@ -414,3 +414,45 @@ function scan_dir($dir, $filter = []){
     unset($key, $value);
     return $files;
 }
+/**
+ * 微信信息解密
+ * @param  string  $appid  小程序id
+ * @param  string  $sessionKey 小程序密钥
+ * @param  string  $encryptedData 在小程序中获取的encryptedData
+ * @param  string  $iv 在小程序中获取的iv
+ * @return array 解密后的数组
+ */
+function decryptData( $appid , $sessionKey, $encryptedData, $iv )
+{
+    $OK = 0;
+    $IllegalAesKey = -41001;
+    $IllegalIv = -41002;
+    $IllegalBuffer = -41003;
+    $DecodeBase64Error = -41004;
+ 
+    if (strlen($sessionKey) != 24) {
+        return $IllegalAesKey;
+    }
+    $aesKey=base64_decode($sessionKey);
+ 
+    if (strlen($iv) != 24) {
+        return $IllegalIv;
+    }
+    $aesIV=base64_decode($iv);
+ 
+    $aesCipher=base64_decode($encryptedData);
+ 
+    $result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+    $dataObj=json_decode( $result );
+    if( $dataObj  == NULL )
+    {
+        return $IllegalBuffer;
+    }
+    if( $dataObj->watermark->appid != $appid )
+    {
+        return $DecodeBase64Error;
+    }
+    $data = json_decode($result,true);
+ 
+    return $data;
+}

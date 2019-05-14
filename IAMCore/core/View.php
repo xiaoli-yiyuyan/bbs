@@ -29,10 +29,13 @@ class View
 	/**
 	 * 获取路径
 	 */
-	public static function getPath($name)
+	public static function getPath($name, $ext = true)
 	{
 		
-		$path = ROOT_PATH . self::$config['DIR'] . DS . self::$config['PATH'] . DS . $name . self::$config['EXT'];
+		$path = ROOT_PATH . self::$config['DIR'] . DS . self::$config['PATH'] . DS . $name;
+		if ($ext) {
+			$path .= self::$config['EXT'];
+		}
 		Listen::hook('viewGetPath', [&$path]);
 		return $path;
 	}
@@ -80,6 +83,104 @@ class View
 			echo $tpl_path;
 		}
 		//return $tpl;
+	}
+	private static $mime = array (
+		//applications
+		'doc'  => 'application/vnd.ms-word',
+		'xls'  => 'application/vnd.ms-excel',
+		'ppt'  => 'application/vnd.ms-powerpoint',
+		'pps'  => 'application/vnd.ms-powerpoint',
+		'pdf'  => 'application/pdf',
+		'xml'  => 'application/xml',
+		'odt'  => 'application/vnd.oasis.opendocument.text',
+		'swf'  => 'application/x-shockwave-flash',
+		// archives
+		'gz'  => 'application/x-gzip',
+		'tgz'  => 'application/x-gzip',
+		'bz'  => 'application/x-bzip2',
+		'bz2'  => 'application/x-bzip2',
+		'tbz'  => 'application/x-bzip2',
+		'zip'  => 'application/zip',
+		'rar'  => 'application/x-rar',
+		'tar'  => 'application/x-tar',
+		'7z'  => 'application/x-7z-compressed',
+		// texts
+		'txt'  => 'text/plain',
+		'html' => 'text/html',
+		'htm'  => 'text/html',
+		'js'  => 'text/javascript',
+		'css'  => 'text/css',
+		'bmp'  => 'image/x-ms-bmp',
+		'jpg'  => 'image/jpeg',
+		'jpeg' => 'image/jpeg',
+		'gif'  => 'image/gif',
+		'png'  => 'image/png',
+		'svg' => 'image/svg+xml'
+		);
+	private static function _getMimeDetect() {
+	  if (class_exists('finfo')) {
+		return 'finfo';
+	  } else if (function_exists('mime_content_type')) {
+		return 'mime_content_type';
+	  } else if ( function_exists('exec')) {
+		$result = exec('file -ib '.escapeshellarg(__FILE__));
+		if ( 0 === strpos($result, 'text/x-php') OR 0 === strpos($result, 'text/x-c++')) {
+		  return 'linux';
+		}
+		$result = exec('file -Ib '.escapeshellarg(__FILE__));
+		if ( 0 === strpos($result, 'text/x-php') OR 0 === strpos($result, 'text/x-c++')) {
+		  return 'bsd';
+		}
+	  }
+	  return 'internal';
+	}
+	private static function _getMimeType($path) {
+	  $mime = self::$mime;
+	  $fmime = self::_getMimeDetect();
+	  switch($fmime) {
+		case 'finfo':
+		  $finfo = finfo_open(FILEINFO_MIME);
+		  if ($finfo) 
+			$type = @finfo_file($finfo, $path);
+		  break;
+		case 'mime_content_type':
+		  $type = mime_content_type($path);
+		  break;
+		case 'linux':
+		  $type = exec('file -ib '.escapeshellarg($path));
+		  break;
+		case 'bsd':
+		  $type = exec('file -Ib '.escapeshellarg($path));
+		  break;
+		default:
+		  $pinfo = pathinfo($path);
+		  $ext = isset($pinfo['extension']) ? strtolower($pinfo['extension']) : '';
+		  $type = isset($mime[$ext]) ? $mime[$ext] : 'unkown';
+		  break;
+	  }
+	  $type = explode(';', $type);
+	  //需要加上这段，因为如果使用mime_content_type函数来获取一个不存在的$path时会返回'application/octet-stream'
+	  if ($fmime != 'internal' AND $type[0] == 'application/octet-stream') {
+		$pinfo = pathinfo($path); 
+		$ext = isset($pinfo['extension']) ? strtolower($pinfo['extension']) : '';
+		if (!empty($ext) AND !empty($mime[$ext])) {
+		  $type[0] = $mime[$ext];
+		}
+	  }
+	  return $type[0];
+	}
+	
+	/**
+	 * 加载静态文件
+	 */
+	public static function loadStatic($name)
+	{
+		$name = preg_replace('/^(.+?\/)/', '', $name);
+		$path = self::getPath($name, false);
+		$mime = self::_getMimeType($path);
+		header( 'Content-type: ' . $mime);
+		readfile ($path);
+		return true;
 	}
 
 	/**

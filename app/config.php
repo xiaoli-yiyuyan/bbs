@@ -13,6 +13,7 @@ $config = [
     'REWRITE' => 1, //是否开启伪静态哦 0关闭 1开启
     'component' => $setting['component'],
     'theme' => $setting['theme'],
+    'TOKEN_KEY' => 'asdasklj49832u9sjh'
 ];
 $config = array_merge($config, $setting);
 return $config;

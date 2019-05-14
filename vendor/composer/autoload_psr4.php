@@ -6,10 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'think\\' => array($vendorDir . '/topthink/think-orm/src'),
+    'think\\' => array($vendorDir . '/topthink/think-orm/src', $vendorDir . '/topthink/think-validate/src'),
     'plugin\\' => array($baseDir . '/plugin'),
     'app\\' => array($baseDir . '/app'),
     'Model\\' => array($baseDir . '/app/model'),
     'Iam\\' => array($baseDir . '/IAMCore/core'),
+    'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
     'App\\' => array($baseDir . '/app/controller'),
 );

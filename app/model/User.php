@@ -30,7 +30,7 @@ class User extends Model
     //     'sort' => 0,0 正序 1 倒序
     //   )
 
-    private static $order = ['last_time', 'id', 'exp', 'coin'];
+    private static $order = ['last_time', 'id', 'exp', 'coin', 'create_time'];
     private static $sort = ['ASC', 'DESC'];
 
     private static $search = [];
@@ -52,6 +52,17 @@ class User extends Model
         }
         return $user->paginate($options['pagesize'], false, [
             'var_page' => $options['var_page']
+        ]);
+    }
+
+    public static function getUserList($order = 'create_time', $sort = 'ASC', $pagesize = 10, $var_page = 'page')
+    {
+        $user = self::where('lock_time', '<', now());
+
+        $user->order($order, $sort);
+
+        return $user->paginate($pagesize, false, [
+            'var_page' => $var_page
         ]);
     }
 
