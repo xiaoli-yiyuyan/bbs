@@ -152,7 +152,6 @@ class Forum extends Common
 
         if (empty($context)) {
             return Response::json(['err' => 3, 'msg' => '帖子内容不能为空！']);
-
         }
 
         if (!empty($img_data)) {
