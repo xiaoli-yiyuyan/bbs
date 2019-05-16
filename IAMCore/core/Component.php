@@ -329,9 +329,10 @@ class Component
 	 */
 	public function use($name, $data = [])
 	{
+
 		$path = $this->dir . $this->ds . $name . '.php';
 		if (file_exists($path)) {
-			(function() use($data, $config){
+			(function() use($data, $path){
 				extract($data); //数组转化为变量
 				include($path);
 			})();

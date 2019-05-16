@@ -127,3 +127,23 @@ function component($cmd, $query = [])
 	}
 	$component->load($action, $data['query']);
 }
+
+/**
+ * 加载自定义组件(新版函数)
+ * @param string $cmd 	指令
+ * @param array $query 	附加参数
+ */
+function useComp($cmd, $query = [])
+{
+	$component_mark = \Iam\Config::get('component');
+	$data = cmdParse($cmd);
+	$action = implode('/', $data['action']);
+	$component = new Iam\Component([
+		'model' => $component_mark,
+		'template_path' => 'theme/'
+	]);
+	if (!empty($query)) {
+		$data['query'] = array_merge($data['query'], $query);
+	}
+	$component->use($action, $data['query']);
+}

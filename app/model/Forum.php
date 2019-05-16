@@ -126,6 +126,19 @@ class Forum extends Model
     }
 
     /**
+     * 根据标签搜索文章
+     */
+    public static function searchByMark($mark_id = '')
+    {
+        $list = self::where('id', 'IN', function($query) use($mark_id) {
+            $query->table('forum_mark_body')->where('mark_id', $mark_id)->field('forum_id');
+        });
+        return $list->paginate(ASetting::get('pagesize'), false, [
+            'query' => ['mark_id' => $mark_id]
+        ]);
+    }
+
+    /**
      * 获取列表数据
      * @param string|array  $class_id 栏目id，字符串用','分隔
      * @param string|array  $user_id 会员id，字符串用','分隔

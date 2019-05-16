@@ -201,7 +201,7 @@ class Forum extends Common
             foreach ($mark_arr as $item) {
                 if (ForumMark::get($item)) {
                     ForumMarkBody::create([
-                        'forum_id' => $id,
+                        'forum_id' => $id->id,
                         'mark_id' => $item
                     ]);
                 }
@@ -697,12 +697,16 @@ class Forum extends Common
         imagecropper($path, 200, 200);
     }
 
-    public function search($keyword = '')
+    public function search($keyword = '', $mark_id = '')
     {
-        if ($keyword === '') {
+        if ($keyword === '' && $mark_id === '') {
             return Page::error('请输入您要搜索的关键词！');
         }
-        $list = MForum::search($keyword);
+        if ($keyword) {
+            $list = MForum::search($keyword);
+        } else {
+            $list = MForum::searchByMark($mark_id);
+        }
         View::load('forum/search', [
             'list' => $list
         ]);
