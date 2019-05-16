@@ -1,5 +1,5 @@
 <?php
-namespace Model;
+namespace comm\model;
 
 use think\Model;
 

@@ -1,12 +1,13 @@
 <?php
-namespace App;
+namespace app;
 
 use think\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Listen;
+use Iam\Router;
 
-class Index extends Common
+class Index extends \comm\core\Home
 {
     public function index()
     {
@@ -16,7 +17,7 @@ class Index extends Common
         //     $item['mark'] = $this->getMarkTitle($item['id']);
         //  }
         // Url::redirect('/chat/room/?id=2');
-    	View::load('index');
+        View::load('index');
     }
 
     public function getMarkTitle($novelid)

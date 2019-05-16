@@ -1,5 +1,4 @@
 <?php
-	define('DS', DIRECTORY_SEPARATOR);
 	define('EXT', '.php');
 	define('CORE_PATH', __DIR__ . DS . 'core' . DS);
 	define('ROOT_PATH', dirname(realpath(APP_PATH)) . DS);
@@ -9,7 +8,7 @@
 	require ROOT_PATH . 'vendor/autoload.php';
 	require IAM_PATH . 'function.php';
 
-	$config = \Iam\Config::set(include APP_PATH . 'datebase' . EXT); //设置并返回配置
+	$config = \Iam\Config::set(include COMM_PATH . 'datebase' . EXT); //设置并返回配置
 
 	\think\Db::setConfig([
 		// 数据库类型
@@ -33,16 +32,17 @@
 		// 数据库表前缀
 		'prefix'      => '',
 		'paginate'    => [
-			'type'      => 'app\ext\IPage',
+			'type'      => 'comm\ext\IPage',
 			'var_page'  => 'page',
 			'list_rows' => 15,
 		],
 	]);
 
+	include(COMM_PATH . 'function.php');
 	// \Iam\Loader::register();
 	// \Iam\Url::$hide = true;
 	\Iam\Config::set(include IAM_PATH . 'convention' . EXT);
-	\Iam\Config::set(include APP_PATH . 'config' . EXT);
+	\Iam\Config::set(include COMM_PATH . 'config' . EXT);
 	\Iam\Plugin::instance()->load();
 	\Iam\Listen::hook('beforeCreate');
 	\Iam\App::run();

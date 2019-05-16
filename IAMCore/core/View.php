@@ -62,6 +62,7 @@ class View
 			return Response::json($data);
 		}
 		$tpl_path = self::getPath($name);
+		
 		if (file_exists($tpl_path)) {
 			(function() use($use_data, $tpl_path){
 				extract($use_data); //数组转化为变量

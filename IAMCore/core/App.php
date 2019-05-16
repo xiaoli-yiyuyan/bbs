@@ -13,7 +13,6 @@ class App
 
 	public static function init()
 	{
-		include(APP_PATH . 'function.php');
 		self::parseUrl();
 	}
 
@@ -32,7 +31,13 @@ class App
 
 	public static function runTpl()
 	{
+		$route = Router::instance()->parse();
+		self::$namespace = $route['namespace'];
+		self::$class = $route['class'];
+		self::$action = $route['action'];
+
 		$runClass = '\\' . self::$namespace . '\\' . self::$class;
+		// print_r($runClass);
 		if (!class_exists($runClass)) {
 			Listen::hook('appBeforeCreateError', [&$runClass]);
 		}

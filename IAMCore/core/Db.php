@@ -25,7 +25,7 @@ class Db
     {
         if(!self::$init){
             if (empty($config)) {
-                $config = Config::set(include APP_PATH . 'datebase' . EXT); //设置并返回配置
+                $config = Config::set(include COMM_PATH . 'datebase' . EXT); //设置并返回配置
             }
             self::$db = new Mysql($config);
             self::$init = true;

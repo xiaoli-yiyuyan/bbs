@@ -1,5 +1,5 @@
 <?php
-namespace app;
+namespace comm;
 
 class Setting
 {
@@ -11,7 +11,7 @@ class Setting
      */
     static public function db()
     {        
-        if (empty(static::$db)) static::$db = new \Model\Setting;
+        if (empty(static::$db)) static::$db = new \comm\model\Setting;
         return static::$db;
     }
 

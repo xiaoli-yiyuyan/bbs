@@ -9,7 +9,7 @@
 // | Author: zhangyajun <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-namespace app\ext;
+namespace comm\ext;
 
 use think\Paginator;
 

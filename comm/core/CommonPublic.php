@@ -1,5 +1,5 @@
 <?php
-namespace app\common;
+namespace comm\core;
 
 use Iam\Db;
 use Iam\Url;
@@ -7,9 +7,8 @@ use Iam\View;
 use Iam\Session;
 use Iam\Controller;
 use Model\Category;
-use app\common\IamVersion;
 use Model\User;
-use app\Setting;
+use comm\Setting;
 use Model\SignLog;
 
 class CommonPublic extends Controller
@@ -26,6 +25,7 @@ class CommonPublic extends Controller
         
         $setting = Setting::get(['login_reward', 'weblogo', 'webname']);
         if (Session::has('sid')) {
+            
             if ($user = User::get(['sid'=> Session::get('sid')])) {
                 $this->user = $user->toArray();
                 $last_time = strtotime($this->user['last_time']);

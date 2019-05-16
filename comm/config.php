@@ -1,5 +1,5 @@
 <?php
-$setting = \app\Setting::get(['theme', 'component']);
+$setting = \comm\Setting::get(['theme', 'component']);
 $config = [
     'data_backup_path' => '../data',
     'data_backup_part_size' => 20971520,

@@ -7,8 +7,9 @@
             "Iam\\": "IAMCore/core/",
             "App\\": "app/controller/",
             "app\\": "app/",
+            "comm\\": "comm/",
             "plugin\\": "plugin/",
-            "Model\\": "app/model/"
+            "Model\\": "comm/model/"
         }
     }
 }
