@@ -9,7 +9,7 @@ use Iam\AppApi;
 use Iam\Request;
 use Iam\Response;
 
-class Api extends Common
+class Api extends \comm\core\Home
 {
     public function __construct()
     {

@@ -9,7 +9,7 @@ use Iam\AppApi;
 use Iam\Request;
 use Iam\Response;
 
-class Chat extends Common
+class Chat extends \comm\core\Home
 {
     public function __construct()
     {

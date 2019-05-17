@@ -125,7 +125,11 @@ class Forum extends \comm\core\Home
             View::data('column_info', $class_info);
         }
 
-        View::load('forum/add_page');
+        $column = Category::where('user_add', 1)->column('id,title');
+
+        View::load('forum/add_page', [
+            'column' => $column
+        ]);
     }
 
     /**

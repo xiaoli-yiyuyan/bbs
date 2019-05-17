@@ -4,7 +4,7 @@ namespace App;
 use Iam\Db;
 use Iam\FileUpload;
 
-class File extends Common
+class File extends \comm\core\Home
 {
     private $options = [
         'upload' => [

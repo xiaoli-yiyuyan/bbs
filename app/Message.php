@@ -3,9 +3,9 @@ namespace App;
 
 use Iam\View;
 use Model\Message as MMessage;
-use app\Setting;
+use comm\Setting;
 
-class Message extends Common
+class Message extends \comm\core\Home
 {
     public function index()
     {

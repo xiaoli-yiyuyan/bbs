@@ -1,9 +1,9 @@
 <?php
 namespace App;
 
-use app\common\IamVersion;
+use \comm\core\IamVersion;
 
-class UpdateZip extends Common
+class UpdateZip extends \comm\core\Home
 {
     private $ianmi = 'http://update.ianmi.com';
 

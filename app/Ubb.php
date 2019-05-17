@@ -12,7 +12,7 @@ use Model\ForumReply;
 use Model\File;
 use Model\Category;
 
-class Ubb extends Common
+class Ubb extends \comm\core\Home
 {
     public function read($rule)
     {

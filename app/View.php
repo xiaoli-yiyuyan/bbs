@@ -6,7 +6,7 @@ use Iam\Url;
 use Iam\View as CView;
 use Iam\Listen;
 
-class View extends Common
+class View extends \comm\core\Home
 {
     public function index()
     {

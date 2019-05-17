@@ -1,5 +1,5 @@
 <?php
-namespace app\common;
+namespace comm\core;
 
 use \PDO;
 use Iam\Config;

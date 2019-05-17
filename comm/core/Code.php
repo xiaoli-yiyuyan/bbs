@@ -1,5 +1,5 @@
 <?php
-namespace app\common;
+namespace comm\core;
 
 class Code
 {

@@ -5,7 +5,7 @@ use Iam\Db;
 use Iam\View;
 use Iam\Listen;
 
-class Index extends Common
+class Index extends \comm\core\Home
 {
     public function index()
     {

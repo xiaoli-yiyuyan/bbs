@@ -6,7 +6,7 @@ use Iam\Url;
 use Iam\View;
 use Iam\Listen;
 
-class Page extends Common
+class Page extends \comm\core\Home
 {
     public function index()
     {

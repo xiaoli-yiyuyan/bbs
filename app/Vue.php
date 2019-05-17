@@ -6,7 +6,7 @@ use Iam\View;
 use Iam\Page;
 use Iam\Request;
 
-class Vue extends Common
+class Vue extends \comm\core\Home
 {
     public function index()
     {

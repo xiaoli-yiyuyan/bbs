@@ -6,7 +6,7 @@ use Iam\Url;
 use Model\File;
 use Model\Category;
 
-class Column extends Common
+class Column extends \comm\core\Home
 {
     public function info($options)
     {

@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace app;
 
 use Iam\Db;
 use Iam\Url;
@@ -14,13 +14,13 @@ use Model\CategoryGroup;
 use Model\Code;
 use Model\Category;
 use app\Setting;
-use app\common\DatabaseTool;
-use app\common\CheckUpdate;
+use comm\core\DatabaseTool;
+use comm\core\CheckUpdate;
 use Model\Forum;
 use Model\User;
 use Model\Theme;
 
-class Admin extends Common
+class Admin extends \comm\core\Home
 {
     public function __construct()
     {

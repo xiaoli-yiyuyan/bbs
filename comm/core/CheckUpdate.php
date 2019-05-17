@@ -1,7 +1,6 @@
 <?php
-namespace app\common;
+namespace comm\core;
 
-use app\common\IamVersion;
 use Iam\Response;
 
 class CheckUpdate

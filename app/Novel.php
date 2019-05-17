@@ -11,7 +11,7 @@ use Model\Novel as MNovel;
 use Model\NovelMark;
 use Model\NovelHistory;
 
-class Novel extends Common
+class Novel extends \comm\core\Home
 {
     public function index()
     {

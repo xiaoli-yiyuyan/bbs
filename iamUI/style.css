@@ -158,6 +158,22 @@ ul li {
 .btn.btn-warning.btn-fill:active {
   background: #cc5200;
 }
+.btn.btn-disabled {
+  border-color: #a1a1a1;
+  color: #a1a1a1;
+}
+.btn.btn-disabled:active {
+  border-color: #a1a1a1;
+  color: #a1a1a1;
+}
+.btn.btn-disabled.btn-fill {
+  color: #FFF;
+  background: #a1a1a1;
+  border: none;
+}
+.btn.btn-disabled.btn-fill:active {
+  background: #a1a1a1;
+}
 .btn.btn-sm {
   font-size: 0.6rem;
   line-height: 1.2rem;
@@ -210,6 +226,10 @@ ul li {
 .input.input-lg {
   line-height: 1.9rem;
   height: 2rem;
+}
+.textarea.input {
+  line-height: 1rem;
+  min-height: 3rem;
 }
 .input-checkbox {
   width: 2.5rem;
@@ -478,6 +498,9 @@ ul li {
 .list .list-group.border-bottom .list-item:last-child {
   border-bottom: none;
 }
+.list .list-group.list-arrow .list-item {
+  padding-right: 1.9rem;
+}
 .list .list-group.list-arrow .list-item:after {
   content: '';
   position: absolute;
@@ -496,7 +519,6 @@ ul li {
   display: block;
   color: #333;
   padding: 0 0.5rem;
-  padding-right: 1.9rem;
   background: #FFF;
 }
 .list .list-group .list-item.list-item-icon {

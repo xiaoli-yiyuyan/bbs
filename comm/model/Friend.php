@@ -4,6 +4,7 @@ namespace Model;
 use Iam\Db;
 use Iam\Page;
 use think\Model;
+use comm\Setting;
 
 class Friend extends Model
 {

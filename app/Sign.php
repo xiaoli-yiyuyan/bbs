@@ -9,7 +9,7 @@ use Iam\Request;
 use Model\SignLog;
 use Model\User;
 
-class Sign extends Common
+class Sign extends \comm\core\Home
 {
     private $sign_reward = [
         'start' => 1, // 第一次签到奖励

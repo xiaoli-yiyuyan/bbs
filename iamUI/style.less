@@ -171,6 +171,9 @@ ul li {
     &.btn-warning {
         .btn-type(#ff6600, #cc5200);
     }
+    &.btn-disabled {
+        .btn-type(#a1a1a1, #a1a1a1);
+    }
     &.btn-sm {
         font-size: 12/@rem;
         line-height: 24/@rem;
@@ -223,6 +226,12 @@ ul li {
     &.input-lg {
         line-height: 38/@rem;
         height: 40/@rem;
+    }
+}
+.textarea {
+    &.input {
+        line-height: 20/@rem;
+        min-height: 60/@rem;
     }
 }
 @input-checkbox-size: 24;
@@ -489,6 +498,7 @@ ul li {
         }
         &.list-arrow {
             .list-item {
+                padding-right: 38/@rem;
                 &:after {
                     content: '';
                     position: absolute;
@@ -506,7 +516,6 @@ ul li {
             display: block;
             color: #333;
             padding: 0 10/@rem;
-            padding-right: 38/@rem;
             background: #FFF;
             &.list-item-icon {
                 padding-left: 38/@rem;
