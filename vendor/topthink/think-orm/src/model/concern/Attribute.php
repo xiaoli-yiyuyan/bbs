@@ -314,8 +314,6 @@ trait Attribute
 
             if (method_exists($this, $method)) {
                 $value = $this->$method($value, array_merge($this->data, $data));
-                
-                $this->set[$name]  = true;
             } elseif (isset($this->type[$name])) {
                 // 类型转换
                 $value = $this->writeTransform($value, $this->type[$name]);
@@ -324,6 +322,7 @@ trait Attribute
 
         // 设置数据对象属性
         $this->data[$name] = $value;
+        $this->set[$name]  = true;
     }
 
     /**
