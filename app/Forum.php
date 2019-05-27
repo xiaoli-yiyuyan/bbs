@@ -435,7 +435,7 @@ class Forum extends \comm\core\Home
             if ($this->isLogin()) {
                 return $matches[1];
             }
-            return Ubb::getTips('此内容<a href="/user/login">登录</a>可见', 'read_login');
+            return Ubb::getTips('此内容<a href="/login/index">登录</a>可见', 'read_login');
         }, $content);
         
         $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user_id) {
@@ -454,6 +454,14 @@ class Forum extends \comm\core\Home
                 return $matches[2];
             }
             return Ubb::getTips('此内容需要花费 <span>' . $matches[1] . '</span> 金币 <a href="/forum/forum_buy?id=' . $id . '">购买</a>', 'read_buy');
+        }, $content);
+
+        $content = preg_replace_callback('/\[read_vip_([12345])\](.*?)\[\/read_vip_\1\]/', function($matches) use($id, $user_id) {
+            $dateTime = new \DateTime($this->user['vip_time']);
+            if ($matches[1] <= $this->user['vip_level'] && $dateTime->format('U') >= time()) {
+                return $matches[2];
+            }
+            return Ubb::getTips('此内容仅限 <span>VIP ' . $matches[1] . '</span> 才可查看', 'read_vip');
         }, $content);
         return $content;
     }
