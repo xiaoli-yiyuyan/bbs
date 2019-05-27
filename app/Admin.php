@@ -731,7 +731,7 @@ class Admin extends \comm\core\Home
         
         /**@2使用setting表中的主题标识完成主题切换，在@1和@2中任选一个 */
         $info = Theme::get(intval($data['id']));
-        Setting::set(['theme' => $info->name, 'component'=>$info->name]);
+        Setting::set(['theme' => $info->name]); //, 'component'=>$info->name
         $res = ['err' => 0];
         /*****************@2***********/
 
