@@ -34,9 +34,11 @@ class Category extends Model
     private static $order = ['id', 'order'];
     private static $sort = ['ASC', 'DESC'];
 
-    public static function getList()
+    public static function getList($var_page = 'page')
     {
-        return self::paginate(20);
+        return self::paginate(20, true, [
+            'var_page' => $var_page
+        ]);
     }
 
     public static function getList_old($options = []/*$class_id = 0, $page = 1, $pagesize = 10*/)

@@ -13,7 +13,7 @@ use Iam\Component;
 use Model\CategoryGroup;
 use Model\Code;
 use Model\Category;
-use app\Setting;
+use comm\Setting;
 use comm\core\DatabaseTool;
 use comm\core\CheckUpdate;
 use Model\Forum;
@@ -417,12 +417,10 @@ class Admin extends \comm\core\Home
         ]);
         return Response::json($res);
     }
-    public function editUser()
+    public function editUser($id = '')
     {
-        $id = Request::get('id');
-        $user = new User;
-        $info = $user->info(['id' => $id]);
-        $this->getErr($info);
+        $info = User::get($id);
+        // $this->getErr($info);
         View::load('admin/edit_user', ['info' => $info]);
     }
 

@@ -24,6 +24,22 @@ class Friend extends Model
     }
 
     /**
+     * 获取关注数
+     */
+    public static function getCareCount($user_id)
+    {
+        return self::where('user_id', $user_id)->count();
+    }
+
+    /**
+     * 获取粉丝数
+     */
+    public static function getFansCount($user_id)
+    {
+        return self::where('care_user_id', $user_id)->count();
+    }
+
+    /**
      * 获取所有粉丝的id
      * @param int $user_id 指定用户的id
      */

@@ -38,7 +38,8 @@ class Login extends \comm\core\Home
         }
 
         Session::set('sid', $user['sid']);
-        Url::redirect('/user/index');
+        
+        return Page::success('登录成功！', '/user/index');
     }
 
     public function loginApi()
@@ -89,7 +90,8 @@ class Login extends \comm\core\Home
 
             Session::set('sid', $sid);
 
-            Url::redirect('/user/index');
+            return Page::success('注册成功！', '/user/index');
+            // Url::redirect('/user/index');
         } else {
             View::load('login/register');
         }

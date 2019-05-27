@@ -4,6 +4,7 @@ namespace Model;
 use Iam\Page;
 use think\Db;
 use think\Model;
+use comm\Setting;
 
 class User extends Model
 {
@@ -52,6 +53,18 @@ class User extends Model
         }
         return $user->paginate($options['pagesize'], false, [
             'var_page' => $options['var_page']
+        ]);
+    }
+
+    /**
+     * 查询列表
+     */
+    public static function list($order = 'id', $sort = 'ASC', $var_page = 'page', $pagesize = '10')
+    {
+        // Setting::get('pagesize')
+        $list = self::order($order, $sort);
+        return $list->paginate($pagesize, false, [
+            'var_page' => $var_page
         ]);
     }
 

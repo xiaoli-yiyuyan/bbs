@@ -21,6 +21,14 @@ class CommonPublic extends Controller
 
     public function __construct()
     {
+        if (!isMobile()) {
+            \think\Db::setConfig([
+                'paginate' => [
+                    'type'      => '\think\paginator\driver\Bootstrap',
+                    'var_page' => 'page'
+                ]
+            ]);
+        }
         $this->version = IamVersion::$version;
         
         $setting = Setting::get(['login_reward', 'weblogo', 'webname']);

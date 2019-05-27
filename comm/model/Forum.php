@@ -4,7 +4,7 @@ namespace Model;
 use Iam\Db;
 use Iam\Page;
 use think\Model;
-use app\Setting as ASetting;
+use comm\Setting as ASetting;
 
 class Forum extends Model
 {
@@ -219,5 +219,13 @@ class Forum extends Model
             $this->is_cream = $this->is_cream == 0 ? 1 : 0;
         }
         return $this->save();
+    }
+
+    /**
+     * 获取内容数
+     */
+    public static function getCount($user_id = '')
+    {
+        return self::where('user_id', $user_id)->count();
     }
 }

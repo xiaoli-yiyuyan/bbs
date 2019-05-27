@@ -22,7 +22,7 @@ class ForumMark extends \comm\core\Home
 
     public function index() {
 
-        $list = MForumMark::paginate(Setting::get('pagesize'), false);
+        $list = MForumMark::where('status', 1)->paginate(Setting::get('pagesize'), false);
         View::load('/admin/forum_mark/index', [
             'list' => $list
         ]);
@@ -34,5 +34,25 @@ class ForumMark extends \comm\core\Home
         View::load('/admin/forum_mark/pass_list', [
             'list' => $list
         ]);
+    }
+
+    /**
+     * 删除标签
+     */
+    public function remove($id) {
+        if (!MForumMark::destroy($id)) {
+            return Page::error('删除失败');
+        }
+        Page::success('删除成功');
+    }
+
+    /**
+     * 操作标签状态
+     */
+    public function status($id, $status) {
+        if (!MForumMark::where('id', $id)->update(['status' => $status])) {
+            return Page::error('操作失败');
+        }
+        Page::success('操作成功');
     }
 }

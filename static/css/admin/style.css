@@ -58,7 +58,7 @@ body {
 }
 .content {
   flex: 1;
-  overflow: hidden;
+  overflow: auto;
   margin: .5rem;
   background: #FFF;
   border: 0.05rem solid #eee;
