@@ -200,3 +200,6 @@ CREATE TABLE `theme` (
 INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('webname','安米软件','网站名');
 INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('webdomain','ianmi.com','网站域名');
 INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('weblogo','/upload/logo/logo.png?t=1553673587','网站logo');
+
+INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('template','default','模板标识');
+

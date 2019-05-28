@@ -14,7 +14,7 @@ use Iam\Cache;
 use Iam\Config;
 use Iam\Request;
 use Iam\Response;
-use app\common\DatabaseTool;
+use comm\core\DatabaseTool;
 
 Config::set(['TEMPLATE' => [
     'DIR' => 'install',
@@ -99,7 +99,7 @@ function check_func()
 function check_dirfile()
 {
     $items = [
-        ['dir', '可写', 'success', 'template'],
+        ['dir', '可写', 'success', 'theme'],
         ['dir', '可写', 'success', 'upload']
     ];
 
@@ -142,8 +142,8 @@ if ($step == 2) {
 
     // 安装环境监测
     View::load('step_2', [
-        'version' => app\common\IamVersion::$version,
-        'datetime' => app\common\IamVersion::$datetime,
+        'version' => comm\core\IamVersion::$version,
+        'datetime' => comm\core\IamVersion::$datetime,
         'env' => $env,
         'func' => $func,
         'dirfile' => $dirfile
@@ -177,7 +177,7 @@ if ($step == 2) {
     
         ]);
         if ($mysql->exec("CREATE DATABASE IF NOT EXISTS `{$data['dbname']}` DEFAULT CHARACTER SET UTF8")) {
-            $cache = new Cache('../app/', 'datebase');
+            $cache = new Cache('../comm/', 'datebase');
             $cache->save($data);
             $backup_dir = '..' . DS . 'install';
             $database = new DatabaseTool([
@@ -198,6 +198,6 @@ if ($step == 2) {
     // 阅读协议，确认安装程序
     
     View::load('step_1', [
-        'version' => app\common\IamVersion::$version
+        'version' => comm\core\IamVersion::$version
     ]);
 }
