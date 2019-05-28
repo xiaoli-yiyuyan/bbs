@@ -457,9 +457,11 @@ class Forum extends \comm\core\Home
         }, $content);
 
         $content = preg_replace_callback('/\[read_vip_([12345])\](.*?)\[\/read_vip_\1\]/', function($matches) use($id, $user_id) {
-            $dateTime = new \DateTime($this->user['vip_time']);
-            if ($matches[1] <= $this->user['vip_level'] && $dateTime->format('U') >= time()) {
-                return $matches[2];
+            if ($this->isLogin()) {
+                $dateTime = new \DateTime($this->user['vip_time']);
+                if ($matches[1] <= $this->user['vip_level'] && $dateTime->format('U') >= time()) {
+                    return $matches[2];
+                }
             }
             return Ubb::getTips('此内容仅限 <span>VIP ' . $matches[1] . '</span> 才可查看', 'read_vip');
         }, $content);
@@ -774,7 +776,7 @@ class Forum extends \comm\core\Home
         if (!$this->isLogin()) {
             return Response::json(['err' => 1, 'msg' => '会员未登录']);
         }
-        $res = source('App/File/upload',[
+        $res = source('app/File/upload',[
             'user_id' => $this->user['id'],
             'path' => '/upload/forum',
             'input_name' => 'file'

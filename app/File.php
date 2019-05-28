@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace app;
 
 use Iam\Db;
 use Iam\FileUpload;

@@ -156,6 +156,7 @@ class User extends \comm\core\Home
             'user_id' => $this->user['id'],
             'type' => 'care'
         ]);
+
         View::load('user/friend_fans', [
             'fans_list' => $fans_list,
             'care_list' => $care_list
