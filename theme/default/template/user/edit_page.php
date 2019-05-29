@@ -1,5 +1,5 @@
-<?php component('components/common/user_header',['title' => '修改资料']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/user/index', 'title' => '个人中心']); ?>
+<?php useComp('components/common/user_header',['title' => '修改资料']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/user/index', 'title' => '个人中心']); ?>
 
 <form id="add" class="box-padding" action="/user/edit_info" method="post">
 
@@ -28,4 +28,4 @@
         return false;
     });
 </script>
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

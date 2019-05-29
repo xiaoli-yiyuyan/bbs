@@ -142,7 +142,7 @@ class Forum extends Model
      * 获取列表数据
      * @param string|array  $class_id 栏目id，字符串用','分隔
      * @param string|array  $user_id 会员id，字符串用','分隔
-     * @param string        $type 查询类型，1最新，2动态, 3热度，4精华
+     * @param string        $type 查询类型，1最新，2动态, 3热度，4精华，5话题，6图片，7文件
      * @param string        $status 0正常 1审核中，9999回收站
      * @param string        $order asc正序 desc倒序
      */
@@ -178,7 +178,27 @@ class Forum extends Model
         }
 
         if ($type == 2) {
+            // 动态
+            $forum->order('active_time', $order);
+        } elseif ($type == 3) {
+            // 热度
             $forum->order('read_count', $order);
+        } elseif ($type == 4) {
+            
+        } elseif ($type == 5) {
+            // 话题
+            $forum->where('id', 'IN', function($query) {
+                $query->table('forum_mark_body')->field('forum_id');
+            });
+            $forum->order('id', $order);
+        } elseif ($type == 6) {
+            // 图片
+            $forum->where('img_data', '<>', '');
+            $forum->order('id', $order);
+        } elseif ($type == 7) {
+            // 文件
+            $forum->where('file_data', '<>', '');
+            $forum->order('id', $order);
         } else {
             $forum->order('id', $order);
         }

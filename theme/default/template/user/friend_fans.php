@@ -1,10 +1,10 @@
-<?php component('components/common/user_header',['title' => '用户中心']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
+<?php useComp('components/common/user_header',['title' => '用户中心']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
 
 <div class="tab ">
     <div class="tab-header">
-        <a class="tab-link"  href="/user/friend_care">关注(<?=$care_list->toArray()['total']?>)</a>
-        <div class="tab-link tab-active">粉丝(<?=$fans_list->toArray()['total']?>)</div>
+        <a class="tab-link"  href="/user/friend_care">关注(<?=$care_list->total()?>)</a>
+        <div class="tab-link tab-active">粉丝(<?=$fans_list->total()?>)</div>
     </div>
     <div class="tab-content">
             <div class="tab-page tab1 tab-active">
@@ -13,7 +13,7 @@
                 <?php } else { ?>
                 <div class="list">
                 <?php foreach ($fans_list as $item) { ?>
-                    <?php $userinfo = source('Model/User/getAuthor', ['id' => $item['user_id']]); ?>
+                    <?php if ($userinfo = source('Model/User/getAuthor', ['id' => $item['user_id']])) { ?>
                     <div class="list-group friend_list">
                         <a href="/user/show?id=<?=$userinfo['id']?>" class="list-item list-item-image-text border-b">
                             <div class="list-item-image">
@@ -32,6 +32,7 @@
                             <?php } ?>
                         </a>
                     </div>
+                    <?php } ?>
                 <?php } ?>
                 </div>
                 <?=$fans_list->render()?>
@@ -68,4 +69,4 @@
     });
 </script>
 
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

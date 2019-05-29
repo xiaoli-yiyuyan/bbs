@@ -1,9 +1,17 @@
-<?php component('components/common/header',['title' => '用户中心']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
+<?php useComp('components/common/header',['title' => '用户中心']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
 <link rel="stylesheet" href="/static/js/dropload/dropload.css"/>
 
 <script src="/static/js/dropload/dropload.js"></script>
-
+<style>
+    .tab .tab-content,
+    .bbs_list.list .list-group {
+        padding: 0;
+    }
+    .care_btn {
+        margin-left: .25rem;
+    }
+</style>
 <div class="user-info border-b">
     <img class="user-photo photo" src="<?=$userinfo['photo']?>" alt="">
     <div class="info-box">
@@ -32,7 +40,7 @@
     </div>
     <div class="tab-content">
             <div class="tab-page tab1 tab-active">
-                <div class="forum_list_box list list-img" data-user-id="<?=$userinfo['id']?>">
+                <div class="forum_list_box list bbs_list" data-user-id="<?=$userinfo['id']?>">
                     <div class="list-group">
 
                     </div>
@@ -85,6 +93,29 @@
 
     var forum_next_page = 1;
 
+    var itemTpl = function(value) {
+        var item_tpl = `<div class="list-img">
+            <a class="list-t-item" href="/forum/view?id=` + value.id + `">
+                <div class="title">` + value.title + `</div>
+                <div class="text-image flex-box">
+                    <div class="flex context">` + value.mini_context + `</div>`;
+                    
+                    if (value.img_list.length > 0) {
+                        item_tpl += `<img class="image" src="` + value.img_list[0].path + `" alt="加载中...">`
+                    }
+                item_tpl += `</div>
+                <div class="user flex-box">
+                    <span class="class_info_title">` + value.class_info.title + `</span>
+                    <img class="photo" src="` + value.author.photo + `" alt="">
+                    <div class="flex">` + value.author.nickname + ` · ` + value.reply_count + ` 评论</div>
+                    <div class="create_time">` + getFriendlyTime(value.create_time) + `</div>
+                </div>
+            </a>
+            <div class="hr"></div>
+        </div>`
+        return item_tpl;
+    }
+
     $('.forum_list_box').dropload({
         scrollArea : window,
         domUp : domUp,
@@ -96,17 +127,7 @@
                 $box.find('.list-group').empty();
                 for (var p in data.data) {
                     var value = data.data[p];
-                    var item_tpl = `<a href="/forum/view?id=` + value.id + `" class="list-t-item"><div class="title">` + value.title + `</div>
-                    <div class="text-image flex-box">
-                    <div class="flex context">` + value.mini_context + `</div>`;
-                    if (value.img_list.length > 0) {
-                        item_tpl += `<img class="image" src="` + value.img_list[0].path + `" alt="加载中...">`
-                    }
-                    item_tpl += `</div>
-                    <div class="user flex-box">
-                    <div class="flex">` + value.author.nickname + ` · ` + value.reply_count + ` 评论</div>
-                    <div class="more"></div>
-                    </div></a><div class="hr"></div>`
+                    var item_tpl = itemTpl(value);
 
                     $box.find('.list-group').append(item_tpl);
                 }
@@ -125,18 +146,7 @@
                 forum_next_page = Number(data.current_page) + 1;
                 for (var p in data.data) {
                     var value = data.data[p];
-                    var item_tpl = `<a href="/forum/view?id=` + value.id + `"class="list-t-item"><div class="title">` + value.title + `</div>
-                    <div class="text-image flex-box">
-                    <div class="flex context">` + value.mini_context + `</div>`;
-                    if (value.img_list.length > 0) {
-                        item_tpl += `<img class="image" src="` + value.img_list[0].path + `" alt="加载中...">`
-                    }
-                    item_tpl += `</div>
-                    <div class="user flex-box">
-                    <div class="flex">` + value.author.nickname + ` · ` + value.reply_count + ` 评论</div>
-                    <div class="create_time">` + getFriendlyTime(value.create_time) + `</div>
-                    </div></a><div class="hr"></div>`
-
+                    var item_tpl = itemTpl(value);
                     $box.find('.list-group').append(item_tpl);
                 }
                 // 每次数据插入，必须重置
@@ -212,4 +222,4 @@ function getFriendlyTime(str, now){
     text-align: left;
 }
 </style>
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

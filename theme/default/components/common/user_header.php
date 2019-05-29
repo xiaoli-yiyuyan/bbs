@@ -1,6 +1,6 @@
 <?php
-    if (!source('App/Common/isLogin')) {
+    if (!source('comm/core/CommonPublic/isLogin')) {
         redirect('/login', ['back_url' => $get_url]);
     }
-    $this->load('/components/common/header', ['title' => $title]);
+    $this->use('/components/common/header', ['title' => $title]);
 ?>

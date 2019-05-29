@@ -1,3 +1,8 @@
+<?php
+	$version = source('/comm/core/IamVersion/getVersion');
+	$theme = \comm\Setting::get('theme');
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,10 +13,9 @@
 	<meta name="keywords" content="<?=empty($keywords) ? '手机网站制作,手机建站,手机建站程序,wap建站程序,免费开源程序,安米程序,安米cms' : $keywords?>" />
 	<meta name="description" content="<?=empty($description) ? '安米手机建站程序，打造免费开源的纯移动端建站程序。' : $description?>" />
 	<link rel="shortcut icon" href="favicon.ico?v=<?=$version?>">
-	<link rel="stylesheet" href="/static/ui/style.css?v=<?=$version?>">
-	<link rel="stylesheet" href="/static/css/base.css?v=<?=$version?>2">
-	<script src="/static/js/jquery-3.3.1.min.js"></script>
-	<script src="/static/js/base.js?v=<?=$version?>"></script>
+	<link rel="stylesheet" href="/theme/<?=$theme?>/template/static/css/style.css?v=<?=$version?>">
+	<script src="/theme/<?=$theme?>/template/static/js/jquery.min.js?v=<?=$version?>"></script>
+	<script src="/theme/<?=$theme?>/template/static/js/core.js?v=<?=$version?>"></script>
 	<script src="/static/ui/ui.js?v=<?=$version?>"></script>
 </head>
 <body>

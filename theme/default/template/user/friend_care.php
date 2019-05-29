@@ -1,5 +1,5 @@
-<?php component('components/common/user_header',['title' => '用户中心']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
+<?php useComp('components/common/user_header',['title' => '用户中心']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
 
 <div class="tab ">
     <div class="tab-header">
@@ -68,4 +68,4 @@
     });
 </script>
 
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

@@ -1,17 +1,24 @@
-<div class="header-height"></div>
-<div class="header">
-    <div class="flex-box">
-        <span class="back"></span>
-        <a href="<?=$back_url?>" class="left-word"><?=$title?></a>
+<div class="header-bar">
+    <div class="header-item back">
+        <i class="icon-svg svg-left"></i>
     </div>
-    <div class="flex-box">
-      
-        <?php if ($message_count = source('App/Message/count') > 0) { ?>
-            <a href="/message" class="new_message_icon"><?=$message_count?></a>
-        <?php } ?>
-    <a href="/user/index" class="icon-svg user"></a>
-    <div class="icon-svg menu left-menu"></div>
+    
+    <div class="header-title ellipsis"><?=$title?></div>
+    
+    <div class="header-item">
+        <a href="/message"><i class="icon-svg svg-mail"></i></a>
     </div>
 </div>
-
-<?php $this->load('/components/common/left_menu'); ?>
+<script>
+$(function() {
+    $('.func-null').click(function() {
+        alert('功能开发中！');
+    });
+    $('.header-bar .back').click(function() {
+        history.go(-1);
+    });
+    $('.header-bar .logo').click(function() {
+        location.href='/';
+    });
+});
+</script>

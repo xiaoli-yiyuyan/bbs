@@ -1,12 +1,13 @@
-<?php self::load('common/header',['title' => '搜索结果']); ?>
-<?php self::load('common/header_nav',['title' => '搜索结果', 'back_url' => '/','message_count' => 0]); ?>
-
+<?php useComp("/components/common/header?title=$webname-专注于手机网站建设" ); ?>
+<?php useComp('/components/common/header_nav', [
+    'title' => '搜索结果'
+]); ?>
 <?php if ($list->total() == 0) { ?>
     <div class="bbs_empty">换个关键词试试吧，这个地方空空如也！</div>
 <?php } else { ?>
-    <div class="list list-img">
+    <div class="list list_img">
 <?php foreach($list as $item) { ?>
-    <?php component('/components/forum/list_img_text', ['item' => $item]); ?>
+    <?php useComp('/components/forum/list_img_text', ['item' => $item]); ?>
 <?php } ?>
 </div>
 
@@ -14,4 +15,4 @@
 <?=$list->render()?>
 </div>
 <?php } ?>
-<?php self::load('common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

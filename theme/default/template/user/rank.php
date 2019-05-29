@@ -1,5 +1,5 @@
-<?php component('components/common/header',['title' => '排行榜']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
+<?php useComp('components/common/header',['title' => '排行榜']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
 <div class="rank_title">会员排行 Top20</div>
 <div class="user_rank_box list">
 <?php $user_list = source('/Model/User/rank'); ?>
@@ -29,4 +29,4 @@
 </div>
 <?php } ?>
 </div>
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

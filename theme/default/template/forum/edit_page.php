@@ -1,5 +1,5 @@
-<?php component('/components/common/user_header', ['title' => $forum['title'] . '-帖子修改']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/forum/view?id=' . $forum['id'], 'title' => $forum['title']]); ?>
+<?php useComp('/components/common/user_header', ['title' => $forum['title'] . '-帖子修改']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/forum/view?id=' . $forum['id'], 'title' => $forum['title']]); ?>
 
 <form id="add" class="box-padding" action="/forum/ajax_edit/?id=<?=$forum['id']?>" method="post">
     <input type="hidden" name="img_data" value="<?=$forum['img_data']?>">
@@ -18,7 +18,7 @@
         <div class="item-title">移动</div>
         <div class="item-input class_id">
                 <select class="input input-lg" name="class_id" id="" >
-                    <option value="<?=$forum['class_id']?>"><?=$navList[$forum['class_id']]?></option>
+                    <option value="<?=$forum['class_id']?>" selected><?=$forum->class_info->title?></option>
                     <?php   foreach($navList as $key => $value){ ?> 
                         <option value="<?=$key?>"><?=$value?></option>
                     <?php }?>
@@ -75,4 +75,4 @@
     <p><button class="btn btn-fill btn-lg btn-block">保存修改</button></p>
 </form>
 <script src="/static/js/forum/add_upload.js?v=0.0.1"></script>
-<?php component('/components/common/footer'); ?>
+<?php useComp('/components/common/footer'); ?>

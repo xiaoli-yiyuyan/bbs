@@ -1,5 +1,5 @@
-<?php component('components/common/user_header',['title' => '用户中心']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
+<?php useComp('components/common/user_header',['title' => '用户中心']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/index', 'title' => '首页']); ?>
 
 <div class="tab ">
     <div class="tab-header">
@@ -8,10 +8,10 @@
     </div>
     <div class="tab-content">
             <div class="tab-page tab1 tab-active">
-                <?php component('components/user/friend_list', ['list' => $care_list]); ?>
+                <?php useComp('components/user/friend_list', ['list' => $care_list]); ?>
             </div>
             <div class="tab-page tab2">
-                <?php component('components/user/friend_list', ['list' => $fans_list, 'is_fans_care' => 'fans']); ?>
+                <?php useComp('components/user/friend_list', ['list' => $fans_list, 'is_fans_care' => 'fans']); ?>
             </div>
     </div>
 </div>
@@ -112,4 +112,4 @@
     });
 </script>
 
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>

@@ -17,5 +17,6 @@
         </div>
     </div>
     <style>
+        .list-group{background:#fff}
         .reply_content a{margin:5px 10px 5px 20px}
     </style>

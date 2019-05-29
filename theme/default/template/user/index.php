@@ -1,17 +1,30 @@
-<?php component('components/common/user_header',['title' => '用户中心']); ?>
+<?php useComp('components/common/user_header',['title' => '用户中心']); ?>
 <link rel="stylesheet" type="text/css" href="/static/css/cropper.min.css">
 
 <script src="/static/js/cropper.min.js"></script>
 <script src="/static/js/reszieimg.js"></script>
-<div class="header-height"></div>
-<div class="header">
-    <span class="logo"  style="background-image:url(../<?php echo $weblogo?>)"></span>
-    <div class="head_center">个人中心</div>
-    <div class="icon-svg menu left-menu"></div>
 
-</div>
+<style>
+.select-photo-page {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+.select-photo {
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+</style>
+<?php useComp('/components/common/header_nav', ['back_url' => '/', 'title' => '个人中心']); ?>
 
-<?php component('/components/common/left_menu'); ?>
+<?php useComp('/components/common/left_menu'); ?>
 
     <div class="user-info border-b">
       <img class="user-photo photo" src="<?=$user['photo']?>" alt="">
@@ -44,20 +57,6 @@
             <div class="li-box-word">消息通知</div>
         </a>
     </div>
-    <!-- <div class="li-box border-b">
-        <a href="/novel/favorite/" class="flex-box">
-            <div><i class="li-box-svg icon-svg b_qiqiu"></i></div>
-            <div class="li-box-word">我的书架</div>
-        </a>
-    </div>
-
-
-    <div class="li-box border-b">
-        <a href="/novel/history/" class="flex-box">
-            <div><i class="li-box-svg icon-svg b_pingtu"></i></div>
-            <div class="li-box-word">最近历史</div>
-        </a>
-    </div> -->
 
 
     <div class="li-box border-b">
@@ -130,20 +129,17 @@
     </div>
 </div>
 <div class="select-photo-page">
-    
-    <div class="header">
-        <span class="header-back">
-            <span class="back-word back-info">
-            < 返回
-            </span>
-        </span>
-        <span class="header-nav">
-            <span class="nav-word btn-save">
-                保存
-            </span>
-        </span>
+    <div class="header-bar">
+        <div class="header-item back-info">
+            <i class="icon-svg svg-left"></i>
+        </div>
+        
+        <div class="header-title">更换头像</div>
+        
+        <div class="header-item btn-save">
+        保存
+        </div>
     </div>
-
     <div class="select-photo">
         <img src="" alt="">
     </div>
@@ -168,13 +164,15 @@
     });
     $('.photo').click(function() {
         var $this = $(this);
-        $.alert('从相册中选择', function() {
-            $file.click();
+        $.confirm('从相册中选择', {
+            'yes': function() {
+                $file.click();
+            }
         });
     });
     $('.back-info').click(function() {
         $('.select-photo-page').hide();
-        console.log(cropper.getImageData());
+        // console.log(cropper.getImageData());
         cropper.destroy();
     });
     $('.btn-save').click(function() {
@@ -206,5 +204,5 @@
         return false;
     });
 </script>
-
-<?php component('components/common/footer'); ?>
+<?php useComp('/components/common/footer_nav', ['index' => 4]); ?>
+<?php useComp('components/common/footer'); ?>

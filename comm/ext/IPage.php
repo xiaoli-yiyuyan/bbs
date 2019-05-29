@@ -97,8 +97,11 @@ class IPage extends Paginator
      * 渲染分页html
      * @return mixed
      */
-    public function render()
+    public function render($query = [])
     {
+        if (!empty($query)) {
+            $this->appends($query);
+        }
         if ($this->hasPages()) {
             if ($this->simple) {
                 return sprintf(

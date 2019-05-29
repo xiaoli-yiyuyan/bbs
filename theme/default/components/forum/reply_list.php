@@ -3,7 +3,7 @@
 <?php } else { ?>
 <div class="list bbs_list">
     <?php foreach ($list as $item) { ?>
-    <?php component('/components/forum/reply_item', ['item' => $item]); ?>
+    <?php useComp('/components/forum/reply_item', ['item' => $item]); ?>
     <?php } ?>
 </div>
 <?php } ?>

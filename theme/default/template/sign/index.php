@@ -1,5 +1,5 @@
-<?php self::load('common/header',['title' => '每日签到']); ?>
-<?php self::load('common/header_nav',['title' => '每日签到', 'back_url' => '/','message_count' => 0]); ?>
+<?php useComp('/components/common/header', ['title' => '每日签到']); ?>
+<?php useComp('/components/common/header_nav?title=每日签到' ); ?>
 <div class="m_body">
     <div class="sign_input_box">
     <?php if (!$is_sign) { ?>

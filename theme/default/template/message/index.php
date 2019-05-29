@@ -1,9 +1,9 @@
-<?php component('components/common/user_header',['title' => '消息列表']); ?>
-<?php component('/components/common/header_nav', ['back_url' => '/user/index', 'title' => '个人中心']); ?>
+<?php useComp('components/common/user_header',['title' => '消息列表']); ?>
+<?php useComp('/components/common/header_nav', ['back_url' => '/user/index', 'title' => '消息列表']); ?>
 
 
-<?php if (empty($list)) { ?>
-    <div class="bbs_empty">这个地方空空如也！</div>
+<?php if ($list->isEmpty()) { ?>
+    <div class="empty_word">这个地方空空如也！</div>
 <?php } else { ?>
 <div class="list">
 <?php foreach ($list as $item) { ?>
@@ -28,4 +28,4 @@
 </div>
 <?php } ?>
 
-<?php component('components/common/footer'); ?>
+<?php useComp('components/common/footer'); ?>
