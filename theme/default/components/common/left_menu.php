@@ -78,7 +78,7 @@
     <div class="modal-overlay"></div>
     <div class="menu-list-body">
         <div class="left_user_box border-b">
-        <?php $user = source('app/common/CommonPublic/getUserInfo'); ?>
+        <?php $user = source('comm/core/CommonPublic/getUserInfo'); ?>
         <?php if ($user['id'] > 0) { ?>
             <div class="user-info">
                 <img class="user-photo photo" src="<?=$user['photo']?>" alt="">

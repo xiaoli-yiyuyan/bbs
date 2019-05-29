@@ -7,7 +7,7 @@
     <div class="page_nav">
         <a href="/admin/add_column">添加栏目</a>
     </div>
-    <?php if (empty($list->total())) { ?>
+    <?php if ($list->isEmpty()) { ?>
     <div class="bbs_empty">这个地方空空如也！</div>
     <?php } else { ?>
     <div class="list">
