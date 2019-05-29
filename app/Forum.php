@@ -68,7 +68,7 @@ class Forum extends \comm\core\Home
             //         break;
             //     }
             // }
-            $item['create_time'] = date('m-d H:i', strtotime($item['create_time']));
+            // $item['create_time'] = date('m-d H:i', strtotime($item['create_time']));
         }
     }
 
