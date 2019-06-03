@@ -534,7 +534,7 @@ class Admin extends \comm\core\Home
 
     public function systemSet()
     {
-        $setting = Setting::get(['is_register','webname', 'webdomain', 'weblogo']);
+        $setting = Setting::get(['is_register','webname', 'webdomain', 'weblogo', 'webname_after', 'description', 'keywords']);
         View::load('admin/system_set', $setting);
     }
 
@@ -549,6 +549,15 @@ class Admin extends \comm\core\Home
         }
         if(isset($post['webdomain'])){
             $post['webdomain'] = htmlspecialchars($post['webdomain']);
+        }
+        if(isset($post['webname_after'])){
+            $post['webname_after'] = htmlspecialchars($post['webname_after']);
+        }
+        if(isset($post['description'])){
+            $post['description'] = htmlspecialchars($post['description']);
+        }
+        if(isset($post['keywords'])){
+            $post['keywords'] = htmlspecialchars($post['keywords']);
         }
         $res = Setting::set($post);
         return Response::json(['err'=> 0]);

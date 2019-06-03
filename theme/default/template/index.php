@@ -1,5 +1,5 @@
-<?php useComp("/components/common/header?title=$webname -专注于手机网站建设" ); ?>
-<?php useComp("/components/common/header_menu_nav?title=$webname" ); ?>
+<?php useComp("/components/common/header" ); ?>
+<?php useComp("/components/common/header_menu_nav?title=首页" ); ?>
 
 <?php
     $tp = \Iam\Request::get('tp', 1);

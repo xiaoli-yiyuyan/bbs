@@ -1,4 +1,4 @@
-<?php useComp("/components/common/header?title=安米社区-专注于手机网站建设"); ?>
+<?php useComp("/components/common/header"); ?>
 <?php useComp('/components/common/header_menu_nav?title=关注动态' ); ?>
 
 <?php

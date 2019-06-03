@@ -1,4 +1,4 @@
-<?php useComp("/components/common/header?title=$webname-专注于手机网站建设" ); ?>
+<?php useComp("/components/common/header?title=搜索结果" ); ?>
 <?php useComp('/components/common/header_nav', [
     'title' => '搜索结果'
 ]); ?>

@@ -28,7 +28,7 @@
         <div class="item-line item-lg">
             <div class="item-title">网站名称</div>
             <div class="item-input">
-<input type="text" class="input input-lg" name="webname" <?php if(isset($webname)){?> value="<?=$webname?>"<?PHP }?>placeholder="请输入网站名">
+                <input type="text" class="input input-lg" name="webname" <?php if(isset($webname)){?> value="<?=$webname?>"<?PHP }?>placeholder="请输入网站名">
             </div>
         </div>
         <div class="item-line item-lg">
@@ -50,6 +50,25 @@
             <div class="item-input">
                     <div>点击上传图片选择文件</div>
                     <span class="btn btn-add-image" >选择LOGO</span>
+            </div>
+        </div>
+        
+        <div class="item-line item-lg">
+            <div class="item-title">站名尾巴</div>
+            <div class="item-input">
+                <input type="text" class="input input-lg" name="webname_after" value="<?=$webname_after ?? ''?>" placeholder="请输入网站标题后面的小尾巴">
+            </div>
+        </div>
+        <div class="item-line item-lg">
+            <div class="item-title">网站说明</div>
+            <div class="item-input">
+                <input type="text" class="input input-lg" name="description" value="<?=$description ?? ''?>" placeholder="请输入网站说明">
+            </div>
+        </div>
+        <div class="item-line item-lg">
+            <div class="item-title">网站关键字</div>
+            <div class="item-input">
+                <input type="text" class="input input-lg" name="keywords" value="<?=$keywords ?? ''?>" placeholder="请输入网站关键字">
             </div>
         </div>
         <button class="btn btn-fill btn-lg btn-block btn-save">保存</button>

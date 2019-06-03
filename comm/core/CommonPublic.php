@@ -59,8 +59,11 @@ class CommonPublic extends Controller
         View::data([
             'user' => $this->user,
             'version' => $this->version,
-            'weblogo' => $setting['weblogo'],
-            'webname' => $setting['webname'],
+            // 'weblogo' => $setting['weblogo'],
+            // 'webname' => $setting['webname'],
+            // 'keywords' => '',
+            // 'description' => '',
+            // 'webname_after' => ''
         ]);
 
     }
