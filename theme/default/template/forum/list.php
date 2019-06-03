@@ -1,4 +1,4 @@
-<?php useComp('/components/common/header?title=' . $class_info['title'] . "-论坛中心-$webname-专注于手机网站建设"); ?>
+<?php useComp('/components/common/header?title=' . $class_info['title'] . "-论坛中心"); ?>
 <?php useComp('/components/common/header_nav', [
     'title' => $class_info['title']
 ]); ?>
