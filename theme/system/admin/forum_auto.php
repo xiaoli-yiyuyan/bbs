@@ -4,16 +4,28 @@
     <div class="namespace">
         <a href="/admin/forum/">待审核帖子</a> \
     </div>
+    
+    <div class="page_nav">
+        <!-- <a href="/admin/forum_mark/add">添加标签</a> -->
+        <a href="/admin/forum/auto">审核类表</a>
+        <a href="/admin/forum/auto?status=2">拒绝列表</a>
+    </div>
     <?php if ($list->isEmpty()) { ?>
     <div class="bbs_empty">这个地方空空如也！</div>
     <?php } else { ?>
-    <div class="list">
-        <div class="list-group list-arrow">
+    <div class="list admin-list">
+        <div class="list-group">
             <?php foreach ($list as $key => $item) { ?>
-            <div class="list-item ellipsis border-b">
+            <div class="list-item border-b">
                 ID:<?=$item['id']?>) <a href="/forum/view?id=<?=$item['id']?>"><?=$item['title']?></a>
-                [<a class="btn_forum_back" data-href="/admin/back_forum?id=<?=$item['id']?>">通过</a>
-                <a class="btn_forum_remove" data-href="/admin/remove_forum?id=<?=$item['id']?>">拒绝</a>]
+                <div class="action-box border-t">
+                    <a class="btn btn-sm btn_forum_back" data-href="/admin/forum/pass?id=<?=$item['id']?>&status=0">通过</a>
+                    <?php if ($item['status'] == 1) { ?>
+                        <a class="btn btn-sm btn_forum_remove" data-href="/admin/forum/pass?id=<?=$item['id']?>&status=2">拒绝</a>
+                    <?php } else { ?>
+                        <a class="btn btn-disabled btn-sm btn_forum_remove">拒绝</a>
+                    <?php } ?>
+                </div>
             </div>
             <?php } ?>
         </div>
@@ -28,7 +40,7 @@
 <script>
     $('.btn_forum_back').click(function() {
         var link = $(this).data('href');
-        $.confirm('确定恢复显示？', {
+        $.confirm('确定通过？', {
             yes: function() {
                 $.getJSON(link).then(function(data) {
                     if (data.err) {
@@ -43,7 +55,7 @@
     
     $('.btn_forum_remove').click(function() {
         var link = $(this).data('href');
-        $.confirm('确定删除此文章？<br>删除后无法恢复</b>！', {
+        $.confirm('确定拒绝？', {
             yes: function() {
                 $.getJSON(link).then(function(data) {
                     if (data.err) {

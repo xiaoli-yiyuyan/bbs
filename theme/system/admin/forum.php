@@ -7,13 +7,15 @@
     <?php if ($list->isEmpty()) { ?>
     <div class="bbs_empty">这个地方空空如也！</div>
     <?php } else { ?>
-    <div class="list">
-        <div class="list-group list-arrow">
+    <div class="list admin-list">
+        <div class="list-group">
             <?php foreach ($list as $key => $item) { ?>
             <div class="list-item border-b">
                 ID:<?=$item['id']?>) <a href="/forum/view?id=<?=$item['id']?>"><?=$item['title']?></a>
-                [<a class="btn_forum_back" data-href="/admin/back_forum?id=<?=$item['id']?>">恢复</a>
-                <a class="btn_forum_remove" data-href="/admin/remove_forum?id=<?=$item['id']?>">删除</a>]
+                <div class="action-box border-t">
+                <a class="btn btn-sm btn_forum_back" data-href="/admin/back_forum?id=<?=$item['id']?>">恢复</a>
+                <a class="btn btn-sm btn_forum_remove" data-href="/admin/remove_forum?id=<?=$item['id']?>">删除</a>
+                </div>
             </div>
             <?php } ?>
         </div>

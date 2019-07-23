@@ -16,23 +16,24 @@
     <?php if (empty($list)) { ?>
     <div class="bbs_empty">这个地方空空如也！</div>
     <?php } else { ?>
-    <div class="list">
-        <div class="list-group list-arrow">
+    <div class="list admin-list">
+        <div class="list-group">
             <?php foreach ($list as $key => $item) { ?>
-            <div class="list-item list-item-image-text border-b">
-                <div class="list-item-image">
-                    <img src="<?=$item['photo']?>" alt="">
+            <div class="list-item border-b">
+                <div class="admin-user-box">
+                    <img class="admin-user-photo" src="<?=$item['photo']?>" alt="">
+                    <div class="admin-user-info">
+                        <div>
+                            <?=$item['nickname']?>(ID:<?=$item['id']?>))
+                        </div>
+                        <div>
+                            VIP:<?=$item['vip_level']?> 金币:<?=$item['coin']?> 点券:<?=$item['money']?>
+                        </div>
+                    </div>
                 </div>
-                <div class="list-item-text">
-                    <div>
-                        <?=$item['nickname']?>(ID:<?=$item['id']?>))
-                    </div>
-                    <div>
-                        VIP:<?=$item['vip_level']?> 金币:<?=$item['coin']?> 点券:<?=$item['money']?>
-                    </div>
-                    <div>
-                        [<a href="/admin/edit_user?id=<?=$item['id']?>">修改</a> <a class="btn_user_remove" data-href="/admin/remove_user?id=<?=$item['id']?>">删除</a>]
-                    </div>
+                <div class="action-box border-t">
+                    <a class="btn btn-sm" href="/admin/edit_user?id=<?=$item['id']?>">修改</a>
+                    <a class="btn btn-sm btn_user_remove" data-href="/admin/remove_user?id=<?=$item['id']?>">删除</a>
                 </div>
             </div>
             <?php } ?>

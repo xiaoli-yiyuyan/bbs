@@ -38,6 +38,13 @@
             </div>
         </div>
         <div class="item-line item-lg">
+            <div class="item-title">帖子审核</div>
+            <div class="item-input">
+                <input class="input-radio" name="is_auto" value="1" type="radio" <?php if ($info['is_auto']) { ?>checked<?php } ?>>开启
+                <input class="input-radio" name="is_auto" value="0" type="radio" <?php if (!$info['is_auto']) { ?>checked<?php } ?>>关闭
+            </div>
+        </div>
+        <div class="item-line item-lg">
             --- 内容设置 ---
         </div>
         <div class="item-line item-lg">

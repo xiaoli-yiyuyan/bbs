@@ -18,7 +18,7 @@
                     <div><a href="/admin/code">代码自定义</a></div>
                     <div><a href="/admin/reward">奖励设置</a></div>
                     <div><a href="/admin/tpl">主题管理</a></div>
-                    <div><a href="/admin/page">组件管理</a></div>
+                    <!-- <div><a href="/admin/page">组件管理</a></div> -->
                     <div><a href="/admin/system_set">系统设置</a></div>
                 </div>
                 <div class="tab-page tab2">
@@ -37,7 +37,7 @@
                     <!-- <div>系统通知</div> -->
                     <div><a href="/admin/forum">帖子回收站</a></div>
                     <div><a href="/admin/forum_mark/index">标签管理</a></div>
-                    <!-- <div><a href="/admin/forum_auto">待审核帖子</a></div> -->
+                    <div><a href="/admin/forum/auto">待审核帖子</a></div>
                     <!-- <div>友链</div> -->
                 </div>
                 <div class="tab-page tab5">

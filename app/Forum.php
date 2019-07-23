@@ -195,6 +195,10 @@ class Forum extends \comm\core\Home
             'active_time' => now(),
         ];
 
+        if ($class_info['is_auto'] == 1) {
+            $data['status'] = 1;
+        }
+
         if (!$id = MForum::create($data)) {
             return Response::json(['err' => 1, 'msg' => '添加失败']);
         }
@@ -319,6 +323,10 @@ class Forum extends \comm\core\Home
         // print_r($data);
         // die();
 
+        if ($class_info['is_auto'] == 1) {
+            $data['status'] = 1;
+        }
+        
         if (!$result = MForum::where(['id' => $forum['id']])->update($data)) {
             Db::rollback();
             return Response::json(['err' => 6, 'msg' => '修改失败']);

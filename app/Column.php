@@ -60,6 +60,7 @@ class Column extends \comm\core\Home
             'title' => $options['title'],
             'bm_id' => $options['bm_id'],
             'user_add' => $options['user_add'],
+            'is_auto' => $options['is_auto'],
             'is_html' => $options['is_html'],
             'is_ubb' => $options['is_ubb'],
         ];

@@ -169,10 +169,8 @@ class Forum extends Model
             $order = 'desc';
         }
 
-        if ($status == 9999) {
-            $forum->where('status', 9999);
-        } elseif ($status == 1) {
-            $forum->where('status', 1);
+        if (!empty($status)) {
+            $forum->where('status', $status);
         } else {
             $forum->where('status', 0);
         }
