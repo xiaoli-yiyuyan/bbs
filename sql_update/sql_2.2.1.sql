@@ -1,0 +1,1 @@
+ALTER TABLE `category` ADD `is_auto` int(11) DEFAULT '0' COMMENT '是否开启审核';
