@@ -42,15 +42,15 @@ class Setting
         }
         return $return;
     }
-
+    
     /**
      * 获取全局配置参数 [可不传参数直接获取所有配置项]
      * @param  string  $name [配置名]
      * @return get
      */
-     static public function get($name = '')
+    static public function get($name = '', $value = '')
     {
-        return static::db()->getValue($name);
+        return static::db()->getValue($name, $value);
     }
 
     /**

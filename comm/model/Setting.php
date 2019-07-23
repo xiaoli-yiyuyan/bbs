@@ -39,13 +39,13 @@ class Setting extends Model
         self::$config[$name] = $value;
         return $this->where(['name' => $name])->update($data);
     }
-
+    
     /**
      * 获取配置
      * @param  string|array  $name [配置名]
      * @return getValue
      */
-    public function getValue($name = '')
+    public function getValue($name = '', $value = '')
     {
         if (empty($name)) {
             $data = $this->column('value','name');
@@ -55,14 +55,26 @@ class Setting extends Model
 
         if (gettype($name) == 'array') {
             $data = $this->where(function($query) use($name) {
-                foreach ($name as $item) {
-                    $query->whereOr('name', $item);
+                foreach ($name as $key => $value) {
+                    $query->whereOr('name', gettype($key) == "string" ? $key : $value);
+                    // $query->whereOr('name', $key);
                 }
             })->column('value','name');
+            
+            foreach ($name as $key => $value) {
+                if (gettype($key) == "string" && !isset($data[$key])) {
+                    $data[$key] = $value;
+                }
+            }
+
             return $data;
         }
 
         $this->setConfig($name);
+        
+        if (!self::$config[$name] && $value) {
+            return $value;
+        }
         return self::$config[$name];
     }
 
