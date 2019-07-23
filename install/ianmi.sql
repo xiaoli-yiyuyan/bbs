@@ -203,3 +203,4 @@ INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('weblogo','/upload/logo
 
 INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('template','default','模板标识');
 
+ALTER TABLE `category` ADD `is_auto` int(11) DEFAULT '0' COMMENT '是否开启审核';
