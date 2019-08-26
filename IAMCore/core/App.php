@@ -8,7 +8,7 @@ class App
 	protected static $controller = 'controller';
 	protected static $baseUrl;
 	protected static $class = 'Index';
-	protected static $action = 'index';
+	public static $action = 'index';
 	protected static $admin = 'Admin';	
 
 	public static function init()

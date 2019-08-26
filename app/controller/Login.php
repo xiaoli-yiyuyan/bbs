@@ -57,8 +57,8 @@ class Login extends Common
     public function wxLogin($code = '', $encryptedData = '', $iv = '')
     {
         $params = [
-            'appid' => 'wx334cbe85bc606230',
-            'secret' => '0b3340bbe6c3bf0b256e7593d2c940f0',
+            'appid' => 'wx3b40e8e0abf69986',
+            'secret' => '4515af0345049c02a3feb8fb9dd000a8',
             'js_code' => $code,
             'grant_type' => 'authorization_code'
         ];
