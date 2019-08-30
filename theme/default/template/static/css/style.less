@@ -1323,3 +1323,98 @@ body {
         }
     }
 }
+.placeholder(@rules) {
+
+    &::-webkit-input-placeholder {
+        @rules();
+    }
+    &:-moz-placeholder {
+        @rules();
+    }
+    &::-moz-placeholder {
+        @rules();
+    }
+    &:-ms-input-placeholder {
+        @rules();
+    }
+}
+._edit_forum {
+    padding: .5rem;
+    // background: #FFFFFF;
+    ._add_forum_title {
+        display: block;
+        font-size: 1rem;
+        width: 100%;
+        padding: .5rem;
+        border: none;
+        border-bottom: 1px solid #eeeeee;
+        .placeholder({
+            color: #999999
+        });
+    }
+    
+    ._edit_content {
+        padding: .5rem;
+        min-height: 10rem;
+        background: #FFFFFF;
+        outline: none;
+        &:empty:before{ 
+            content:attr(placeholder);
+            color: gray; 
+        }
+        &:focus:before{
+            content:none;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+._edit_tools_block {
+    height: 3rem;
+}
+._edit_tools {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    // height: 2.6rem;
+    padding: .6rem;
+    background: #FFFFFF;
+    ._menu {
+        display: flex;
+        align-items: center;
+        ._add_title {
+            padding: .2rem .3rem;
+            margin-right: 1rem;
+            border-radius: .15rem;
+            background: #e8e8e8;
+            &._add_title_active {
+                background: #08a86b;
+                color: #FFFFFF;
+            }
+        }
+        .icon-svg {
+            width: 1.4rem;
+            height: 1.4rem;
+            margin: 0 .3rem;
+        }
+        ._add_face {
+            background-image: url(../svg/forum/face.svg);
+        }
+        ._add_hr {
+            background-image: url(../svg/forum/hr.svg);
+        }
+        ._add_image {
+            background-image: url(../svg/forum/image.svg);
+        }
+        ._add_file {
+            background-image: url(../svg/forum/file.svg);
+        }
+    }
+    .face-box {
+        padding: 0;
+        padding-top: .6rem;
+    }
+}

@@ -414,3 +414,42 @@ function scan_dir($dir, $filter = []){
     unset($key, $value);
     return $files;
 }
+
+/**
+ * 生成一个token
+ */
+function createToken($id)
+{
+    $token = md5(uniqid(microtime(true),true) . $id);
+    return $token;
+}
+
+/**
+ * 设置/获取TOKEN
+ */
+function token($token = '')
+{
+    static $uuid;
+    if ($token !== '') {
+        $uuid = $token;
+    }
+
+    if (empty($uuid)) {
+        $uuid = \Iam\Request::get('token');
+    }
+    return $uuid;
+}
+
+
+/**
+ * 格式化参数
+ */
+function parseParam($str)
+{
+    $str = trim($str, ',');
+    if ($str === '') {
+        return [];
+    }
+    $str = explode(',', $str);
+    return $str;
+}

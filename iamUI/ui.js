@@ -34,7 +34,7 @@ $(function() {
         options.skin && $modal.addClass(options.skin);
         options.title && $('<div class="modal-header">' + options.title + '</div>').appendTo($modal); //判断标题
 
-        options.content && $('<div class="modal-content">' + options.content + '</div>').appendTo($modal); //判断内容
+        options.content && $('<div class="modal-content"></div>').append(options.content).appendTo($modal); //判断内容
 
         var $footer = '';
         var btn = [];
@@ -54,8 +54,8 @@ $(function() {
         }
         $modal.appendTo('body');
         $modal.css({
-            'marginTop': - Math.round($modal.height() / 2) + 'px',
-            'marginLeft': - Math.round($modal.width() / 2 / 1.185) + 'px'
+            'marginTop': - Math.round($modal.height() / 2 * 1.185) + 'px',
+            'marginLeft': - Math.round($modal.width() / 2) + 'px'
         });
         setTimeout(function() {
             $modal.addClass('modal-in');
@@ -70,6 +70,7 @@ $(function() {
         }
         return $modal;
     }
+
     Modal.close = function($modal, $overlay) {
         $modal.removeClass('modal-in');
         if ($overlay) {

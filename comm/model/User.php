@@ -98,6 +98,19 @@ class User extends Model
     public static function getAuthor($id)
     {
         $user = self::get($id);
-        return $user;
+        $user->append(['lv', 'is_online']);
+        $user->visible(['id', 'nickname', 'nickcolor', 'photo', 'money', 'coin', 'vip_level', 'explain', 'exp']);
+        return $user->toArray();
+    }
+
+    /**
+     * 生成一个token
+     */
+    public function resetToken()
+    {
+        $token = createToken($this->id);
+        $this->uuid = $token;
+        $this->save();
+        return $token;
     }
 }

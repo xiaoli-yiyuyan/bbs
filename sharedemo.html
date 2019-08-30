@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>分享测试案例</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script type="text/javascript" src="http://oss.tiaobox.com/js/jquery-1.10.2.min.js"></script>	
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	<script type="text/javascript" src="http://oss.tiaobox.com/js/wxutils.js"></script>
+</head>
+<body>
+
+	<h1>设置微信分享信息</h1>
+	<div>
+		<label>分享的标题</label><input type="text" id="sharetitle" value="" placeholder="分享的标题" name="">
+	</div>
+
+	<div>
+		<label>分享的说明</label><input type="text" id="sharedesc" value="" placeholder="分享的说明" name="">
+	</div>
+
+	<div>
+		<label>分享的链接</label><input type="text" id="sharelink" value="" placeholder="分享的链接" name="">
+	</div>
+
+	<button id="btn_ok">点击设置</button>
+
+	<script type="text/javascript">
+		//默认设置的分享信息
+			wxUtils.setWxShare({
+				title: '跳一跳玩的好，免费拿奖品！111',
+                desc: '免费有奖跳一跳，还不来玩？每周更新大奖',
+                link: 'http://h5.tiaobox.com',
+                imgUrl: 'http://www.tiaobox.com/img/share.png',
+			});
+		//修改后的分享信息
+		$("#btn_ok").click(function(){
+			console.log("设置了分享");
+			var sharetitle = $("#sharetitle").val();
+			var sharedesc = $("#sharedesc").val();
+			var sharelink = $("#sharelink").val();
+			alert(sharetitle+"--"+sharedesc+"--"+sharelink)
+			wxUtils.setWxShare({
+				title: sharetitle,
+				desc: sharedesc,
+				link: sharelink,
+				imgUrl: 'http://dlj.vojs.tv/c/2019/bainian/image/share.jpg'
+			});
+		})
+
+	</script>
+</body>
+</html>

@@ -15,7 +15,7 @@ $(function() {
     console.log(upload_data);
 
     var allow_type = ["png","gif","jpg","bmp","jpeg"];
-    $('.add_img').click(function() {
+    $('._add_image').click(function() {
         var file_input = $('<input type="file">');
         file_input.hide();
         $('body').append(file_input);
@@ -90,8 +90,11 @@ $(function() {
                 }
                 pic.css("background-image","url("+this.result+")");
             }
-            $(".add_img").before(pic);
+            // $(".add_img").before(pic);
             
+            var modal = $.modal({
+                content: pic
+            });
             ajaxUpload({
                 form: { 'file': file },
                 url: '/forum/ajax_upload',
@@ -108,7 +111,9 @@ $(function() {
                     var $insert = pic.find(".progress_text");
                     $insert.addClass('btn_pic_insert');
                     $insert.text("插入");
-
+                    iamEditor.insertHTML('<img data-code="[img0]" src="' + data.path + '"/>');
+                    $.modal.close(modal);
+                    $.msg('插入图片成功');
                 }
             });
         } else {

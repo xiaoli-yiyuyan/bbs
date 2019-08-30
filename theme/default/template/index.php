@@ -26,6 +26,10 @@
             'type' => 2
         ]);
     }
+
+    // $forum = new \api\Sign;
+    // $list = $forum->list();
+    // print_r($list);die();
 ?>
 
 <div class="_index_nav">

@@ -10,6 +10,7 @@ return array(
     'plugin\\' => array($baseDir . '/plugin'),
     'comm\\' => array($baseDir . '/comm'),
     'app\\' => array($baseDir . '/app'),
+    'api\\' => array($baseDir . '/api'),
     'Model\\' => array($baseDir . '/comm/model'),
     'Iam\\' => array($baseDir . '/IAMCore/core'),
     'App\\' => array($baseDir . '/app/controller'),

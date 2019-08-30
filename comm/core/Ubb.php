@@ -184,7 +184,7 @@ class Ubb
 
     public static function getTips($msg, $type = '')
     {
-        return '<div class="ubb_tips '. $type .'">' . $msg . '</div>';
+        return '<div class="_sys_ubb_tips '. $type .'">' . $msg . '</div>';
     }
 
     public static function getLink($text, $href)
@@ -242,6 +242,21 @@ class Ubb
             }
             return '<a class="_i_alt_user" href=' . href('/user/show?id=' . $user->id) . '><span class="_i_alt" style="color: #a7e3ff;">@</span>' . $user->nickname . '</a>';
         }, $context);
+        return $context;
+    }
+
+    /**
+     * 设置图片ubb
+     */
+    public static function setViewImages($context, $img_data)
+    {
+        if (!empty($img_data)) {
+            $img_arr = explode(',', $img_data);
+            foreach ($img_arr as $key => $value) {
+                $file = Db::table('file')->find($value);
+                $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
+            }
+        }
         return $context;
     }
 }

@@ -6,7 +6,7 @@ class IamEditor {
     init() {
         this.dom.setAttribute('contenteditable', true);
         this.dom.addEventListener('keydown', (event) => {
-            console.log(event);
+            // console.log(event);
             var range = this.getRange();
             if (range.commonAncestorContainer.parentNode.getAttribute('unit')) {
                 var textEle  =  range.commonAncestorContainer;
@@ -29,11 +29,13 @@ class IamEditor {
             event.preventDefault();
         });
         document.addEventListener('click', (event) => {
+            // console.log(event.target);
             if (this.dom.contains(event.target) && event.target.getAttribute('unit')) {
                 var range = this.getRange();
-                var textEle  =  range.commonAncestorContainer;
-                range.setStart(range.startContainer,  0);
-                range.setEnd(range.endContainer,  textEle.length);
+                range.selectNodeContents(event.target)
+                // var textEle = range.toString();
+                range.setStart(range.startContainer, 0);
+                range.setEnd(range.endContainer, 1);
             }
         });
     }
@@ -55,8 +57,10 @@ class IamEditor {
         this.focus();
         document.execCommand('insertHTML', false, html + '&#8203;');
         var range = this.getRange();
-        range.setStart(range.endContainer,  0);
-        range.setEnd(range.endContainer,  0);
+        range.setStart(range.endContainer,  range.endContainer.length);
+        range.setEnd(range.endContainer,  range.endContainer.length);
+        
+        range.collapse(false);
     }
 
     toUbb() {

@@ -92,4 +92,16 @@ class Category extends Model
     {
         return Forum::where('class_id', $this->id)->where('status', 0)->count();
     }
+
+    /**
+     * 判断是不是栏目管理
+     */
+    public function isBm($user_id)
+    {
+        $admin_id = $this->bm_id ? explode(',', $this->bm_id) : [];
+        // print_r(in_array($user_id, $admin_id));
+        if (in_array($user_id, $admin_id)) {
+            return true;
+        }
+    }
 }

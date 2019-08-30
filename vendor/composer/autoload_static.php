@@ -26,6 +26,7 @@ class ComposerStaticInitfd190dac51dd8f09a2e3200228f7261f
         'a' => 
         array (
             'app\\' => 4,
+            'api\\' => 4,
         ),
         'M' => 
         array (
@@ -57,6 +58,10 @@ class ComposerStaticInitfd190dac51dd8f09a2e3200228f7261f
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'api\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/api',
         ),
         'Model\\' => 
         array (

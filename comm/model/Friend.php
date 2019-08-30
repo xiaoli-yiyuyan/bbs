@@ -11,7 +11,7 @@ class Friend extends Model
     /**
      * 获取粉丝列表
      */
-    public static function getList($user_id = '', $type = 'fans' /** fans|care */, $page = 1, $pagesize = 10)
+    public static function getList($user_id = '', $type = 'fans' /** fans|care */, $page = 1, $pagesize = '')
     {
         $friend = self::where('1','1');
         if ($type == 'fans') {
@@ -19,8 +19,8 @@ class Friend extends Model
         } else {
             $friend->where('user_id', $user_id);
         }
-        
-        return $friend->paginate(Setting::get('pagesize'));
+        $pagesize = !empty($pagesize) ? $pagesize : Setting::get('pagesize');
+        return $friend->paginate($pagesize);
     }
 
     /**
