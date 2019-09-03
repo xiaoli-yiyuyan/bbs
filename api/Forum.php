@@ -11,6 +11,7 @@ use comm\core\Ubb;
 use Model\File;
 use comm\Setting;
 use Iam\Image;
+use think\Db;
 
 class Forum extends \api\Api
 {
@@ -322,12 +323,12 @@ class Forum extends \api\Api
     public function save($id = '', $class_id = '', $title = '', $context = '', $img_data = '', $file_data = '', $mark_body = '')
     {
         
-        if (!$user = source('/api/User/info')) {
+        if (!$this->user = source('/api/User/info')) {
             $this->error(1, '会员未登录');
             return;
         }
 
-        if (!$forum = MForum::get($id)) {
+        if (!$forum = ForumModel::get($id)) {
             $this->error(2, '抱歉，你要操作的帖子不存在！');
             return;
         }
@@ -337,7 +338,7 @@ class Forum extends \api\Api
             return;
         }
 
-        $isAdmin = $class_info->isBm($user['id']);
+        $isAdmin = $class_info->isBm($this->user['id']);
 
         if(!$class_info['user_add'] && !$isAdmin){
             $this->error(4, '移动到的栏目仅VIP方能操作');
@@ -349,8 +350,8 @@ class Forum extends \api\Api
             return;
         }
 
-        if (empty($title)) {
-            $this->error(6, '帖子标题不能为空！');
+        if (!empty($title) && mb_strlen($title) < 6) {
+            $this->error(6, '帖子标题不能小于6个字！');
             return;
         }
 
@@ -444,7 +445,7 @@ class Forum extends \api\Api
         
         Db::commit();
         $this->message('修改成功');
-        return ['id' => $id];
+        return $this->data(['id' => $id]);
     }
 
     // 回收状态码

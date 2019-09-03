@@ -73,8 +73,8 @@ class Forum extends Model
             $img_arr = explode(',', $this->img_data);
             foreach ($img_arr as $key => $value) {
                 $file = File::get($value);
-                $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
-                $context = str_replace("[img={$value}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
+                $context = str_replace("[img={$value}]", "<img src=\"{$file['path']}\" data-code=\"[img={$value}]\" alt=\"{$file['name']}\">", $context);
+                $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" data-code=\"[img={$value}]\" alt=\"{$file['name']}\">", $context);
             }
         }
         return $context;

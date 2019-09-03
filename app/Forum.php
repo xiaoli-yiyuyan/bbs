@@ -352,6 +352,7 @@ class Forum extends \comm\core\Home
         }
         $forum->append(['class_info']);
         $navList = Category::where('user_add', 1)->where('id', '<>', $forum->class_id)->column('id,title');
+        $forum['context'] = $forum->setViewImages($forum['context']);
         View::load('forum/edit_page', [
             'forum' => $forum,
             'navList' => $navList

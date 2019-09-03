@@ -2142,7 +2142,7 @@ body {
   font-weight: 700;
 }
 ._edit_forum {
-  margin: .5rem;
+  padding: .5rem;
 }
 ._edit_forum ._add_forum_title {
   display: block;
@@ -2169,6 +2169,7 @@ body {
   min-height: 10rem;
   background: #FFFFFF;
   outline: none;
+  white-space: pre-wrap;
 }
 ._edit_forum ._edit_content:empty:before {
   content: attr(placeholder);
@@ -2201,6 +2202,7 @@ body {
   left: 0;
   padding: .6rem;
   background: #FFFFFF;
+  border-top: 1px solid #EEEEEE;
 }
 ._edit_tools ._menu {
   display: flex;

@@ -6,7 +6,6 @@ class IamEditor {
     init() {
         this.dom.setAttribute('contenteditable', true);
         this.dom.addEventListener('keydown', (event) => {
-            // console.log(event);
             var range = this.getRange();
             if (range.commonAncestorContainer.parentNode.getAttribute('unit')) {
                 var textEle  =  range.commonAncestorContainer;
@@ -20,6 +19,22 @@ class IamEditor {
                 if (event.keyCode === 8) {
                     return false;
                 }
+            }
+            if (event.keyCode === 13){
+                // let elem = document.createTextNode('\n');
+                // const range = document.createRange();
+                // range.selectNodeContents(elem);
+                // range.collapse(toStart);
+                const _startOffset = this.getRange().startOffset
+
+                // 处理：回车时，不能插入 <br> 而是插入 \n ，因为是在 pre 标签里面
+                document.execCommand('insertHTML', false, '\n');
+                if (this.getRange().startOffset === _startOffset) {
+                    // 没起作用，再来一遍
+                    document.execCommand('insertHTML', false, '\n');
+                }
+                // 阻止默认行为
+                event.preventDefault();
             }
         });
         

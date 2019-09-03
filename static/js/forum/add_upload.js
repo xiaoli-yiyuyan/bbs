@@ -12,7 +12,7 @@ $(function() {
         upload_data.file_data = $('input[name=file_data]').val().split(',');
     }
 
-    console.log(upload_data);
+    // console.log(upload_data);
 
     var allow_type = ["png","gif","jpg","bmp","jpeg"];
     $('._add_image').click(function() {
@@ -252,6 +252,21 @@ $(function() {
     
     $('._right_bottom').click(function() {
         var $this = $('._edit_forum');
+
+        var $imgs = $('img[data-code^="[img="]');
+        
+        var ids = [];
+        $imgs.each(function($key, $item) {
+            console.log($item);
+            var code = $($item).data('code');
+            var id = code.replace(/[^0-9]/ig,"");
+            if (ids.indexOf(id) == -1) {
+                ids.push(id);
+            }
+        });
+
+        $('input[name=img_data]').val(ids.join(','));
+
         $this.append($('<input name="context" type="hidden">').val(iamEditor.toUbb()));
         $this.find('input[name=mark_body]').val(getAllMarkId());
         $.post($this.attr('action'), $this.serialize()).then(function(data) {

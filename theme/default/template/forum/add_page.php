@@ -32,6 +32,10 @@
         </div>
     </div>
 
+    <!-- 代码自定义 BEGIN -->
+    <?=code('forum_ubb')?>
+    <!-- 代码自定义 END -->
+    
     <div class="_edit_tools_block"></div>
     <div class="_edit_tools">
         <div class="_menu">
@@ -40,6 +44,7 @@
             <div class="_add_hr icon-svg" wd="分割线"></div>
             <div class="_add_image icon-svg" wd="图片"></div>
             <div class="_add_file icon-svg" wd="文件"></div>
+            <!-- <div class="_ubb_info icon-svg" wd="UBB说明">UBB说明</div> -->
         </div>
             
         <div class="_face_box chat-face-box transition" style="height: 0;">
@@ -96,6 +101,10 @@
     $('._add_face').click(function() {
         $('._file_box').height(0);
         $('.chat-face-box').height($('.chat-face-box').height() == 0 ? $('.face-box').innerHeight() : 0);
+    });
+
+    $('._add_hr').click(function() {
+        iamEditor.insertHTML('<hr data-code="[hr]"/>');
     });
 
     $('._add_file').click(function() {

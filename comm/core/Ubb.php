@@ -229,7 +229,7 @@ class Ubb
     public static function face($context)
     {
         foreach (self::$faceCode as $key => $value) {
-            $context = str_replace("[表情:{$key}]", "<img class=\"face-chat\" src=\"/static/images/face/{$value}\" alt=\"{$key}\">", $context);
+            $context = str_replace("[表情:{$key}]", "<img class=\"face-chat\" data-code=\"[表情:{$key}]\" src=\"/static/images/face/{$value}\" alt=\"{$key}\">", $context);
         }
         return $context;
     }
