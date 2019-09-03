@@ -35,7 +35,7 @@ class CommonPublic extends Controller
         if (Session::has('sid')) {
             if ($user = User::get(['sid'=> Session::get('sid')])) {
                 // <2.3.2 升级兼容
-                if (isset($user['uuid'])) {
+                if (isset($user->toArray()['uuid'])) {
                     token($user->uuid);
                 }
                 $this->user = $user->toArray();

@@ -86,6 +86,7 @@
         $.get('/admin/sys_update').then(function($data) {
             $('.update_plane').css('display', 'none');
             alert($data.msg);
+            location.reload();
         });
     });
 </script>
