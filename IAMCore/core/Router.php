@@ -45,6 +45,13 @@ class Router
 		$class = $url[$count - 2];
 		// 取出Action
 		$action = $url[$count - 1];
+		// $url = '/index/user/info.htm';
+		// 查找后缀，如果存在的话
+		$ext = '';
+		if ($index = strpos($action, '.')) {
+			$ext = substr($action, $index + 1);
+			$action = substr($action, 0, $index);
+		}
 		// 取出路径
 		$path = array_splice($url, $count - 2);
 
@@ -56,6 +63,7 @@ class Router
 			'namespace' => $namespace,
 			'class' => $this->xiaToTuo($class, true),
 			'action' => $this->xiaToTuo($action),
+			'ext' => $ext,
 			'params' => $_GET
 		];
 	}

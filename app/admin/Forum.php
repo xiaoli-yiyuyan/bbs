@@ -26,7 +26,6 @@ class Forum extends \comm\core\Home
      */
     public function auto($status = 1)
     {
-        $forum = new Forum;
         $list = source('/Model/Forum/getList', ['status' => $status]);
 
         View::load('admin/forum_auto', [

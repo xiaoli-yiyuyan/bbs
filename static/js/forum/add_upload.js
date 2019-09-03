@@ -41,9 +41,11 @@ $(function() {
             return;
         }
         console.log(file);
-        var box = $('<div class="file_item"><div class="file_icon icon-svg"></div><div class="file_progress_box"><div class="file_name">abc.rar</div><div class="file_progress"><div class="file_progress_bar"></div></div></div><div class="file_action"><div class="flex-box"><div class="btn_remove">--</div><div class="btn_setting">--</div></div></div></div>');
+        var box = $('<div class="file_item"><div class="file_icon icon-svg"></div><div class="file_progress_box"><div class="file_name">abc.rar</div><div class="file_progress"><div class="file_progress_bar"></div></div></div><div class="file_action"><div class="flex-box"><div class="btn_remove">--</div><!--div class="btn_setting">--</div--></div></div></div>');
         box.find('.file_name').text(file.name + '(' + renderSize(file.size) + ')');
         $('.add_file').before(box);
+        
+        $('._file_box').height($('.file_group').innerHeight());
         ajaxUpload({
             form: { 'file': file },
             url: '/forum/ajax_upload',
@@ -55,6 +57,7 @@ $(function() {
             },
             success: function(data) {
                 dataAdd('file_data', data.id);
+                box.data('id', data.id);
                 var $remove = box.find('.btn_remove');
                 $remove.addClass('btn_file_remove');
                 $remove.text('删除');
@@ -111,7 +114,7 @@ $(function() {
                     var $insert = pic.find(".progress_text");
                     $insert.addClass('btn_pic_insert');
                     $insert.text("插入");
-                    iamEditor.insertHTML('<img data-code="[img0]" src="' + data.path + '"/>');
+                    iamEditor.insertHTML('<img data-code="[img=' + data.id + ']" src="' + data.path + '"/>');
                     $.modal.close(modal);
                     $.msg('插入图片成功');
                 }
@@ -136,6 +139,8 @@ $(function() {
         var $parent = $(this).parents('.file_item');
         dataRemve('file_data', $parent.data('id'));
         $parent.remove();
+        
+        $('._file_box').height($('.file_group').innerHeight());
     });
 
     var insertImg = function(id) {
@@ -243,17 +248,21 @@ $(function() {
         return data;
     }
 
-    $('#add').submit(function() {
-        var $this = $(this);
+    // 发表文章
+    
+    $('._right_bottom').click(function() {
+        var $this = $('._edit_forum');
+        $this.append($('<input name="context" type="hidden">').val(iamEditor.toUbb()));
         $this.find('input[name=mark_body]').val(getAllMarkId());
         $.post($this.attr('action'), $this.serialize()).then(function(data) {
             if (data.err) {
                 $.alert(data.msg);
             } else {
-                location.replace('/forum/view?id=' + data.id);
+                location.replace('/forum/view?id=' + data.data.id);
             }
         });
         return false;
     });
+
     // this.remove();
 });

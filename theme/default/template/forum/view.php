@@ -1,7 +1,7 @@
 <?php useComp('/components/common/header', [
-    'title' => $forum['title'],
+    'title' => !empty($forum['title']) ? $forum['title'] : '查看内容',
     // 'keywords' => implode($forum['keywords'], ','),
-    'description' => mb_substr($forum['strip_tags_context'], 0, 100)
+    // 'description' => mb_substr($forum['strip_tags_context'], 0, 100)
 ]); ?>
 <script src="/static/js/iamEditor.min.js?v=<?=$version?>"></script>
 <style>
@@ -23,11 +23,11 @@
             <span class="view_info_item"><?=friendlyDateFormat($forum->create_time)?></span> · 
             <span class="view_info_item"><?=$forum['read_count']+1?>阅读</span>
         </div>
-        <?php if ($forum['user_id'] == $user['id'] || $class_info['is_admin']) { ?>
+        <?php if ($forum['user_id'] == $user['id'] || $forum['is_admin']) { ?>
             <div class="view_action">
                 <a class="btn" href="/forum/edit_page?id=<?=$forum['id']?>">修改</a>
                 <a class="btn btn_remove" data-id="<?=$forum['id']?>">删除</a>
-                <?php if ($class_info['is_admin']) { ?>
+                <?php if ($forum['is_admin']) { ?>
                 
                     <a class="btn" href="/forum/top_cream_way?id=<?=$forum['id']?>">
                         <?php if ($forum['is_top']) { ?>
@@ -49,28 +49,28 @@
             </div>
         <?php } ?>
         <div class="view_user_info">
-            <a class="view_user_info_item" href="<?=href('/user/show?id=' . $forum_user['id'])?>">
-                <img class="view_user_info_photo" src="<?=$forum_user['photo']?>" alt="">
+            <a class="view_user_info_item" href="<?=href('/user/show?id=' . $forum->author['id'])?>">
+                <img class="view_user_info_photo" src="<?=$forum->author['photo']?>" alt="">
                 <div class="user_up">
                     <div class="view_user_info_nickname">
                         
-                        <?=$forum_user['nickname']?>
+                        <?=$forum->author['nickname']?>
                     </div>
                     <div>
-                        <span class="user_vip user_vip_<?=$forum_user['vip_level']?>">VIP<?=$forum_user['vip_level']?></span>
-                        <span class="user_lv">Lv.<?=$forum_user['lv']['level']?></span>
+                        <span class="user_vip user_vip_<?=$forum->author['vip_level']?>">VIP<?=$forum->author['vip_level']?></span>
+                        <span class="user_lv">Lv.<?=$forum->author['lv']['level']?></span>
                          · <?=$fans_count?>粉丝</div>
                 </div>
             </a>
-            <?php if ($user['id'] != 0 && $user['id'] != $forum_user['id']) { ?>
+            <?php if ($user['id'] != 0 && $user['id'] != $forum->author['id']) { ?>
             
             <span class="care_btn">
-                <?php $is_care = source('Model/Friend/isCare', ['user_id' => $user['id'], 'care_user_id' => $forum_user['id']]); ?>
+                <?php $is_care = source('Model/Friend/isCare', ['user_id' => $user['id'], 'care_user_id' => $forum->author['id']]); ?>
 
                 <?php if ($is_care) { ?>
-                    <button data-id="<?=$forum_user['id']?>" class="btn btn-sm btn-action-care">- 已关注</button>
+                    <button data-id="<?=$forum->author['id']?>" class="btn btn-sm btn-action-care">- 已关注</button>
                 <?php } else { ?>
-                    <button data-id="<?=$forum_user['id']?>" class="btn btn-shadow btn-fill btn-sm btn-action-care">+ 关注</button>
+                    <button data-id="<?=$forum->author['id']?>" class="btn btn-shadow btn-fill btn-sm btn-action-care">+ 关注</button>
                 <?php } ?>
             </span>
             <?php } ?>

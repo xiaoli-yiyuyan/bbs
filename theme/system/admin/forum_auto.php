@@ -17,8 +17,9 @@
         <div class="list-group">
             <?php foreach ($list as $key => $item) { ?>
             <div class="list-item border-b">
-                ID:<?=$item['id']?>) <a href="/forum/view?id=<?=$item['id']?>"><?=$item['title']?></a>
+                ID:<?=$item['id']?>) <a href="/forum/view?id=<?=$item['id']?>"><?=!empty($item['title']) ? $item['title'] : $item['mini_context'] ?></a>
                 <div class="action-box border-t">
+                    <a class="btn btn-sm btn_forum_look" href="/forum/view?id=<?=$item['id']?>">查看</a>
                     <a class="btn btn-sm btn_forum_back" data-href="/admin/forum/pass?id=<?=$item['id']?>&status=0">通过</a>
                     <?php if ($item['status'] == 1) { ?>
                         <a class="btn btn-sm btn_forum_remove" data-href="/admin/forum/pass?id=<?=$item['id']?>&status=2">拒绝</a>

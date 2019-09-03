@@ -1,3 +1,7 @@
+<?php
+    $rightBottom = $rightBottom ?? [];
+?>
+
 <div class="header-bar">
     <div class="header-item back">
         <i class="icon-svg svg-left"></i>
@@ -6,7 +10,11 @@
     <div class="header-title ellipsis"><?=$title?></div>
     
     <div class="header-item">
+        <?php if (!empty($rightBottom)) { ?>
+        <div class="_right_bottom"><?=$rightBottom['text']?></div>
+        <?php } else { ?>
         <a href="/message"><i class="icon-svg svg-mail"></i></a>
+        <?php } ?>
     </div>
 </div>
 <script>

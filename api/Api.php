@@ -43,10 +43,12 @@ class Api
             $this->errorCode = $errorCode;
             $this->errorMessage = $errorMessage;
         }
-        return [
-            'error' => $this->errorCode,
-            'message' => $this->errorMessage,
-        ];
+        if ($this->getErrorCode() != 0) {
+            return [
+                'error' => $this->errorCode,
+                'message' => $this->errorMessage,
+            ];
+        }
     }
 
     public function getErrorCode()

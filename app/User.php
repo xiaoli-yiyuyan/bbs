@@ -32,18 +32,18 @@ class User extends \comm\core\Home
 
         // 帖子相关
         $forum_count = Forum::where('user_id', $this->user['id'])->count();
-        $forum_data = Forum::where('user_id', $this->user['id'])->order('id', 'desc')->find();
+        // $forum_data = Forum::where('user_id', $this->user['id'])->order('id', 'desc')->find();
 
         // 评论相关
         $reply_count = ForumReply::where('user_id', $this->user['id'])->count();
-        $reply_data = ForumReply::where('user_id', $this->user['id'])->order('id', 'desc')->find();
+        // $reply_data = ForumReply::where('user_id', $this->user['id'])->order('id', 'desc')->find();
         View::load('user/index',[
             'fans_count' => $fans_count,
             'care_count' => $care_count,
             'forum_count' => $forum_count,
-            'forum_data' => $forum_data,
+            // 'forum_data' => $forum_data,
             'reply_count' => $reply_count,
-            'reply_data' => $reply_data
+            // 'reply_data' => $reply_data
         ]);
     }
 

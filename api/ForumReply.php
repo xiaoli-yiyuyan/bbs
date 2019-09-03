@@ -32,7 +32,7 @@ class ForumReply extends \api\Api
             $item->context = Ubb::altUser($item->context);
         });
         $list->append(['author']);
-        return $list;
+        return $this->data($list);
     }
 
 }

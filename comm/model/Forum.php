@@ -57,6 +57,9 @@ class Forum extends Model
         $text = preg_replace_callback('/\[img_\d+\]/', function() {
             return;
         }, $text);
+        $text = preg_replace_callback('/\[img=\d+\]/', function() {
+            return;
+        }, $text);
         return $text;
     }
 
@@ -71,6 +74,7 @@ class Forum extends Model
             foreach ($img_arr as $key => $value) {
                 $file = File::get($value);
                 $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
+                $context = str_replace("[img={$value}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
             }
         }
         return $context;
@@ -100,7 +104,7 @@ class Forum extends Model
 
     public function getClassInfoAttr($val, $data)
     {
-        return Category::field('title')->get($data['class_id']);
+        return Category::get($data['class_id']);
     }
 
     /**

@@ -2006,12 +2006,15 @@ body {
   white-space: normal;
   margin-bottom: .2rem;
 }
+.list-care .text .images {
+  display: flex;
+}
 .list-care .text .images img {
   display: block;
   width: 33%;
   height: 4rem;
   border-radius: .1rem;
-  box-shadow: 0 .1rem .2rem #666666;
+  box-shadow: 0 0.08rem 0.5rem rgba(0, 0, 0, 0.2);
 }
 .list-care .count {
   display: flex;
@@ -2134,8 +2137,12 @@ body {
   color: #666666;
   font-size: .6rem;
 }
+._right_bottom {
+  color: #08a86b;
+  font-weight: 700;
+}
 ._edit_forum {
-  padding: .5rem;
+  margin: .5rem;
 }
 ._edit_forum ._add_forum_title {
   display: block;
@@ -2173,6 +2180,16 @@ body {
 ._edit_forum ._edit_content img {
   max-width: 100%;
   height: auto;
+}
+._edit_forum ._mark_box {
+  border-top: 1px solid #eeeeee;
+}
+._edit_forum ._cclass_title {
+  padding: .5rem .2rem;
+  font-size: .9rem;
+}
+._edit_forum ._cclass_box {
+  margin-bottom: .2rem;
 }
 ._edit_tools_block {
   height: 3rem;
@@ -2216,7 +2233,25 @@ body {
 ._edit_tools ._menu ._add_file {
   background-image: url(../svg/forum/file.svg);
 }
-._edit_tools .face-box {
+._edit_tools ._face_box,
+._edit_tools ._file_box {
+  overflow: hidden;
+}
+._edit_tools .face-box,
+._edit_tools .file_group {
   padding: 0;
   padding-top: .6rem;
+}
+._edit_tools .add_btn {
+  margin: .25rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 3rem;
+  width: 3rem;
+  line-height: 1rem;
+  background: #eee;
+  color: #999;
+  border-radius: .1rem;
 }

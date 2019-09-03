@@ -7,7 +7,7 @@ function request()
 /**
  * 数据源获取
  */
-function source($cmd, $query = [])
+function source($cmd, $query = [], &$class = null)
 {
 	// source('api/list?user_name=1&b=2c=3');
 	// $param = func_get_args();
@@ -71,7 +71,8 @@ function source($cmd, $query = [])
 
 		// 执行方法
 		if (count($args) == $method->getNumberOfParameters()) {
-			return $method->invokeArgs($method->isStatic() ? null : new $appClass, $args);
+			$class = $runClass;
+			return $method->invokeArgs($method->isStatic() ? null : $runClass, $args);
 		} else {
 			throw new \Exception('参数错误，缺少参数');
 		}

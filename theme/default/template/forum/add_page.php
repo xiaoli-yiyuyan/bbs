@@ -1,13 +1,41 @@
 <?php useComp('/components/common/user_header', ['title' => '帖子发布']); ?>
-<?php useComp('/components/common/header_nav', ['title' => '内容发布']); ?>
+<?php useComp('/components/common/header_nav', [
+    'title' => '内容发布',
+    'rightBottom' => [
+        'text' => '发布'
+    ]
+]); ?>
 <script src="/static/js/iamEditor.min.js?v=<?=$version?>"></script>
-<div class="_edit_forum">
-    <input type="text" class="_add_forum_title" placeholder="在这里输入标题">
+<form class="_edit_forum" action="/forum/add.json?token=<?=$user['uuid']?>" method="post">
+    
+    <input type="hidden" name="img_data">
+    <input type="hidden" name="file_data">
+
+    <!-- <div class="_cclass_title">专栏分类</div> -->
+    <div class="_cclass_box">
+        
+    <select class="input input-line input-lg" name="class_id" id="">
+        <option>请选择要发帖的栏目</option>
+        <?php foreach ($column as $item => $value) { ?>
+            <option value="<?=$item?>" <?=(!empty($column_info) && $column_info['id'] == $item) ? 'selected="selected"' : ''?>><?=$value?></option>
+        <?php } ?>
+        </select>
+    </div>
+    <input type="text" class="_add_forum_title" name="title" placeholder="在这里输入标题" style="display: none;">
     <div class="_edit_content" placeholder="说点啥好呢？"></div>
+    
+    <input type="hidden" name="mark_body">
+    <div class="_mark_box item-line item-lg">
+        <div class="item-title">标签</div>
+        <div class="item-input">
+        <div class="input mark_input btn-sm" contenteditable="true"></div><span class="btn_add_mark">添加</span>
+        </div>
+    </div>
+
     <div class="_edit_tools_block"></div>
     <div class="_edit_tools">
         <div class="_menu">
-            <div class="_add_title _add_title_active">添加标题</div>
+            <div class="_add_title">添加标题</div>
             <div class="_add_face icon-svg" wd="表情"></div>
             <div class="_add_hr icon-svg" wd="分割线"></div>
             <div class="_add_image icon-svg" wd="图片"></div>
@@ -49,15 +77,32 @@
                 <span class="face-out"><img data-img="做操"  src="/static/images/face/zuocao.gif" alt="做操"></span>
             </div>
         </div>
+
+        <!-- 附件列表 -->
+        <div class="_file_box transition" style="height: 0;">
+            
+            <div class="file_group">
+                <div class="add_btn add_file">
+                    添加<br>文件
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</form>
 <script>
     var iamEditor = new IamEditor();
     iamEditor.getBox(document.querySelector('._edit_content'));
 
     $('._add_face').click(function() {
+        $('._file_box').height(0);
         $('.chat-face-box').height($('.chat-face-box').height() == 0 ? $('.face-box').innerHeight() : 0);
     });
+
+    $('._add_file').click(function() {
+        $('.chat-face-box').height(0);
+        $('._file_box').height($('._file_box').height() == 0 ? $('.file_group').innerHeight() : 0);
+    });
+
     $('.face-box .face-out img').click(function() {
         var img_tag = $(this).data('img');
         var face_code = '[表情:' + img_tag + ']';
@@ -65,46 +110,15 @@
         // $('.input_show').val($('.input_show').val() + face_code);
     });
     
-    // $('._add_image').click(function() {
-    //         $.modal({
-    //             title: '爆款手机',
-    //             content: '<div class="list">\
-    //         <div class="list-group">\
-    //             <div class="list-item ellipsis list-item-icon">\
-    //                 <img src="images/1.jpg" alt="">\
-    //                 Apple 苹果 iPhone 6s Plus (A1699) 16G 玫瑰金色 移动联通电信4G 全网通手机\
-    //             </div>\
-    //             <div class="list-item ellipsis list-item-icon">\
-    //                 <img src="images/1.jpg" alt="">\
-    //                 Letv 乐视1S 乐1S 移动联通双4G 双卡双待 16GB 金</div>\
-    //             <div class="list-item ellipsis">NOKIA/诺基亚 2610 nokia 2610 经典诺基亚直板手机 学生备用老人手机 诺基亚低端功能机</div>\
-    //             <div class="list-item ellipsis">华为 Mate8 NXT-TL00 3GB+32GB版 移动定制 月光银</div>\
-    //             <div class="list-item ellipsis">锤子 坚果 32GB 红色 移动联通4G手机 双卡双待&gt;</div>\
-    //         </div>\
-    //     </div>',
-    //             btn: [
-    //                 function($btn) {
-    //                     $btn.text('管理');
-    //                     $btn.click(function() {
-    //                         $.alert('点击了按钮一');
-    //                     });
-    //                 },
-    //                 function($btn) {
-    //                     $btn.text('取消');
-    //                     $btn.click(function() {
-    //                         $.alert('点击了按钮二');
-    //                     });
-    //                 },
-    //                 function($btn) {
-    //                     $btn.text('查看>>');
-    //                     $btn.click(function() {
-    //                         $.alert('点击了按钮三');
-    //                     });
-    //                 }
-    //             ]
-    //         });
-    //     });
-
+    $('._add_title').click(function () {
+        $(this).toggleClass('_add_title_active');
+        if ($(this).hasClass('_add_title_active')) {
+            $('._add_forum_title').show();
+        } else {
+            
+            $('._add_forum_title').hide();
+        }
+    });
     var face = [
         { name: "爱你", src: "aini.gif" },
         { name: "抱抱", src: "baobao.gif" },

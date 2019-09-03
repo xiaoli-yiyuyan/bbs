@@ -28,6 +28,12 @@ class IamEditor {
             document.execCommand('insertText', false, plainText);
             event.preventDefault();
         });
+
+        this.dom.addEventListener('blur', (event) => {
+            // 编辑框失去焦点时保存选区
+            this._currentRange = this.selection.getRangeAt(0);
+        });
+
         document.addEventListener('click', (event) => {
             // console.log(event.target);
             if (this.dom.contains(event.target) && event.target.getAttribute('unit')) {
@@ -50,6 +56,12 @@ class IamEditor {
     }
     
     focus() {
+        // 恢复选区
+        if (this._currentRange) {
+            const selection = window.getSelection()
+            selection.removeAllRanges()
+            selection.addRange(this._currentRange)
+        }
         this.dom.focus();
     }
 

@@ -22,7 +22,7 @@
 </div>
 
 <!-- 分页 -->
-<?=$page?>
+<?=$list->render()?>
 </div>
 <?php } ?>
 <?php self::load('common/footer'); ?>

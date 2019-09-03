@@ -35,7 +35,9 @@ class App
 		self::$namespace = $route['namespace'];
 		self::$class = $route['class'];
 		self::$action = $route['action'];
-
+		if ($route['ext'] == 'json') {
+			self::$namespace = 'api';
+		}
 		$runClass = '\\' . self::$namespace . '\\' . self::$class;
 		// print_r($runClass);
 		if (!class_exists($runClass)) {
@@ -69,6 +71,9 @@ class App
 		// 执行方法
 		if (count($args) == $method->getNumberOfParameters()) {
 			$method->invokeArgs($appClass, $args);
+			if ($route['ext'] == 'json') {
+				Response::json($appClass->getReturn());
+			}
 			Listen::hook('appCreated', [$appClass, $method]);
 		} else {
 			throw new \Exception('参数错误，缺少参数');

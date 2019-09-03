@@ -84,27 +84,19 @@ class Forum extends \comm\core\Home
     }
 
     public function list($id = '')
-    {
-        $class_info = Category::get($id);
-        $forum = MForum::where('class_id', $id);
-        $forum->where('status', '<>', 9999);
-        $forum->order('is_top desc, active_time desc');
-        $list = $forum->paginate(Setting::get('pagesize'), false, [
-            'query' => ['id' => $id]
+    {   
+        $list = source('/api/Forum/list', [
+            'class_id' => $id
         ]);
-        foreach ($list as &$item) {
-            $item['img_list'] = $this->setViewFiles($item['img_data']);
-            $item['file_list'] = $this->setViewFiles($item['file_data']);
-        }
+        $class_info = Category::get($id);
+        $list->appends('id', $id);
 
-        $ids = array_column($list->toArray()['data'], 'id');
-
-        $this->parseList($list);
-        $replyCount = ForumReply::where('forum_id', 'in', $ids)->count(1);
+        $replyCount = ForumReply::where('forum_id', 'IN', function($query) use($id) {
+            return $query->table('forum')->field('id')->where('class_id', $id);
+        })->count();
 
         View::load('forum/list', [
             'list' => $list,
-            'page' => $list->render(),
             'class_info' => $class_info,
             'reply_count' => $replyCount
         ]);
@@ -137,7 +129,7 @@ class Forum extends \comm\core\Home
      */
     public function ajaxAdd($class_id = '', $title = '', $context = '', $img_data = '', $file_data = '', $mark_body = '')
     {
-
+        source('/api/Forum/add');
         if (!$this->isLogin()) {
             return Response::json(['err' => 6, 'msg' => '会员未登录']);
         }
@@ -371,176 +363,20 @@ class Forum extends \comm\core\Home
      */
     public function view($id = '')
     {
-        if (!$forum = MForum::get($id)) {
-            return Page::error('要查看的内容不存在！');
+        $forum = source('/api/Forum/view', ['id' => $id], $api);
+        if ($error = $api->error()) {
+            return Page::error($error['message']);
         }
-
-        if (!$forum_user = $forum->author) {
-            return Page::error('楼主信息异常，暂时无法查看该帖子！');
-        }
-
-        if (!$class_info = Category::get($forum['class_id'])) {
-            return Page::error('帖子发表栏目不存在，暂时无法查看该帖子！');
-        }
-        $class_info['is_admin'] = $this->isAdmin($this->user['id'], $class_info['id']);
-        if ($forum->status == 9999 && !$class_info['is_admin']) {
-            return Page::error('要查看的内容不存在！');
-        }
-        $this->viewInfo = $forum;
-        
-        $forum['img_list'] = $this->setViewFiles($forum['img_data']);
-        $forum['file_list'] = $this->setViewFiles($forum['file_data']);
-
-        
-        // 启用HTML过滤
-        if ($class_info->is_html) {
-            $forum['title'] = htmlspecialchars($forum['title']);
-            $forum['context'] = htmlspecialchars($forum['context']);
-            $forum['context'] = str_replace(chr(13).chr(10), '<br>', $forum['context']);
-            $forum['context'] = str_replace(chr(32), '&nbsp;', $forum['context']);
-        }
-
-        // 启用UBB语法
-        if ($class_info->is_ubb) {
-            $forum['context'] = $this->rule($forum['context'], $forum['id'], $forum['user_id']);
-            $forum['context'] = $this->setViewImages($forum['context'], $forum['img_data']);
-        }
-        $forum['strip_tags_context'] = str_replace('&nbsp;', chr(32), $forum['context']);
-        $forum['strip_tags_context'] = strip_tags($forum['strip_tags_context']);
-        $forum['strip_tags_context'] = preg_replace('/\s+/', ' ', $forum['strip_tags_context']);
-        // $forum['keywords'] = getKeywords($forum['title'], $forum['strip_tags_context']);
-
-        // 阅读量+1
-        MForum::where('id', $forum->id)->setInc('read_count');
-        // $forum->read_count = $forum->read_count + 1;
-        // $forum->save();
         // 获取回复数据
-        $forum_reply = ForumReply::where('forum_id', $forum['id'])->paginate(20, false, [
-            'query' => ['id' => $forum['id']]
-        ])->each(function($item, $key) {
-            $item->context = $this->face($item->context);
-            $item->context = Ubb::altUser($item->context);
-        });
-        $forum = $forum->append(['mark_body', 'author']);
-        
-        $fans_count = Friend::where('care_user_id', $forum->user_id)->count();
+        $forum_reply = source('/api/ForumReply/list', ['forum_id' => $id, 'pagesize' => 20]);
+        $forum_reply->appends('id', $forum['id']);
+        // 获取粉丝数
+        $fans_count = source('/api/Friend/fansCount', ['user_id' => $forum->user_id]);
         View::load('forum/view', [
             'forum' => $forum,
-            'forum_user' => $forum_user,
-            'class_info' => $class_info,
             'forum_reply' => $forum_reply,
             'fans_count' => $fans_count
         ]);
-        // return ['err' => 0, 'info' => $info, 'user' => $forum_user, 'class_info' => $class_info];
-    }
-
-    /**
-     * 论坛UBB
-     */
-    private function rule($content, $id, $user_id)
-    {
-        $content = preg_replace_callback('/\[read_login\](.*?)\[\/read_login\]/', function($matches) {
-            if ($this->isLogin()) {
-                return $matches[1];
-            }
-            return Ubb::getTips('此内容<a href="/login/index">登录</a>可见', 'read_login');
-        }, $content);
-        
-        $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user_id) {
-            $reply = ForumReply::get([
-                'user_id' => $this->user['id'],
-                'forum_id' => $this->viewInfo['id']
-            ]);
-            if ($user_id == $this->user['id'] || $reply) {
-                return $matches[1];
-            }
-            return Ubb::getTips('此内容 <span>评论</span> 可见', 'read_reply');
-        }, $content);
-
-        $content = preg_replace_callback('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', function($matches) use($id, $user_id) {
-            if ($user_id == $this->user['id'] || $this->isBuy($id)) {
-                return $matches[2];
-            }
-            return Ubb::getTips('此内容需要花费 <span>' . $matches[1] . '</span> 金币 <a href="/forum/forum_buy?id=' . $id . '">购买</a>', 'read_buy');
-        }, $content);
-
-        $content = preg_replace_callback('/\[read_vip_([12345])\](.*?)\[\/read_vip_\1\]/', function($matches) use($id, $user_id) {
-            if ($this->isLogin()) {
-                $dateTime = new \DateTime($this->user['vip_time']);
-                if ($matches[1] <= $this->user['vip_level'] && $dateTime->format('U') >= time()) {
-                    return $matches[2];
-                }
-            }
-            return Ubb::getTips('此内容仅限 <span>VIP ' . $matches[1] . '</span> 才可查看', 'read_vip');
-        }, $content);
-        return $content;
-    }
-
-    /**
-     * 判断是否已经购买
-     */
-    private function isBuy($id)
-    {
-        return ForumBuy::get(['forum_id' => $id, 'user_id' => $this->user['id']]);
-    }
-
-    /**
-     * 购买内容
-     */
-    public function forumBuy()
-    {
-        $id = Request::get('id');
-        if (!$forum = MForum::get($id)) {
-            return Page::error('购买失败！');
-        }
-        $content = $forum['context'];
-        $content = preg_match('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', $content, $matches);
-        if (empty($matches)) {
-            return Page::error('购买失败！');
-        }
-        if ($matches <= 0) {
-            return Page::error('购买失败！');
-        }
-        if ($buy = ForumBuy::get(['forum_id' => $id, 'user_id' => $this->user['id']])) {
-            return Page::error('购买失败！');
-        }
-
-        if (!MUser::changeCoin($this->user['id'], -$matches[1])) {
-            return Page::error('购买失败！余额不足');
-        }
-
-        ForumBuy::create([
-            'forum_id' => $id,
-            'user_id' => $this->user['id'],
-            'coin' => $matches[1]
-        ]);
-        return Page::success('购买成功！', '/forum/view?id=' . $id);
-    }
-
-    public function setViewImages($context, $img_data)
-    {
-        if (!empty($img_data)) {
-            $img_arr = explode(',', $img_data);
-            foreach ($img_arr as $key => $value) {
-                $file = Db::table('file')->find($value);
-                $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
-            }
-        }
-        return $context;
-    }
-
-    public function setViewFiles($file_data)
-    {
-        $file_list = [];
-        if (!empty($file_data)) {
-            $file_arr = explode(',', $file_data);
-            foreach ($file_arr as $key => $value) {
-                $file = Db::table('file')->find($value);
-                $file['format_size'] = byteFormat($file['size']);
-                $file_list[] = $file;
-            }
-        }
-        return $file_list;
     }
 
     public function replyList($options)

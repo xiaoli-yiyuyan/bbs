@@ -3,6 +3,7 @@ namespace api;
 
 use Model\Forum as ForumModel;
 use Model\ForumBuy;
+use Model\ForumMark;
 use Model\ForumMarkBody;
 use Model\User;
 use Model\Category;
@@ -13,13 +14,15 @@ use Iam\Image;
 
 class Forum extends \api\Api
 {
+    private $addForumCoin = 0;
+    private $addReplyCoin = 0;
     /**
      * 获取文章类表
      * @param int $sort 0 默认。ID倒序，1 ID顺序，2 动态顺序
      */
     public function list($class_id = '', $user_id = '', $page = 1, $pagesize = 10, $sort = 1, $order = 1, $type = '' /**1,2,3 */)
     {
-        $forum = ForumModel::where(1, 1);
+        $forum = ForumModel::where('status', 0);
 
         // 栏目类表
         $class_id = parseParam($class_id);
@@ -78,9 +81,9 @@ class Forum extends \api\Api
             $orderSort[] = 'ASC';
         }
         $forum->order($orderSort[0], $orderSort[1]);
-        $list = $forum->paginate($pagesize, true, ['page' => $page]);
+        $list = $forum->paginate($pagesize, false, ['page' => $page]);
         $list->append(['author', 'mini_context', 'img_list', 'file_list']);
-        return $list;
+        return $this->data($list);
     }
 
     /**
@@ -98,14 +101,14 @@ class Forum extends \api\Api
             return;
         }
 
-        if (!$class_info = Category::get($forum['class_id'])) {
+        if (!$class_info = $forum->class_info) {
             $this->error(3, '帖子发表栏目不存在，暂时无法查看该帖子！');
             return;
         }
 
         $user_id = ($user = source('/api/User/info')) ? $user['id'] : 0;
-        $class_info['is_admin'] = $class_info->isBm($user_id);
-        if ($forum->status == 9999 && !$class_info['is_admin']) {
+        $forum['is_admin'] = $class_info->isBm($user_id);
+        if ($forum->status == 9999 && !$forum['is_admin']) {
             $this->error(4, '要查看的内容不存在！');
             return;
         }
@@ -125,7 +128,8 @@ class Forum extends \api\Api
         // 启用UBB语法
         if ($class_info->is_ubb) {
             $forum['context'] = $this->rule($forum['context'], $forum['id'], $forum['user_id']);
-            $forum['context'] = $this->setViewImages($forum['context'], $forum['img_data']);
+            $forum['context'] = Ubb::face($forum['context']);
+            $forum['context'] = $forum->setViewImages($forum['context']);
         }
         // $forum['strip_tags_context'] = str_replace('&nbsp;', chr(32), $forum['context']);
         // $forum['strip_tags_context'] = strip_tags($forum['strip_tags_context']);
@@ -135,10 +139,9 @@ class Forum extends \api\Api
         // 阅读量+1
         ForumModel::where('id', $forum->id)->setInc('read_count');
 
-        $forum = $forum->append(['mark_body', 'author']);
-        $forum['class_title'] = $class_info->title;
-        // print_r($forum);
-        return $forum->toArray();
+        $forum = $forum->append(['mark_body', 'author', 'class_info']);
+
+        return $this->data($forum);
     }
 
     /**
@@ -192,8 +195,8 @@ class Forum extends \api\Api
         if (!empty($img_data)) {
             $img_arr = explode(',', $img_data);
             foreach ($img_arr as $key => $value) {
-                $file = Db::table('file')->find($value);
-                $context = str_replace("[img_{$key}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
+                $file = File::get($value);
+                $context = str_replace("[img_{$value}]", "<img src=\"{$file['path']}\" alt=\"{$file['name']}\">",$context);
             }
         }
         return $context;
@@ -208,7 +211,7 @@ class Forum extends \api\Api
         if (!empty($file_data)) {
             $file_arr = explode(',', $file_data);
             foreach ($file_arr as $key => $value) {
-                $file = Db::table('file')->find($value);
+                $file = File::get($value);
                 $file['format_size'] = byteFormat($file['size']);
                 $file_list[] = $file;
             }
@@ -222,7 +225,7 @@ class Forum extends \api\Api
     public function add($class_id = '', $title = '', $context = '', $img_data = '', $file_data = '', $mark_body = '')
     {
 
-        if (!$user = source('/api/User/info')) {
+        if (!$this->user = source('/api/User/info')) {
             $this->error(1, '会员未登录');
             return;
         }
@@ -237,8 +240,8 @@ class Forum extends \api\Api
             return;
         }
 
-        if (empty($title)) {
-            $this->error(4, '帖子标题不能为空！');
+        if (!empty($title) && mb_strlen($title) < 6) {
+            $this->error(4, '帖子标题不能小于6个字！');
             return;
         }
 
@@ -310,7 +313,7 @@ class Forum extends \api\Api
 
         User::changeCoin($this->user['id'], $this->addForumCoin);
         $this->message('发布成功');
-        return ['id' => $id->id, 'reward_coin' => $this->addForumCoin];
+        return $this->data(['id' => $id->id, 'reward_coin' => $this->addForumCoin]);
     }
 
     /**

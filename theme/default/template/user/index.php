@@ -78,11 +78,6 @@
         <a href="/forum/my_list?user_id=<?=$user['id']?>" class="flex-box">
             <div><i class="li-box-svg icon-svg b_shoubing"></i></div>
             <div class="li-box-word">帖子(<?=$forum_count?>)</div>
-            <?php if ($forum_count > 0) { ?>
-            <div class="ellipsis more bbs_article" data-id="<?=$forum_data['id']?>"><?=$forum_data['title']?></div>
-            <?php } else { ?>
-            <div class="ellipsis more bbs_article" data-id="0">还没有发表主题！</div>
-            <?php } ?>
         </a>
     </div>
     <!-- 论坛统计 End -->
@@ -92,11 +87,6 @@
         <a href="/forum/reply_art_list?reply_id=<?=$user['id']?>" class="flex-box">
             <div><i class="li-box-svg icon-svg b_pingtu"></i></div>
             <div class="li-box-word">评论(<?=$reply_count?>)</div>
-            <?php if ($reply_count) { ?>
-            <div class="ellipsis more bbs_reply" data-forum-id="<?=$reply_data['forum_id']?>"><?=$reply_data['context']?></div>
-            <?php } else { ?>
-            <div class="ellipsis more bbs_reply" data-forum-id="0">还没有评论主题！</div>
-            <?php } ?>
         </a>
     </div>
     <!-- 论坛评论统计 End -->
