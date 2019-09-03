@@ -34,7 +34,10 @@ class CommonPublic extends Controller
         $setting = Setting::get(['login_reward', 'weblogo', 'webname']);
         if (Session::has('sid')) {
             if ($user = User::get(['sid'=> Session::get('sid')])) {
-                token($user->uuid);
+                // <2.3.2 升级兼容
+                if (isset($user['uuid'])) {
+                    token($user->uuid);
+                }
                 $this->user = $user->toArray();
                 $last_time = strtotime($this->user['last_time']);
                 $_last_time = strtotime(date('Y-m-d', $last_time));
