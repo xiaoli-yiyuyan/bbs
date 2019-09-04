@@ -20,7 +20,9 @@
         <?php if (!empty($item['img_list'])) { ?>
             <div class="images">
                 <?php for ($i = 0; $i < min(3, count($item['img_list'])); $i ++) { ?>
-                <img src="/forum/imagecropper?path=<?=ltrim($item['img_list'][$i]['path'], '/')?>" alt="加载中...">
+                <div class="images_item">
+                    <img src="/forum/imagecropper?path=<?=ltrim($item['img_list'][$i]['path'], '/')?>" alt="加载中...">
+                </div>
                 <?php } ?>
             </div>
         <?php } ?>

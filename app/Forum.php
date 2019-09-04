@@ -556,7 +556,7 @@ class Forum extends \comm\core\Home
 
     public function imagecropper($path = '')
     {
-        imagecropper($path, 120, 80);
+        imagecropper($path, 270, 270);
     }
 
     public function search($keyword = '', $mark_id = '')
