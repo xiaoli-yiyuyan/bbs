@@ -258,9 +258,16 @@ function imagecropper($source_path, $target_width, $target_height)
         return false;
         break;
     }
-
     $target_image = imagecreatetruecolor($target_width, $target_height);
     $cropped_image = imagecreatetruecolor($cropped_width, $cropped_height);
+
+    
+    // 解决GIF背景透明
+    $color = imagecolorallocate($cropped_image, 255, 255, 255);
+    imagecolortransparent($cropped_image, $color); 
+    imagefill($cropped_image, 0, 0, $color); 
+
+
     imagealphablending($target_image,false);
     imagesavealpha($target_image,true);
     imagealphablending($cropped_image,false);
