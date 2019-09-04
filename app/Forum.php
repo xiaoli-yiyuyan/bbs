@@ -85,8 +85,10 @@ class Forum extends \comm\core\Home
 
     public function list($id = '')
     {   
+        $page = Request::get('page');
         $list = source('/api/Forum/list', [
-            'class_id' => $id
+            'class_id' => $id,
+            'page' => $page
         ]);
         $class_info = Category::get($id);
         $list->appends('id', $id);

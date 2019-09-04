@@ -24,13 +24,13 @@
     <input type="text" class="_add_forum_title" name="title" placeholder="在这里输入标题" style="display: none;">
     <div class="_edit_content" placeholder="说点啥好呢？"><?=$forum['context']?></div>
     
-    <input type="hidden" name="mark_body">
+    <!-- <input type="hidden" name="mark_body" value="">
     <div class="_mark_box item-line item-lg">
         <div class="item-title">标签</div>
         <div class="item-input">
         <div class="input mark_input btn-sm" contenteditable="true"></div><span class="btn_add_mark">添加</span>
         </div>
-    </div>
+    </div> -->
 
     <!-- 代码自定义 BEGIN -->
     <?=code('forum_ubb')?>
