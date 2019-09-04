@@ -131,7 +131,7 @@ class Forum extends \comm\core\Home
      */
     public function ajaxAdd($class_id = '', $title = '', $context = '', $img_data = '', $file_data = '', $mark_body = '')
     {
-        source('/api/Forum/add');
+        // source('/api/Forum/add');
         if (!$this->isLogin()) {
             return Response::json(['err' => 6, 'msg' => '会员未登录']);
         }

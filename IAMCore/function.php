@@ -50,7 +50,7 @@ function source($cmd, $query = [], &$class = null)
 		array_pop($appClass);
 		$appClass = implode('\\', $appClass);
 		if (!class_exists($appClass, $appAction)) {
-			return;
+			throw new \Exception('对应类或者方法未找到');
 		}
 
 		// 执行带参数的方法

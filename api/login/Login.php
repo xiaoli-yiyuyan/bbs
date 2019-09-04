@@ -1,7 +1,10 @@
 <?php
 namespace api\login;
 
-use api\Api;
+use Model\User;
+use comm\Setting;
+use Iam\Request;
+use Iam\Session;
 
 class Login extends \api\Api
 {
@@ -55,28 +58,28 @@ class Login extends \api\Api
             'email' => $email,
         ]);
 
-        $check = $this->dataCheck($post);
+        // $check = $this->dataCheck($post);
         if ($check['err']) {
             $this->error($check['err'], $check['msg']);
             return;
         }
         $user = new User;
-        if ($user->where(['username' => $post['username']])->whereOr(['email' => $post['email']])->find()) {
+        if ($user->where(['username' => $username])->whereOr(['email' => $email])->find()) {
             $this->error(8, '用户名或邮箱重复，请更换！');
             return;
         }
         $id = $user->insertGetId([
-            'username' => $post['username'],
-            'nickname' => $post['username'],
-            'password' => md5($post['password']),
+            'username' => $username,
+            'nickname' => $username,
+            'password' => md5($password),
             'photo' => '/static/images/photo.jpg',
-            'email' => $post['email'],
-            'addip' => Request::ip()
+            'email' => $email,
+            'create_ip' => Request::ip()
         ]);
         $sid = createToken($id . '_' . getRandChar(16));
-        $user->where(['id' => $id])->update([
-            'sid' => $sid
-        ]);
+        $user = User::get($id);
+        $user->sid = $sid;
+        $user->save();
         $token = $user->resetToken();
         Session::set('id', $id);
 

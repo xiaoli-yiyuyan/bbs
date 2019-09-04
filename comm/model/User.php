@@ -97,7 +97,9 @@ class User extends Model
      */
     public static function getAuthor($id)
     {
-        $user = self::get($id);
+        if (!$user = self::get($id)) {
+            return;
+        }
         $user->append(['lv', 'is_online']);
         $user->visible(['id', 'nickname', 'nickcolor', 'photo', 'money', 'coin', 'vip_level', 'explain', 'exp']);
         return $user->toArray();
