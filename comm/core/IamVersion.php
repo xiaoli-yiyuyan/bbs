@@ -3,7 +3,7 @@ namespace comm\core;
 
 class IamVersion
 {
-    public static $version = '2.3.9';
+    public static $version = '2.3.10';
     public static $datetime = '2019-09-05';
 
     public static function getVersion()
