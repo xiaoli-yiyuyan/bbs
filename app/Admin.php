@@ -430,6 +430,8 @@ class Admin extends \comm\core\Home
         $post = Request::post();
         if (!empty($post['password'])) {
             $post['password'] = md5($post['password']);
+        } else {
+            unset($post['password']);
         }
         if (!Db::table('user')->where(['id' => $id])->update($post)) {
             return Response::json(['err' => 1, 'msg' => '修改失败']);
