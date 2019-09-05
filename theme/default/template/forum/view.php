@@ -62,18 +62,11 @@
                          · <?=$fans_count?>粉丝</div>
                 </div>
             </a>
-            <?php if ($user['id'] != 0 && $user['id'] != $forum->author['id']) { ?>
-            
             <span class="care_btn">
-                <?php $is_care = source('Model/Friend/isCare', ['user_id' => $user['id'], 'care_user_id' => $forum->author['id']]); ?>
-
-                <?php if ($is_care) { ?>
-                    <button data-id="<?=$forum->author['id']?>" class="btn btn-sm btn-action-care">- 已关注</button>
-                <?php } else { ?>
-                    <button data-id="<?=$forum->author['id']?>" class="btn btn-shadow btn-fill btn-sm btn-action-care">+ 关注</button>
-                <?php } ?>
+                <!-- 关注按钮-Begin -->
+                <?php useComp('/components/user/care_button', ['user_id' => $user['id'], 'care_user_id' => $forum->author['id']]); ?>
+                <!-- 关注按钮-End -->
             </span>
-            <?php } ?>
         </div>
     <div class="view_context">
         <?=$forum['context']?>
@@ -127,7 +120,9 @@
                     </div>
                     <div class="create_time"><?=(($forum_reply->currentPage() - 1) * $forum_reply->listRows()) + $index + 1?>楼 <?=friendlyDateFormat($item['create_time'])?></div>
                 </div>
-                <div data-user-id="<?=$item->author['id']?>" class="btn btn-sm btn-fill btn-action-care">+ 关注</div>
+                <!-- 关注按钮-Begin -->
+                <?php useComp('/components/user/care_button', ['user_id' => $user['id'], 'care_user_id' => $item->author['id']]); ?>
+                <!-- 关注按钮-End -->
             </div>
         </div>
         <div class="list-item">

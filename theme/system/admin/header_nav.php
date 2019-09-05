@@ -17,7 +17,7 @@
                 <div class="tab-page tab1">
                     <div><a href="/admin/code">代码自定义</a></div>
                     <div><a href="/admin/reward">奖励设置</a></div>
-                    <div><a href="/admin/tpl">主题管理</a></div>
+                    <!-- <div><a href="/admin/tpl">主题管理</a></div> -->
                     <!-- <div><a href="/admin/page">组件管理</a></div> -->
                     <div><a href="/admin/system_set">系统设置</a></div>
                 </div>
