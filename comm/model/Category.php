@@ -100,7 +100,7 @@ class Category extends Model
     {
         $admin_id = $this->bm_id ? explode(',', $this->bm_id) : [];
         // print_r(in_array($user_id, $admin_id));
-        if (in_array($user_id, $admin_id) || $user_id = 1) {
+        if (in_array($user_id, $admin_id) || $user_id == 1) {
             return true;
         }
     }
