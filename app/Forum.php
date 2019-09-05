@@ -234,7 +234,7 @@ class Forum extends \comm\core\Home
             return Response::json(['err' => 2, 'msg' => '移动到的栏目仅VIP方能操作']);
         }
 
-        if ($forum['user_id'] != $this->user['id'] && $isAdmin) {
+        if ($forum['user_id'] != $this->user['id'] && !$forum->class_info->isBm($user_id)) {
             return Response::json(['err' => 2, 'msg' => '你无权进行此操作！']);
         }
 
@@ -338,6 +338,9 @@ class Forum extends \comm\core\Home
         if (!$info = MForum::get($id)) {
             return Response::json(['err' => 1, 'msg' => '抱歉，你要操作的帖子不存在！']);
         }
+        if ($info->user_id != $this->user['id'] && !$info->class_info->isBm($this->user['id'])) {
+            return Response::json(['err' => 1, 'msg' => '操作失败']);
+        }
         $info->status = $this->rec_code;
         $info->save();
         ForumReply::where('forum_id', $id)->update(['status' => $this->rec_code]);
@@ -351,6 +354,10 @@ class Forum extends \comm\core\Home
     {
         if (!$forum = MForum::get($id)) {
             return Page::error('要查看的内容不存在！');
+        }
+        
+        if ($info->user_id != $this->user['id'] && !$info->class_info->isBm($this->user['id'])) {
+            return Response::json(['err' => 1, 'msg' => '操作失败']);
         }
         $forum->append(['class_info']);
         $navList = Category::where('user_add', 1)->where('id', '<>', $forum->class_id)->column('id,title');
