@@ -58,5 +58,6 @@
 <?=$list->render([
     'tp' => $tp
 ])?>
+<?=code('copyright')?>
 <?php useComp('/components/common/footer_nav', ['index' => 0]); ?>
 <?php useComp('/components/common/footer'); ?>

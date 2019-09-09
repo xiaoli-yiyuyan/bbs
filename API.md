@@ -15,3 +15,10 @@
         password2,
         email
     }
+    
+[api/user/info].nickname
+[userinfo]nickname[/userinfo]
+
+[img=120]
+
+[href=http://baidu.com]百度一下你就知道[/href]
