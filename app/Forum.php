@@ -356,7 +356,7 @@ class Forum extends \comm\core\Home
             return Page::error('要查看的内容不存在！');
         }
         
-        if ($info->user_id != $this->user['id'] && !$info->class_info->isBm($this->user['id'])) {
+        if ($forum->user_id != $this->user['id'] && !$forum->class_info->isBm($this->user['id'])) {
             return Response::json(['err' => 1, 'msg' => '操作失败']);
         }
         $forum->append(['class_info']);
