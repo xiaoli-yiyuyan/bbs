@@ -337,7 +337,7 @@ class Forum extends \api\Api
             $this->error(3, '帖子发表栏目不存在！');
             return;
         }
-
+        
         $isAdmin = $class_info->isBm($this->user['id']);
 
         if(!$class_info['user_add'] && !$isAdmin){
