@@ -151,14 +151,14 @@ class Forum extends \api\Api
     private function rule($content, $id, $user_id)
     {
         $user = source('/api/User/info');
-        $content = preg_replace_callback('/\[read_login\](.*?)\[\/read_login\]/', function($matches) {
+        $content = preg_replace_callback('/\[read_login\](.*?)\[\/read_login\]/', function($user, $matches) {
             if ($user) {
                 return $matches[1];
             }
             return Ubb::getTips('此内容<span class="_sys_ubb_login">登录</span>可见', 'read_login');
         }, $content);
         
-        $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user_id) {
+        $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user, $user_id) {
             $reply = ForumReply::get([
                 'user_id' => $user['id'],
                 'forum_id' => $id
@@ -169,14 +169,14 @@ class Forum extends \api\Api
             return Ubb::getTips('此内容 <span class="_sys_ubb_reply" data-id="' . $id . '">评论</span> 可见', 'read_reply');
         }, $content);
 
-        $content = preg_replace_callback('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', function($matches) use($id, $user_id) {
+        $content = preg_replace_callback('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', function($matches) use($user, $id, $user_id) {
             if ($user && $user_id == $user['id'] || $this->isBuy($id)) {
                 return $matches[2];
             }
             return Ubb::getTips('此内容需要花费 <span>' . $matches[1] . '</span> 金币 <span class="_sys_ubb_buy" data-id="' . $id . '">购买</span>', 'read_buy');
         }, $content);
 
-        $content = preg_replace_callback('/\[read_vip_([12345])\](.*?)\[\/read_vip_\1\]/', function($matches) use($id, $user_id) {
+        $content = preg_replace_callback('/\[read_vip_([12345])\](.*?)\[\/read_vip_\1\]/', function($matches) use($user, $id, $user_id) {
             if ($user) {
                 $dateTime = new \DateTime($user['vip_time']);
                 if ($matches[1] <= $user['vip_level'] && $dateTime->format('U') >= time()) {
@@ -186,6 +186,15 @@ class Forum extends \api\Api
             return Ubb::getTips('此内容仅限 <span class="_sys_ubb_vip">VIP ' . $matches[1] . '</span> 才可查看', 'read_vip');
         }, $content);
         return $content;
+    }
+
+    /**
+     * 判断是否已经购买
+     */
+    private function isBuy($id)
+    {
+        $user = source('/api/User/info');
+        return ForumBuy::get(['forum_id' => $id, 'user_id' => $user['id']]);
     }
 
     /**
