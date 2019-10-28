@@ -28,16 +28,11 @@ class Login extends \comm\core\Home
     public function login($username = '', $password = '')
     {
         $post = Request::post(['username', 'password']);
-        if (empty($username) || empty($password)) {
-            return Page::error('用户名或密码为空！');
+        $res = source('/api/login/Login/login', $post, $api);
+        
+        if ($error = $api->error()) {
+            return Page::error($error['message']);
         }
-
-        $where = ['username' => $username, 'password' => md5($password)];
-        if (!$user = User::where($where)->find()) {
-            return Page::error('登录失败！');
-        }
-
-        Session::set('sid', $user['sid']);
         
         return Page::success('登录成功！', '/user/index');
     }

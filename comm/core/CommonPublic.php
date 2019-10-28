@@ -32,8 +32,8 @@ class CommonPublic extends Controller
         $this->version = IamVersion::$version;
         
         $setting = Setting::get(['login_reward', 'weblogo', 'webname']);
-        if (Session::has('sid')) {
-            if ($user = User::get(['sid'=> Session::get('sid')])) {
+        if (Session::has('id')) {
+            if ($user = User::get(Session::get('id'))) {
                 // <2.3.2 升级兼容
                 if (isset($user->toArray()['uuid'])) {
                     token($user->uuid);
@@ -52,7 +52,7 @@ class CommonPublic extends Controller
                 $exp = $now_time - $last_time;
                 $exp = min($exp, $this->expMax) + $this->user['exp'];
 
-                Db::table('user')->where('sid', Session::get('sid'))->update(['last_time' => now(), 'exp' => $exp]);
+                Db::table('user')->where('id', Session::get('id'))->update(['last_time' => now(), 'exp' => $exp]);
                 $level_info = getUserLevel($this->user['exp'], $this->upExp);
                 $this->user = array_merge($this->user, $level_info);
                 $this->user['is_today_sign'] = SignLog::isTodaySign($this->user['id']);
