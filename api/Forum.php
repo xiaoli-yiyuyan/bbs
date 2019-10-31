@@ -4,6 +4,7 @@ namespace api;
 use Model\Forum as ForumModel;
 use Model\ForumBuy;
 use Model\ForumMark;
+use Model\ForumReply;
 use Model\ForumMarkBody;
 use Model\User;
 use Model\Category;
@@ -151,14 +152,14 @@ class Forum extends \api\Api
     private function rule($content, $id, $user_id)
     {
         $user = source('/api/User/info');
-        $content = preg_replace_callback('/\[read_login\](.*?)\[\/read_login\]/', function($user, $matches) {
+        $content = preg_replace_callback('/\[read_login\](.*?)\[\/read_login\]/', function($matches) use($user) {
             if ($user) {
                 return $matches[1];
             }
             return Ubb::getTips('此内容<span class="_sys_ubb_login">登录</span>可见', 'read_login');
         }, $content);
         
-        $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user, $user_id) {
+        $content = preg_replace_callback('/\[read_reply\](.*?)\[\/read_reply\]/', function($matches) use($user, $user_id, $id) {
             $reply = ForumReply::get([
                 'user_id' => $user['id'],
                 'forum_id' => $id
