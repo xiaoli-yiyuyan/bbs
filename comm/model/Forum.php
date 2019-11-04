@@ -179,6 +179,7 @@ class Forum extends Model
             $forum->where('status', 0);
         }
 
+        $forum->order(['is_top' =>  'DESC','id'=> $order]);
         if ($type == 2) {
             // 动态
             $forum->order('active_time', $order);
@@ -202,11 +203,10 @@ class Forum extends Model
             $forum->where('file_data', '<>', '');
             $forum->order('id', $order);
         } else {
-            $forum->order('id', $order);
+            // $forum->order('id', $order);
         }
         $list = $forum->paginate($pagesize);
         $list->append(['author', 'mini_context', 'img_list', 'file_list']);
-
         if ($toArray == 1) {
             return $list->toArray();
         }
