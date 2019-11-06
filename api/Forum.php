@@ -82,6 +82,8 @@ class Forum extends \api\Api
         } else {
             $orderSort[] = 'ASC';
         }
+        
+        $forum->order(['is_top' =>  'DESC']);
         $forum->order($orderSort[0], $orderSort[1]);
         $list = $forum->paginate($pagesize, false, ['page' => $page]);
         $list->append(['author', 'mini_context', 'img_list', 'file_list']);

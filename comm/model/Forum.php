@@ -179,7 +179,6 @@ class Forum extends Model
             $forum->where('status', 0);
         }
 
-        $forum->order(['is_top' =>  'DESC','id'=> $order]);
         if ($type == 2) {
             // 动态
             $forum->order('active_time', $order);

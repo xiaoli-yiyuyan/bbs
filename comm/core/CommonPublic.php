@@ -13,7 +13,7 @@ use Model\SignLog;
 
 class CommonPublic extends Controller
 {
-    public $user = ['id' => 0];
+    public $user = ['id' => 0, 'uuid' => ''];
     public $upExp = 25;
 
     private $version;
