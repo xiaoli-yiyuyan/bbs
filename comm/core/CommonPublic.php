@@ -1,7 +1,7 @@
 <?php
 namespace comm\core;
 
-use Iam\Db;
+use think\Db;
 use Iam\Url;
 use Iam\View;
 use Iam\Session;
@@ -51,7 +51,6 @@ class CommonPublic extends Controller
 
                 $exp = $now_time - $last_time;
                 $exp = min($exp, $this->expMax) + $this->user['exp'];
-
                 Db::table('user')->where('id', Session::get('id'))->update(['last_time' => now(), 'exp' => $exp]);
                 $level_info = getUserLevel($this->user['exp'], $this->upExp);
                 $this->user = array_merge($this->user, $level_info);
