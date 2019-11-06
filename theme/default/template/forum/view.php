@@ -224,6 +224,26 @@ $(function() {
     $('.reply_index').submit(function() {
         $(this).find('input[name=context]').val(iamEditor.toUbb());
     });
+
+    $('._sys_ubb_login').click(function() {
+        location.href='/login?back_url=/forum/view?id=' + <?=$forum['id']?>;
+    });
+    $('._sys_ubb_reply').click(function() {
+        $('.reply_body .input_show.input').focus();
+    });
+    $('._sys_ubb_buy').click(function() {
+        var id = $(this).data('id');
+        $.confirm('确定购买此内容？', {
+            yes: function() {
+                $.getJSON('/forum/forum_buy.json?token=<?=$user['uuid']?>', {id: id}).then(function(data) {
+                    $.msg(data.msg);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                });
+            }
+        });
+    });
 });
 
 </script>

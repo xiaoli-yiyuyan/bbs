@@ -190,6 +190,50 @@ class Forum extends \api\Api
     }
 
     /**
+     * 购买内容
+     */
+    public function forumBuy($id)
+    {
+        if (!$user = source('/api/User/info')) {
+            $this->error(1, '会员未登录');
+            return;
+        }
+
+        if (!$forum = ForumModel::get($id)) {
+            $this->error(1, '购买失败！');
+            return;
+        }
+        $content = $forum['context'];
+        $content = preg_match('/\[read_buy_(\d+)\](.*?)\[\/read_buy_\1\]/', $content, $matches);
+        if (empty($matches)) {
+            $this->error(1, '购买失败！');
+            return;
+        }
+        if ($matches <= 0) {
+            $this->error(2, '购买失败！');
+            return;
+        }
+        if ($buy = ForumBuy::get(['forum_id' => $id, 'user_id' => $user['id']])) {
+            $this->error(3, '购买失败！');
+            return;
+        }
+
+        if (!User::changeCoin($user['id'], -$matches[1])) {
+            $this->error(4, '购买失败！余额不足');
+            return;
+        }
+
+        ForumBuy::create([
+            'forum_id' => $id,
+            'user_id' => $user['id'],
+            'coin' => $matches[1]
+        ]);
+        
+        $this->message('购买成功！');
+        return $id;
+    }
+
+    /**
      * 判断是否已经购买
      */
     private function isBuy($id)

@@ -109,7 +109,7 @@ ul li {
 }
 .btn.btn-shadow {
   border: 0rem solid #0894ec;
-  box-shadow: 0 0 .05rem;
+  box-shadow: 0 0 0.05rem;
 }
 .btn.btn-success {
   border-color: #4cd964;
@@ -287,7 +287,7 @@ ul li {
   height: 1.3rem;
   position: relative;
   vertical-align: top;
-  border: .05rem solid #dddddd;
+  border: 0.05rem solid #dddddd;
   background-color: #dddddd;
   border-radius: 0.1rem;
   border-radius: 5px;
@@ -332,7 +332,7 @@ ul li {
   position: relative;
   vertical-align: middle;
   margin-top: -0.125rem;
-  border: .05rem solid #dddddd;
+  border: 0.05rem solid #dddddd;
   background-color: #dddddd;
   border-radius: 0.1rem;
   border-radius: 5px;
@@ -607,7 +607,7 @@ ul li {
   flex-direction: column;
   justify-content: center;
   margin-right: 1.4rem;
-  margin-left: .25rem;
+  margin-left: 0.25rem;
   line-height: 1rem;
 }
 .header-height {
@@ -633,7 +633,7 @@ ul li {
   color: #FFF;
 }
 .header .icon-svg {
-  margin: .625rem;
+  margin: 0.625rem;
 }
 .header .menu {
   background-image: url(svg/menu.svg);
@@ -847,9 +847,9 @@ ul li {
 }
 .btn2 {
   box-shadow: 0 0 2px #665ce6;
-  padding: .5rem;
+  padding: 0.5rem;
   color: #FFF;
-  border-radius: .05rem;
+  border-radius: 0.05rem;
   background: linear-gradient(#665ce6, #665ce6);
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
@@ -930,8 +930,8 @@ body {
   border-bottom: 1px solid #eee;
 }
 .list-img .class_info_title {
-  padding: .1rem;
-  font-size: .6rem;
+  padding: 0.1rem;
+  font-size: 0.6rem;
   border: 1px solid #dddddd;
   border-radius: 0.1rem;
   border-radius: 5px;
@@ -987,7 +987,7 @@ body {
   text-align: left;
 }
 .list-img .photo {
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -1071,7 +1071,7 @@ body {
 }
 .btn.btn-shadow {
   border: 0rem solid #0894ec;
-  box-shadow: 0 0 .05rem;
+  box-shadow: 0 0 0.05rem;
 }
 .btn.btn-success {
   border-color: #4cd964;
@@ -1202,7 +1202,7 @@ body {
   overflow: hidden;
 }
 .column_nav .column_title {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .column_nav .column_count {
   color: #aaaaaa;
@@ -1219,7 +1219,7 @@ body {
 .user-photo {
   width: 4rem;
   height: 4rem;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   background-color: #eee;
   box-shadow: 0 0 0.5rem #d1d1d1;
 }
@@ -1227,7 +1227,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 .info-box > div {
   display: flex;
@@ -1235,12 +1235,12 @@ body {
   flex: 1;
 }
 .user-nc {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #7c8a94;
 }
 .user-ep {
-  font-size: .6rem;
+  font-size: 0.6rem;
   color: #947c7c;
 }
 .edit-info {
@@ -1248,7 +1248,7 @@ body {
 }
 .update-photo-box {
   display: flex;
-  font-size: .8rem;
+  font-size: 0.8rem;
   align-items: center;
   color: #7c8a94;
   background-color: #eee;
@@ -1266,46 +1266,46 @@ body {
 .user_memo {
   flex: 1;
   line-height: 1rem;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 .user_lv {
-  margin-left: .25rem;
-  padding: 0 .2rem;
-  border-radius: .1rem;
-  font-size: .6rem;
+  margin-left: 0.25rem;
+  padding: 0 0.2rem;
+  border-radius: 0.1rem;
+  font-size: 0.6rem;
   font-weight: 400;
   background: #09f;
   color: #fff;
 }
 .user_name {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .user_explan {
   color: #888;
 }
 .fans_nav {
-  padding: .3rem;
+  padding: 0.3rem;
   background: #fff;
 }
 .fans_nav_link {
   position: relative;
   text-align: center;
   flex: 1;
-  font-size: .6rem;
+  font-size: 0.6rem;
   color: #777;
 }
 .fans_nav_num {
   color: #333;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 .vip_icon {
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
   background: #e04204;
   color: #fff;
-  font-size: .6rem;
-  line-height: .7rem;
-  border-radius: .1rem;
-  opacity: .8;
+  font-size: 0.6rem;
+  line-height: 0.7rem;
+  border-radius: 0.1rem;
+  opacity: 0.8;
 }
 .vip_0 {
   background: #afafaf;
@@ -1317,41 +1317,41 @@ body {
 }
 .user_rank .user_lv,
 .user_rank .is_online {
-  height: .8rem;
-  line-height: .8rem;
-  font-size: .6rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.6rem;
 }
 .user_coin {
   color: #FFF;
-  margin-left: .25rem;
-  padding: 0 .2rem;
-  border-radius: .1rem;
-  font-size: .6rem;
+  margin-left: 0.25rem;
+  padding: 0 0.2rem;
+  border-radius: 0.1rem;
+  font-size: 0.6rem;
   font-weight: 400;
   background: #00ca7d;
 }
 .change-info {
-  margin-top: .25rem;
+  margin-top: 0.25rem;
 }
 .message_line_item {
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 .change-info a {
   /* justify-content: center;
     align-items: center; */
   background: #FFF;
   border-radius: 3px;
-  padding: .6rem 1rem;
+  padding: 0.6rem 1rem;
   padding-right: 1.8rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: #555;
 }
 .change-info a .more {
-  padding: .2rem .8rem;
+  padding: 0.2rem 0.8rem;
   color: #666;
   border: 1px #ddd solid;
-  border-radius: .1rem;
-  font-size: .6rem;
+  border-radius: 0.1rem;
+  font-size: 0.6rem;
 }
 .change-info a:after {
   content: '';
@@ -1367,10 +1367,10 @@ body {
   background-size: 100% 100%;
 }
 .m_body {
-  padding: .5rem;
+  padding: 0.5rem;
   line-height: 1.5rem;
   background: #fff;
-  border-bottom: .05rem solid #eee;
+  border-bottom: 0.05rem solid #eee;
 }
 .sign_word {
   flex-wrap: wrap;
@@ -1383,28 +1383,28 @@ body {
   background: #FFFFFF;
   color: #333;
   line-height: 1.6rem;
-  margin: .125rem;
-  border: .05rem solid #ddd;
-  border-radius: .1rem;
+  margin: 0.125rem;
+  border: 0.05rem solid #ddd;
+  border-radius: 0.1rem;
 }
 .sign_info_box {
   color: #333;
   background: #FFFFFF;
 }
 .sign_input {
-  margin-top: .5rem;
-  margin-bottom: .5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .sign_info_box .nav_title {
   text-align: center;
   line-height: 2rem;
-  font-size: .8rem;
-  border-top: .05rem solid #EEE;
-  border-bottom: .05rem solid #EEE;
+  font-size: 0.8rem;
+  border-top: 0.05rem solid #EEE;
+  border-bottom: 0.05rem solid #EEE;
 }
 .sign_info_box u,
 .sign_info_box b {
-  padding: 0 .1rem;
+  padding: 0 0.1rem;
 }
 .sign_info_box u {
   color: #00cc77;
@@ -1415,13 +1415,13 @@ body {
 .sign_log_box .nav_title {
   text-align: center;
   line-height: 1.6rem;
-  font-size: .8rem;
-  border-top: .05rem solid #EEE;
+  font-size: 0.8rem;
+  border-top: 0.05rem solid #EEE;
   /* border-bottom: .05rem solid #EEE; */
 }
 .sign_log_box .list .list-group .list-item {
   display: flex;
-  padding: .5rem;
+  padding: 0.5rem;
   line-height: 1rem;
 }
 .sign_table td {
@@ -1433,25 +1433,25 @@ body {
 }
 .sign_user_info {
   text-align: left;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .sign_text_info {
   position: relative;
-  padding: .25rem;
+  padding: 0.25rem;
   text-align: center;
-  font-size: .7rem;
+  font-size: 0.7rem;
   line-height: 1.2rem;
 }
 .sign_info {
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .sign_info_memo {
-  font-size: .6rem;
-  line-height: .7rem;
+  font-size: 0.6rem;
+  line-height: 0.7rem;
   background: #32393e;
   color: #00ca7d;
-  border-radius: .5rem;
-  box-shadow: 0, 0, .2rem, #32393e;
+  border-radius: 0.5rem;
+  box-shadow: 0, 0, 0.2rem, #32393e;
 }
 .sign_table {
   width: 100%;
@@ -1459,7 +1459,7 @@ body {
 }
 .datatime {
   color: #999;
-  font-size: .6rem;
+  font-size: 0.6rem;
 }
 .sign_user_info .datatime {
   float: right;
@@ -1469,11 +1469,11 @@ body {
 }
 .sign_status_ok,
 .sign_status_no {
-  padding: .1rem;
-  font-size: .6rem;
+  padding: 0.1rem;
+  font-size: 0.6rem;
   color: #00a759;
   border: 0.05rem solid #00d672;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
   background: #c7ffe5;
 }
 .sign_status_no {
@@ -1482,15 +1482,15 @@ body {
   color: #4200ad;
 }
 .s_exit {
-  margin: .3rem;
-  margin-right: .5rem;
+  margin: 0.3rem;
+  margin-right: 0.5rem;
   width: 1.6rem;
   height: 1.6rem;
   background-image: url(/static/svg/exit.svg);
 }
 .s_setting {
-  margin: .3rem;
-  margin-right: .5rem;
+  margin: 0.3rem;
+  margin-right: 0.5rem;
   width: 1.6rem;
   height: 1.6rem;
   background-image: url(/static/svg/setting.svg);
@@ -1531,24 +1531,24 @@ body {
 }
 .li-box-word {
   white-space: nowrap;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 .li-box-svg {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   width: 1.4rem;
   height: 1.4rem;
   margin-top: -0.25rem;
 }
 .bbas_action {
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   display: flex;
   background: #FFF;
   justify-content: space-between;
   border-bottom: 1px solid #dddddd;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .bbas_action .create_time {
-  font-size: .7rem;
+  font-size: 0.7rem;
   color: #aaaaaa;
 }
 .bbas_action .create_time.reply {
@@ -1558,21 +1558,21 @@ body {
   display: flex;
   justify-content: space-between;
   position: relative;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   line-height: 2rem;
   background: #FFF;
 }
 .bbs_order_title {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.85rem;
-  border-bottom: .15rem #07d664 solid;
+  border-bottom: 0.15rem #07d664 solid;
 }
 .file_box {
   background: #FFF;
 }
 .file_box .add_btn {
-  margin: .25rem;
+  margin: 0.25rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1582,10 +1582,10 @@ body {
   line-height: 1rem;
   background: #eee;
   color: #999;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
 }
 .file_box .img_item {
-  margin: .25rem;
+  margin: 0.25rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1609,29 +1609,29 @@ body {
   background: rgba(0, 0, 0, 0.8);
   color: #FFF;
   width: 2rem;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
 }
 .file_box .img_item .progress_del {
   position: absolute;
   right: -0.4rem;
   top: -0.4rem;
-  width: .8rem;
-  height: .8rem;
-  line-height: .6rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  line-height: 0.6rem;
   text-align: center;
   color: #FFF;
   border-radius: 50%;
   background: #F22;
 }
 .forum_down_name {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 .file_group {
   display: flex;
   flex-wrap: wrap;
 }
 .file_item {
-  margin: .25rem;
+  margin: 0.25rem;
   display: flex;
   width: 100%;
 }
@@ -1642,13 +1642,13 @@ body {
 }
 .file_progress_box {
   flex: 1;
-  padding: .25rem;
+  padding: 0.25rem;
   text-align: center;
 }
 .file_progress {
-  height: .6rem;
-  border: #04ab4f .05rem solid;
-  border-radius: .1rem;
+  height: 0.6rem;
+  border: #04ab4f 0.05rem solid;
+  border-radius: 0.1rem;
 }
 .file_progress_bar {
   height: 100%;
@@ -1666,20 +1666,20 @@ body {
 }
 .view_head {
   position: relative;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 .view_head .view_title {
   font-size: 1rem;
 }
 .view_head .view_info {
-  padding: .25rem 0;
+  padding: 0.25rem 0;
 }
 .view_head .view_info .view_info_item {
-  font-size: .7rem;
+  font-size: 0.7rem;
   color: #aaaaaa;
 }
 .view_head .view_user_info {
-  padding: .5rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
 }
@@ -1690,20 +1690,20 @@ body {
 .view_head .view_user_info .view_user_info_item .view_user_info_photo {
   border-radius: 2.5%;
   border-radius: 50%;
-  margin-right: .75rem;
+  margin-right: 0.75rem;
   width: 2rem;
   height: 2rem;
 }
 .view_head .view_user_info .view_user_info_item .view_user_info_nickname {
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: #32393e;
 }
 .view_head .view_user_info .view_user_info_item .user_up {
   color: #aaaaaa;
-  font-size: .6rem;
+  font-size: 0.6rem;
 }
 .view_context {
-  font-size: .8rem;
+  font-size: 0.8rem;
   line-height: 1.2rem;
   color: #333333;
   word-wrap: break-word;
@@ -1716,8 +1716,8 @@ body {
 }
 .replay_title {
   position: relative;
-  padding: .5rem;
-  font-size: .9rem;
+  padding: 0.5rem;
+  font-size: 0.9rem;
   color: #777;
 }
 .replay_empty {
@@ -1739,9 +1739,9 @@ body {
 }
 .input_show {
   flex: 1;
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
   background: #FFFFFF;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
 }
 .input_show img {
   width: 1.5rem;
@@ -1753,7 +1753,7 @@ body {
 .reply_index {
   position: relative;
   display: flex;
-  padding: .5rem;
+  padding: 0.5rem;
   background: #FFF;
   /* box-shadow: 0 -.1rem .1rem #bbb; */
 }
@@ -1761,14 +1761,14 @@ body {
   height: 2.5rem;
 }
 .transition {
-  -webkit-transition: all .2s ease;
-  transition: all .2s ease;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 .chat-face-box {
   background: #FFF;
 }
 .face-box {
-  padding: .5rem;
+  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -1787,17 +1787,17 @@ body {
 .bbs_list.list .list-item {
   line-height: 1rem;
   padding: 0;
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: #111;
 }
 .bbs_list.list .list-group {
-  padding: .5rem;
-  border-bottom: .05rem #eee solid;
+  padding: 0.5rem;
+  border-bottom: 0.05rem #eee solid;
 }
 .bbs_user {
   display: flex;
   align-items: center;
-  font-size: .7rem;
+  font-size: 0.7rem;
   line-height: 1rem;
   /* color: #333; */
 }
@@ -1811,19 +1811,19 @@ body {
   vertical-align: middle;
   margin-top: -0.25rem;
   margin-right: 0.25rem;
-  box-shadow: 0 .05rem .1rem #32393e;
+  box-shadow: 0 0.05rem 0.1rem #32393e;
 }
 .create_time {
   color: #aaa;
   font-size: 12px;
 }
 .reply_time {
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 .reply_str {
-  font-size: .6rem;
+  font-size: 0.6rem;
   color: #025898;
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
 }
 .bbs_replay_num {
   color: #8f8f8f;
@@ -1833,7 +1833,7 @@ body {
   margin-left: 0.25rem;
   margin-top: -0.125rem;
   vertical-align: middle;
-  width: .9rem;
+  width: 0.9rem;
   height: 0.9rem;
 }
 .svg-bbs_reply {
@@ -1844,18 +1844,18 @@ body {
 }
 .mark-item {
   display: inline-block;
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
   background: #3a4248;
   color: #FFFFFF;
-  font-size: .6rem;
-  padding: 0 .5rem;
+  font-size: 0.6rem;
+  padding: 0 0.5rem;
   line-height: 1rem;
-  border-radius: .75rem;
+  border-radius: 0.75rem;
 }
 .mark-item.mark-close:after {
   display: inline-block;
   content: 'x';
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 .mark_input {
   display: inline-block;
@@ -1873,7 +1873,7 @@ body {
 }
 .view_mark {
   color: #999999;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 }
 .empty_word,
 .bbs_empty {
@@ -1886,10 +1886,10 @@ body {
 .forum_cream,
 .forum_img,
 .forum_file {
-  padding: .1rem .25rem;
+  padding: 0.1rem 0.25rem;
   background: #09f;
   color: #FFFFFF;
-  border-radius: .15rem;
+  border-radius: 0.15rem;
 }
 .forum_cream {
   background: #90f;
@@ -1901,10 +1901,10 @@ body {
   background: #f09;
 }
 .img_bar {
-  margin: .25rem;
+  margin: 0.25rem;
   margin-bottom: 0;
-  border-radius: .25rem;
-  box-shadow: 0 0 .5rem #000000;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.5rem #000000;
   overflow: hidden;
 }
 .img_bar img {
@@ -1913,7 +1913,7 @@ body {
 }
 .pagination {
   display: flex;
-  margin: .5rem;
+  margin: 0.5rem;
   line-height: 1.6rem;
 }
 .pagination li,
@@ -1921,10 +1921,10 @@ body {
   flex: 1;
   text-align: center;
   display: block;
-  margin: 0 .1rem;
+  margin: 0 0.1rem;
   background-color: #fff;
-  border: .05rem solid #eee;
-  border-radius: .1rem;
+  border: 0.05rem solid #eee;
+  border-radius: 0.1rem;
 }
 /* .pagination span,
 .pagination input,
@@ -1952,20 +1952,20 @@ body {
 .list-care {
   line-height: 1rem;
   background-color: #FFFFFF;
-  margin-bottom: .4rem;
+  margin-bottom: 0.4rem;
 }
 .list-care .user {
   display: flex;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 .list-care .user .photo {
   width: 2rem;
   height: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 .05rem .15rem #999999;
+  box-shadow: 0 0.05rem 0.15rem #999999;
 }
 .list-care .user .info {
-  margin-left: .4rem;
+  margin-left: 0.4rem;
 }
 .list-care .user .info .nickname {
   font-size: 0.75rem;
@@ -1974,25 +1974,25 @@ body {
   background: #0099FF;
   color: #FFFFFF;
   font-size: 0.5rem;
-  padding: 0 .2rem;
-  border-radius: .1rem;
+  padding: 0 0.2rem;
+  border-radius: 0.1rem;
 }
 .list-care .user .info .mark {
   font-size: 0.6rem;
   color: #999999;
 }
 .list-care .user .info .mark span {
-  margin-right: .4rem;
+  margin-right: 0.4rem;
 }
 .list-care .text {
   display: block;
   color: #000000;
-  padding: .5rem;
+  padding: 0.5rem;
   padding-top: 0;
 }
 .list-care .text .title {
   font-weight: 700;
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
 }
 .list-care .text .context {
   color: #666666;
@@ -2004,25 +2004,25 @@ body {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   white-space: normal;
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
 }
 .list-care .text .images {
   display: flex;
 }
 .list-care .text .images .images_item {
   width: 33%;
-  padding: 0 .1rem;
+  padding: 0 0.1rem;
 }
 .list-care .text .images img {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: .15rem;
+  border-radius: 0.15rem;
   box-shadow: 0 0.08rem 0.5rem rgba(0, 0, 0, 0.2);
 }
 .list-care .count {
   display: flex;
-  padding: .5rem;
+  padding: 0.5rem;
   padding-top: 0;
 }
 .list-care .count > div {
@@ -2036,15 +2036,15 @@ body {
   margin-left: 0.25rem;
   margin-top: -0.125rem;
   vertical-align: middle;
-  width: .9rem;
+  width: 0.9rem;
   height: 0.9rem;
 }
 .user_vip {
   color: #FFFFFF;
-  margin-left: .25rem;
-  padding: 0 .2rem;
-  border-radius: .1rem;
-  font-size: .6rem;
+  margin-left: 0.25rem;
+  padding: 0 0.2rem;
+  border-radius: 0.1rem;
+  font-size: 0.6rem;
   font-weight: 400;
   color: #fff;
 }
@@ -2067,42 +2067,55 @@ body {
   background: #ff0055;
 }
 .ubb_tips {
-  margin: .5rem;
-  padding: .25rem;
+  margin: 0.5rem;
+  padding: 0.25rem;
   background: #f1ede8;
-  border: .05rem solid #e6d3cc;
-  border-radius: .1rem;
+  border: 0.05rem solid #e6d3cc;
+  border-radius: 0.1rem;
   color: #d65026;
 }
 .ubb_tips span {
   font-weight: 700;
 }
 .view_context_file {
-  margin: .5rem;
-  border-bottom: .05rem #eee solid;
+  margin: 0.5rem;
+  border-bottom: 0.05rem #eee solid;
   background: #e8eff1;
-  border: .05rem solid #cce0e6;
-  border-radius: .1rem;
+  border: 0.05rem solid #cce0e6;
+  border-radius: 0.1rem;
   color: #335c68;
 }
 .view_context_file .box_title {
-  padding: .25rem;
+  padding: 0.25rem;
   background: none;
-  border-bottom: .05rem solid #cce0e6;
+  border-bottom: 0.05rem solid #cce0e6;
 }
 .view_context_file .box_content {
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .view_context_file .box_content .forum_file_list {
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .view_context_file .box_content .forum_file_list .forum_down_name {
-  font-size: .8rem;
+  font-size: 0.8rem;
+}
+._sys_ubb_tips {
+  margin: 0.5rem;
+  border-bottom: 0.05rem #eee solid;
+  background: #dcece5;
+  border: 0.05rem solid #bbddcd;
+  border-radius: 0.1rem;
+  color: #33684e;
+  padding: 0.25rem;
+}
+._sys_ubb_tips span {
+  color: #ff2289;
+  font-weight: 700;
 }
 ._index_nav {
   display: flex;
   background: #FFFFFF;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 ._index_nav > div {
   flex: 1;
@@ -2112,47 +2125,47 @@ body {
 ._index_nav > div a {
   display: inline-block;
   color: #000000;
-  padding: 0 .15rem;
+  padding: 0 0.15rem;
   line-height: 2rem;
 }
 ._index_nav ._active a {
   height: 2rem;
-  border-bottom: #00ca7d solid .15rem;
+  border-bottom: #00ca7d solid 0.15rem;
 }
 ._list_mark {
-  padding: .5rem .5rem;
+  padding: 0.5rem 0.5rem;
   padding-top: 0;
   display: flex;
 }
 ._list_mark ._item {
   display: flex;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
   overflow: hidden;
   border: 1px solid #DDDDDD;
 }
 ._list_mark ._item ._j {
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
   background: #4e8fe4;
   color: #FFFFFF;
 }
 ._list_mark ._item ._title {
-  padding: 0 .25rem;
+  padding: 0 0.25rem;
   background: #FFFFFF;
   color: #666666;
-  font-size: .6rem;
+  font-size: 0.6rem;
 }
 ._right_bottom {
   color: #08a86b;
   font-weight: 700;
 }
 ._edit_forum {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 ._edit_forum ._add_forum_title {
   display: block;
   font-size: 1rem;
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   border: none;
   border-bottom: 1px solid #eeeeee;
 }
@@ -2169,7 +2182,7 @@ body {
   color: #999999;
 }
 ._edit_forum ._edit_content {
-  padding: .5rem;
+  padding: 0.5rem;
   min-height: 10rem;
   background: #FFFFFF;
   outline: none;
@@ -2190,11 +2203,11 @@ body {
   border-top: 1px solid #eeeeee;
 }
 ._edit_forum ._cclass_title {
-  padding: .5rem .2rem;
-  font-size: .9rem;
+  padding: 0.5rem 0.2rem;
+  font-size: 0.9rem;
 }
 ._edit_forum ._cclass_box {
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
 }
 ._edit_tools_block {
   height: 3rem;
@@ -2204,7 +2217,7 @@ body {
   bottom: 0;
   right: 0;
   left: 0;
-  padding: .6rem;
+  padding: 0.6rem;
   background: #FFFFFF;
   border-top: 1px solid #EEEEEE;
 }
@@ -2213,9 +2226,9 @@ body {
   align-items: center;
 }
 ._edit_tools ._menu ._add_title {
-  padding: .2rem .3rem;
+  padding: 0.2rem 0.3rem;
   margin-right: 1rem;
-  border-radius: .15rem;
+  border-radius: 0.15rem;
   background: #e8e8e8;
 }
 ._edit_tools ._menu ._add_title._add_title_active {
@@ -2225,7 +2238,7 @@ body {
 ._edit_tools ._menu .icon-svg {
   width: 1.4rem;
   height: 1.4rem;
-  margin: 0 .3rem;
+  margin: 0 0.3rem;
 }
 ._edit_tools ._menu ._add_face {
   background-image: url(../svg/forum/face.svg);
@@ -2246,10 +2259,10 @@ body {
 ._edit_tools .face-box,
 ._edit_tools .file_group {
   padding: 0;
-  padding-top: .6rem;
+  padding-top: 0.6rem;
 }
 ._edit_tools .add_btn {
-  margin: .25rem;
+  margin: 0.25rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -2259,5 +2272,5 @@ body {
   line-height: 1rem;
   background: #eee;
   color: #999;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
 }
