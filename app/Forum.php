@@ -371,14 +371,14 @@ class Forum extends \comm\core\Home
     /**
      * 查看帖子详细
      */
-    public function view($id = '')
+    public function view($id = '', $page = 1)
     {
         $forum = source('/api/Forum/view', ['id' => $id], $api);
         if ($error = $api->error()) {
             return Page::error($error['message']);
         }
         // 获取回复数据
-        $forum_reply = source('/api/ForumReply/list', ['forum_id' => $id, 'pagesize' => 20]);
+        $forum_reply = source('/api/ForumReply/list', ['forum_id' => $id,'page' => $page, 'pagesize' => 20]);
         $forum_reply->appends('id', $forum['id']);
         // 获取粉丝数
         $fans_count = source('/api/Friend/fansCount', ['user_id' => $forum->user_id]);
