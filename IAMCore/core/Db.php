@@ -97,7 +97,7 @@ class Db
     }
 
     public function where($data,$value = null){ //设置查询条件
-        if (is_string($value)) {
+        if (is_string($value) || is_number($value)) {
             $this->where = [$data => $value];
         } else if (is_array($value)) {
             $this->whereStr = $data;
