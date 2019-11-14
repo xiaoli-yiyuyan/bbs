@@ -1,12 +1,6 @@
 <?php self::load('common/header',['title' => '后台管理-奖励设置']); ?>
 <?php self::load('admin/header_nav'); ?>
 <script src="/static/js/template.js?v=<?=$version?>"></script>
-
-<style>
-    .list-item {
-        border-bottom: 1px solid #eee;
-    }
-</style>
 <div class="content">
     <div class="namespace">
         <a href="/admin/user/">系统设置</a> \ <div class="nav_title">主题管理</div>
@@ -17,14 +11,16 @@
         <!-- <a href="/admin/add_page?type=1">添加页面</a> -->
     </div>
     <div class="list">
-        <div class="list-group">
+        <div class="list-group theme-list-group">
             <?php foreach ($list['data'] as $key => $item) {?>
-                <div class="list-item" data-url="<?=$item['path']?>">
-                    <div><span class="title"><?=$item['title']?></span> <span class="version"><?=$item['version']?></span></div>
-                    <div>
-                        <button class="btn btn-clone" name="<?=$item['name']?>">克隆</button>
+                <a class="list-item" href="/admin/tpl_view?name=<?=$item['name']?>">
+                    <img class="theme-logo" src="<?=$item['logoPath']?>" alt="">
+                    <div class="ellipsis theme-title"><?=$item['title']?></div>
+                    <div class="theme-pay-info">
+                        <div><?=$item['price'] > 0 ? '￥' . $item['price'] : '免费'?></div>
+                        <div><?=$item['version']?></div>
                     </div>
-                </div>
+                </a>
             <?php } ?>
         </div>
     </div>
