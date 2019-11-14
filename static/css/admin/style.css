@@ -3,54 +3,64 @@ body {
   height: 100%;
 }
 body {
-  display: flex;
-  flex-direction: column;
   background: #F8F8F8;
+}
+.top-fixed {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  background: #F8F8F8;
+}
+.top-fixed-block {
+  height: 4.4rem;
 }
 .header_nav {
   display: flex;
-  padding: .5rem;
+  padding: 0.2rem 0.2rem;
   background: #FFF;
   border-bottom: 0.05rem solid #eee;
 }
 .header_nav a {
   color: #333;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
 }
 .header_nav a.ianmi_link {
   flex: 1;
-  text-align: center;
+  text-align: right;
 }
 .top_nav_box {
   position: relative;
   height: 2rem;
-  margin: .5rem;
+  margin: 0.5rem;
+  margin-bottom: 0;
   z-index: 999;
 }
 .top_nav {
   position: absolute;
   left: 0;
   right: 0;
-  border: .05rem solid #ccc;
+  border: 0.05rem solid #ccc;
   background: #FFF;
   border-radius: 0.1rem;
-  box-shadow: 0 0 .5rem #ccc;
+  box-shadow: 0 0 0.5rem #ccc;
 }
 .top_nav .tab-content {
   padding: 0;
 }
 .top_nav .tab-page > div {
   line-height: 2rem;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 .top_nav .tab-page > div:nth-child(2n+1) {
   background: #f8f8f8;
 }
 .admin_logo {
-  margin: .5rem;
+  margin: 0.5rem;
   border-radius: 0.1rem;
   overflow: hidden;
-  box-shadow: 0 0 .25rem #333;
+  box-shadow: 0 0 0.25rem #333;
 }
 .admin_logo img {
   display: block;
@@ -58,8 +68,7 @@ body {
 }
 .content {
   flex: 1;
-  overflow: auto;
-  margin: .5rem;
+  margin: 0.5rem;
   background: #FFF;
   border: 0.05rem solid #eee;
   border-radius: 0.1rem;
@@ -67,39 +76,39 @@ body {
 .tpl_title {
   display: flex;
   align-items: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 .tpl_title::before {
-  margin-right: .25rem;
+  margin-right: 0.25rem;
   content: '';
-  width: .8rem;
-  height: .8rem;
+  width: 0.8rem;
+  height: 0.8rem;
   background: linear-gradient(to top, #ff5e00, #ffb88f);
   border-radius: 50%;
 }
 .btn_box {
   display: flex;
-  padding: .25rem;
+  padding: 0.25rem;
   justify-content: flex-end;
 }
 .btn_box .btn {
-  margin: .25rem;
+  margin: 0.25rem;
 }
 .namespace {
-  padding: .5rem;
+  padding: 0.5rem;
   border-bottom: 0.05rem solid #eee;
 }
 .empty {
   padding: 2rem 0;
   text-align: center;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #aaa;
 }
 .tips {
-  margin: .5rem;
-  font-size: .65rem;
-  padding: .5rem;
-  border: .05rem solid #30b973;
+  margin: 0.5rem;
+  font-size: 0.65rem;
+  padding: 0.5rem;
+  border: 0.05rem solid #30b973;
   border-radius: 0.1rem;
   background: #50d491;
   color: #1f6742;
@@ -116,7 +125,7 @@ body {
   border-top: 0.05rem solid #eee;
 }
 .count_box {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 .count_box .count_group {
   display: flex;
@@ -127,7 +136,7 @@ body {
 }
 .count_box .count_item {
   flex: 1;
-  padding: .5rem;
+  padding: 0.5rem;
   text-align: center;
   line-height: 1.2rem;
 }
@@ -139,14 +148,14 @@ body {
   display: flex;
   text-align: center;
   border-bottom: 0.05rem solid #eee;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
 .page_nav a {
   flex: 1;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .form-group {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 .btn-block {
   display: block;
@@ -161,7 +170,7 @@ body {
   flex: 1;
 }
 .tree.list .icon-svg {
-  margin-right: .25rem;
+  margin-right: 0.25rem;
   margin-top: -0.125rem;
 }
 .tree.list .svg-namespace {
@@ -177,11 +186,11 @@ body {
   background-image: url(/static/svg/admin/mark.svg?s);
 }
 .btn-margin-left {
-  margin-left: .25rem;
+  margin-left: 0.25rem;
 }
 .column_photo {
   position: relative;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   width: 3.8rem;
   height: 3.8rem;
   background-color: #FFF;
@@ -204,7 +213,7 @@ body {
 }
 .vip_level_data [name=vip_level] {
   width: 4rem;
-  margin-right: .25rem;
+  margin-right: 0.25rem;
 }
 .list-item-text {
   margin-left: 3.25rem !important;
@@ -213,7 +222,7 @@ body {
   background: #FFF;
 }
 .code_name {
-  margin: 0 .1rem;
+  margin: 0 0.1rem;
   color: #3f7290;
 }
 .list.admin-list {
@@ -224,12 +233,12 @@ body {
 }
 .list.admin-list .action-box {
   position: relative;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   display: flex;
   justify-content: flex-end;
 }
 .list.admin-list .action-box .btn {
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
   color: #000000;
   font-weight: 700;
   border-color: #ccc;
@@ -240,7 +249,7 @@ body {
 }
 .admin-user-box {
   display: flex;
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 .admin-user-box .admin-user-photo {
   width: 2.5rem;
@@ -248,8 +257,126 @@ body {
   border: 0.05rem solid #eee;
 }
 .admin-user-box .admin-user-info {
-  margin-left: .5rem;
+  margin-left: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.theme-list-group {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1rem;
+  padding: 0 0.2rem;
+}
+.theme-list-group .list-item {
+  padding: 0.4rem 0.2rem !important;
+  width: 33.3333%;
+}
+.theme-list-group .theme-logo {
+  display: block;
+  width: 100%;
+  border-radius: 0.15rem;
+  box-shadow: 0px 0px 1px #eeeeee;
+}
+.theme-list-group .theme-title {
+  margin-top: 0.3rem;
+  font-size: 0.7rem;
+}
+.theme-list-group .theme-pay-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.55rem;
+  line-height: 0.6rem;
+  color: #888;
+}
+.theme_view {
+  padding: 0.4rem;
+}
+.theme_view .theme_view_title {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.theme_view .theme_view_title .theme_clone_title {
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+.theme_view .theme-pay-info {
+  display: flex;
+  margin-top: 0.4rem;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  line-height: 0.6rem;
+  color: #888;
+}
+.theme_view .theme-pay-info .price {
+  font-weight: 700;
+  color: #ff9f22;
+}
+.theme_view .theme_view_memo_title {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  color: #000000;
+}
+.theme_view .theme_view_memo {
+  margin-top: 0.2rem;
+  font-size: 0.65rem;
+  line-height: 1rem;
+}
+.theme_view .theme_view_memo.close {
+  position: relative;
+  max-height: 4.5rem;
+  overflow: hidden;
+}
+.theme_view .theme_view_memo.close::after {
+  content: "点击展开";
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  right: 0;
+  bottom: 0rem;
+  color: #09f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), #ffffff, #ffffff);
+}
+.theme_view .theme_view_btn {
+  display: block;
+  margin-top: 0.8rem;
+  background: #30b973;
+  padding: 0.5rem;
+  color: #FFF;
+  text-align: center;
+  border-radius: 0.1rem;
+}
+.theme_view .theme_view_btn.disable {
+  background: #aaa;
+}
+.theme_view .theme_other {
+  margin-top: 0.6rem;
+  display: flex;
+}
+.theme_view .theme_other .other_btn {
+  margin-right: 0.4rem;
+  padding: 0 0.5rem;
+  background: #eee;
+}
+.theme_view_logo_group {
+  overflow-y: auto;
+}
+.theme_view_logo_group .theme_view_logo_group_box {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.theme_view_logo_group .theme_view_logo_group_box .theme_view_logo {
+  margin: 0 0.2rem;
+  display: block;
+  width: 33.3333%;
+  height: 33.3333%;
+  border-radius: 0.15rem;
+  box-shadow: 0px 0px 1px #eeeeee;
+}
+.theme_view_logo_group .theme_view_logo_group_box .theme_view_logo:first-child {
+  margin-left: 0;
 }

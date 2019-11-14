@@ -180,29 +180,6 @@ $(function() {
 
     //     }
     // };
-    var ajaxUpload = function(options) {
-        var fd = new FormData();
-        for (var p in options.form) {
-            fd.append(p, options.form[p]);
-        }
-        $.ajax({
-            url: options.url,
-            type: "POST",
-            dataType: 'json',
-            xhr: function() {
-                myXhr = $.ajaxSettings.xhr();
-                if(myXhr.upload){
-                    myXhr.upload.addEventListener('progress', options.progress, false);
-                }
-                return myXhr;
-            },
-            processData: false,
-            contentType: false,
-            data: fd,
-            success: options.success
-        });
-    }
-    
     function renderSize(value){
         if(null==value||value==''){
             return "0 Bytes";
@@ -281,3 +258,26 @@ $(function() {
 
     // this.remove();
 });
+
+var ajaxUpload = function(options) {
+    var fd = new FormData();
+    for (var p in options.form) {
+        fd.append(p, options.form[p]);
+    }
+    $.ajax({
+        url: options.url,
+        type: "POST",
+        dataType: 'json',
+        xhr: function() {
+            myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload){
+                myXhr.upload.addEventListener('progress', options.progress, false);
+            }
+            return myXhr;
+        },
+        processData: false,
+        contentType: false,
+        data: fd,
+        success: options.success
+    });
+}

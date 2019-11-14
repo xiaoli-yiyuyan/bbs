@@ -6,13 +6,24 @@ html, body {
     height: 100%;
 }
 body {
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
     background: #F8F8F8;
+}
+.top-fixed {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    background: #F8F8F8;
+}
+.top-fixed-block {
+    height: 4.4rem;
 }
 .header_nav {
     display: flex;
-    padding: .5rem;
+    padding: 0.2rem .2rem;
     background: @background-color;
     border-bottom: .05rem solid @border-color;
     a {
@@ -21,13 +32,14 @@ body {
     }
     a.ianmi_link {
         flex: 1;
-        text-align: center;
+        text-align: right;
     }
 }
 .top_nav_box {
     position: relative;
     height: 2rem;
     margin: .5rem;
+    margin-bottom: 0;
     z-index: 999;
 }
 .top_nav {
@@ -62,7 +74,7 @@ body {
 }
 .content {
     flex: 1;
-    overflow: auto;
+    // overflow: auto;
     margin: .5rem;
     background: @background-color;
     border: .05rem solid @border-color;
@@ -265,5 +277,126 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+}
+
+.theme-list-group {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 1rem;
+    padding: 0 0.2rem;
+    .list-item {
+        padding: 0.4rem 0.2rem !important;
+        width: 33.3333%;
+    }
+    
+    .theme-logo {
+        display: block;
+        width: 100%;
+        border-radius: .15rem;
+        box-shadow: 0px 0px 1px #eeeeee;
+    }
+    .theme-title {
+        margin-top: .3rem;
+        font-size: .7rem;
+    }
+    .theme-pay-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.55rem;
+        line-height: .6rem;
+        color: #888;
+    }
+}
+.theme_view {
+    padding: 0.4rem;
+    .theme_view_title {
+        margin-top: 0.6rem;
+        font-size: .9rem;
+        font-weight: 700;
+        .theme_clone_title {
+            font-size: .7rem;
+            font-weight: 400;
+        }
+    }
+    .theme-pay-info {
+        display: flex;
+        margin-top: 0.4rem;
+        justify-content: space-between;
+        font-size: 0.65rem;
+        line-height: .6rem;
+        color: #888;
+        .price {
+            font-weight: 700;
+            color: rgb(255, 159, 34);
+        }
+    }
+    .theme_view_memo_title {
+        margin-top: .6rem;
+        font-size: 0.75rem;
+        color: #000000;
+    }
+    .theme_view_memo {
+        margin-top: .2rem;
+        font-size: 0.65rem;
+        // color: #555555;
+        line-height: 1rem;
+        &.close {
+            position: relative;
+            max-height: 4.5rem;
+            overflow: hidden;
+            &::after {
+                content: "点击展开";
+                position: absolute;
+                text-align: center;
+                width: 100%;
+                right: 0;
+                bottom: 0rem;
+                color: #09f;
+                font-size: .7rem;
+                font-weight: 700;
+                line-height: 1.5rem;
+                background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
+            }
+        }
+    }
+    .theme_view_btn {
+        display: block;
+        margin-top: 0.8rem;
+        background: #30b973;
+        padding: .5rem;
+        color: #FFF;
+        text-align: center;
+        border-radius: @border-radius-size;
+        &.disable {
+            background: #aaa;
+        }
+    }
+    .theme_other {
+        margin-top: 0.6rem;
+        display: flex;
+        .other_btn {
+            margin-right: 0.4rem;
+            padding: 0 0.5rem;
+            background: #eee;
+        }
+    }
+}
+.theme_view_logo_group {
+    overflow-y: auto;
+    .theme_view_logo_group_box {
+        display: flex;
+        flex-wrap: nowrap;
+        .theme_view_logo {
+            margin: 0 .2rem;
+            display: block;
+            width: 33.3333%;
+            height: 33.3333%;
+            border-radius: .15rem;
+            box-shadow: 0px 0px 1px #eeeeee;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
     }
 }

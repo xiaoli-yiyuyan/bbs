@@ -701,7 +701,8 @@ class Admin extends \comm\core\Home
         fclose($file);
     }
 
-    public $themeHost = 'http://theme.ianmi.com';
+    // public $themeHost = 'http://theme.ianmi.com';
+    public $themeHost = 'http://192.168.2.188:805';
 
     /**
      * 主题管理
@@ -710,10 +711,17 @@ class Admin extends \comm\core\Home
     {
         $url = $this->themeHost . '/theme/getJson';
         $list = $this->curlWay($url);
-        if(isset($list['err'])){
-            return Response::json($list);
-        }
         $list = json_decode($list, true);
+        if(isset($list['err'])){
+            return Page::error($view['msg']);
+        }
+
+        foreach ($list['data'] as &$item) {
+            $item['logoPath'] = "/static/images/theme_default.jpg";
+            if (count($item['logo_path']) > 0) {
+                $item['logoPath'] = $this->themeHost . '/' . $item['logo_path'][0];
+            }
+        }
         View::load('admin/tpl', ['list' => $list]);
     }
 
@@ -728,25 +736,107 @@ class Admin extends \comm\core\Home
     }
     
     /**
+     * 主题详细
+     */
+    public function tplView($name = '')
+    {
+        $localTheme = [];
+        //查找本地是否存在这个主题
+        if ($_localTheme = Theme::get(['name' => $name])) {
+            $localTheme = $_localTheme;
+            $name = $localTheme['self_name'];
+        }
+        $is = [];
+
+        $url = $this->themeHost . '/theme/getView?name=' . $name;
+        $view = $this->curlWay($url);
+        $view = json_decode($view, true);
+        if(isset($view['err'])){
+            return Page::error($view['msg']);
+        }
+
+        if (count($view['logo_path']) == 0) {
+            $view['logo_path'][] = "/static/images/theme_default.jpg";
+        } else {
+            foreach ($view['logo_path'] as &$item) {
+                $item = $this->themeHost . '/' . $item;
+            }
+        }
+        
+        // 是否已经获取/购买主题
+        $is['get'] = true;
+        // 是否已经下载到本地
+        $is['download'] = !empty($localTheme);
+        // 是否为本体主题
+        $is['self'] = true;
+        // 是否需要更新
+        $is['update'] = false;
+        // 是否为系统主题
+        $is['system'] = false;
+        if ($is['download']) {
+            $is['self'] = $localTheme['self_name'] == $localTheme['name'];
+            $is['system'] = $localTheme['name'] == 'default';
+            $is['update'] = $is['self'] && $this->versionCheck($localTheme['version'], $view['version']);
+        }
+        View::load('admin/tpl_view', [
+            'view' => $view,
+            'localTheme' => $localTheme,
+            'is' => $is
+        ]);
+    }
+
+    /**
+     * 版本号大小对比
+     */
+    public function versionCheck($version, $new_version)
+    {
+        
+        if (!empty($version)) {
+            // 版本号判断
+            $o_v = explode('.', ltrim($version, 'v'));
+            $n_v = explode('.', ltrim($new_version, 'v'));
+            if ($o_v == $n_v) {
+                // 无需升级
+                return;
+            }
+            for ($i = 0; $i < 3; $i ++) {
+				
+                if ($n_v[$i] > $o_v[$i]) {
+                    break;
+                }
+                if ($n_v[$i] < $o_v[$i]) {
+                    // 版本号不对
+                    return;
+                }
+            }
+            $old_version = 'v' . implode('.', $o_v);
+        }
+        return true;
+    }
+
+    /**
      * 主题切换（这里的主题切换选择，影响到上方的我的主题管理，若选择@1上述需修改）
      */
-    public function themeUse()
+    public function themeUse($id = null)
     {
-        $data = Request::post();
-        if(!isset($data['id'])){
-            return  Response::json(['err' => 1, 'msg' => '参数错误']);
+        if(!Theme::get($id)){
+            return Page::error('参数错误');
+            // return  Response::json(['err' => 1, 'msg' => '参数错误']);
         }
         /**@1保存theme表中的status完成主题切换，在@1和@2中任选一个 */
-        // $res = Theme::setStatus(intval($data['id']));
+        $res = Theme::setStatus(intval($id));
         /****************@1***************/
         
         /**@2使用setting表中的主题标识完成主题切换，在@1和@2中任选一个 */
-        $info = Theme::get(intval($data['id']));
-        Setting::set(['theme' => $info->name]); //, 'component'=>$info->name
-        $res = ['err' => 0];
+        // $info = Theme::get(intval($data['id']));
+        // Setting::set(['theme' => $info->name]); //, 'component'=>$info->name
+        // $res = ['err' => 0];
         /*****************@2***********/
+        if (!empty($res['err'])) {
+            return Page::error($res['msg']);
+        }
 
-        return  Response::json($res);
+        return Page::success('操作成功');
     }
 
     /**
@@ -770,41 +860,144 @@ class Admin extends \comm\core\Home
 
     }
 
+    /**
+     * 安装主题
+     */
+    public function installTheme($name = '')
+    {
+        $down = $this->downTheme($name, $name);
+        if (!empty($down['err'])) {
+            return Page::error($down['msg']);
+        }
+        if (!$theme = Theme::create($down['data'])) {
+            return Page::error('安装失败');
+        }
+        
+        return Page::success('安装成功');
+    }
+
+    /**
+     * 克隆主题
+     */
+    public function cloneTheme($name = '', $title = null)
+    {
+        $theme = Theme::create([
+            'self_name' => $name
+        ]);
+        $theme->name = $theme->self_name . '_clone' . $theme->id;
+
+        if (!$localTheme = Theme::get(['name' => $name])) {
+            $down = $this->downTheme($name, $theme->name, $title);
+            if (!empty($down['err'])) {
+                $theme->delete();
+                return Page::error($down['msg']);
+            }
+
+            // $theme->self_name = $name;
+            $theme->version = $down['version'];
+            $theme->memo = $down['memo'];
+            $theme->title = $down['title'];
+            $theme->logo = $down['logo'];
+            $theme->save();
+            return Page::success('操作成功');
+        }
+
+        copydir('./theme/' . $name, './theme/' . $theme->name);
+        $theme->version = $localTheme['version'];
+        $theme->memo = $localTheme['memo'];
+        $theme->logo = $localTheme['logo'];
+        $theme->title = $title ?? $localTheme['title'];
+        $theme->save();
+        return Page::success('操作成功');
+    }
+
+    /**
+     * 更新主题
+     */
+    public function updateTheme($name = '')
+    {
+        if (!$theme = Theme::get(['name' => $name])) {
+            return Page::error('更新失败');
+        }
+
+        if ($theme['self_name'] != $theme['name']) {
+            return Page::error('更新失败');
+        }
+        $down = $this->downTheme($name, $name, null, true);
+
+        if (!empty($down['err'])) {
+            return Page::error($down['msg']);
+        }
+
+        $theme->logo = $down['logo'];
+        $theme->memo = $down['memo'];
+        $theme->version = $down['version'];
+
+        return Page::success('操作成功');
+    }
+
+    /**
+     * 获取主题详细
+     */
+    private function cloudThemeView($name)
+    {
+        $url = $this->themeHost . '/theme/getView?name=' . $name;
+        $view = $this->curlWay($url);
+        $view = json_decode($view, true);
+        return $view;
+    }
+
    /**
-    * 克隆主题
+    * 下载主题
    */
-   public function cloneTheme($old_name = '', $name = '', $title = '', $version = '', $url = '')
+   private function downTheme($name = '', $new_name = '', $title = null, $isUpdate = false)
    {
        /**查看标识是否唯一  1不能和默认名一致 2 不能和数据库中存在的关键字一样*/
-       $name = trim($name);
-       if($name == 'default' || $name == 'system'){
-            return Response::json(['err' => 1, 'msg' => '该标识为关键字，请重新设置']);
-       }
+        $new_name = trim($new_name);
+        if($new_name == 'default' || $new_name == 'system'){
+                return ['err' => 1, 'msg' => '该标识为关键字，请重新设置'];
+        }
 
-       $res = Theme::get(['name' => $name]);
-       if($res){
-           return Response::json(['err' => 1, 'msg' => '该标识已存在，请重新设置']);
-       }
-       $url = $this->themeHost . '/' . $url;
-       $field = $this->curlWay($url);
-       if(isset($field['err'])){
-           return Response::json($field);
-       }
-       $file_url = "./theme/" . $name . ".zip";
-       $resource = fopen($file_url, "w+");
-       fwrite($resource, $field);
-       fclose($resource);
-       $result = unzip($file_url, './theme/'.$name);
-       if($result){
-           unlink($file_url);
-           $theme = new Theme;
-           $theme->name = $name;
-           $theme->title = $title;
-           $theme->version = $version;
-           $theme->save();
-           return Response::json(['err' => 0, 'msg' => '解压成功']);
-       }
-       return Response::json(['err' => 2, 'msg' => '解压失败']);
+        $res = Theme::get(['name' => $new_name]);
+        if(!$isUpdate && $res){
+            return ['err' => 1, 'msg' => '该标识已存在，或主题已经安装，请重新设置'];
+        }
+        $view = $this->cloudThemeView($name);
+        if (isset($view['err'])) {
+            return $view;
+        }
+
+        $url = $this->themeHost . '/' . $view['path'];
+        $field = $this->curlWay($url);
+        if(isset($field['err'])){
+            return $field;
+        }
+        $file_url = "./theme/" . $new_name . ".zip";
+        $resource = fopen($file_url, "w+");
+        fwrite($resource, $field);
+        fclose($resource);
+        $result = unzip($file_url, './theme/'.$new_name);
+
+        $title = $title ?? $view['title'];
+        if($result){
+            unlink($file_url);
+            // $theme = new Theme;
+            // $theme->self_name = $old_name;
+            // $theme->name = $name;
+            // $theme->title = $title;
+            // $theme->memo = $view['memo'];
+            // $theme->version = $view['version'];
+            // $theme->save();
+            return ['err' => 0, 'msg' => '解压成功', 'data' => [
+                'name' => $new_name,
+                'title' => $title,
+                'memo' => $view['memo'],
+                'self_name' => $name,
+                'version' => $view['version'],
+                'logo' => $view['logo_path'],
+            ]];
+        }
+        return ['err' => 2, 'msg' => '解压失败'];
    }
 
    /**
@@ -813,28 +1006,28 @@ class Admin extends \comm\core\Home
     *@param string $name 主题标识
     */
 
-    public function deleteTheme($id, $name)
+    public function deleteTheme($id = null)
     {
-        $id = intval($id); 
-        $name = trim($name);
-        if($name == 'default' || $name == 'system'){
-            return Response::json(['err' => 5, 'msg' => '该主题为默认主题不能删除']);
+        $id = intval($id);
+        
+        if (!$info = Theme::get($id)) {
+            return Page::error('删除失败，主题不存在');
         }
-        $info = Theme::get(['id' => $id, 'name' => $name]);
-        if(!$info){
-           return Response::json(['err' => 1, 'msg' => '删除错误，请确认删除主题']);
+        if($info['name'] == 'default' || $info['name'] == 'system'){
+            return Page::error('该主题为默认主题不能删除');
         }
         $res = $info->delete();
         if(!$res){
-           return Response::json(['err' => 2, 'msg' => '删除错误，请重试']);
+            return Page::error('删除错误，请重试');
+        //    return Response::json(['err' => 2, 'msg' => '删除错误，请重试']);
         }
         /**删除文件夹 */
-        $dir = './theme/'.$name;
-        $fileExists = file_exists($dir);
+        // $dir = './theme/'.$info['name'];
+        // $fileExists = file_exists($dir);
         if($fileExists){
-            $this->deleteDir($dir);
+            // $this->deleteDir($dir);
         }
-        return Response::json(['err' => 0, 'msg' => '删除成功']);
+        return Page::success('操作成功');
     }
 
     private function deleteDir($dir)

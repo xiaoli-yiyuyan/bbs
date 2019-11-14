@@ -460,3 +460,40 @@ function parseParam($str)
     $str = explode(',', $str);
     return $str;
 }
+
+/**
+ * 复制文件夹
+ * @param $source
+ * @param $dest
+ */
+function copydir($source, $dest)
+{
+    if (!file_exists($dest)) mkdir($dest);
+    $handle = opendir($source);
+    while (($item = readdir($handle)) !== false) {
+        if ($item == '.' || $item == '..') continue;
+        $_source = $source . '/' . $item;
+        $_dest = $dest . '/' . $item;
+        if (is_file($_source)) copy($_source, $_dest);
+        if (is_dir($_source)) copydir($_source, $_dest);
+    }
+    closedir($handle);
+}
+
+/**
+ * 删除文件夹
+ * @param $path
+ * @return bool
+ */
+function rmdirs($path)
+{
+    $handle = opendir($path);
+    while (($item = readdir($handle)) !== false) {
+        if ($item == '.' || $item == '..') continue;
+        $_path = $path . '/' . $item;
+        if (is_file($_path)) unlink($_path);
+        if (is_dir($_path)) rmdirs($_path);
+    }
+    closedir($handle);
+    return rmdir($path);
+}
