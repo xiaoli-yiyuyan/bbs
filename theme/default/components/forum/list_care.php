@@ -2,7 +2,18 @@
     <div class="user">
         <img class="photo" src="<?=$item['author']['photo']?>" alt="">
         <div class="info">
-            <div class="nickname"><?=$item['author']['nickname']?> <span class="level">Lv.<?=$item['author']['lv']['level']?></span></div>
+            <div class="nickname">
+                <div class="nl">
+                    <span><?=$item['author']['nickname']?></span>
+                    <span class="level">Lv.<?=$item['author']['lv']['level']?></span>
+                </div>
+                <div class="good">
+                    <?php if($item['is_top'] == 1){?><span class='forum_top'>顶</span><?php }?>
+                    <?php if($item['is_cream'] == 1){?><span class='forum_cream'>精</span><?php }?>
+                    <!-- <?php if($item['img_data'] != ''){?><span class='forum_img'>图</span><?php }?> -->
+                    <?php if($item['file_data'] != ''){?><span class='forum_file'>附</span><?php }?>
+                </div>
+            </div>
             <div class="mark">
                 <span><?=friendlyDateFormat($item['create_time'])?></span>
                 <span><?=$item->class_info['title']?></span>
@@ -10,18 +21,14 @@
         </div>
     </div>
     <a class="text" href="/forum/view?id=<?=$item['id']?>">
-        <div class="title">
-        <?php if($item['is_top'] == 1){?><span class='forum_top'>顶</span><?php }?>
-        <?php if($item['is_cream'] == 1){?><span class='forum_cream'>精</span><?php }?>
-        <!-- <?php if($item['img_data'] != ''){?><span class='forum_img'>图</span><?php }?> -->
-        <?php if($item['file_data'] != ''){?><span class='forum_file'>附</span><?php }?>
-        <?=$item['title']?></div>
+        <div class="title"><?=$item['title']?></div>
         <div class="context"><?=$item['mini_context']?></div>
         <?php if (!empty($item['img_list'])) { ?>
             <div class="images">
-                <?php for ($i = 0; $i < min(3, count($item['img_list'])); $i ++) { ?>
+                <?php $showCount = min(3, count($item['img_list'])); ?>
+                <?php for ($i = 0; $i < $showCount; $i ++) { ?>
                 <div class="images_item">
-                    <img src="/forum/imagecropper?path=<?=ltrim($item['img_list'][$i]['path'], '/')?>" alt="加载中...">
+                    <img src="/static/images/imgblock_<?=$showCount?>.png" data-original="/forum/imagecropper?path=<?=ltrim($item['img_list'][$i]['path'], '/')?>&count=<?=$showCount?>" alt="加载中...">
                 </div>
                 <?php } ?>
             </div>

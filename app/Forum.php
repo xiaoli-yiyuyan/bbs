@@ -83,12 +83,18 @@ class Forum extends \comm\core\Home
         return $list;
     }
 
-    public function list($id = '')
+    
+    /**
+     * 论坛列表
+     */
+    public function list($id = '', $order = 1, $type = 0)
     {   
         $page = Request::get('page');
         $list = source('/api/Forum/list', [
             'class_id' => $id,
-            'page' => $page
+            'page' => $page,
+            'order' => $order,
+            'type' => $type
         ]);
         $class_info = Category::get($id);
         $list->appends('id', $id);
@@ -100,7 +106,9 @@ class Forum extends \comm\core\Home
         View::load('forum/list', [
             'list' => $list,
             'class_info' => $class_info,
-            'reply_count' => $replyCount
+            'reply_count' => $replyCount,
+            'order' => $order,
+            'type' => $type
         ]);
     }
 
@@ -507,7 +515,8 @@ class Forum extends \comm\core\Home
             $content = '<a href="' . href('/user/show?id=' . $this->user['id']) . '">' .$this->user['nickname'] . '</a> 评论了你的主题，快去<a href="' . href('/forum/view?id=' . $id) . '">查看</a>吧！';
             Message::send(0, $forum['user_id'], $content);
         }
-        return Url::redirect('/forum/view?id=' . $id);
+        return Page::success('评论成功 金币+' . $this->addReplyCoin, '/forum/view?id=' . $id);
+        // return Url::redirect('/forum/view?id=' . $id);
     }
 
     public function myList()
@@ -561,9 +570,13 @@ class Forum extends \comm\core\Home
         return $context;
     }
 
-    public function imagecropper($path = '')
+    public function imagecropper($path = '', $count = 3)
     {
-        imagecropper($path, 270, 270);
+        $maxCount = 3;
+        $width = 160;
+        $height = 160;
+        $width = $width * $maxCount / $count;
+        imagecropper($path, $width, $height);
     }
 
     public function search($keyword = '', $mark_id = '')

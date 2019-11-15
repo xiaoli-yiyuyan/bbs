@@ -1,6 +1,60 @@
 <?php useComp("/components/common/header" ); ?>
 <?php useComp("/components/common/header_menu_nav?title=首页" ); ?>
 
+
+<link rel="stylesheet" href="/static/js/swiper.min.css?v=<?=$version?>">
+<script src="/static/js/swiper.min.js?v=<?=$version?>"></script>
+<style>
+.imgg {
+    display: block;
+    width: 100%;
+}
+.imggs {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+</style>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <img class="imgg" src="/static/images/timg3_a.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+            <img class="imgg" src="/static/images/timg1_a.jpg" alt="">
+        </div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+</div>
+
+
+<?php $column = source('Model/Category/getList', ['pagesize' => 10]); ?>
+<div class="column_index_box flex-box">
+    <?php foreach ($column as $item) { ?>
+        <div class="column_index_item">
+            <div class="column_photo_box">
+                <img class="column_photo" src="<?=$item['photo']?>" alt="<?=$item['title']?>">
+            </div>
+            <div class="column_title"><?=$item['title']?></div>
+        </div>
+    <?php } ?>
+</div>
+<div class="func-more">
+    <div class="func-more-item">
+        <div class="title">Go签到</div>
+        <div class="info">快来暴击签到</div>
+    </div>
+    <div class="func-more-item">
+        <div class="title">My帖子</div>
+        <div class="info">我的发帖记录</div>
+    </div>
+    <div class="func-more-item">
+        <div class="title">My评论</div>
+        <div class="info">我的互动记录</div>
+    </div>
+</div>
+<div class="empty-block"></div>
 <?php
     $tp = \Iam\Request::get('tp', 1);
     if ($tp == 2) {
@@ -59,5 +113,15 @@
     'tp' => $tp
 ])?>
 <?=code('copyright')?>
+<script>        
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        lazyLoading: true,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: 5000,
+    }); 
+</script>
 <?php useComp('/components/common/footer_nav', ['index' => 0]); ?>
 <?php useComp('/components/common/footer'); ?>

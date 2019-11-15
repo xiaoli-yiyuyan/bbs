@@ -9,7 +9,7 @@
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
 	<meta name="baidu-site-verification" content="HmdI3Pb6F4" />
@@ -20,6 +20,8 @@
 	<link rel="shortcut icon" href="favicon.ico?v=<?=$version?>">
 	<link rel="stylesheet" href="/theme/<?=$theme?>/template/static/css/style.css?v=<?=$version?>">
 	<script src="/theme/<?=$theme?>/template/static/js/jquery.min.js?v=<?=$version?>"></script>
+	<script src="/static/js/jquery.lazyload.min.js?v=<?=$version?>"></script>
+	<script src="/static/js/jquery.form.js?v=<?=$version?>"></script>
 	<script src="/theme/<?=$theme?>/template/static/js/core.js?v=<?=$version?>"></script>
 	<script src="/static/ui/ui.js?v=<?=$version?>"></script>
 </head>

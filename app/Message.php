@@ -9,7 +9,7 @@ class Message extends \comm\core\Home
 {
     public function index()
     {
-        $list = MMessage::where('to_user_id', $this->user['id'])->order('id', 'desc')->paginate(Setting::get('pagesize'));
+        $list = MMessage::where('to_user_id', $this->user['id'])->order('status', 'asc')->order('id', 'desc')->paginate(Setting::get('pagesize'));
         $list->each(function($item) {
             MMessage::readStatus($item->id, $item->to_user_id);
         });

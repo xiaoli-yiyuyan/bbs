@@ -1016,16 +1016,19 @@ class Admin extends \comm\core\Home
         if($info['name'] == 'default' || $info['name'] == 'system'){
             return Page::error('该主题为默认主题不能删除');
         }
+        if(empty($info['name'])){
+            return Page::error('删除失败');
+        }
         $res = $info->delete();
         if(!$res){
             return Page::error('删除错误，请重试');
         //    return Response::json(['err' => 2, 'msg' => '删除错误，请重试']);
         }
         /**删除文件夹 */
-        // $dir = './theme/'.$info['name'];
-        // $fileExists = file_exists($dir);
+        $dir = './theme/' . $info['name'];
+        $fileExists = file_exists($dir);
         if($fileExists){
-            // $this->deleteDir($dir);
+            $this->deleteDir($dir);
         }
         return Page::success('操作成功');
     }

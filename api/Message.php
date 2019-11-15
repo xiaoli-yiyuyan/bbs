@@ -13,7 +13,7 @@ class Message extends \api\Api
      */
     public function list($page = 1, $pagesize = 10, $sort = 1, $order = 1, $type = 0)
     {
-        if ($user = source('/api/User/info')) {
+        if (!$user = source('/api/User/info')) {
             $this->error(1, '会员未登录');
             return;
         }
@@ -45,7 +45,11 @@ class Message extends \api\Api
      */
     public function count($status = 0)
     {
-        $count = MessageModel::getCount($this->user['id'], $status);
+        if (!$user = source('/api/User/info')) {
+            $this->error(1, '会员未登录');
+            return;
+        }
+        $count = MessageModel::getCount($user['id'], $status);
         return $count;
     }
 }

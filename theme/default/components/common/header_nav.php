@@ -13,7 +13,14 @@
         <?php if (!empty($rightBottom)) { ?>
         <div class="_right_bottom"><?=$rightBottom['text']?></div>
         <?php } else { ?>
-        <a href="/message"><i class="icon-svg svg-mail"></i></a>
+            
+        <?php $newMessageCount = source('/api/message/count'); ?>
+        <a href="/message" class="message-icon">
+            <i class="icon-svg svg-mail"></i>
+            <?php if (!empty($newMessageCount)) { ?>
+                <div class="top-right-count new-message-count"><?=$newMessageCount?></div>
+            <?php } ?>
+        </a>
         <?php } ?>
     </div>
 </div>
@@ -23,7 +30,12 @@ $(function() {
         alert('功能开发中！');
     });
     $('.header-bar .back').click(function() {
-        history.go(-1);
+        if(window.history.length > 1){
+            history.go(-1);
+        }else{
+            location.href='/';
+        }
+
     });
     $('.header-bar .logo').click(function() {
         location.href='/';

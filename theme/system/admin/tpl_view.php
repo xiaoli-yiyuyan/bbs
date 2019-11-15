@@ -79,7 +79,7 @@
                 <!-- <div class="other_btn">修改</div> -->
             <?php } ?>
 
-            <?php if ($is['download'] && !$is['system']) { ?>
+            <?php if ($is['download'] && !$is['system'] && $localTheme['status'] != 1) { ?>
                 <a class="other_btn" data-href="/admin/deleteTheme?id=<?=$localTheme['id']?>">删除</a>
             <?php } ?>
         </div>

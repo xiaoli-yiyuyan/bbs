@@ -11,7 +11,7 @@
     .read_count{margin-right:5px; color: #897777;}
     /* .create_time{line-height: 25px;} */
 </style>
-<?php useComp('/components/common/header_nav', ['title' => $forum['title']]); ?>
+<?php useComp('/components/common/header_nav', ['title' => !empty($forum['title']) ? $forum['title'] : '查看内容']); ?>
 <?php if ($forum_reply->currentPage() == 1) { ?>
 <div class="content-main">
     <div class="view_head border-b">
@@ -199,7 +199,9 @@ $(function() {
                 $.getJSON('/forum/ajax_remove', {id: id}).then(function(data) {
                     $.msg('删除成功');
                     setTimeout(function() {
-                        location.href = '/forum/list?id=' + data.class_id;
+                        location.replace('/forum/list?id=' + data.class_id);
+
+                        // location.href = '/forum/list?id=' + data.class_id;
                     }, 1000);
                 });
             },
@@ -223,6 +225,16 @@ $(function() {
     });
     $('.reply_index').submit(function() {
         $(this).find('input[name=context]').val(iamEditor.toUbb());
+        
+        $(this).ajaxSubmit(function (data) {
+            $.msg(data.msg);
+            setTimeout(function() {
+                if (data.url) {
+                    location.replace(data.url);
+                }
+            }, 1000);
+        });
+        return false;
     });
 
     $('._sys_ubb_login').click(function() {
@@ -238,7 +250,7 @@ $(function() {
                 $.getJSON('/forum/forum_buy.json?token=<?=$user['uuid']?>', {id: id}).then(function(data) {
                     $.msg(data.msg);
                     setTimeout(function() {
-                        location.reload();
+                        location.replace(location.href);
                     }, 1000);
                 });
             }

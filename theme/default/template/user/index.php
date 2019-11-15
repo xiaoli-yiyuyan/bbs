@@ -49,12 +49,20 @@
     </div>
 </a>
 
+<?php $newMessageCount = source('/api/message/count'); ?>
+
 <div class="change-info">
 
     <div class="li-box border-b message_line_item">
         <a href="/message" class="flex-box flex">
             <i class="li-box-svg icon-svg b_message"></i>
             <div class="li-box-word">消息通知</div>
+            
+            <div class="flex message-box-ts">
+                <?php if (!empty($newMessageCount)) { ?>
+                <div class="word_right new-message-count"><?=$newMessageCount?></div>
+                <?php } ?>
+            </div>
         </a>
     </div>
 

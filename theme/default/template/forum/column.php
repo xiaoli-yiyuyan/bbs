@@ -22,4 +22,4 @@
 </div>
 <?php useComp('/components/common/footer_nav', ['index' => 1]); ?>
 
-<?php useComp('components/common/footer'); ?>
+<?php useComp('/components/common/footer'); ?>

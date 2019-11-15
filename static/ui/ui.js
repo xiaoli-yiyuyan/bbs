@@ -74,11 +74,11 @@ $(function() {
         $modal.removeClass('modal-in');
         $overlay = $overlay || $modal.prev();
         console.log($overlay);
-        if ($overlay.hasClass('modal-overlay-visible')) {
+        if ($overlay.hasClass('modal-overlay') && $overlay.hasClass('modal-overlay-visible')) {
             $overlay.removeClass('modal-overlay-visible');
         }
         setTimeout(function() {
-            if ($overlay) {
+            if ($overlay.hasClass('modal-overlay')) {
                 $overlay.remove();
                 $('body').css('overflow', '');
             }

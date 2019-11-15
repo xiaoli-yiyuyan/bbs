@@ -34,10 +34,12 @@ class Category extends Model
     private static $order = ['id', 'order'];
     private static $sort = ['ASC', 'DESC'];
 
-    public static function getList($var_page = 'page')
+    public static function getList($var_page = 'page', $pagesize = 10, $page = 1)
     {
-        return self::paginate(20, true, [
-            'var_page' => $var_page
+        return self::paginate($pagesize, true, [
+            'var_page' => $var_page,
+            'page' => $page,
+            // 'pagesize' => $pagesize,
         ]);
     }
 
