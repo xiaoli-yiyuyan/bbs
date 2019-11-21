@@ -205,3 +205,8 @@ INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('template','default','�
 
 ALTER TABLE `category` ADD `is_auto` int(11) DEFAULT '0' COMMENT '是否开启审核';
 ALTER TABLE `user` ADD `uuid` varchar(255) COMMENT '唯一识别码';
+
+ALTER TABLE `theme` ADD `self_name` varchar(255) COMMENT '主题原本标识';
+ALTER TABLE `theme` ADD `memo` text COMMENT '说明';
+ALTER TABLE `theme` ADD `logo_path` varchar(255) COMMENT '展示图';
+INSERT INTO `theme` (`id`, `title`, `self_name`, `name`, `status`, `version`, `memo`, `logo_path`) values (1, '简安米-系统默认', 'default', 'default', 1, '-.-.-', '简安米，一款以极简为理念的html5手机网站模板，且专注于移动端网站建设，专门为移动网站设计。功能强大，内容丰富，人性化的操作模式深受广大网友喜爱。', '[]') ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `title` = VALUES(`title`), `self_name` = VALUES(`self_name`), `name` = VALUES(`name`), `status` = VALUES(`status`), `version` = VALUES(`version`), `memo` = VALUES(`memo`), `logo_path` = VALUES(`logo_path`)

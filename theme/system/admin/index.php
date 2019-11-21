@@ -51,10 +51,6 @@
         <div>安米推荐使用<a href="http://www.zzidc.com/index.action?agentpand=330754">国内主机，虚拟空间</a></div>
         <div>安米推荐使用<a href="http://www.zzidc.com/index.action?agentpand=330754">香港主机，虚拟空间</a></div>
     </div>
-    <div class="footer_nav">
-        <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>
-        <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
-    </div>
 </div>
 <style>
     .update_plane {
@@ -94,4 +90,6 @@
         });
     });
 </script>
+
+<?php self::load('common/footer_nav'); ?>
 <?php self::load('common/footer'); ?>

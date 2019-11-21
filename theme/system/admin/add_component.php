@@ -12,10 +12,7 @@
     <script type=text/javascript src=/static/admintemplate/js/vendor.6c70df58022e2fec1939.js></script>
     <script type=text/javascript src=/static/admintemplate/js/app.8b8a1b0e9ceeace28296.js></script>
 </div>
-<div class="footer_nav">
-    <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>
-    <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
-</div>
+<?php self::load('common/footer_nav'); ?>
 <script>
 function GetUrlParms() {
     var args = new Object(); 

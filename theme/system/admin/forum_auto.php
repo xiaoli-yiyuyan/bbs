@@ -34,10 +34,7 @@
     </div>
     <?php } ?>
 </div>
-<div class="footer_nav">
-    <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>
-    <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
-</div>
+<?php self::load('common/footer_nav'); ?>
 <script>
     $('.btn_forum_back').click(function() {
         var link = $(this).data('href');

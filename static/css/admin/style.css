@@ -462,8 +462,8 @@ body {
 }
 .ad {
   margin: 0.5rem;
-  background: #FFF;
-  border: 0.05rem solid #eee;
+  background: #ffdada;
+  border: 0.05rem solid #ffa6a6;
   border-radius: 0.1rem;
   padding: 0.5rem;
 }

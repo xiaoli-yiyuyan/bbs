@@ -61,6 +61,7 @@ class CommonPublic extends Controller
         View::data([
             'user' => $this->user,
             'version' => $this->version,
+            'version_datetime' => IamVersion::$datetime,
             // 'weblogo' => $setting['weblogo'],
             // 'webname' => $setting['webname'],
             // 'keywords' => '',

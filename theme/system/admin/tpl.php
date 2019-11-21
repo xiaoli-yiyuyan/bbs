@@ -11,6 +11,9 @@
         <!-- <a href="/admin/add_page?type=1">添加页面</a> -->
     </div>
     <div class="list">
+        <?php if (empty($list['data'])) { ?>
+            <div class="empty">主题商店即将上线</div>
+        <?php } ?>
         <div class="list-group theme-list-group">
             <?php foreach ($list['data'] as $key => $item) {?>
                 <a class="list-item" href="/admin/tpl_view?name=<?=$item['name']?>">
@@ -25,10 +28,7 @@
         </div>
     </div>
 </div>
-<div class="footer_nav">
-    <div>安米程序 v<?=$version?> (2018新鲜出炉)</div>
-    <div>本程序免费开源 官网地址 <a class="ianmi_link" href="http://ianmi.com">http://ianmi.com</a></div>
-</div>
+<?php self::load('common/footer_nav'); ?>
 
 <script id="clone_form" type="text/html">
     <div class="list newlist">
