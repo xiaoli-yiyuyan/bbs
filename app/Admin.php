@@ -701,8 +701,8 @@ class Admin extends \comm\core\Home
         fclose($file);
     }
 
-    // public $themeHost = 'http://theme.ianmi.com';
-    public $themeHost = 'http://192.168.2.188:805';
+    public $themeHost = 'http://theme.ianmi.com';
+    // public $themeHost = 'http://192.168.2.188:805';
 
     /**
      * 主题管理
@@ -732,6 +732,12 @@ class Admin extends \comm\core\Home
     {
         $setting = Setting::get(['theme', 'component']);
         $list = (new Theme)->paginate(10);
+        foreach ($list as &$item) {
+            $item['logoPath'] = "/static/images/theme_default.jpg";
+            if (count($item['logo_path']) > 0) {
+                $item['logoPath'] = $this->themeHost . '/' . $item['logo_path'][0];
+            }
+        }
         View::load('admin/my_tpl', ['setting' =>$setting, 'list' => $list]);
     }
     
@@ -752,9 +758,13 @@ class Admin extends \comm\core\Home
         $view = $this->curlWay($url);
         $view = json_decode($view, true);
         if(isset($view['err'])){
-            return Page::error($view['msg']);
-        }
+            if (!$_localTheme) {
+                return Page::error($view['msg']);
+            }
 
+            $view = $_localTheme->toArray();
+            $view['price'] = 0;
+        }
         if (count($view['logo_path']) == 0) {
             $view['logo_path'][] = "/static/images/theme_default.jpg";
         } else {
@@ -897,7 +907,7 @@ class Admin extends \comm\core\Home
             $theme->version = $down['version'];
             $theme->memo = $down['memo'];
             $theme->title = $down['title'];
-            $theme->logo = $down['logo'];
+            $theme->logo_path = $down['logo_path'];
             $theme->save();
             return Page::success('操作成功');
         }
@@ -905,7 +915,7 @@ class Admin extends \comm\core\Home
         copydir('./theme/' . $name, './theme/' . $theme->name);
         $theme->version = $localTheme['version'];
         $theme->memo = $localTheme['memo'];
-        $theme->logo = $localTheme['logo'];
+        $theme->logo_path = $localTheme['logo_path'];
         $theme->title = $title ?? $localTheme['title'];
         $theme->save();
         return Page::success('操作成功');
@@ -929,7 +939,7 @@ class Admin extends \comm\core\Home
             return Page::error($down['msg']);
         }
 
-        $theme->logo = $down['logo'];
+        $theme->logo_path = $down['logo_path'];
         $theme->memo = $down['memo'];
         $theme->version = $down['version'];
 
@@ -994,7 +1004,7 @@ class Admin extends \comm\core\Home
                 'memo' => $view['memo'],
                 'self_name' => $name,
                 'version' => $view['version'],
-                'logo' => $view['logo_path'],
+                'logo_path' => $view['logo_path'],
             ]];
         }
         return ['err' => 2, 'msg' => '解压失败'];

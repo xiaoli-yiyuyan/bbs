@@ -23,7 +23,7 @@
 		<div class="input_group">
 			<div class="item-line item-lg">
 				<div class="item-title">服务器</div>
-				<div class="item-input"><input type="text" class="input input-lg" name="host" placeholder="数据库服务器" value="127.0.0.1"></div>
+				<div class="item-input"><input type="text" class="input input-lg" name="host" placeholder="数据库服务器" value="localhost"></div>
 			</div>
 			<div class="item-line item-lg">
 				<div class="item-title">库名</div>

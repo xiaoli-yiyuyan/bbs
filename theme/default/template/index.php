@@ -4,29 +4,9 @@
 
 <link rel="stylesheet" href="/static/js/swiper.min.css?v=<?=$version?>">
 <script src="/static/js/swiper.min.js?v=<?=$version?>"></script>
-<style>
-.imgg {
-    display: block;
-    width: 100%;
-}
-.imggs {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-</style>
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">
-            <img class="imgg" src="/static/images/timg3_a.jpg" alt="">
-        </div>
-        <div class="swiper-slide">
-            <img class="imgg" src="/static/images/timg1_a.jpg" alt="">
-        </div>
-    </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-</div>
+
+
+<?php useComp("/components/images/slider_link" ); ?>
 
 
 <?php $column = source('Model/Category/getList', ['pagesize' => 10]); ?>
@@ -41,18 +21,22 @@
     <?php } ?>
 </div>
 <div class="func-more">
-    <div class="func-more-item">
+    <a class="func-more-item" href="/sign/index">
         <div class="title">Go签到</div>
-        <div class="info">快来暴击签到</div>
-    </div>
-    <div class="func-more-item">
+        <div class="info">暴击签到</div>
+    </a>
+    <a class="func-more-item" href="/forum/my_list">
         <div class="title">My帖子</div>
-        <div class="info">我的发帖记录</div>
-    </div>
-    <div class="func-more-item">
+        <div class="info">发帖记录</div>
+    </a>
+    <a class="func-more-item" href="/forum/reply_art_list">
         <div class="title">My评论</div>
-        <div class="info">我的互动记录</div>
-    </div>
+        <div class="info">互动记录</div>
+    </a>
+    <a class="func-more-item" href="/user/rank">
+        <div class="title">名人榜</div>
+        <div class="info">围观名人</div>
+    </a>
 </div>
 <div class="empty-block"></div>
 <?php

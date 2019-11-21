@@ -1,6 +1,7 @@
 <?php self::load('common/header',['title' => '后台管理-奖励设置']); ?>
 <?php self::load('admin/header_nav'); ?>
 <script src="/static/js/template.js?v=<?=$version?>"></script>
+<script src="/static/js/fly-zomm-img.min.js?v=<?=$version?>"></script>
 
 <div class="content">
     <div class="namespace">
@@ -10,9 +11,6 @@
         <div class="theme_view_logo_group">
             <div class="theme_view_logo_group_box">
             <?php foreach ($view['logo_path'] as $logo) { ?>
-                <img class="theme_view_logo" src="<?=$logo?>" alt="">
-                <img class="theme_view_logo" src="<?=$logo?>" alt="">
-                <img class="theme_view_logo" src="<?=$logo?>" alt="">
                 <img class="theme_view_logo" src="<?=$logo?>" alt="">
             <?php } ?>
             </div>
@@ -71,8 +69,8 @@
                 <a class="other_btn" data-href="/admin/cloneTheme?name=<?=$localTheme['name'] ?? $view['name']?>">克隆</a>
             <?php } ?>
 
-            <?php if ($is['download']) { ?>
-                <!-- <div class="other_btn">配置</div> -->
+            <?php if ($is['download'] && $localTheme['status'] == 1) { ?>
+                <a class="other_btn" href="/admin/theme/setting?id=<?=$localTheme['id']?>">配置</a>
             <?php } ?>
             
             <?php if ($is['download'] && !$is['self']) { ?>
@@ -209,6 +207,20 @@
         $.confirm("是否进行[" + $this.text() + "]操作" ,{
             yes: function(){
                 location.href = $this.data('href');
+            }
+        });
+    });
+
+    $(function (){
+        $('.theme_view_logo_group_box').FlyZommImg({
+            // screenHeight: 0,
+            rollSpeed:200,//切换速度
+            miscellaneous:true,//是否显示底部辅助按钮
+            closeBtn:true,//是否打开右上角关闭按钮
+            hideClass:'hide',//不需要显示预览的 class
+            imgQuality:'original',//图片质量类型  thumb 缩略图  original 默认原图
+            slitherCallback:function (direction,DOM) {//左滑动回调 两个参数 第一个动向 'left,firstClick,close' 第二个 当前操作DOM
+//                   console.log(direction,DOM);
             }
         });
     });

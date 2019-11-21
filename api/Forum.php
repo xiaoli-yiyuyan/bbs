@@ -132,6 +132,7 @@ class Forum extends \api\Api
         // 启用UBB语法
         if ($class_info->is_ubb) {
             $forum['context'] = $this->rule($forum['context'], $forum['id'], $forum['user_id']);
+            $forum['context'] = str_replace('[hr]', '<hr class="_sys_hr"/>', $forum['context']);
             $forum['context'] = Ubb::face($forum['context']);
             $forum['context'] = $forum->setViewImages($forum['context']);
         }

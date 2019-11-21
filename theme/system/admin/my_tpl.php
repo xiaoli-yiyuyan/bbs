@@ -21,25 +21,18 @@
         <a href="/admin/my_tpl">我的主题</a>
         <!-- <a href="/admin/add_page?type=1">添加页面</a> -->
     </div>
+
+
     <div class="list">
-        <div class="list-group">
+        <div class="list-group theme-list-group">
             <?php foreach ($list as $key => $item) {?>
-                <div class="list-item">
-                    <div class="tpl_title"><input value="<?=$item['title']?>" class="newName" name="<?=$item['id']?>"><span class="title-name"><?=$item['title']?></span> <?=$item['version']?> (<?=$item['name']?>)</div>
-                    <div class="btn_box">
-                        <div class="change-btn-name">
-                            <button class="btn btn-sm btn-change-yes">确认</button>
-                            <button class="btn btn-sm btn-change-none">取消</button>
-                        </div>
-                        <button class="btn btn-sm btn-change-name">修改</button>
-                        <?php if($item['name'] == $setting['theme']) {?>
-                            <!-- <button class="btn btn-sm">编辑</button> -->
-                        <?php }else{?>
-                            <button class="btn btn-sm btn-use" data-id="<?=$item['id']?>">使用</button>
-                            <button class="btn btn-sm btn-delete" data-id="<?=$item['id']?>" data-name="<?=$item['name']?>">删除</button>
-                        <?php }?>
+                <a class="list-item <?=($item['status'] == 1 ? 'useing-theme' : '')?>" href="/admin/tpl_view?name=<?=$item['name']?>">
+                    <img class="theme-logo" src="<?=$item['logoPath']?>" alt="">
+                    <div class="ellipsis theme-title"><?=$item['title']?></div>
+                    <div class="theme-pay-info">
+                        <div><?=$item['version']?></div>
                     </div>
-                </div>
+                </a>
             <?php } ?>
         </div>
     </div>

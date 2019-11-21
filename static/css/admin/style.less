@@ -307,6 +307,20 @@ body {
         line-height: .6rem;
         color: #888;
     }
+    .useing-theme {
+        position: relative;
+        &::before {
+            position: absolute;
+            top: .2rem;
+            left: 0;
+            content: '使用中';
+            background: #30b973;
+            padding: .2rem;
+            color: #fff;
+            border-radius: .15rem;
+            box-shadow: 0 0 .1rem #000;
+        }
+    }
 }
 .theme_view {
     padding: 0.4rem;
@@ -399,4 +413,82 @@ body {
             }
         }
     }
+}
+.setting-list {
+    .setting-list {
+        display: flex;
+        .setting-title {
+            margin-left: .2rem;
+        }
+    }
+    .setting-title {
+        display: flex;
+        background: #32393e;
+        color: #a3b3be;
+        justify-content: space-between;
+        .setting-group-title {
+            margin: .5rem;
+        }
+        .settion-add-item {
+            display: flex;
+            font-size: .7rem;
+            margin: .5rem;
+            width: 1rem;
+            background: #a3b3be;
+            color: #32393e;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+        }
+    }
+    .setting-index {
+        margin-left: .2rem;
+        display: flex;
+        margin-top: .2rem;
+        // border-bottom: 1px solid #50d491;
+    }
+    .setting-index-num {
+        display: flex;
+        width: 1rem;
+        background: #d3dde4;
+        align-items: center;
+        justify-content: center;
+    }
+    .setting-index-group {
+        flex: 1;
+        
+        .setting-name {
+            padding: .2rem;
+            background: #75818a;
+            color: #a3b3be;
+        }
+        .setting-value {
+            padding: .2rem;
+            background: #75818a;
+        }
+    }
+}
+.setting-item {
+    margin-top: .2rem;
+    &:first-child {
+        margin-top: 0;
+    }
+    .setting-name {
+        padding: .2rem;
+        background: #32393e;
+        color: #a3b3be;
+    }
+    .setting-value {
+        padding: .2rem;
+        background: #32393e;
+    }
+}
+.ad {
+    
+    margin: 0.5rem;
+    background: #FFF;
+    border: 0.05rem solid #eee;
+    border-radius: 0.1rem;
+    padding: .5rem;
 }

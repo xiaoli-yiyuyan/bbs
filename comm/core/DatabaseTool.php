@@ -40,7 +40,7 @@ class DatabaseTool
         //启动PDO连接
         try
         {
-            $this->handler = new PDO("mysql:host={$this->config['host']}:{$this->config['port']};dbname={$this->config['database']};charset=utf8", $this->config['user'], $this->config['password']);
+            $this->handler = new PDO("mysql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']};charset=utf8", $this->config['user'], $this->config['password']);
         }
         catch (PDOException $e)
         {

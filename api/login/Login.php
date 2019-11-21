@@ -42,7 +42,7 @@ class Login extends \api\Api
     /**
      * 会员注册
      */
-    public function register($username = '', $password = '', $password2 = '', $email = '')
+    public function register($username = '', $nickname = '', $password = '', $password2 = '', $email = '')
     {
         $setting = Setting::get(['is_register']);
         $setting['is_register'] = $setting['is_register'] ?? 1;
@@ -57,12 +57,22 @@ class Login extends \api\Api
             'password2' => $password2,
             'email' => $email,
         ]);
-
         // $check = $this->dataCheck($post);
         if ($check['err']) {
             $this->error($check['err'], $check['msg']);
             return;
         }
+        $nickname = htmlspecialchars($nickname);
+        if (!empty($nickname)) {
+            $check = $this->nicknameCheck($nickname);
+            if ($check['err']) {
+                $this->error($check['err'], $check['msg']);
+                return;
+            }
+        } else {
+            $nickname = $username;
+        }
+        
         $user = new User;
         if ($user->where(['username' => $username])->whereOr(['email' => $email])->find()) {
             $this->error(8, '用户名或邮箱重复，请更换！');
@@ -70,7 +80,7 @@ class Login extends \api\Api
         }
         $id = $user->insertGetId([
             'username' => $username,
-            'nickname' => $username,
+            'nickname' => $nickname,
             'password' => md5($password),
             'photo' => '/static/images/photo.jpg',
             'email' => $email,
@@ -120,4 +130,15 @@ class Login extends \api\Api
         return $err;
     }
 
+    /**
+     * 昵称规则检查
+     */
+    private function nicknameCheck($nickname)
+    {
+        $err = ["err" => 0];
+        if (!preg_match("/^[a-zA-Z0-9_\x{4e00}-\x{9fa5}\\s·]{2,12}$/u",$nickname)) {
+            $err = ['err' => 2, 'msg' => '昵称不能有特殊字符,且长度为6~12位'];
+        }
+        return $err;
+    }
 }

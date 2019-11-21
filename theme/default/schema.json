@@ -1,0 +1,26 @@
+{
+    "required": [
+      "slider_list"
+    ],
+    "properties": {
+        "slider_list": {
+            "type": "array",
+            "description": "首页轮播图",
+            "title": "轮播图",
+            "items": {
+                "type": "object",
+                "title": "图",
+                "properties": {
+                    "img": {
+                        "type": "string",
+                        "title": "地址"
+                    },
+                    "link": {
+                        "type": "string",
+                        "title": "链接"
+                    }
+                }
+            }
+        }
+    }
+}

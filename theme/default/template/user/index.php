@@ -2,8 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/cropper.min.css">
 
 <script src="/static/js/cropper.min.js"></script>
-<script src="/static/js/reszieimg.js"></script>
-
+<script src="/static/js/reszieimg.js?v=1"></script>
 <style>
 .select-photo-page {
     display: none;
@@ -125,6 +124,15 @@
             <div class="li-box-word">退出</div>
         </a>
     </div>
+    <?php if ($user['id'] == 1) { ?>
+    <div class="empty-block"></div>
+    <div class="li-box border-b">
+        <a href="/admin" class="flex-box flex">
+            <i class="li-box-svg icon-svg b_qiqiu"></i>
+            <div class="li-box-word">管理员后台</div>
+        </a>
+    </div>
+    <?php } ?>
 </div>
 <div class="select-photo-page">
     <div class="header-bar">
@@ -148,7 +156,7 @@
     var $img = $('.select-photo img');
 
     $file.localResizeIMG({
-        maxSize: 90,
+        maxSize: 300,
         error: function(msg) {
             $.alert(msg);
         },
@@ -176,11 +184,18 @@
     $('.btn-save').click(function() {
         $('.select-photo-page').hide();
         var base64 = cropper.getCroppedCanvas().toDataURL('image/png');
-        $('.photo').attr('src', base64);
-        $.post('/user/base64_upload', {'base64': base64}).then(function() {
-            $.msg('更换成功');
+        base64 = $.base64Resize({
+            maxSize: 120,
+            base64: base64,
+            quality: 1,
+            success: function(result) {
+                $('.photo').attr('src', result.base64);
+                $.post('/user/base64_upload', {'base64': result.base64}).then(function() {
+                    $.msg('更换成功');
+                });
+                cropper.destroy();
+            }
         });
-        cropper.destroy();
     });
     $('.edit-info').click(function() {
         location.href="/user/edit_page";

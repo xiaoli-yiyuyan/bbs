@@ -342,4 +342,13 @@ class Component
 
 		return true;
 	}
+
+	/**
+	 * 获取模板配置
+	 */
+	public function setting()
+	{
+		$cache = new Cache($this->dir, 'setting');
+		return $cache->get();
+	}
 }

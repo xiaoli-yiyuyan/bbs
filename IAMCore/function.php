@@ -146,8 +146,13 @@ function useComp($cmd, $query = [])
 	if (!empty($query)) {
 		$data['query'] = array_merge($data['query'], $query);
 	}
+	
+	if ($data['action'][0] == ':setting') {
+		return $component->setting();
+	}
 	$component->use($action, $data['query']);
 }
+
 
 function isMobile() { 
 	// 如果有HTTP_X_WAP_PROFILE则一定是移动设备

@@ -65,12 +65,12 @@ class User extends \comm\core\Home
         }
         $nickname = htmlspecialchars($nickname);
         $explain = htmlspecialchars($explain);
-        if (mb_strlen($nickname) < 2) {
-            return Response::json(['err' => 2, 'msg' => '昵称长度不能小于2个字符哦！']);
+        if (!preg_match("/^[a-zA-Z0-9_\x{4e00}-\x{9fa5}\\s·]{2,12}$/u",$nickname)) {
+            return Response::json(['err' => 2, 'msg' => '昵称不能有特殊字符,且长度为6~12位']);
         }
-        if (mb_strlen($nickname) > 16) {
-            return Response::json(['err' => 3, 'msg' => '昵称太长啦，我记不住！']);
-        }
+        // if (mb_strlen($nickname) > 16) {
+        //     return Response::json(['err' => 3, 'msg' => '昵称太长啦，我记不住！']);
+        // }
         if (empty($explain)) {
             return Response::json(['err' => 4, 'msg' => '你忘了你的小尾巴了！']);
         }

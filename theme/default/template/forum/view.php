@@ -97,6 +97,7 @@
 <?=code('ad_forum')?>
 <!-- 代码自定义 END -->
 <?php } ?>
+<div class="empty-block" style="background: #eee"></div>
 <div class="replay_box">
     <div class="replay_title border-b">全部回复 <?=$forum_reply->total()?> 条</div>
     

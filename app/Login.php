@@ -45,7 +45,7 @@ class Login extends \comm\core\Home
             return Page::error('注册已关闭！');
         }
         if (Request::isPost()) {
-            $post = Request::post(['username', 'password', 'password2', 'email']);
+            $post = Request::post(['username', 'nickname', 'password', 'password2', 'email']);
             $res = source('/api/login/Login/register', $post, $api);
             if ($error = $api->error()) {
                 return Page::error($error['message']);

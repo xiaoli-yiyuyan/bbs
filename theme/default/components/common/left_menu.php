@@ -18,7 +18,7 @@
     border-bottom: .05rem solid #eee;
 }
 .left-menu-list-open {
-  overflow: hidden;
+    overflow: hidden;
 }
 .left-menu-list {
   position: fixed;

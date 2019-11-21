@@ -8,7 +8,7 @@ use comm\Setting as ASetting;
 class Theme extends Model
 {
     protected $type = [
-        'logo' => 'array'
+        'logo_path' => 'array'
     ];
 
     /**

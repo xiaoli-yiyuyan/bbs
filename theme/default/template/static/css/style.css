@@ -1048,6 +1048,12 @@ body {
 .login .login-item .icon-svg.pass {
   background-image: url(/static/svg/login-lock.svg);
 }
+.login .login-item .icon-svg.like {
+  background-image: url(/static/svg/login-like.svg);
+}
+.login .login-item .icon-svg.message {
+  background-image: url(/static/svg/login-message.svg);
+}
 .login .login-item .input-lg {
   line-height: 1.9rem;
   height: 2.4rem;
@@ -2370,6 +2376,7 @@ body {
   flex: 1;
   text-align: center;
   border-left: 1px solid #f4f4f4;
+  color: #000000;
 }
 .func-more .func-more-item:first-child {
   border-left: none;
@@ -2442,4 +2449,104 @@ body {
   text-align: center;
   background: #f22;
   color: #FFF;
+}
+.vip_icon {
+  padding: 0 0.25rem;
+  background: #e04204;
+  color: #fff;
+  font-size: 0.6rem;
+  line-height: 0.7rem;
+  border-radius: 0.1rem;
+  opacity: 0.8;
+}
+.vip_0 {
+  background: #afafaf;
+}
+.user_rank .vip_icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.user_rank .user_lv,
+.user_rank .is_online {
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.6rem;
+}
+.list .user_rank.list-group {
+  border-bottom: 0.05rem solid #EEE;
+}
+.list .user_rank.list-group .list-item .list-item-image {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+}
+.list .user_rank.list-group .list-item.list-item-image-text {
+  height: inherit;
+}
+.is_online {
+  margin-left: 0.25rem;
+  border-radius: 0.1rem;
+  padding: 0 0.25rem;
+  background: #afafaf;
+  color: #FFF;
+}
+.is_online_1 {
+  background: #00ca33;
+}
+.user_rank .nickname {
+  color: #32393e;
+  font-size: 0.9rem;
+}
+.user_rank .explain {
+  font-size: 0.65rem;
+  color: #7d7e81;
+}
+.rank_index {
+  position: relative;
+  margin-right: 0.5rem;
+  width: 1rem;
+  text-align: center;
+  background: #cab4b0;
+  color: #FFF;
+  border-radius: 0.1rem;
+}
+.user_rank:nth-child(1) .rank_index::after,
+.user_rank:nth-child(2) .rank_index::after,
+.user_rank:nth-child(3) .rank_index::after {
+  position: absolute;
+  bottom: -0.25rem;
+  left: 0.25rem;
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #FFFFFF;
+  transform: rotate(45deg);
+}
+.user_rank:nth-child(1) .rank_index {
+  background: #ff2600;
+}
+.user_rank:nth-child(2) .rank_index {
+  background: #ff5b3e;
+}
+.user_rank:nth-child(3) .rank_index {
+  background: #ff9684;
+}
+.user_rank_box {
+  margin-top: 0.5rem;
+}
+.rank_title {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 2rem;
+  text-align: center;
+  color: #32393e;
+}
+.user_rank_link {
+  position: absolute;
+  right: 0;
+  font-size: 0.7rem;
+}
+.user_rank .list-item-image img {
+  border-radius: 50%;
 }
