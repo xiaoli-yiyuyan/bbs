@@ -12,12 +12,12 @@
 <?php $column = source('Model/Category/getList', ['pagesize' => 10]); ?>
 <div class="column_index_box flex-box">
     <?php foreach ($column as $item) { ?>
-        <div class="column_index_item">
+        <a class="column_index_item" href="/forum/list?id=<?=$item['id']?>">
             <div class="column_photo_box">
                 <img class="column_photo" src="<?=$item['photo']?>" alt="<?=$item['title']?>">
             </div>
             <div class="column_title"><?=$item['title']?></div>
-        </div>
+        </a>
     <?php } ?>
 </div>
 <div class="func-more">

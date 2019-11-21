@@ -2347,6 +2347,8 @@ body {
   background: #ffffff;
 }
 .column_index_box .column_index_item {
+  display: block;
+  color: #000;
   margin-top: 0.5rem;
   width: 20%;
 }
