@@ -14,9 +14,11 @@ CREATE TABLE `category` (
   `is_html` int(11) DEFAULT '1',
   `is_ubb` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO `category` VALUES (1,'','综合论坛',0,'','','',0,'http://ianmi.com/upload/column/20180909234237_202.png',2047,'',1,1,1),(2,NULL,'源码发布',0,NULL,NULL,NULL,0,'http://ianmi.com/upload/column/20180909234155_726.png',2046,'',1,1,1),(3,NULL,'任务求助',0,NULL,NULL,NULL,0,'http://ianmi.com/upload/column/20180909234325_411.png',2048,'',1,1,1),(4,NULL,'教程中心',0,NULL,NULL,NULL,0,'http://ianmi.com/upload/column/20180909233702_340.png',2044,'',1,1,1);
+ALTER TABLE `category` ADD `is_auto` int(11) DEFAULT '0' COMMENT '是否开启审核';
+
+INSERT INTO `category` VALUES (1,'','综合论坛',0,'','','',0,'http://bbs.ianmi.com/upload/column/20191121163448_265.png',69,'',1,1,1,1),(2,NULL,'美图分享',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163457_220.png',70,'',1,1,1,0),(3,NULL,'任务求助',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163505_624.png',71,'',1,1,1,0),(4,NULL,'教程中心',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163517_332.png',72,'',1,1,1,0),(5,NULL,'灌水闲聊',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163534_556.png',73,NULL,1,1,1,0),(6,NULL,'新人爆照',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163553_990.png',74,NULL,1,1,1,0),(7,NULL,'文学交流',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163602_544.png',75,NULL,1,1,1,0),(8,NULL,'游戏分享',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163614_788.png',76,NULL,1,1,1,0),(9,NULL,'意见反馈',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163629_866.png',77,NULL,1,1,1,0),(10,NULL,'官方公告',0,NULL,NULL,NULL,0,'http://bbs.ianmi.com/upload/column/20191121163715_459.png',78,NULL,1,1,1,0);
 
 CREATE TABLE `chat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -203,7 +205,6 @@ INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('weblogo','/upload/logo
 
 INSERT INTO `setting` (`name`, `value`, `title`) VALUES ('template','default','模板标识');
 
-ALTER TABLE `category` ADD `is_auto` int(11) DEFAULT '0' COMMENT '是否开启审核';
 ALTER TABLE `user` ADD `uuid` varchar(255) COMMENT '唯一识别码';
 
 ALTER TABLE `theme` ADD `self_name` varchar(255) COMMENT '主题原本标识';

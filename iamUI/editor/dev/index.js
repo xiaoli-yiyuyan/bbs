@@ -40,7 +40,7 @@ class IamEditor {
         
         this.dom.addEventListener('paste', function(event){
             let plainText  =  event.clipboardData.getData('text/plain');  // 无格式文本
-            document.execCommand('insertText', false, plainText);
+            document.execCommand('insertHTML', false, plainText);
             event.preventDefault();
         });
 

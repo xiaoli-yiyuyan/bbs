@@ -1,5 +1,5 @@
 <?php useComp('/components/common/left_menu'); ?>
-<?php $newMessageCount = source('/api/message/count'); ?>
+<?php $newMessageCount = source('/api/Message/count'); ?>
 <header class="header-bar">
     <div class="header-item left-menu">
         <i class="icon-svg svg-menu"></i>

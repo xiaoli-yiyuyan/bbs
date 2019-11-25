@@ -14,7 +14,7 @@
         <div class="_right_bottom"><?=$rightBottom['text']?></div>
         <?php } else { ?>
             
-        <?php $newMessageCount = source('/api/message/count'); ?>
+        <?php $newMessageCount = source('/api/Message/count'); ?>
         <a href="/message" class="message-icon">
             <i class="icon-svg svg-mail"></i>
             <?php if (!empty($newMessageCount)) { ?>
