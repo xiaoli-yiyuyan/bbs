@@ -598,7 +598,7 @@ class Admin extends \comm\core\Home
 
     public function codeAdd()
     {
-        $data = Request::post(['name', 'title', 'content']);
+        $data = Request::post(['name', 'title', 'preg', 'content']);
         if (Code::get(['name' => $data['name']])) {
             return View::load('error', ['msg' => '添加失败，可能原因：名称重复']);
         }
@@ -620,7 +620,7 @@ class Admin extends \comm\core\Home
     public function codeEdit()
     {
         $id = Request::get('id');
-        $data = Request::post(['name', 'title', 'content']);
+        $data = Request::post(['name', 'title', 'preg', 'content']);
         if ($code = Code::get(['name' => $data['name']])) {
             if ($code->id != $id) {
                 return View::load('error', ['msg' => '修改失败，可能原因：名称重复']);

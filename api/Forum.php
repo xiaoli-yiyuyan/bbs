@@ -10,6 +10,7 @@ use Model\User;
 use Model\Category;
 use comm\core\Ubb;
 use Model\File;
+use Model\Code;
 use comm\Setting;
 use Iam\Image;
 use think\Db;
@@ -126,7 +127,7 @@ class Forum extends \api\Api
             $forum['title'] = htmlspecialchars($forum['title']);
             $forum['context'] = htmlspecialchars($forum['context']);
             $forum['context'] = str_replace(chr(13).chr(10), '<br>', $forum['context']);
-            $forum['context'] = str_replace(chr(32), '&nbsp;', $forum['context']);
+            // $forum['context'] = str_replace(chr(32), '&nbsp;', $forum['context']);
         }
 
         // 启用UBB语法
@@ -135,6 +136,8 @@ class Forum extends \api\Api
             $forum['context'] = str_replace('[hr]', '<hr class="_sys_hr"/>', $forum['context']);
             $forum['context'] = Ubb::face($forum['context']);
             $forum['context'] = $forum->setViewImages($forum['context']);
+            $forum['context'] = $this->myUbb($forum['context']);
+            // $forum['context'] = preg_replace('/\[url link=(.*?)\](.*?)\[\/url\]/', '<a href="$1">$2<a>', $forum['context']);
         }
         // $forum['strip_tags_context'] = str_replace('&nbsp;', chr(32), $forum['context']);
         // $forum['strip_tags_context'] = strip_tags($forum['strip_tags_context']);
@@ -147,6 +150,27 @@ class Forum extends \api\Api
         $forum = $forum->append(['mark_body', 'author', 'class_info']);
 
         return $this->data($forum);
+    }
+
+    /**
+     * 自定义UBB
+     */
+    private function myUbb($context)
+    {
+        $code = Code::where('preg', '<>', '')->select();
+
+        set_error_handler(function () {
+            throw new \ErrorException();
+        }, E_WARNING);
+        foreach ($code as $value) {
+            try {
+                $context = preg_replace($value->preg, $value->content, $context);
+            } catch (\ErrorException $error) {
+                continue;
+            }
+        }
+        restore_error_handler();
+        return $context;
     }
 
     /**

@@ -1,0 +1,1 @@
+ALTER TABLE `code` ADD `preg` varchar(500) DEFAULT '' COMMENT '正则表达式';

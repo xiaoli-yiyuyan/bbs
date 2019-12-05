@@ -2,7 +2,6 @@
 namespace api;
 
 use Model\SignLog;
-use Model\User;
 
 use Model\Message as MessageModel;
 
